@@ -1,0 +1,83 @@
+.app-bar {
+  background-color: var(--lumo-primary-color);
+  box-shadow: var(--lumo-box-shadow-m);
+  flex-direction: column;
+  z-index: 1;
+}
+
+/* Container */
+.app-bar__container {
+  padding: var(--lumo-space-wide-l);
+  transition: padding var(--transition-duration-m);
+}
+
+.app-bar__container vaadin-button {
+  margin-bottom: 0;
+  margin-top: 0;
+}
+
+/* Menu button */
+.app-bar__navigation-icon {
+  color: var(--lumo-primary-contrast-color);
+  transition: margin-right var(--transition-duration-m),
+              min-width var(--transition-duration-m),
+              opacity var(--transition-duration-s),
+              padding var(--transition-duration-m),
+              visibility var(--transition-duration-m),
+              width var(--transition-duration-m);
+}
+
+/* Title */
+.app-bar__title {
+  margin: 0;
+}
+
+/* Action items */
+.app-bar__action-items {
+  margin-left: auto;
+}
+
+.app-bar__action-items > * {
+  color: var(--lumo-primary-contrast-color);
+}
+
+.app-bar__action-items > *:not(:last-child) {
+  margin-right: var(--lumo-space-s);
+}
+
+/* Tabs */
+.app-bar__tabs {
+  box-shadow: none;
+  margin: auto;
+}
+
+.app-bar__tab[selected] {
+  color: var(--lumo-primary-contrast-color);
+}
+
+.app-bar__tab[selected]::before,
+.app-bar__tab[selected]::after {
+  background-color: var(--lumo-primary-contrast-color);
+}
+
+
+@media (max-width: 1023px) {
+  .app-bar__container {
+    padding: var(--lumo-space-wide-m);
+  }
+
+  .app-bar__navigation-icon {
+    margin-right: var(--lumo-space-m);
+  }
+}
+
+@media (min-width: 1024px) {
+  .app-bar__navigation-icon {
+    min-width: 0;
+    opacity: 0;
+    padding: 0;
+    transition: opacity var(--transition-duration-l);
+    visibility: hidden;
+    width: 0;
+  }
+}

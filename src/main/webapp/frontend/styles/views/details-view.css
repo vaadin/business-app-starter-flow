@@ -1,0 +1,21 @@
+.details-view {
+  overflow: auto;
+}
+
+.details-view__viewport {
+  max-width: 1024px;
+}
+
+@media (max-width: 1023px) {
+  .details-view__viewport {
+    margin: var(--lumo-space-m) auto;
+    width: calc(100% - var(--lumo-space-m) * 2);
+  }
+}
+
+@media (min-width: 1024px) {
+  .details-view__viewport {
+    margin: var(--lumo-space-l) auto;
+    width: calc(100% - var(--lumo-space-l) * 2);
+  }
+}

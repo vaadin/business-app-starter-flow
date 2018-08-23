@@ -1,0 +1,110 @@
+.navigation-drawer {
+  z-index: 1;
+}
+
+.navigation-drawer__scrim {
+  background: var(--lumo-shade-50pct);
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  transition: opacity var(--transition-duration-m);
+  width: 100%;
+}
+
+/* Content */
+.navigation-drawer__content {
+  background-color: var(--lumo-base-color);
+  box-shadow: var(--lumo-box-shadow-m);
+  box-sizing: border-box;
+  height: 100%;
+  overflow: auto;
+  position: relative;
+  transition: box-shadow var(--transition-duration-m), margin var(--transition-duration-m);
+  width: var(--navigation-drawer-width);
+}
+
+/* Account switcher */
+.navigation-drawer__avatar {
+  border-radius: 100%;
+  display: flex;
+  height: var(--lumo-size-l);
+  margin: var(--lumo-space-m) 0 var(--lumo-space-l) var(--lumo-space-m);
+  width: var(--lumo-size-l);
+}
+
+.navigation-drawer__title {
+  margin: 0;
+  padding: 0 var(--lumo-space-m);
+}
+
+.navigation-drawer__email {
+  align-items: center;
+  border-bottom: 1px solid var(--lumo-shade-10pct);
+  display: flex;
+  justify-content: space-between;
+  padding: 0 var(--lumo-space-m) var(--lumo-space-m) var(--lumo-space-m);
+}
+
+.navigation-drawer__email vaadin-button {
+  margin: 0;
+}
+
+/* Items */
+.navigation-drawer__item {
+  align-items: center;
+  display: flex;
+  font-size: var(--lumo-font-size-s);
+  font-weight: 600;
+  height: var(--lumo-size-l);
+  padding: 0 var(--lumo-space-m);
+}
+
+/* Margins on first and last item */
+.navigation-drawer__item:first-of-type {
+  margin-top: var(--lumo-space-s);
+}
+
+.navigation-drawer__item:last-of-type {
+  margin-bottom: var(--lumo-space-s);
+}
+
+/* Highlight */
+.navigation-drawer__item:not([highlight]) {
+  color: var(--lumo-body-text-color);
+}
+
+.navigation-drawer__item:not([highlight]) iron-icon {
+  color: var(--lumo-secondary-text-color);
+}
+
+/* Hover */
+.navigation-drawer__item:hover {
+  background-color: var(--lumo-contrast-5pct);
+  text-decoration: none;
+}
+
+/* Active */
+.navigation-drawer__item:active {
+  background-color: var(--lumo-contrast-10pct);
+}
+
+/* Item icon */
+.navigation-drawer__item iron-icon {
+  margin-right: var(--lumo-space-l);
+}
+
+@media (max-width: 1023px) {
+  .navigation-drawer__content {
+    position: fixed;
+  }
+
+  .navigation-drawer--open .navigation-drawer__scrim {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .navigation-drawer:not(.navigation-drawer--open) .navigation-drawer__content {
+    margin-left: calc(var(--navigation-drawer-width) * -1.2);
+  }
+}

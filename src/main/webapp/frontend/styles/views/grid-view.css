@@ -1,0 +1,26 @@
+.grid-view {
+  transition: padding var(--transition-duration-m);
+}
+
+.grid-view vaadin-grid {
+  margin: 0 auto;
+  max-width: 1024px;
+}
+
+@media (max-width: 399px) {
+  .grid-view {
+    padding: 0;
+  }
+}
+
+@media (min-width: 400px) and (max-width: 1023px) {
+  .grid-view {
+    padding: var(--lumo-space-m) var(--lumo-space-m) 0 var(--lumo-space-m);
+  }
+}
+
+@media (min-width: 1024px) {
+  .grid-view {
+    padding: var(--lumo-space-l) var(--lumo-space-l) 0 var(--lumo-space-l);
+  }
+}

@@ -1,0 +1,42 @@
+<link rel="import" href="../bower_components/vaadin-lumo-styles/badge.html">
+<link rel="import" href="../bower_components/vaadin-lumo-styles/color.html">
+<link rel="import" href="../bower_components/vaadin-lumo-styles/style.html">
+<link rel="import" href="../bower_components/vaadin-lumo-styles/typography.html">
+
+<link rel="stylesheet" href="lumo-styles.css">
+
+<link rel="stylesheet" href="components/app-bar.css">
+<link rel="stylesheet" href="components/list-item.css">
+<link rel="stylesheet" href="components/navigation-drawer.css">
+
+<link rel="stylesheet" href="views/details-view.css">
+<link rel="stylesheet" href="views/grid-view.css">
+
+
+<custom-style>
+  <style include="lumo-badge">
+    :root {
+      --navigation-drawer-width: calc(var(--lumo-size-m) * 7);
+      --transition-duration-s: 160ms;
+      --transition-duration-m: 240ms;
+      --transition-duration-l: 320ms;
+    }
+
+    html,
+    body {
+      height: 100%;
+      width: 100%;
+    }
+
+    .root {
+      background-color: var(--lumo-shade-5pct);
+      height: 100%;
+      width: 100%;
+    }
+
+    .content {
+      flex-direction: column;
+      z-index: 0;
+    }
+  </style>
+</custom-style>

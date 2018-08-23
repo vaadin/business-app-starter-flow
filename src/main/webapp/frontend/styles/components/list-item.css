@@ -1,0 +1,37 @@
+.list-item {
+  padding: var(--lumo-space-wide-l);
+}
+
+.list-item__icon,
+.list-item__img,
+.list-item__initials {
+  margin-right: var(--lumo-space-l);
+}
+
+.list-item__img,
+.list-item__initials {
+  border-radius: var(--lumo-border-radius);
+  height: var(--lumo-size-s);
+  width: var(--lumo-size-s);
+}
+
+.list-item__initials {
+  background-color: var(--lumo-primary-color);
+  flex-shrink: 0;
+  font-weight: 500;
+  line-height: 1;
+}
+
+vaadin-grid .list-item {
+  padding: 0;
+}
+
+vaadin-grid .list-item__icon,
+vaadin-grid .list-item__img,
+vaadin-grid .list-item__initials {
+  margin-right: var(--lumo-space-m);
+}
+
+vaadin-grid .list-item * {
+  pointer-events: none;
+}
