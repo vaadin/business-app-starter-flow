@@ -28,10 +28,6 @@
               width var(--transition-duration-m);
 }
 
-.app-bar__navigation-icon--visible {
-
-}
-
 /* Title */
 .app-bar__title {
   margin: 0;

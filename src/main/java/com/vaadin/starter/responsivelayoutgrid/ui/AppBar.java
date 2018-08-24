@@ -23,7 +23,7 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
 	public AppBar(String title) {
 		super();
 		setClassName(CLASS_NAME);
-		getElement().setAttribute("theme", "dark");
+		getElement().setAttribute(LumoStyles.THEME, LumoStyles.DARK);
 
 		// Two rows:
 		// 1) navigation icon, title and action items

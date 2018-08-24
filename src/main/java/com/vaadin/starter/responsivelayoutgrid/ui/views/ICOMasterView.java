@@ -7,13 +7,14 @@ import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.data.renderer.LocalDateRenderer;
-import com.vaadin.flow.data.renderer.TemplateRenderer;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.starter.responsivelayoutgrid.backend.DummyData;
 import com.vaadin.starter.responsivelayoutgrid.backend.InitialCoinOffering;
 import com.vaadin.starter.responsivelayoutgrid.ui.MainLayout;
 import com.vaadin.starter.responsivelayoutgrid.ui.components.ListItem;
+import com.vaadin.starter.responsivelayoutgrid.ui.utils.CSSProperties;
+import com.vaadin.starter.responsivelayoutgrid.ui.utils.UIUtils;
 
 @Route(value = "", layout = MainLayout.class)
 @PageTitle("Initial Coin Offerings")
@@ -30,7 +31,7 @@ public class ICOMasterView extends Div {
 
     public ICOMasterView() {
         setClassName(GRID_VIEW);
-        getStyle().set("flex", "1");
+        getStyle().set(CSSProperties.Flex.PROPERTY, "1");
 
         grid = new Grid();
         grid.addColumn(new ComponentRenderer<>(this::createICOInfo))
@@ -50,7 +51,7 @@ public class ICOMasterView extends Div {
                 .setWidth("160px")
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createAmountRaised))
-                .setHeader(createRightAlignedDiv(new Text("Amount Raised")))
+                .setHeader(UIUtils.createRightAlignedDiv(new Text("Amount Raised")))
                 .setSortable(true)
                 .setWidth("160px")
                 .setFlexGrow(0);
@@ -66,17 +67,11 @@ public class ICOMasterView extends Div {
     }
 
     private Component createAmountRaised(InitialCoinOffering ico) {
-        return createRightAlignedDiv(new Text(Double.toString(ico.getAmountRaised())));
+        return UIUtils.createRightAlignedDiv(new Text(Double.toString(ico.getAmountRaised())));
     }
 
     private void viewDetails(InitialCoinOffering ico) {
         UI.getCurrent().navigate(ICODetailsView.class, ico.getId());
-    }
-
-    private Div createRightAlignedDiv(Component... components) {
-        Div div = new Div(components);
-        div.getStyle().set("text-align", "right");
-        return div;
     }
 
     public void selectTab(Tab tab) {

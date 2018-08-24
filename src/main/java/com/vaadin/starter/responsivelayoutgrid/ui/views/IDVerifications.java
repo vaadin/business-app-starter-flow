@@ -14,6 +14,7 @@ import com.vaadin.starter.responsivelayoutgrid.backend.Person;
 import com.vaadin.starter.responsivelayoutgrid.ui.LumoStyles;
 import com.vaadin.starter.responsivelayoutgrid.ui.MainLayout;
 import com.vaadin.starter.responsivelayoutgrid.ui.components.ListItem;
+import com.vaadin.starter.responsivelayoutgrid.ui.utils.CSSProperties;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ public class IDVerifications extends Div {
 
     public IDVerifications() {
         setClassName("grid-view");
-        getStyle().set("flex", "1");
+        getStyle().set(CSSProperties.Flex.PROPERTY, "1");
 
         grid = new Grid();
         grid.addColumn(Person::getId)

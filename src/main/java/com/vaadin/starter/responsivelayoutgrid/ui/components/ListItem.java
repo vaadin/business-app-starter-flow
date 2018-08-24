@@ -8,6 +8,7 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.starter.responsivelayoutgrid.ui.LumoStyles;
+import com.vaadin.starter.responsivelayoutgrid.ui.utils.CSSProperties;
 
 public class ListItem extends FlexLayout {
 
@@ -29,7 +30,7 @@ public class ListItem extends FlexLayout {
 		secondaryLabel.addClassName(LumoStyles.Text.SECONDARY);
 
 		FlexLayout column = new FlexLayout(primaryLabel, secondaryLabel);
-		column.getStyle().set("flex-direction", "column");
+		column.getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN);
 
 		add(visual, column);
 	}
@@ -51,7 +52,7 @@ public class ListItem extends FlexLayout {
 		secondaryLabel.addClassName(LumoStyles.Text.SECONDARY);
 
 		FlexLayout column = new FlexLayout(primaryLabel, secondaryLabel);
-		column.getStyle().set("flex-direction", "column");
+		column.getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN);
 
 		add(visual, column);
 	}

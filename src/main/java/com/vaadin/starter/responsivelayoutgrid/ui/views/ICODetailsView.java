@@ -13,6 +13,7 @@ import com.vaadin.starter.responsivelayoutgrid.backend.DummyData;
 import com.vaadin.starter.responsivelayoutgrid.backend.InitialCoinOffering;
 import com.vaadin.starter.responsivelayoutgrid.ui.MainLayout;
 import com.vaadin.starter.responsivelayoutgrid.ui.components.ListItem;
+import com.vaadin.starter.responsivelayoutgrid.ui.utils.CSSProperties;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -39,24 +40,26 @@ public class ICODetailsView extends Div implements HasUrlParameter<Long> {
 
         formatter = DateTimeFormatter.ofPattern("MMM dd, YYYY");
 
+        /* Header section */
         image = new Image("", "");
         image.setHeight("240px");
         image.setWidth("240px");
 
         amountRaised = new ListItem(VaadinIcon.MONEY, "", "Amount Raised");
-
         runningDate = new ListItem(VaadinIcon.CALENDAR, "", "Running Date");
-
         status = new ListItem(VaadinIcon.LOCK, "", "Status");
 
         FlexLayout column = new FlexLayout(amountRaised, runningDate, status);
-        column.getStyle().set("flex-direction", "column");
+        column.getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN);
 
         FlexLayout row = new FlexLayout(image, column);
         row.setAlignItems(FlexComponent.Alignment.CENTER);
-        row.getStyle().set("flex-wrap", "wrap");
+        row.getStyle().set(CSSProperties.FlexWrap.PROPERTY, CSSProperties.FlexWrap.WRAP);
 
         viewport.add(row);
+
+        /* Dashboard sections */
+
     }
 
     @Override
