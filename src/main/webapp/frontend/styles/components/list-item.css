@@ -1,6 +1,7 @@
 .list-item {
   box-sizing: border-box;
   padding: var(--lumo-space-wide-l);
+  position: relative;
 }
 
 .list-item__icon,
@@ -22,6 +23,15 @@
   flex-shrink: 0;
   font-weight: 500;
   line-height: 1;
+}
+
+.list-item__divider {
+  background-color: var(--lumo-contrast-20pct);
+  bottom: 0;
+  height: 1px;
+  left: calc(var(--lumo-space-l) * 3);
+  position: absolute;
+  right: 0;
 }
 
 vaadin-grid .list-item {

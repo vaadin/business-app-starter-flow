@@ -1,9 +1,6 @@
 package com.vaadin.starter.responsivelayoutgrid.ui.views;
 
-import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H3;
-import com.vaadin.flow.component.html.Image;
-import com.vaadin.flow.component.html.Paragraph;
+import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
@@ -55,10 +52,10 @@ public class ICODetailsView extends Div implements HasUrlParameter<Long> {
         image.setWidth("240px");
 
         amountRaised = new ListItem(VaadinIcon.MONEY, "", "Amount Raised");
-        amountRaised.addClassName(BoxShadowBorders.BOTTOM);
+        amountRaised.setDividerVisible(true);
 
         runningDate = new ListItem(VaadinIcon.CALENDAR, "", "Running Date");
-		runningDate.addClassName(BoxShadowBorders.BOTTOM);
+		runningDate.setDividerVisible(true);
 
 		status = new ListItem(VaadinIcon.LOCK, "", "Status");
 
@@ -69,6 +66,7 @@ public class ICODetailsView extends Div implements HasUrlParameter<Long> {
         FlexLayout row = UIUtils.createWrappingFlexLayout(image, column);
         row.setAlignItems(FlexComponent.Alignment.CENTER);
         row.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
+		row.addClassNames(LumoStyles.Padding.Bottom.L, BoxShadowBorders.BOTTOM);
 
         viewport.add(row);
 
@@ -136,13 +134,13 @@ public class ICODetailsView extends Div implements HasUrlParameter<Long> {
 
 		if (icon.equals(VaadinIcon.TIMER)) {
 			item.addClassName(LumoStyles.Text.SECONDARY);
-		} else if (icon.equals(VaadinIcon.CHECK)) {
+		} else if (icon.equals(VaadinIcon.CHECK) || icon.equals(VaadinIcon.FLAG_CHECKERED)) {
 			item.addClassName(LumoStyles.Text.SUCCESS);
 		} else if (icon.equals(VaadinIcon.BAN)) {
 			item.addClassName(LumoStyles.Text.ERROR);
 		}
 
-		item.getPrimaryLabel().addClassName(LumoStyles.FontSize.H2);
+		item.getPrimaryLabel().addClassName(LumoStyles.FontSize.H3);
 		item.getStyle().set(CSSProperties.MinWidth.PROPERTY, "200px");
 		item.setWidth("33%");
 
@@ -150,9 +148,9 @@ public class ICODetailsView extends Div implements HasUrlParameter<Long> {
 	}
 
 	private H3 createH3(String text) {
-		H3 h3 = new H3(text);
-		h3.addClassName(LumoStyles.Margin.Responsive.Horizontal.ML);
-		return h3;
+		H3 header = new H3(text);
+		header.addClassName(LumoStyles.Margin.Responsive.Horizontal.ML);
+		return header;
 	}
 
 	private Paragraph createParagraph(String text) {
