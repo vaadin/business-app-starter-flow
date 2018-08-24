@@ -57,12 +57,29 @@ public class LumoStyles {
 			public static final String XL = "padding-b-xl";
 		}
 
+		public class Horizontal {
+			public static final String XS = "padding-h-xs";
+			public static final String S = "padding-h-s";
+			public static final String M = "padding-h-m";
+			public static final String L = "padding-h-l";
+			public static final String XL = "padding-h-xl";
+		}
+
 		public class Left {
 			public static final String XS = "padding-l-xs";
 			public static final String S = "padding-l-s";
 			public static final String M = "padding-l-m";
 			public static final String L = "padding-l-l";
 			public static final String XL = "padding-l-xl";
+		}
+
+		public class Responsive {
+			public class Horizontal {
+				public static final String ML = "padding-r-h-ml";
+			}
+			public class Vertical {
+				public static final String VL = "padding-r-v-ml";
+			}
 		}
 
 		public class Right {
@@ -80,6 +97,87 @@ public class LumoStyles {
 			public static final String L = "padding-t-l";
 			public static final String XL = "padding-t-xl";
 		}
+
+		public class Vertical {
+			public static final String XS = "padding-v-xs";
+			public static final String S = "padding-v-s";
+			public static final String M = "padding-v-m";
+			public static final String L = "padding-v-l";
+			public static final String XL = "padding-v-xl";
+		}
 	}
 
+	public class Margin {
+		public class All {
+			public static final String AUTO = "margin-a-a";
+			public static final String XS = "margin-a-xs";
+			public static final String S = "margin-a-s";
+			public static final String M = "margin-a-m";
+			public static final String L = "margin-a-l";
+			public static final String XL = "margin-a-xl";
+		}
+
+		public class Bottom {
+			public static final String AUTO = "margin-b-a";
+			public static final String XS = "margin-b-xs";
+			public static final String S = "margin-b-s";
+			public static final String M = "margin-b-m";
+			public static final String L = "margin-b-l";
+			public static final String XL = "margin-b-xl";
+		}
+
+		public class Horizontal {
+			public static final String AUTO = "margin-h-a";
+			public static final String XS = "margin-h-xs";
+			public static final String S = "margin-h-s";
+			public static final String M = "margin-h-m";
+			public static final String L = "margin-h-l";
+			public static final String XL = "margin-h-xl";
+		}
+
+		public class Left {
+			public static final String AUTO = "margin-l-a";
+			public static final String XS = "margin-l-xs";
+			public static final String S = "margin-l-s";
+			public static final String M = "margin-l-m";
+			public static final String L = "margin-l-l";
+			public static final String XL = "margin-l-xl";
+		}
+
+		public class Responsive {
+			public class Horizontal {
+				public static final String ML = "margin-r-h-ml";
+			}
+			public class Vertical {
+				public static final String ML = "margin-r-v-ml";
+			}
+		}
+
+		public class Right {
+			public static final String AUTO = "margin-r-a";
+			public static final String XS = "margin-r-xs";
+			public static final String S = "margin-r-s";
+			public static final String M = "margin-r-m";
+			public static final String L = "margin-r-l";
+			public static final String XL = "margin-r-xl";
+		}
+
+		public class Top {
+			public static final String AUTO = "margin-t-a";
+			public static final String XS = "margin-t-xs";
+			public static final String S = "margin-t-s";
+			public static final String M = "margin-t-m";
+			public static final String L = "margin-t-l";
+			public static final String XL = "margin-t-xl";
+		}
+
+		public class Vertical {
+			public static final String AUTO = "margin-v-a";
+			public static final String XS = "margin-v-xs";
+			public static final String S = "margin-v-s";
+			public static final String M = "margin-v-m";
+			public static final String L = "margin-v-l";
+			public static final String XL = "margin-v-xl";
+		}
+	}
 }

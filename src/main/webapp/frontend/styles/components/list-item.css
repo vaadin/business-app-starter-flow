@@ -6,6 +6,7 @@
 .list-item__icon,
 .list-item__img,
 .list-item__initials {
+  flex-shrink: 0;
   margin-right: var(--lumo-space-l);
 }
 

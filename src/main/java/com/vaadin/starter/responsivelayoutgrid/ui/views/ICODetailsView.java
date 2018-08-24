@@ -1,8 +1,9 @@
 package com.vaadin.starter.responsivelayoutgrid.ui.views;
 
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H4;
+import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Image;
+import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
@@ -23,8 +24,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
 
-import static com.vaadin.starter.responsivelayoutgrid.ui.utils.ViewStyles.DETAILS_VIEW;
-
 @Route(value = "ico-details", layout = MainLayout.class)
 @PageTitle("ICO Details")
 public class ICODetailsView extends Div implements HasUrlParameter<Long> {
@@ -38,11 +37,12 @@ public class ICODetailsView extends Div implements HasUrlParameter<Long> {
 	private final Random random;
 
 	public ICODetailsView() {
-        setClassName(DETAILS_VIEW);
-        getStyle().set("flex", "1");
+		getStyle().set(CSSProperties.Overflow.PROPERTY, CSSProperties.Overflow.AUTO);
+        getStyle().set(CSSProperties.Flex.PROPERTY, "1");
 
         viewport = new Div();
-        viewport.setClassName(DETAILS_VIEW + "__viewport");
+		viewport.addClassNames(LumoStyles.Margin.Horizontal.AUTO, LumoStyles.Margin.Responsive.Vertical.ML);
+		viewport.getStyle().set(CSSProperties.MaxWidth.PROPERTY, CSSProperties.MaxWidth._800);
         add(viewport);
 
         formatter = DateTimeFormatter.ofPattern("MMM dd, YYYY");
@@ -50,7 +50,8 @@ public class ICODetailsView extends Div implements HasUrlParameter<Long> {
 
         /* Header section */
         image = new Image("", "");
-        image.setHeight("240px");
+		image.getStyle().set(CSSProperties.BorderRadius.PROPERTY, "100%");
+		image.setHeight("240px");
         image.setWidth("240px");
 
         amountRaised = new ListItem(VaadinIcon.MONEY, "", "Amount Raised");
@@ -67,33 +68,47 @@ public class ICODetailsView extends Div implements HasUrlParameter<Long> {
 
         FlexLayout row = UIUtils.createWrappingFlexLayout(image, column);
         row.setAlignItems(FlexComponent.Alignment.CENTER);
+        row.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
 
         viewport.add(row);
 
         /* Dashboard sections */
-		viewport.add(
-			new H4("Registrations"),
-			UIUtils.createWrappingFlexLayout(
-				createLargeListItem(VaadinIcon.TIMER, Integer.toString(random.nextInt(1000)), "Pending"),
-				createLargeListItem(VaadinIcon.CHECK, Integer.toString(random.nextInt(1000)), "Approved"),
-				createLargeListItem(VaadinIcon.BAN, Integer.toString(random.nextInt(1000)), "Denied")
-			)
+		FlexLayout registrations = UIUtils.createWrappingFlexLayout(
+			createLargeListItem(VaadinIcon.TIMER, Integer.toString(random.nextInt(5000)), "Pending"),
+			createLargeListItem(VaadinIcon.CHECK, Integer.toString(random.nextInt(5000)), "Approved"),
+			createLargeListItem(VaadinIcon.BAN, Integer.toString(random.nextInt(5000)), "Denied")
+		);
+		registrations.addClassNames(LumoStyles.Padding.Bottom.L, BoxShadowBorders.BOTTOM);
+
+		FlexLayout originOfFunds = UIUtils.createWrappingFlexLayout(
+			createLargeListItem(VaadinIcon.TIMER, Integer.toString(random.nextInt(5000)), "Open"),
+			createLargeListItem(VaadinIcon.CHECK, Integer.toString(random.nextInt(5000)), "Closed")
+		);
+		originOfFunds.addClassNames(LumoStyles.Padding.Bottom.L, BoxShadowBorders.BOTTOM);
+
+		FlexLayout balanceUpdates = UIUtils.createWrappingFlexLayout(
+			createLargeListItem(VaadinIcon.TIMER, Integer.toString(random.nextInt(5000)), "Pending"),
+			createLargeListItem(VaadinIcon.CHECK, Integer.toString(random.nextInt(5000)), "Approved")
+		);
+		balanceUpdates.addClassNames(LumoStyles.Padding.Bottom.L, BoxShadowBorders.BOTTOM);
+
+		FlexLayout tokenReceivingAddresses = UIUtils.createWrappingFlexLayout(
+			createLargeListItem(VaadinIcon.TIMER, Integer.toString(random.nextInt(5000)), "Unconfirmed"),
+			createLargeListItem(VaadinIcon.CHECK, Integer.toString(random.nextInt(5000)), "Confirmed"),
+			createLargeListItem(VaadinIcon.FLAG_CHECKERED, Integer.toString(random.nextInt(5000)), "Processed")
 		);
 
 		viewport.add(
-			new H4("Origin of Funds"),
-			UIUtils.createWrappingFlexLayout(
-				createLargeListItem(VaadinIcon.TIMER, Integer.toString(random.nextInt(1000)), "Open"),
-				createLargeListItem(VaadinIcon.CHECK, Integer.toString(random.nextInt(1000)), "Closed")
-			)
-		);
-
-		viewport.add(
-			new H4("Balance Updates"),
-			UIUtils.createWrappingFlexLayout(
-				createLargeListItem(VaadinIcon.TIMER, Integer.toString(random.nextInt(1000)), "Pending"),
-				createLargeListItem(VaadinIcon.CHECK, Integer.toString(random.nextInt(1000)), "Approved")
-			)
+			createH3("Registrations"),
+			registrations,
+			createH3("Origin of Funds"),
+			originOfFunds,
+			createH3("Balance Updates"),
+			createParagraph("Import transactions by uploading a CSV file containing transactional data."),
+			balanceUpdates,
+			createH3("Token Receiving Address"),
+			createParagraph("Before tokens are distributed, you may send out an email asking approved registrants to verify their token receiving address. Only applies to non-ETH registrants."),
+			tokenReceivingAddresses
 		);
     }
 
@@ -116,11 +131,33 @@ public class ICODetailsView extends Div implements HasUrlParameter<Long> {
         // TODO: how do we update the page title?
     }
 
-    public ListItem createLargeListItem(VaadinIcon icon, String primary, String secondary) {
+    private ListItem createLargeListItem(VaadinIcon icon, String primary, String secondary) {
 		ListItem item = new ListItem(icon, primary, secondary);
+
+		if (icon.equals(VaadinIcon.TIMER)) {
+			item.addClassName(LumoStyles.Text.SECONDARY);
+		} else if (icon.equals(VaadinIcon.CHECK)) {
+			item.addClassName(LumoStyles.Text.SUCCESS);
+		} else if (icon.equals(VaadinIcon.BAN)) {
+			item.addClassName(LumoStyles.Text.ERROR);
+		}
+
 		item.getPrimaryLabel().addClassName(LumoStyles.FontSize.H2);
 		item.getStyle().set(CSSProperties.MinWidth.PROPERTY, "200px");
 		item.setWidth("33%");
+
 		return item;
+	}
+
+	private H3 createH3(String text) {
+		H3 h3 = new H3(text);
+		h3.addClassName(LumoStyles.Margin.Responsive.Horizontal.ML);
+		return h3;
+	}
+
+	private Paragraph createParagraph(String text) {
+		Paragraph p = new Paragraph(text);
+		p.addClassName(LumoStyles.Margin.Responsive.Horizontal.ML);
+		return p;
 	}
 }
