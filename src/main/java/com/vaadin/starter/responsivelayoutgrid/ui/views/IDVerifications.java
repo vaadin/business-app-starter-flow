@@ -34,7 +34,7 @@ public class IDVerifications extends Div {
                 .setHeader("ID")
                 .setFrozen(true)
                 .setSortable(true)
-                .setWidth("80px")
+                .setWidth("60px")
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createUserInfo))
                 .setHeader("Name")
@@ -53,7 +53,6 @@ public class IDVerifications extends Div {
                 .setSortable(true)
                 .setWidth("160px")
                 .setFlexGrow(0);
-
         grid.setItems(getItems());
         grid.setSizeFull();
         add(grid);

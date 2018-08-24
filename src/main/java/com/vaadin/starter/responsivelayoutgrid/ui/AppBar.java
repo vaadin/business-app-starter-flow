@@ -63,11 +63,19 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
 
 	public void resetNavigationIcon() {
 		navigationIcon.setIcon(new Icon(VaadinIcon.MENU));
-		navigationIcon.removeClassName("visible");
+		navigationIcon.removeClassName(CLASS_NAME + "__navigation-icon--visible");
 	}
 
+	/**
+	 * The navigation icon is hidden by default on large viewports. Setting its visibility to true will override that
+	 * behaviour.
+	 */
 	public void setNavigationIconVisible(boolean visible) {
-		navigationIcon.addClassName("visible");
+		if (visible) {
+			navigationIcon.addClassName(CLASS_NAME + "__navigation-icon--visible");
+		} else {
+			navigationIcon.removeClassName(CLASS_NAME + "__navigation-icon--visible");
+		}
 	}
 
 	public String getTitle() {

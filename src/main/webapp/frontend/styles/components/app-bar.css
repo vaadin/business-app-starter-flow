@@ -19,12 +19,17 @@
 /* Menu button */
 .app-bar__navigation-icon {
   color: var(--lumo-primary-contrast-color);
+  margin-right: var(--lumo-space-m);
   transition: margin-right var(--transition-duration-m),
               min-width var(--transition-duration-m),
               opacity var(--transition-duration-s),
               padding var(--transition-duration-m),
               visibility var(--transition-duration-m),
               width var(--transition-duration-m);
+}
+
+.app-bar__navigation-icon--visible {
+
 }
 
 /* Title */
@@ -65,14 +70,11 @@
   .app-bar__container {
     padding: var(--lumo-space-wide-m);
   }
-
-  .app-bar__navigation-icon {
-    margin-right: var(--lumo-space-m);
-  }
 }
 
 @media (min-width: 1024px) {
-  .app-bar__navigation-icon {
+  .app-bar__navigation-icon:not(.app-bar__navigation-icon--visible) {
+    margin-right: 0;
     min-width: 0;
     opacity: 0;
     padding: 0;

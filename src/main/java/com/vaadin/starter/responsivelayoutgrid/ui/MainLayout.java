@@ -107,6 +107,8 @@ public class MainLayout extends FlexLayout
 
         } else if (navigationTarget == ICODetailsView.class) {
             appBar.setNavigationIcon(VaadinIcon.ARROW_BACKWARD);
+            appBar.setNavigationIconVisible(true);
+
             reverseNavigation = appBar.getNavigationIcon().addClickListener(e -> UI.getCurrent().navigate(""));
 
             appBar.setActionItemsVisible(true);

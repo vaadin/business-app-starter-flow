@@ -1,7 +1,5 @@
 package com.vaadin.starter.responsivelayoutgrid.backend;
 
-import com.vaadin.flow.component.html.Image;
-
 import java.time.LocalDate;
 
 public class InitialCoinOffering {
