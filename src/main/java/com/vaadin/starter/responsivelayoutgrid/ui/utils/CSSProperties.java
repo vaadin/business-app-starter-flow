@@ -21,4 +21,8 @@ public class CSSProperties {
 		public static final String RIGHT = new String("right");
 	}
 
+	public static class MinWidth {
+		public static final String PROPERTY = new String("min-width");
+	}
+
 }

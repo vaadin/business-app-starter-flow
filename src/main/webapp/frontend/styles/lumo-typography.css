@@ -1,3 +1,4 @@
+/* Colors */
 .header-text {
   color: var(--lumo-header-text-color);
 }
@@ -28,4 +29,36 @@
 
 .success-text {
   color: var(--lumo-success-text-color);
+}
+
+/* Sizes */
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  font-weight: 600;
+  line-height: var(--lumo-line-height-xs);
+}
+
+.h1 {
+  font-size: var(--lumo-font-size-xxxl);
+}
+
+.h2 {
+  font-size: var(--lumo-font-size-xxl);
+}
+
+.h3 {
+  font-size: var(--lumo-font-size-xl);
+}
+
+.h4 {
+  font-size: var(--lumo-font-size-l);
+}
+
+.h5 {
+  font-size: var(--lumo-font-size-m);
+}
+
+.h6 {
+  font-size: var(--lumo-font-size-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
 }

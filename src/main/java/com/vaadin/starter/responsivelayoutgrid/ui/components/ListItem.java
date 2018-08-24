@@ -84,4 +84,8 @@ public class ListItem extends FlexLayout {
 	public void setPrimaryText(String text) {
 		primaryLabel.setText(text);
 	}
+
+	public Label getPrimaryLabel() {
+		return this.primaryLabel;
+	}
 }

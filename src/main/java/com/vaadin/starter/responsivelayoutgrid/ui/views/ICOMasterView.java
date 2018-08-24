@@ -16,11 +16,12 @@ import com.vaadin.starter.responsivelayoutgrid.ui.components.ListItem;
 import com.vaadin.starter.responsivelayoutgrid.ui.utils.CSSProperties;
 import com.vaadin.starter.responsivelayoutgrid.ui.utils.UIUtils;
 
+import static com.vaadin.starter.responsivelayoutgrid.ui.utils.ViewStyles.GRID_VIEW;
+
 @Route(value = "", layout = MainLayout.class)
 @PageTitle("Initial Coin Offerings")
 public class ICOMasterView extends Div {
 
-    private final String GRID_VIEW = "grid-view";
     private final Grid<InitialCoinOffering> grid;
 
     private enum Tab {

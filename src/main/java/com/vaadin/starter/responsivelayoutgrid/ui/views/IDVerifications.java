@@ -20,6 +20,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.vaadin.starter.responsivelayoutgrid.ui.utils.ViewStyles.GRID_VIEW;
+
 @Route(value = "id-verifications", layout = MainLayout.class)
 @PageTitle("ID Verifications")
 public class IDVerifications extends Div {
@@ -27,7 +29,7 @@ public class IDVerifications extends Div {
     private final Grid<Person> grid;
 
     public IDVerifications() {
-        setClassName("grid-view");
+        setClassName(GRID_VIEW);
         getStyle().set(CSSProperties.Flex.PROPERTY, "1");
 
         grid = new Grid();
