@@ -55,6 +55,12 @@
             <artifactId>vaadin-core</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-context-menu-flow</artifactId>
+            <version>1.0.0.beta2</version>
+        </dependency>
+
         <!-- Added to provide logging output as Flow uses -->
         <!-- the unbound SLF4J no-operation (NOP) logger implementation -->
         <dependency>

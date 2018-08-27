@@ -1,5 +1,4 @@
 .app-bar {
-  background-color: var(--lumo-primary-color);
   box-shadow: var(--lumo-box-shadow-m);
   flex-direction: column;
   z-index: 1;
@@ -18,7 +17,7 @@
 
 /* Menu button */
 .app-bar__navigation-icon {
-  color: var(--lumo-primary-contrast-color);
+  /* color: var(--lumo-primary-contrast-color); */
   margin-right: var(--lumo-space-m);
   transition: margin-right var(--transition-duration-m),
               min-width var(--transition-duration-m),
@@ -39,7 +38,7 @@
 }
 
 .app-bar__action-items > * {
-  color: var(--lumo-primary-contrast-color);
+  /* color: var(--lumo-primary-contrast-color); */
 }
 
 .app-bar__action-items > *:not(:last-child) {
@@ -53,12 +52,12 @@
 }
 
 .app-bar__tab[selected] {
-  color: var(--lumo-primary-contrast-color);
+  /* color: var(--lumo-primary-contrast-color); */
 }
 
 .app-bar__tab[selected]::before,
 .app-bar__tab[selected]::after {
-  background-color: var(--lumo-primary-contrast-color);
+  /* background-color: var(--lumo-primary-contrast-color); */
 }
 
 

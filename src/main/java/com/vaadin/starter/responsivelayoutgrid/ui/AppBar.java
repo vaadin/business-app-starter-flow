@@ -9,8 +9,10 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
+import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.AfterNavigationEvent;
 import com.vaadin.flow.router.AfterNavigationObserver;
+import com.vaadin.flow.shared.Registration;
 
 public class AppBar extends FlexLayout implements AfterNavigationObserver {
 
@@ -19,6 +21,9 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
 	private H4 title;
 	private Tabs tabs;
 	private final FlexLayout actionItems;
+	private final FlexLayout container;
+	private TextField search;
+	private Registration searchRegistration;
 
 	public AppBar(String title) {
 		super();
@@ -41,7 +46,7 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
 		actionItems.setClassName(CLASS_NAME + "__action-items");
 		actionItems.setVisible(false);
 
-		FlexLayout container = new FlexLayout(navigationIcon, this.title, actionItems);
+		container = new FlexLayout(navigationIcon, this.title, actionItems);
 		container.setAlignItems(Alignment.BASELINE);
 		container.setClassName(CLASS_NAME + "__container");
 		add(container);
@@ -122,6 +127,31 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
 		actionItems.removeAll();
 	}
 
+	public void searchModeOn() {
+		title.setVisible(false);
+		actionItems.setVisible(false);
+		tabs.setVisible(false);
 
+		navigationIcon.setIcon(new Icon(VaadinIcon.ARROW_BACKWARD));
+		searchRegistration = navigationIcon.addClickListener(e -> searchModeOff());
+		setNavigationIconVisible(true);
+
+		search = new TextField();
+		search.setPlaceholder("Search");
+		search.focus();
+		container.add(search);
+		container.setFlexGrow(1, search);
+	}
+
+	private void searchModeOff() {
+		title.setVisible(true);
+		actionItems.setVisible(true);
+		tabs.setVisible(true);
+
+		searchRegistration.remove();
+		resetNavigationIcon();
+
+		container.remove(search);
+	}
 
 }

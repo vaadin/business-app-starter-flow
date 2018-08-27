@@ -19,7 +19,6 @@
 }
 
 .list-item__initials {
-  background-color: var(--lumo-primary-color);
   flex-shrink: 0;
   font-weight: 500;
   line-height: 1;

@@ -1,7 +1,10 @@
 package com.vaadin.starter.responsivelayoutgrid.ui;
 
+import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.HasElement;
 import com.vaadin.flow.component.UI;
+import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.contextmenu.ContextMenu;
 import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
@@ -26,6 +29,7 @@ public class MainLayout extends FlexLayout
     private final AppBar appBar;
 
     Registration reverseNavigation;
+    private ContextMenu menu;
 
     public MainLayout() {
         addClassName("root");
@@ -90,9 +94,14 @@ public class MainLayout extends FlexLayout
             appBar.addTab(new Tab("Closed"));
 
             appBar.setActionItemsVisible(true);
-            appBar.addActionItem(VaadinIcon.SEARCH);
+            appBar.addActionItem(VaadinIcon.SEARCH).addClickListener(e -> appBar.searchModeOn());
             appBar.addActionItem(VaadinIcon.FILTER);
-            appBar.addActionItem(VaadinIcon.ELLIPSIS_DOTS_V);
+            Button menuButton = appBar.addActionItem(VaadinIcon.ELLIPSIS_DOTS_V);
+
+            ContextMenu contextMenu = new ContextMenu(menuButton);
+            contextMenu.setOpenOnClick(true);
+            contextMenu.addItem("Share", e -> System.out.println("Testing..."));
+            contextMenu.addItem("Download", e -> System.out.println("Testing..."));
 
         } else if (navigationTarget == IDVerifications.class) {
             appBar.setTabsVisible(true);
@@ -101,18 +110,20 @@ public class MainLayout extends FlexLayout
             appBar.addTab(new Tab("Denied"));
 
             appBar.setActionItemsVisible(true);
-            appBar.addActionItem(VaadinIcon.SEARCH);
+            appBar.addActionItem(VaadinIcon.SEARCH).addClickListener(e -> appBar.searchModeOn());
             appBar.addActionItem(VaadinIcon.FILTER);
-            appBar.addActionItem(VaadinIcon.ELLIPSIS_DOTS_V);
+            Button menuButton = appBar.addActionItem(VaadinIcon.ELLIPSIS_DOTS_V);
+
+            ContextMenu contextMenu = new ContextMenu(menuButton);
+            contextMenu.setOpenOnClick(true);
+            contextMenu.addItem("Share", e -> System.out.println("Testing..."));
+            contextMenu.addItem("Download", e -> System.out.println("Testing..."));
 
         } else if (navigationTarget == ICODetailsView.class) {
             appBar.setNavigationIcon(VaadinIcon.ARROW_BACKWARD);
             appBar.setNavigationIconVisible(true);
 
             reverseNavigation = appBar.getNavigationIcon().addClickListener(e -> UI.getCurrent().navigate(""));
-
-            appBar.setActionItemsVisible(true);
-            appBar.addActionItem(VaadinIcon.SEARCH);
         }
     }
 }
