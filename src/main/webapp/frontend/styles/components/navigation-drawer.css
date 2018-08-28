@@ -60,6 +60,13 @@
   width: 100%;
 }
 
+/* Search */
+.navigation-drawer vaadin-text-field {
+  box-sizing: border-box;
+  padding: var(--lumo-space-m) var(--lumo-space-m) var(--lumo-space-s) var(--lumo-space-m);
+  width: 100%;
+}
+
 @media (max-width: 1023px) {
   .navigation-drawer__content {
     position: fixed;

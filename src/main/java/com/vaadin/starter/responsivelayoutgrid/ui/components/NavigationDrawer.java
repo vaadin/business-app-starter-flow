@@ -13,6 +13,7 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.AfterNavigationEvent;
 import com.vaadin.flow.router.AfterNavigationObserver;
 import com.vaadin.flow.router.HighlightConditions;
@@ -46,6 +47,8 @@ public class NavigationDrawer extends Div implements AfterNavigationObserver {
 		} else {
 			initBrandExpression();
 		}
+
+		initSearch();
 	}
 
 	private void initScrim() {
@@ -90,6 +93,12 @@ public class NavigationDrawer extends Div implements AfterNavigationObserver {
 		logo.setSrc("https://upload.wikimedia.org/wikipedia/commons/7/76/Vaadin_Logo.svg");
 
 		content.add(logo);
+	}
+
+	private void initSearch() {
+		TextField search = new TextField();
+		search.setPlaceholder("Search");
+		content.add(search);
 	}
 
 	public NavigationItem addNavigationItem(VaadinIcon icon, String text, Class<? extends Component> navigationTarget) {
