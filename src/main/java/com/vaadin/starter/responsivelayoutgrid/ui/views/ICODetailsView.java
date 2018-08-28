@@ -10,7 +10,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.starter.responsivelayoutgrid.backend.DummyData;
 import com.vaadin.starter.responsivelayoutgrid.backend.InitialCoinOffering;
-import com.vaadin.starter.responsivelayoutgrid.ui.LumoStyles;
+import com.vaadin.starter.responsivelayoutgrid.ui.utils.LumoStyles;
 import com.vaadin.starter.responsivelayoutgrid.ui.MainLayout;
 import com.vaadin.starter.responsivelayoutgrid.ui.components.ListItem;
 import com.vaadin.starter.responsivelayoutgrid.ui.utils.BoxShadowBorders;

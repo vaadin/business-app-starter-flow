@@ -1,18 +1,27 @@
-package com.vaadin.starter.responsivelayoutgrid.ui;
+package com.vaadin.starter.responsivelayoutgrid.ui.components;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.contextmenu.ContextMenu;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H4;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.orderedlayout.FlexLayout;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.AfterNavigationEvent;
 import com.vaadin.flow.router.AfterNavigationObserver;
 import com.vaadin.flow.router.HighlightConditions;
 import com.vaadin.flow.router.RouterLink;
+import com.vaadin.starter.responsivelayoutgrid.ui.utils.LumoStyles;
+import com.vaadin.starter.responsivelayoutgrid.ui.utils.UIUtils;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class NavigationDrawer extends Div implements AfterNavigationObserver {
 
@@ -57,19 +66,28 @@ public class NavigationDrawer extends Div implements AfterNavigationObserver {
 		email.setClassName(CLASS_NAME + "__email");
 		email.getElement().setAttribute(LumoStyles.THEME, LumoStyles.FontSize.S);
 
-		dropdown = new Button(new Icon(VaadinIcon.ANGLE_DOWN));
-		dropdown.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Button.ICON_SMALL);
+		dropdown = UIUtils.createSmallIconButton(VaadinIcon.ANGLE_DOWN);
 		email.add(dropdown);
+
+		ContextMenu contextMenu = new ContextMenu(dropdown);
+		contextMenu.setOpenOnClick(true);
+		contextMenu.addItem("joacim@gmail.com", e -> System.out.println("Testing..."));
+		contextMenu.addItem("tove@gmail.com", e -> System.out.println("Testing..."));
 
 		content.add(avatar, username, email);
 	}
 
-	public void addNavigationItem(VaadinIcon icon, String text, Class<? extends Component> navigationTarget) {
-		RouterLink item = new RouterLink(null, navigationTarget);
-		item.add(new Icon(icon), new Text(text));
-		item.setHighlightCondition(HighlightConditions.sameLocation());
-		item.setClassName(CLASS_NAME + "__item");
+	public NavigationItem addNavigationItem(VaadinIcon icon, String text, Class<? extends Component> navigationTarget) {
+		NavigationItem item = new NavigationItem(icon, text, navigationTarget);
 		content.add(item);
+		return item;
+	}
+
+	public NavigationItem addNavigationSubItem(NavigationItem parent, String text, Class<? extends Component> navigationTarget) {
+		NavigationItem item = new NavigationItem(text, navigationTarget);
+		parent.addSubNavigationItem(item);
+		content.add(item);
+		return item;
 	}
 
 	public void toggle() {

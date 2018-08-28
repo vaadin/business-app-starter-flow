@@ -1,6 +1,5 @@
 package com.vaadin.starter.responsivelayoutgrid.ui;
 
-import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.HasElement;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
@@ -16,9 +15,10 @@ import com.vaadin.flow.router.RouterLayout;
 import com.vaadin.flow.server.InitialPageSettings;
 import com.vaadin.flow.server.PageConfigurator;
 import com.vaadin.flow.shared.Registration;
-import com.vaadin.starter.responsivelayoutgrid.ui.views.ICODetailsView;
-import com.vaadin.starter.responsivelayoutgrid.ui.views.ICOMasterView;
-import com.vaadin.starter.responsivelayoutgrid.ui.views.IDVerifications;
+import com.vaadin.starter.responsivelayoutgrid.ui.components.AppBar;
+import com.vaadin.starter.responsivelayoutgrid.ui.components.NavigationDrawer;
+import com.vaadin.starter.responsivelayoutgrid.ui.components.NavigationItem;
+import com.vaadin.starter.responsivelayoutgrid.ui.views.*;
 
 @HtmlImport("frontend://styles/shared-styles.html")
 @Viewport("width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes")
@@ -42,6 +42,20 @@ public class MainLayout extends FlexLayout
         navigationDrawer.addNavigationItem(VaadinIcon.GRID, "Initial Coin Offerings", ICOMasterView.class);
         navigationDrawer.addNavigationItem(VaadinIcon.USER_CHECK, "ID Verifications", IDVerifications.class);
 
+        // Sub-views
+        NavigationItem dashboard = navigationDrawer.addNavigationItem(VaadinIcon.DASHBOARD, "Dashboard", Dashboard.class);
+        NavigationItem v1 = navigationDrawer.addNavigationSubItem(dashboard, "First level", View1.class);
+
+        NavigationItem v2 = navigationDrawer.addNavigationSubItem(v1, "Second level", View2.class);
+        navigationDrawer.addNavigationSubItem(v2, "Third level", View3.class);
+        navigationDrawer.addNavigationSubItem(v2, "Third level", View4.class);
+        navigationDrawer.addNavigationSubItem(v2, "Third level", View5.class);
+
+        NavigationItem v3 = navigationDrawer.addNavigationSubItem(v1, "Second level", View6.class);
+        navigationDrawer.addNavigationSubItem(v3, "Third level", View7.class);
+        navigationDrawer.addNavigationSubItem(v3, "Third level", View8.class);
+        navigationDrawer.addNavigationSubItem(v3, "Third level", View9.class);
+
         // Content
         content = new FlexLayout();
         content.addClassName("content");
@@ -50,7 +64,7 @@ public class MainLayout extends FlexLayout
 
         // Header
         appBar = new AppBar("App Bar");
-        appBar.getNavigationIcon().addClickListener(appBarEvent -> navigationDrawer.toggle());
+        appBar.getMenuNavigationIcon().addClickListener(appBarEvent -> navigationDrawer.toggle());
         content.add(appBar);
 
     }
@@ -69,11 +83,7 @@ public class MainLayout extends FlexLayout
 
     @Override
     public void beforeEnter(BeforeEnterEvent beforeEnterEvent) {
-        // TODO: Who is responsible for configuring the AppBar based on the selected view?
-
         Class<?> navigationTarget = beforeEnterEvent.getNavigationTarget();
-
-        appBar.resetNavigationIcon();
 
         // TODO: Certain views sport a back button instead of a menu button. We remove the registration by default when a navigation change happens.
         if (reverseNavigation != null) {
@@ -81,49 +91,44 @@ public class MainLayout extends FlexLayout
             reverseNavigation = null;
         }
 
+        appBar.setNavigationMode(AppBar.NavigationMode.MENU);
+
         appBar.removeAllTabs();
         appBar.setTabsVisible(false);
 
         appBar.removeAllActionItems();
         appBar.setActionItemsVisible(false);
 
-        if (navigationTarget == ICOMasterView.class) {
-            appBar.setTabsVisible(true);
-            appBar.addTab(new Tab("Ongoing"));
-            appBar.addTab(new Tab("Upcoming"));
-            appBar.addTab(new Tab("Closed"));
-
-            appBar.setActionItemsVisible(true);
-            appBar.addActionItem(VaadinIcon.SEARCH).addClickListener(e -> appBar.searchModeOn());
-            appBar.addActionItem(VaadinIcon.FILTER);
-            Button menuButton = appBar.addActionItem(VaadinIcon.ELLIPSIS_DOTS_V);
-
-            ContextMenu contextMenu = new ContextMenu(menuButton);
-            contextMenu.setOpenOnClick(true);
-            contextMenu.addItem("Share", e -> System.out.println("Testing..."));
-            contextMenu.addItem("Download", e -> System.out.println("Testing..."));
-
-        } else if (navigationTarget == IDVerifications.class) {
-            appBar.setTabsVisible(true);
-            appBar.addTab(new Tab("Pending"));
-            appBar.addTab(new Tab("Approved"));
-            appBar.addTab(new Tab("Denied"));
-
-            appBar.setActionItemsVisible(true);
-            appBar.addActionItem(VaadinIcon.SEARCH).addClickListener(e -> appBar.searchModeOn());
-            appBar.addActionItem(VaadinIcon.FILTER);
-            Button menuButton = appBar.addActionItem(VaadinIcon.ELLIPSIS_DOTS_V);
-
-            ContextMenu contextMenu = new ContextMenu(menuButton);
-            contextMenu.setOpenOnClick(true);
-            contextMenu.addItem("Share", e -> System.out.println("Testing..."));
-            contextMenu.addItem("Download", e -> System.out.println("Testing..."));
+        // TODO: Who is responsible for configuring the AppBar based on the selected view?
+        if (navigationTarget == ICOMasterView.class || navigationTarget == IDVerifications.class) {
+            createTabs();
+            createActionItems();
 
         } else if (navigationTarget == ICODetailsView.class) {
-            appBar.setNavigationIcon(VaadinIcon.ARROW_BACKWARD);
-            appBar.setNavigationIconVisible(true);
+            appBar.setNavigationMode(AppBar.NavigationMode.CONTEXTUAL);
+            appBar.setContextualNavigationIcon(VaadinIcon.ARROW_BACKWARD);
+            reverseNavigation = appBar.getContextualNavigationIcon().addClickListener(e -> UI.getCurrent().navigate(""));
+        }
+    }
 
-            reverseNavigation = appBar.getNavigationIcon().addClickListener(e -> UI.getCurrent().navigate(""));
+    private void createActionItems() {
+        appBar.setActionItemsVisible(true);
+        appBar.addActionItem(VaadinIcon.SEARCH).addClickListener(e -> appBar.searchModeOn());
+        appBar.addActionItem(VaadinIcon.FILTER);
+        createContextMenu(appBar.addActionItem(VaadinIcon.ELLIPSIS_DOTS_V));
+    }
+
+    private void createContextMenu(Button button) {
+        ContextMenu contextMenu = new ContextMenu(button);
+        contextMenu.setOpenOnClick(true);
+        contextMenu.addItem("Share", e -> System.out.println("Testing..."));
+        contextMenu.addItem("Download", e -> System.out.println("Testing..."));
+    }
+
+    private void createTabs() {
+        appBar.setTabsVisible(true);
+        for (String tab : new String[]{"Ongoing", "Upcoming", "Closed"}) {
+            appBar.addTab(new Tab(tab));
         }
     }
 }

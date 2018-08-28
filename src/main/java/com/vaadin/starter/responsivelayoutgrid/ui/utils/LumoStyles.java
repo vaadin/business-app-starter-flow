@@ -1,4 +1,4 @@
-package com.vaadin.starter.responsivelayoutgrid.ui;
+package com.vaadin.starter.responsivelayoutgrid.ui.utils;
 
 public class LumoStyles {
 

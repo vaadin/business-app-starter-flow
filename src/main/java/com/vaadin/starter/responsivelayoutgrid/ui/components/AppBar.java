@@ -1,8 +1,8 @@
-package com.vaadin.starter.responsivelayoutgrid.ui;
+package com.vaadin.starter.responsivelayoutgrid.ui.components;
 
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H4;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -13,11 +13,14 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.AfterNavigationEvent;
 import com.vaadin.flow.router.AfterNavigationObserver;
 import com.vaadin.flow.shared.Registration;
+import com.vaadin.starter.responsivelayoutgrid.ui.utils.LumoStyles;
+import com.vaadin.starter.responsivelayoutgrid.ui.utils.UIUtils;
 
 public class AppBar extends FlexLayout implements AfterNavigationObserver {
 
 	private final String CLASS_NAME = "app-bar";
-	private Button navigationIcon;
+	private Button menuNavigationIcon;
+	private Button contextualNavigationIcon;
 	private H4 title;
 	private Tabs tabs;
 	private final FlexLayout actionItems;
@@ -25,30 +28,38 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
 	private TextField search;
 	private Registration searchRegistration;
 
+	public enum NavigationMode {
+		MENU, CONTEXTUAL
+	}
+
 	public AppBar(String title) {
 		super();
 		setClassName(CLASS_NAME);
 		getElement().setAttribute(LumoStyles.THEME, LumoStyles.DARK);
 
-		// Two rows:
-		// 1) navigation icon, title and action items
-		// 2) tabs
+		menuNavigationIcon = UIUtils.createSmallIconButton(VaadinIcon.MENU);
+		menuNavigationIcon.setClassName(CLASS_NAME + "__navigation-icon");
 
-		// Row 1
-		navigationIcon = new Button(new Icon(VaadinIcon.MENU));
-		navigationIcon.setClassName(CLASS_NAME + "__navigation-icon");
-		navigationIcon.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Button.ICON_SMALL);
+		contextualNavigationIcon = UIUtils.createSmallIconButton(VaadinIcon.ARROW_BACKWARD);
+		contextualNavigationIcon.setClassName(CLASS_NAME + "__navigation-icon");
+		contextualNavigationIcon.addClassName(CLASS_NAME + "__navigation-icon--visible");
+		contextualNavigationIcon.setVisible(false);
 
 		this.title = new H4(title);
 		this.title.setClassName(CLASS_NAME + "__title");
+
+		search = new TextField();
+		search.setPlaceholder("Search");
+		search.setVisible(false);
 
 		actionItems = new FlexLayout();
 		actionItems.setClassName(CLASS_NAME + "__action-items");
 		actionItems.setVisible(false);
 
-		container = new FlexLayout(navigationIcon, this.title, actionItems);
+		container = new FlexLayout(menuNavigationIcon, contextualNavigationIcon, this.title, search, actionItems);
 		container.setAlignItems(Alignment.BASELINE);
 		container.setClassName(CLASS_NAME + "__container");
+		container.setFlexGrow(1, search);
 		add(container);
 
 		// Row 2
@@ -58,29 +69,26 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
 		add(tabs);
 	}
 
-	public Button getNavigationIcon() {
-		return navigationIcon;
-	}
-
-	public void setNavigationIcon(VaadinIcon icon) {
-		navigationIcon.setIcon(new Icon(icon));
-	}
-
-	public void resetNavigationIcon() {
-		navigationIcon.setIcon(new Icon(VaadinIcon.MENU));
-		navigationIcon.removeClassName(CLASS_NAME + "__navigation-icon--visible");
-	}
-
-	/**
-	 * The navigation icon is hidden by default on large viewports. Setting its visibility to true will override that
-	 * behaviour.
-	 */
-	public void setNavigationIconVisible(boolean visible) {
-		if (visible) {
-			navigationIcon.addClassName(CLASS_NAME + "__navigation-icon--visible");
+	public void setNavigationMode(NavigationMode mode) {
+		if (mode.equals(NavigationMode.MENU)) {
+			menuNavigationIcon.setVisible(true);
+			contextualNavigationIcon.setVisible(false);
 		} else {
-			navigationIcon.removeClassName(CLASS_NAME + "__navigation-icon--visible");
+			menuNavigationIcon.setVisible(false);
+			contextualNavigationIcon.setVisible(true);
 		}
+	}
+
+	public Button getMenuNavigationIcon() {
+		return menuNavigationIcon;
+	}
+
+	public Button getContextualNavigationIcon() {
+		return contextualNavigationIcon;
+	}
+
+	public void setContextualNavigationIcon(VaadinIcon icon) {
+		contextualNavigationIcon.setIcon(new Icon(icon));
 	}
 
 	public String getTitle() {
@@ -111,11 +119,8 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
 	}
 
 	public Button addActionItem(VaadinIcon icon) {
-		Button button = new Button(new Icon(icon));
-		button.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Button.ICON_SMALL);
-
+		Button button = UIUtils.createSmallIconButton(icon);
 		actionItems.add(button);
-
 		return button;
 	}
 
@@ -128,30 +133,32 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
 	}
 
 	public void searchModeOn() {
+		menuNavigationIcon.setVisible(false);
 		title.setVisible(false);
 		actionItems.setVisible(false);
 		tabs.setVisible(false);
 
-		navigationIcon.setIcon(new Icon(VaadinIcon.ARROW_BACKWARD));
-		searchRegistration = navigationIcon.addClickListener(e -> searchModeOff());
-		setNavigationIconVisible(true);
+		contextualNavigationIcon.setIcon(new Icon(VaadinIcon.ARROW_BACKWARD));
+		contextualNavigationIcon.setVisible(true);
+		searchRegistration = contextualNavigationIcon.addClickListener(e -> searchModeOff());
 
-		search = new TextField();
-		search.setPlaceholder("Search");
+		search.setVisible(true);
 		search.focus();
-		container.add(search);
-		container.setFlexGrow(1, search);
+
+		container.setAlignItems(Alignment.CENTER);
 	}
 
 	private void searchModeOff() {
+		menuNavigationIcon.setVisible(true);
 		title.setVisible(true);
 		actionItems.setVisible(true);
 		tabs.setVisible(true);
 
+		contextualNavigationIcon.setVisible(false);
 		searchRegistration.remove();
-		resetNavigationIcon();
 
-		container.remove(search);
+		search.setVisible(false);
+
+		container.setAlignItems(Alignment.BASELINE);
 	}
-
 }

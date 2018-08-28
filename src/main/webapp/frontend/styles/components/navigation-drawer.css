@@ -3,13 +3,15 @@
 }
 
 .navigation-drawer__scrim {
-  background: var(--lumo-shade-50pct);
+  animation: 0.2s lumo-overlay-backdrop-enter both;
+  background: var(--lumo-shade-20pct);
   height: 100%;
   opacity: 0;
   pointer-events: none;
   position: absolute;
   transition: opacity var(--transition-duration-m);
   width: 100%;
+  will-change: opacity;
 }
 
 /* Content */
@@ -48,50 +50,6 @@
 
 .navigation-drawer__email vaadin-button {
   margin: 0;
-}
-
-/* Items */
-.navigation-drawer__item {
-  align-items: center;
-  display: flex;
-  font-size: var(--lumo-font-size-s);
-  font-weight: 600;
-  height: var(--lumo-size-l);
-  padding: 0 var(--lumo-space-m);
-}
-
-/* Margins on first and last item */
-.navigation-drawer__item:first-of-type {
-  margin-top: var(--lumo-space-s);
-}
-
-.navigation-drawer__item:last-of-type {
-  margin-bottom: var(--lumo-space-s);
-}
-
-/* Highlight */
-.navigation-drawer__item:not([highlight]) {
-  color: var(--lumo-body-text-color);
-}
-
-.navigation-drawer__item:not([highlight]) iron-icon {
-  color: var(--lumo-secondary-text-color);
-}
-
-/* Hover */
-.navigation-drawer__item:hover {
-  background-color: var(--lumo-contrast-5pct);
-  text-decoration: none;
-}
-
-/* Active */
-.navigation-drawer__item:active {
-  background-color: var(--lumo-contrast-10pct);
-}
-
-/* Item icon */
-.navigation-drawer__item iron-icon {
-  margin-right: var(--lumo-space-l);
 }
 
 @media (max-width: 1023px) {
