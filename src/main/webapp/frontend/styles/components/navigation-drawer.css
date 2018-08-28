@@ -10,7 +10,6 @@
   opacity: 0;
   pointer-events: none;
   position: absolute;
-  transition: opacity var(--transition-duration-m);
   width: 100%;
   will-change: opacity;
 }
@@ -24,7 +23,7 @@
   flex-direction: column;
   height: 100%;
   position: relative;
-  transition: box-shadow var(--transition-duration-m), margin var(--transition-duration-m);
+  transition: margin var(--transition-duration-m);
   width: var(--navigation-drawer-width);
 }
 
@@ -86,7 +85,7 @@
   min-width: 0;
 }
 
-/* Testing purposes */
+/* Rail navigation */
 .navigation-drawer--rail:not(.navigation-drawer--open) .navigation-item__link iron-icon {
   margin: 0;
 }
