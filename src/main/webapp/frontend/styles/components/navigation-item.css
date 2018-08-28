@@ -3,15 +3,6 @@
   display: flex;
 }
 
-/* Margins on first and last item */
-.navigation-item:first-of-type {
-  margin-top: var(--lumo-space-s);
-}
-
-.navigation-item:last-of-type {
-  margin-bottom: var(--lumo-space-s);
-}
-
 /* Hover */
 .navigation-item:hover {
   background-color: var(--lumo-contrast-5pct);
@@ -53,26 +44,26 @@
 }
 
 /* Link label */
-.navigation-item label {
+.navigation-item__link label {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.navigation-item-l1 label {
+.navigation-item[level="1"] label {
   margin-left: var(--lumo-space-m);
 }
 
-.navigation-item-l2 label {
+.navigation-item[level="2"] label {
   margin-left: var(--lumo-space-l);
 }
 
-.navigation-item-l3 label {
+.navigation-item[level="3"] label {
   margin-left: var(--lumo-space-xl);
 }
 
 /* Expand/collapse button */
 .navigation-item > vaadin-button {
   margin-left: auto;
-  margin-right: var(--lumo-space-m);
+  margin-right: var(--lumo-space-s);
 }

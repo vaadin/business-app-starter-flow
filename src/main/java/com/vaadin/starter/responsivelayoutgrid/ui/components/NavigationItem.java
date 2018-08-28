@@ -36,7 +36,7 @@ public class NavigationItem extends Div {
 		link.setClassName(CLASS_NAME + "__link");
 		add(link);
 
-		expandCollapse = UIUtils.createSmallIconButton(down);
+		expandCollapse = UIUtils.createSmallTertiaryIconButton(down);
 		expandCollapse.setVisible(false);
 		expandCollapse.addClickListener(event -> {
 			expandCollapse.setIcon(expandCollapse.getIcon().equals(up) ? down : up);
@@ -45,6 +45,7 @@ public class NavigationItem extends Div {
 		add(expandCollapse);
 
 		subItems = new ArrayList<>();
+		setLevel(0);
 	}
 
 	public NavigationItem(String text, Class<? extends Component> navigationTarget) {
@@ -61,7 +62,9 @@ public class NavigationItem extends Div {
 
 	public void setLevel(int level) {
 		this.level = level;
-		addClassName(CLASS_NAME + "-l" + Integer.toString(level));
+		if (level > 0) {
+			getElement().setAttribute("level", Integer.toString(level));
+		}
 	}
 
 	public int getLevel() {

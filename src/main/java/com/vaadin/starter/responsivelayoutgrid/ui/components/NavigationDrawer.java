@@ -1,7 +1,6 @@
 package com.vaadin.starter.responsivelayoutgrid.ui.components;
 
 import com.vaadin.flow.component.Component;
-import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.contextmenu.ContextMenu;
 import com.vaadin.flow.component.html.Div;
@@ -10,58 +9,80 @@ import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.flow.component.orderedlayout.FlexLayout;
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.AfterNavigationEvent;
 import com.vaadin.flow.router.AfterNavigationObserver;
-import com.vaadin.flow.router.HighlightConditions;
-import com.vaadin.flow.router.RouterLink;
-import com.vaadin.starter.responsivelayoutgrid.ui.utils.BoxShadowBorders;
 import com.vaadin.starter.responsivelayoutgrid.ui.utils.LumoStyles;
 import com.vaadin.starter.responsivelayoutgrid.ui.utils.UIUtils;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 
 public class NavigationDrawer extends Div implements AfterNavigationObserver {
 
 	private final String CLASS_NAME = "navigation-drawer";
 	private final String OPEN = CLASS_NAME + "--open";
+	private final String RAIL = CLASS_NAME + "--rail";
+	private Div scrim;
 	private Div content;
+	private Div scrollArea;
+
 	private Image avatar;
 	private H4 username;
 	private Label email;
 	private Button dropdown;
-	private Div scrim;
+
+	private Div list;
 
 	public NavigationDrawer() {
 		setClassName(CLASS_NAME);
-		initScrim();
-		initContent();
+		init();
+	}
 
-		boolean accountSwitcher = true;
-		if (accountSwitcher) {
+	private void init() {
+		// Backdrop on small viewports.
+		scrim = new Div();
+		scrim.setClassName(CLASS_NAME + "__scrim");
+		scrim.addClickListener(event -> close());
+		add(scrim);
+
+		// Main content.
+		content = new Div();
+		content.setClassName(CLASS_NAME + "__content");
+		add(content);
+
+		// Scrollable area.
+		scrollArea = new Div();
+		scrollArea.setClassName(CLASS_NAME + "__scroll-area");
+		content.add(scrollArea);
+
+		// Header: account switcher or brand logo.
+		if (true) {
 			initAccountSwitcher();
 		} else {
 			initBrandExpression();
 		}
 
-		initSearch();
-	}
+		// Search field.
+		TextField search = new TextField();
+		search.setPlaceholder("Search");
+		scrollArea.add(search);
 
-	private void initScrim() {
-		scrim = new Div();
-		scrim.setClassName(CLASS_NAME + "__scrim");
-		add(scrim);
-		scrim.addClickListener(event -> close());
-	}
+		// Wrapper for navigation items.
+		list = new Div();
+		list.setClassName(CLASS_NAME + "__list");
+		scrollArea.add(list);
 
-	private void initContent() {
-		content = new Div();
-		content.setClassName(CLASS_NAME + "__content");
-		add(content);
+		// "Footer", currently only a collapse/expand button.
+		Button railButton = UIUtils.createSmallButton(VaadinIcon.CARET_LEFT, "Collapse");
+		railButton.setClassName(CLASS_NAME + "__footer");
+		railButton.addClickListener(event -> {
+			if (getClassName().contains(RAIL)) {
+				removeClassName(RAIL);
+				railButton.setIcon(new Icon(VaadinIcon.CARET_LEFT));
+			} else {
+				addClassName(RAIL);
+				railButton.setIcon(new Icon(VaadinIcon.CARET_RIGHT));
+			}
+		});
+		content.add(railButton);
 	}
 
 	private void initAccountSwitcher() {
@@ -76,7 +97,7 @@ public class NavigationDrawer extends Div implements AfterNavigationObserver {
 		email.setClassName(CLASS_NAME + "__email");
 		email.getElement().setAttribute(LumoStyles.THEME, LumoStyles.FontSize.S);
 
-		dropdown = UIUtils.createSmallIconButton(VaadinIcon.ANGLE_DOWN);
+		dropdown = UIUtils.createSmallTertiaryIconButton(VaadinIcon.ANGLE_DOWN);
 		email.add(dropdown);
 
 		ContextMenu contextMenu = new ContextMenu(dropdown);
@@ -84,7 +105,7 @@ public class NavigationDrawer extends Div implements AfterNavigationObserver {
 		contextMenu.addItem("joacim@gmail.com", e -> System.out.println("Testing..."));
 		contextMenu.addItem("tove@gmail.com", e -> System.out.println("Testing..."));
 
-		content.add(avatar, username, email);
+		scrollArea.add(avatar, username, email);
 	}
 
 	private void initBrandExpression() {
@@ -92,25 +113,19 @@ public class NavigationDrawer extends Div implements AfterNavigationObserver {
 		logo.setClassName(CLASS_NAME + "__logo");
 		logo.setSrc("https://upload.wikimedia.org/wikipedia/commons/7/76/Vaadin_Logo.svg");
 
-		content.add(logo);
-	}
-
-	private void initSearch() {
-		TextField search = new TextField();
-		search.setPlaceholder("Search");
-		content.add(search);
+		scrollArea.add(logo);
 	}
 
 	public NavigationItem addNavigationItem(VaadinIcon icon, String text, Class<? extends Component> navigationTarget) {
 		NavigationItem item = new NavigationItem(icon, text, navigationTarget);
-		content.add(item);
+		list.add(item);
 		return item;
 	}
 
 	public NavigationItem addNavigationSubItem(NavigationItem parent, String text, Class<? extends Component> navigationTarget) {
 		NavigationItem item = new NavigationItem(text, navigationTarget);
 		parent.addSubNavigationItem(item);
-		content.add(item);
+		list.add(item);
 		return item;
 	}
 
@@ -126,7 +141,7 @@ public class NavigationDrawer extends Div implements AfterNavigationObserver {
 		addClassName(OPEN);
 	}
 
-	public void close() {
+	private void close() {
 		removeClassName(OPEN);
 	}
 

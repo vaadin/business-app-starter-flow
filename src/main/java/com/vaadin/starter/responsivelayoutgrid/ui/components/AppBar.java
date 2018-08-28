@@ -2,7 +2,6 @@ package com.vaadin.starter.responsivelayoutgrid.ui.components;
 
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H4;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -37,10 +36,10 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
 		setClassName(CLASS_NAME);
 		getElement().setAttribute(LumoStyles.THEME, LumoStyles.DARK);
 
-		menuNavigationIcon = UIUtils.createSmallIconButton(VaadinIcon.MENU);
+		menuNavigationIcon = UIUtils.createSmallTertiaryIconButton(VaadinIcon.MENU);
 		menuNavigationIcon.setClassName(CLASS_NAME + "__navigation-icon");
 
-		contextualNavigationIcon = UIUtils.createSmallIconButton(VaadinIcon.ARROW_BACKWARD);
+		contextualNavigationIcon = UIUtils.createSmallTertiaryIconButton(VaadinIcon.ARROW_BACKWARD);
 		contextualNavigationIcon.setClassName(CLASS_NAME + "__navigation-icon");
 		contextualNavigationIcon.addClassName(CLASS_NAME + "__navigation-icon--visible");
 		contextualNavigationIcon.setVisible(false);
@@ -119,7 +118,7 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
 	}
 
 	public Button addActionItem(VaadinIcon icon) {
-		Button button = UIUtils.createSmallIconButton(icon);
+		Button button = UIUtils.createSmallTertiaryIconButton(icon);
 		actionItems.add(button);
 		return button;
 	}
