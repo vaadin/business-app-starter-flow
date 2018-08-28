@@ -17,6 +17,7 @@ import com.vaadin.flow.router.AfterNavigationEvent;
 import com.vaadin.flow.router.AfterNavigationObserver;
 import com.vaadin.flow.router.HighlightConditions;
 import com.vaadin.flow.router.RouterLink;
+import com.vaadin.starter.responsivelayoutgrid.ui.utils.BoxShadowBorders;
 import com.vaadin.starter.responsivelayoutgrid.ui.utils.LumoStyles;
 import com.vaadin.starter.responsivelayoutgrid.ui.utils.UIUtils;
 
@@ -38,7 +39,13 @@ public class NavigationDrawer extends Div implements AfterNavigationObserver {
 		setClassName(CLASS_NAME);
 		initScrim();
 		initContent();
-		initAccountSwitcher();
+
+		boolean accountSwitcher = true;
+		if (accountSwitcher) {
+			initAccountSwitcher();
+		} else {
+			initBrandExpression();
+		}
 	}
 
 	private void initScrim() {
@@ -75,6 +82,14 @@ public class NavigationDrawer extends Div implements AfterNavigationObserver {
 		contextMenu.addItem("tove@gmail.com", e -> System.out.println("Testing..."));
 
 		content.add(avatar, username, email);
+	}
+
+	private void initBrandExpression() {
+		Image logo = new Image();
+		logo.setClassName(CLASS_NAME + "__logo");
+		logo.setSrc("https://upload.wikimedia.org/wikipedia/commons/7/76/Vaadin_Logo.svg");
+
+		content.add(logo);
 	}
 
 	public NavigationItem addNavigationItem(VaadinIcon icon, String text, Class<? extends Component> navigationTarget) {

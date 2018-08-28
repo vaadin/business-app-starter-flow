@@ -40,6 +40,13 @@ public class LumoStyles {
 		public static final String XS = "font-size-xs";
 	}
 
+	public class Shadow {
+		public static final String S = "shadow-s";
+		public static final String M = "shadow-m";
+		public static final String L = "shadow-l";
+		public static final String XL = "shadow-xl";
+	}
+
 	public class Padding {
 		public class All {
 			public static final String XS = "padding-a-xs";
