@@ -1,9 +1,11 @@
 package com.vaadin.starter.responsivelayoutgrid.ui.components;
 
+import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.shared.Registration;
 
 public class NavigationTabItem extends NavigationItem {
 
@@ -25,5 +27,10 @@ public class NavigationTabItem extends NavigationItem {
 
 	public NavigationTabItem(String text) {
 		this(null, text);
+	}
+
+	@Override
+	public Registration addClickListener(ComponentEventListener listener) {
+		return link.addClickListener(listener);
 	}
 }

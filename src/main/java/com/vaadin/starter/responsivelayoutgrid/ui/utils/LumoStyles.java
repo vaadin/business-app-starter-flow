@@ -91,6 +91,7 @@ public class LumoStyles {
 			public class Horizontal {
 				public static final String ML = "padding-r-h-ml";
 			}
+
 			public class Vertical {
 				public static final String VL = "padding-r-v-ml";
 			}
@@ -162,6 +163,7 @@ public class LumoStyles {
 			public class Horizontal {
 				public static final String ML = "margin-r-h-ml";
 			}
+
 			public class Vertical {
 				public static final String ML = "margin-r-v-ml";
 			}

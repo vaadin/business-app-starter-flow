@@ -18,14 +18,20 @@ import com.vaadin.starter.responsivelayoutgrid.ui.utils.UIUtils;
 public class AppBar extends FlexLayout implements AfterNavigationObserver {
 
 	private final String CLASS_NAME = "app-bar";
+
+	private FlexLayout container;
+
 	private Button menuNavigationIcon;
 	private Button contextualNavigationIcon;
+
 	private H4 title;
+	private FlexLayout actionItems;
+
 	private Tabs tabs;
-	private final FlexLayout actionItems;
-	private final FlexLayout container;
-	private TextField search;
+
 	private Registration searchRegistration;
+	private TextField search;
+
 
 	public enum NavigationMode {
 		MENU, CONTEXTUAL
@@ -55,6 +61,12 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
 		actionItems.setClassName(CLASS_NAME + "__action-items");
 		actionItems.setVisible(false);
 
+		/*
+		avatar = new Image();
+		avatar.setClassName(CLASS_NAME + "__avatar");
+		avatar.setSrc("https://pbs.twimg.com/profile_images/1009479665705074688/0oLHVbs8_400x400.jpg");
+		*/
+
 		container = new FlexLayout(menuNavigationIcon, contextualNavigationIcon, this.title, search, actionItems);
 		container.setAlignItems(Alignment.BASELINE);
 		container.setClassName(CLASS_NAME + "__container");
@@ -65,6 +77,7 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
 		tabs = new Tabs();
 		tabs.setVisible(false);
 		tabs.setClassName(CLASS_NAME + "__tabs");
+		tabs.getElement().setAttribute("overflow", "end");
 		add(tabs);
 	}
 
@@ -104,9 +117,24 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
 		setTitle(UI.getCurrent().getInternals().getTitle());
 	}
 
-	public void addTab(Tab tab) {
+	private Tab addTab(Tab tab) {
 		tab.setClassName(CLASS_NAME + "__tab");
 		tabs.add(tab);
+		return tab;
+	}
+
+	public Tab addTab(String text) {
+		return addTab(new Tab(text));
+	}
+
+	public Tab addClosableTab(String text) {
+		Tab tab = addTab(new Tab(text));
+
+		Button close = UIUtils.createSmallTertiaryIconButton(VaadinIcon.CLOSE);
+		close.addClickListener(event -> tabs.remove(tab));
+		tab.add(close);
+
+		return tab;
 	}
 
 	public void setTabsVisible(boolean visible) {
@@ -124,7 +152,7 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
 	}
 
 	public void setActionItemsVisible(boolean visible) {
-		actionItems.setVisible(true);
+		actionItems.setVisible(visible);
 	}
 
 	public void removeAllActionItems() {

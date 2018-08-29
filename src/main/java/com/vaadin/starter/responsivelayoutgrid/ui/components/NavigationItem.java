@@ -4,7 +4,6 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.flow.router.RouterLink;
 import com.vaadin.starter.responsivelayoutgrid.ui.utils.UIUtils;
 
 import java.util.ArrayList;
@@ -16,7 +15,6 @@ public class NavigationItem extends Div {
 
 	private String text;
 
-	private RouterLink link;
 	private Button expandCollapse;
 
 	private boolean subItemsVisible;
@@ -66,6 +64,10 @@ public class NavigationItem extends Div {
 
 	public int getLevel() {
 		return level;
+	}
+
+	public String getText() {
+		return text;
 	}
 
 	@Override
