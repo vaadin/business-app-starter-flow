@@ -18,6 +18,7 @@ import com.vaadin.flow.shared.Registration;
 import com.vaadin.starter.responsivelayoutgrid.ui.components.AppBar;
 import com.vaadin.starter.responsivelayoutgrid.ui.components.NavigationDrawer;
 import com.vaadin.starter.responsivelayoutgrid.ui.components.NavigationItem;
+import com.vaadin.starter.responsivelayoutgrid.ui.utils.UIUtils;
 import com.vaadin.starter.responsivelayoutgrid.ui.views.*;
 
 @HtmlImport("frontend://styles/shared-styles.html")
@@ -38,24 +39,6 @@ public class MainLayout extends FlexLayout
         NavigationDrawer navigationDrawer = new NavigationDrawer();
         add(navigationDrawer);
 
-        // Views
-        navigationDrawer.addNavigationItem(VaadinIcon.GRID, "Initial Coin Offerings", ICOMasterView.class);
-        navigationDrawer.addNavigationItem(VaadinIcon.USER_CHECK, "ID Verifications", IDVerifications.class);
-
-        // Sub-views
-        NavigationItem dashboard = navigationDrawer.addNavigationItem(VaadinIcon.DASHBOARD, "Dashboard", Dashboard.class);
-        NavigationItem v1 = navigationDrawer.addNavigationSubItem(dashboard, "First level", View1.class);
-
-        NavigationItem v2 = navigationDrawer.addNavigationSubItem(v1, "Second level", View2.class);
-        navigationDrawer.addNavigationSubItem(v2, "Third level", View3.class);
-        navigationDrawer.addNavigationSubItem(v2, "Third level", View4.class);
-        navigationDrawer.addNavigationSubItem(v2, "Third level", View5.class);
-
-        NavigationItem v3 = navigationDrawer.addNavigationSubItem(v1, "Second level", View6.class);
-        navigationDrawer.addNavigationSubItem(v3, "Third level", View7.class);
-        navigationDrawer.addNavigationSubItem(v3, "Third level", View8.class);
-        navigationDrawer.addNavigationSubItem(v3, "Third level", View9.class);
-
         // Content
         content = new FlexLayout();
         content.addClassName("content");
@@ -66,6 +49,23 @@ public class MainLayout extends FlexLayout
         appBar = new AppBar("App Bar");
         appBar.getMenuNavigationIcon().addClickListener(appBarEvent -> navigationDrawer.toggle());
         content.add(appBar);
+
+        // Views
+        navigationDrawer.addNavigationItem(VaadinIcon.GRID, "Initial Coin Offerings", ICOMasterView.class);
+        navigationDrawer.addNavigationItem(VaadinIcon.USER_CHECK, "ID Verifications", IDVerifications.class);
+        NavigationItem dashboard = navigationDrawer.addNavigationItem(VaadinIcon.DASHBOARD, "Dashboard", Dashboard.class);
+
+        // Sub-views
+        NavigationItem charts = navigationDrawer.addNavigationItem(dashboard, "Charts");
+
+        NavigationItem pieCharts = navigationDrawer.addNavigationItem(charts, "Pie Charts");
+        navigationDrawer.addNavigationItem(pieCharts, "Doughnut");
+        navigationDrawer.addNavigationItem(pieCharts, "Spie");
+
+        NavigationItem flowchart = navigationDrawer.addNavigationItem(charts, "Flowchart");
+        navigationDrawer.addNavigationItem(flowchart, "Document");
+        navigationDrawer.addNavigationItem(flowchart, "Data");
+        navigationDrawer.addNavigationItem(flowchart, "System");
 
     }
 
@@ -91,13 +91,7 @@ public class MainLayout extends FlexLayout
             reverseNavigation = null;
         }
 
-        appBar.setNavigationMode(AppBar.NavigationMode.MENU);
-
-        appBar.removeAllTabs();
-        appBar.setTabsVisible(false);
-
-        appBar.removeAllActionItems();
-        appBar.setActionItemsVisible(false);
+        appBar.reset();
 
         // TODO: Who is responsible for configuring the AppBar based on the selected view?
         if (navigationTarget == ICOMasterView.class || navigationTarget == IDVerifications.class) {
@@ -108,6 +102,9 @@ public class MainLayout extends FlexLayout
             appBar.setNavigationMode(AppBar.NavigationMode.CONTEXTUAL);
             appBar.setContextualNavigationIcon(VaadinIcon.ARROW_BACKWARD);
             reverseNavigation = appBar.getContextualNavigationIcon().addClickListener(e -> UI.getCurrent().navigate(""));
+
+        } else if (navigationTarget == Dashboard.class) {
+            appBar.setTabsVisible(true);
         }
     }
 

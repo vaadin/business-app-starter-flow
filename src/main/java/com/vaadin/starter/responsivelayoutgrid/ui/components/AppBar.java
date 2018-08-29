@@ -160,4 +160,14 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
 
 		container.setAlignItems(Alignment.BASELINE);
 	}
+
+	public void reset() {
+		setNavigationMode(AppBar.NavigationMode.MENU);
+
+		removeAllTabs();
+		setTabsVisible(false);
+
+		removeAllActionItems();
+		setActionItemsVisible(false);
+	}
 }

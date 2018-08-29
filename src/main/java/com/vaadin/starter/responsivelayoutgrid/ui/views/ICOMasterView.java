@@ -24,12 +24,6 @@ public class ICOMasterView extends Div {
 
     private final Grid<InitialCoinOffering> grid;
 
-    private enum Tab {
-        ONGOING, UPCOMING, CLOSED
-    }
-
-    private Tab selected;
-
     public ICOMasterView() {
         setClassName(GRID_VIEW);
         getStyle().set(CSSProperties.Flex.PROPERTY, "1");
@@ -73,9 +67,5 @@ public class ICOMasterView extends Div {
 
     private void viewDetails(InitialCoinOffering ico) {
         UI.getCurrent().navigate(ICODetailsView.class, ico.getId());
-    }
-
-    public void selectTab(Tab tab) {
-
     }
 }

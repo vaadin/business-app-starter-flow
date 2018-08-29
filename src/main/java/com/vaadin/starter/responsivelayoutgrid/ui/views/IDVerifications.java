@@ -56,6 +56,7 @@ public class IDVerifications extends Div {
                 .setSortable(true)
                 .setWidth("160px")
                 .setFlexGrow(0);
+
         grid.setItems(getItems());
         grid.setSizeFull();
         add(grid);

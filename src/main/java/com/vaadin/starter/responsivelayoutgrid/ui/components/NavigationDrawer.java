@@ -112,19 +112,25 @@ public class NavigationDrawer extends Div implements AfterNavigationObserver {
 		Image logo = new Image();
 		logo.setClassName(CLASS_NAME + "__logo");
 		logo.setSrc("https://upload.wikimedia.org/wikipedia/commons/7/76/Vaadin_Logo.svg");
-
 		scrollArea.add(logo);
 	}
 
-	public NavigationItem addNavigationItem(VaadinIcon icon, String text, Class<? extends Component> navigationTarget) {
-		NavigationItem item = new NavigationItem(icon, text, navigationTarget);
+	public NavigationLinkItem addNavigationItem(VaadinIcon icon, String text, Class<? extends Component> navigationTarget) {
+		NavigationLinkItem item = new NavigationLinkItem(icon, text, navigationTarget);
 		list.add(item);
 		return item;
 	}
 
-	public NavigationItem addNavigationSubItem(NavigationItem parent, String text, Class<? extends Component> navigationTarget) {
-		NavigationItem item = new NavigationItem(text, navigationTarget);
-		parent.addSubNavigationItem(item);
+	public NavigationLinkItem addNavigationItem(NavigationItem parent, String text, Class<? extends Component> navigationTarget) {
+		NavigationLinkItem item = new NavigationLinkItem(text, navigationTarget);
+		parent.addSubItem(item);
+		list.add(item);
+		return item;
+	}
+
+	public NavigationTabItem addNavigationItem(NavigationItem parent, String text) {
+		NavigationTabItem item = new NavigationTabItem(text);
+		parent.addSubItem(item);
 		list.add(item);
 		return item;
 	}
