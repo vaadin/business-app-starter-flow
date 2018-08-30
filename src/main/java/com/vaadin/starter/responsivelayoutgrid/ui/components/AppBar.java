@@ -137,6 +137,10 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
 		return tab;
 	}
 
+	public void setSelectedTab(Tab selectedTab) {
+		tabs.setSelectedTab(selectedTab);
+	}
+
 	public void setTabsVisible(boolean visible) {
 		tabs.setVisible(visible);
 	}

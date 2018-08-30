@@ -70,7 +70,10 @@ public class MainLayout extends FlexLayout
 
 		for (NavigationItem item : new NavigationItem[]{charts, pieCharts, doughtnut, spie, flowchart, document, data, system}) {
 			item.addClickListener(e -> {
-				appBar.addClosableTab(item.getText());
+				if (!UI.getCurrent().getInternals().getActiveViewLocation().getPath().equals("dashboard")) {
+					UI.getCurrent().navigate("dashboard");
+				}
+				appBar.setSelectedTab(appBar.addClosableTab(item.getText()));
 			});
 		}
 	}
