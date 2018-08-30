@@ -18,7 +18,7 @@ import com.vaadin.starter.responsivelayoutgrid.ui.utils.UIUtils;
 
 import static com.vaadin.starter.responsivelayoutgrid.ui.utils.ViewStyles.GRID_VIEW;
 
-@Route(value = "", layout = MainLayout.class)
+@Route(value = "initial-coin-offerings", layout = MainLayout.class)
 @PageTitle("Initial Coin Offerings")
 public class ICOMasterView extends Div {
 

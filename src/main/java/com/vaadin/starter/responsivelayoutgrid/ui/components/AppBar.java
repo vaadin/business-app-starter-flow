@@ -68,7 +68,7 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
 		*/
 
 		container = new FlexLayout(menuNavigationIcon, contextualNavigationIcon, this.title, search, actionItems);
-		container.setAlignItems(Alignment.BASELINE);
+		container.setAlignItems(Alignment.CENTER);
 		container.setClassName(CLASS_NAME + "__container");
 		container.setFlexGrow(1, search);
 		add(container);
@@ -117,9 +117,26 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
 		setTitle(UI.getCurrent().getInternals().getTitle());
 	}
 
+	public Button addActionItem(VaadinIcon icon) {
+		Button button = UIUtils.createSmallTertiaryIconButton(icon);
+		actionItems.add(button);
+
+		updateActionItemsVisibility();
+
+		return button;
+	}
+
+	public void removeAllActionItems() {
+		actionItems.removeAll();
+		updateActionItemsVisibility();
+	}
+
 	private Tab addTab(Tab tab) {
 		tab.setClassName(CLASS_NAME + "__tab");
 		tabs.add(tab);
+
+		updateTabsVisibility();
+
 		return tab;
 	}
 
@@ -141,26 +158,9 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
 		tabs.setSelectedTab(selectedTab);
 	}
 
-	public void setTabsVisible(boolean visible) {
-		tabs.setVisible(visible);
-	}
-
 	public void removeAllTabs() {
 		tabs.removeAll();
-	}
-
-	public Button addActionItem(VaadinIcon icon) {
-		Button button = UIUtils.createSmallTertiaryIconButton(icon);
-		actionItems.add(button);
-		return button;
-	}
-
-	public void setActionItemsVisible(boolean visible) {
-		actionItems.setVisible(visible);
-	}
-
-	public void removeAllActionItems() {
-		actionItems.removeAll();
+		updateTabsVisibility();
 	}
 
 	public void searchModeOn() {
@@ -175,31 +175,33 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
 
 		search.setVisible(true);
 		search.focus();
-
-		container.setAlignItems(Alignment.CENTER);
 	}
 
 	private void searchModeOff() {
 		menuNavigationIcon.setVisible(true);
 		title.setVisible(true);
-		actionItems.setVisible(true);
-		tabs.setVisible(true);
+
+		updateActionItemsVisibility();
+		updateTabsVisibility();
 
 		contextualNavigationIcon.setVisible(false);
 		searchRegistration.remove();
 
 		search.setVisible(false);
-
-		container.setAlignItems(Alignment.BASELINE);
 	}
 
 	public void reset() {
 		setNavigationMode(AppBar.NavigationMode.MENU);
 
-		removeAllTabs();
-		setTabsVisible(false);
-
 		removeAllActionItems();
-		setActionItemsVisible(false);
+		removeAllTabs();
+	}
+
+	private void updateActionItemsVisibility() {
+		actionItems.setVisible(actionItems.getComponentCount() > 0);
+	}
+
+	private void updateTabsVisibility() {
+		tabs.setVisible(tabs.getComponentCount() > 0);
 	}
 }

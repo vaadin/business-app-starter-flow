@@ -14,10 +14,7 @@ import com.vaadin.flow.router.RouterLayout;
 import com.vaadin.flow.server.InitialPageSettings;
 import com.vaadin.flow.server.PageConfigurator;
 import com.vaadin.flow.shared.Registration;
-import com.vaadin.starter.responsivelayoutgrid.ui.components.AppBar;
-import com.vaadin.starter.responsivelayoutgrid.ui.components.NavigationDrawer;
-import com.vaadin.starter.responsivelayoutgrid.ui.components.NavigationItem;
-import com.vaadin.starter.responsivelayoutgrid.ui.views.Dashboard;
+import com.vaadin.starter.responsivelayoutgrid.ui.components.*;
 import com.vaadin.starter.responsivelayoutgrid.ui.views.ICODetailsView;
 import com.vaadin.starter.responsivelayoutgrid.ui.views.ICOMasterView;
 import com.vaadin.starter.responsivelayoutgrid.ui.views.IDVerifications;
@@ -32,13 +29,14 @@ public class MainLayout extends FlexLayout
 
 	Registration reverseNavigation;
 	private ContextMenu menu;
+	private NavigationDrawer navigationDrawer;
 
 	public MainLayout() {
 		addClassName("root");
 
 		// Navigation
-		NavigationDrawer navigationDrawer = new NavigationDrawer();
-		add(navigationDrawer);
+		// initNavigationLinkDrawer();
+		initNavigationTabDrawer();
 
 		// Content
 		content = new FlexLayout();
@@ -50,32 +48,6 @@ public class MainLayout extends FlexLayout
 		appBar = new AppBar("App Bar");
 		appBar.getMenuNavigationIcon().addClickListener(appBarEvent -> navigationDrawer.toggle());
 		content.add(appBar);
-
-		// Views
-		navigationDrawer.addNavigationItem(VaadinIcon.GRID, "Initial Coin Offerings", ICOMasterView.class);
-		navigationDrawer.addNavigationItem(VaadinIcon.USER_CHECK, "ID Verifications", IDVerifications.class);
-		NavigationItem dashboard = navigationDrawer.addNavigationItem(VaadinIcon.DASHBOARD, "Dashboard", Dashboard.class);
-
-		// Sub-views
-		NavigationItem charts = navigationDrawer.addNavigationItem(dashboard, "Charts");
-
-		NavigationItem pieCharts = navigationDrawer.addNavigationItem(charts, "Pie Charts");
-		NavigationItem doughtnut = navigationDrawer.addNavigationItem(pieCharts, "Doughnut");
-		NavigationItem spie = navigationDrawer.addNavigationItem(pieCharts, "Spie");
-
-		NavigationItem flowchart = navigationDrawer.addNavigationItem(charts, "Flowchart");
-		NavigationItem document = navigationDrawer.addNavigationItem(flowchart, "Document");
-		NavigationItem data = navigationDrawer.addNavigationItem(flowchart, "Data");
-		NavigationItem system = navigationDrawer.addNavigationItem(flowchart, "System");
-
-		for (NavigationItem item : new NavigationItem[]{charts, pieCharts, doughtnut, spie, flowchart, document, data, system}) {
-			item.addClickListener(e -> {
-				if (!UI.getCurrent().getInternals().getActiveViewLocation().getPath().equals("dashboard")) {
-					UI.getCurrent().navigate("dashboard");
-				}
-				appBar.setSelectedTab(appBar.addClosableTab(item.getText()));
-			});
-		}
 	}
 
 	@Override
@@ -110,15 +82,12 @@ public class MainLayout extends FlexLayout
 		} else if (navigationTarget == ICODetailsView.class) {
 			appBar.setNavigationMode(AppBar.NavigationMode.CONTEXTUAL);
 			appBar.setContextualNavigationIcon(VaadinIcon.ARROW_BACKWARD);
-			reverseNavigation = appBar.getContextualNavigationIcon().addClickListener(e -> UI.getCurrent().navigate(""));
+			reverseNavigation = appBar.getContextualNavigationIcon().addClickListener(e -> UI.getCurrent().navigate("initial-coin-offerings"));
 
-		} else if (navigationTarget == Dashboard.class) {
-			appBar.setTabsVisible(true);
 		}
 	}
 
 	private void createActionItems() {
-		appBar.setActionItemsVisible(true);
 		appBar.addActionItem(VaadinIcon.SEARCH).addClickListener(e -> appBar.searchModeOn());
 		appBar.addActionItem(VaadinIcon.FILTER);
 		createContextMenu(appBar.addActionItem(VaadinIcon.ELLIPSIS_DOTS_V));
@@ -132,9 +101,49 @@ public class MainLayout extends FlexLayout
 	}
 
 	private void createTabs() {
-		appBar.setTabsVisible(true);
 		for (String tab : new String[]{"Ongoing", "Upcoming", "Closed"}) {
 			appBar.addTab(tab);
 		}
+	}
+
+	private void initNavigationLinkDrawer() {
+		NavigationLinkDrawer navigationDrawer = new NavigationLinkDrawer();
+		add(navigationDrawer);
+
+		navigationDrawer.addNavigationItem(VaadinIcon.GRID, "Initial Coin Offerings", ICOMasterView.class);
+		navigationDrawer.addNavigationItem(VaadinIcon.USER_CHECK, "ID Verifications", IDVerifications.class);
+
+		this.navigationDrawer = navigationDrawer;
+	}
+
+	private void initNavigationTabDrawer() {
+		NavigationTabDrawer navigationDrawer = new NavigationTabDrawer();
+		add(navigationDrawer);
+
+		// Dashboard
+		NavigationItem dashboard = navigationDrawer.addNavigationItem(VaadinIcon.GRID_BIG, "Dashboard");
+
+		NavigationItem charts = navigationDrawer.addNavigationItem(VaadinIcon.CHART, "Charts");
+
+		NavigationItem pieCharts = navigationDrawer.addNavigationItem(charts, "Pie Charts");
+		NavigationItem doughtnut = navigationDrawer.addNavigationItem(pieCharts, "Doughnut");
+		NavigationItem spie = navigationDrawer.addNavigationItem(pieCharts, "Spie");
+
+		NavigationItem flowchart = navigationDrawer.addNavigationItem(charts, "Flowchart");
+		NavigationItem document = navigationDrawer.addNavigationItem(flowchart, "Document");
+		NavigationItem data = navigationDrawer.addNavigationItem(flowchart, "Data");
+		NavigationItem system = navigationDrawer.addNavigationItem(flowchart, "System");
+
+		// Workflows
+		NavigationItem workflow = navigationDrawer.addNavigationItem(VaadinIcon.SITEMAP, "Workflows");
+
+		// Leaf nodes can be added as tabs.
+		navigationDrawer.getNavigationItems().forEach(navigationItem -> {
+			if (navigationItem.hasSubItems()) {
+				navigationItem.addClickListener(e -> appBar.setSelectedTab(appBar.addClosableTab(navigationItem.getText())));
+			}
+		});
+
+		this.navigationDrawer = navigationDrawer;
 	}
 }

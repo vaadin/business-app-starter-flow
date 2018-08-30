@@ -1,6 +1,5 @@
 package com.vaadin.starter.responsivelayoutgrid.ui.components;
 
-import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.contextmenu.ContextMenu;
 import com.vaadin.flow.component.html.Div;
@@ -15,11 +14,14 @@ import com.vaadin.flow.router.AfterNavigationObserver;
 import com.vaadin.starter.responsivelayoutgrid.ui.utils.LumoStyles;
 import com.vaadin.starter.responsivelayoutgrid.ui.utils.UIUtils;
 
+import java.util.ArrayList;
+
 public class NavigationDrawer extends Div implements AfterNavigationObserver {
 
 	private final String CLASS_NAME = "navigation-drawer";
 	private final String OPEN = CLASS_NAME + "--open";
 	private final String RAIL = CLASS_NAME + "--rail";
+
 	private Div scrim;
 	private Div content;
 	private Div scrollArea;
@@ -29,7 +31,10 @@ public class NavigationDrawer extends Div implements AfterNavigationObserver {
 	private Label email;
 	private Button dropdown;
 
-	private Div list;
+	protected Div list;
+	private ArrayList<NavigationItem> items;
+
+	private final Button railButton = UIUtils.createSmallButton(VaadinIcon.CARET_LEFT, "Collapse");
 
 	public NavigationDrawer() {
 		setClassName(CLASS_NAME);
@@ -70,18 +75,11 @@ public class NavigationDrawer extends Div implements AfterNavigationObserver {
 		list.setClassName(CLASS_NAME + "__list");
 		scrollArea.add(list);
 
+		items = new ArrayList<>();
+
 		// "Footer", currently only a collapse/expand button.
-		Button railButton = UIUtils.createSmallButton(VaadinIcon.CARET_LEFT, "Collapse");
 		railButton.setClassName(CLASS_NAME + "__footer");
-		railButton.addClickListener(event -> {
-			if (getClassName().contains(RAIL)) {
-				removeClassName(RAIL);
-				railButton.setIcon(new Icon(VaadinIcon.CARET_LEFT));
-			} else {
-				addClassName(RAIL);
-				railButton.setIcon(new Icon(VaadinIcon.CARET_RIGHT));
-			}
-		});
+		railButton.addClickListener(event -> setRailModeEnabled(getClassName().contains(RAIL)));
 		content.add(railButton);
 	}
 
@@ -115,24 +113,14 @@ public class NavigationDrawer extends Div implements AfterNavigationObserver {
 		scrollArea.add(logo);
 	}
 
-	public NavigationLinkItem addNavigationItem(VaadinIcon icon, String text, Class<? extends Component> navigationTarget) {
-		NavigationLinkItem item = new NavigationLinkItem(icon, text, navigationTarget);
-		list.add(item);
-		return item;
-	}
-
-	public NavigationLinkItem addNavigationItem(NavigationItem parent, String text, Class<? extends Component> navigationTarget) {
-		NavigationLinkItem item = new NavigationLinkItem(text, navigationTarget);
-		parent.addSubItem(item);
-		list.add(item);
-		return item;
-	}
-
-	public NavigationTabItem addNavigationItem(NavigationItem parent, String text) {
-		NavigationTabItem item = new NavigationTabItem(text);
-		parent.addSubItem(item);
-		list.add(item);
-		return item;
+	private void setRailModeEnabled(boolean enabled) {
+		if (enabled) {
+			removeClassName(RAIL);
+			railButton.setIcon(new Icon(VaadinIcon.CARET_LEFT));
+		} else {
+			addClassName(RAIL);
+			railButton.setIcon(new Icon(VaadinIcon.CARET_RIGHT));
+		}
 	}
 
 	public void toggle() {
@@ -149,6 +137,20 @@ public class NavigationDrawer extends Div implements AfterNavigationObserver {
 
 	private void close() {
 		removeClassName(OPEN);
+	}
+
+	protected void addNavigationItem(NavigationItem item) {
+		list.add(item);
+		items.add(item);
+	}
+
+	protected void addNavigationItem(NavigationItem parent, NavigationItem item) {
+		parent.addSubItem(item);
+		addNavigationItem(item);
+	}
+
+	public ArrayList<NavigationItem> getNavigationItems() {
+		return items;
 	}
 
 	@Override

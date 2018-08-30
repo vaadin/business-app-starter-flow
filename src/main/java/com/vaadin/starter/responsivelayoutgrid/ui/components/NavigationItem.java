@@ -87,4 +87,8 @@ public class NavigationItem extends Div {
 		subItems.forEach(item -> item.setVisible(visible));
 		subItemsVisible = visible;
 	}
+
+	public boolean hasSubItems() {
+		return subItems.size() > 0;
+	}
 }
