@@ -48,10 +48,18 @@
 }
 
 /* Tabs */
+.app-bar__tab-container {
+  padding: 0 var(--lumo-space-l);
+}
+
+.app-bar__tab-container vaadin-button {
+  flex-shrink: 0;
+  margin: calc(calc(var(--lumo-size-l) - var(--lumo-size-s)) / 2) 0;
+}
+
 .app-bar__tabs {
   box-shadow: none;
-  margin: auto;
-  max-width: 100%;
+  overflow: hidden;
 }
 
 .app-bar__tab vaadin-button {
@@ -61,6 +69,10 @@
 @media (max-width: 1023px) {
   .app-bar__container {
     padding: var(--lumo-space-wide-m);
+  }
+
+  .app-bar__tab-container {
+    padding: 0 var(--lumo-space-s);
   }
 }
 

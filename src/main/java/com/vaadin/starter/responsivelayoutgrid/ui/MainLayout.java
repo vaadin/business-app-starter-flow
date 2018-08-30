@@ -1,10 +1,12 @@
 package com.vaadin.starter.responsivelayoutgrid.ui;
 
+import com.vaadin.flow.component.ClickNotifier;
 import com.vaadin.flow.component.HasElement;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.contextmenu.ContextMenu;
 import com.vaadin.flow.component.dependency.HtmlImport;
+import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.page.Viewport;
@@ -15,9 +17,7 @@ import com.vaadin.flow.server.InitialPageSettings;
 import com.vaadin.flow.server.PageConfigurator;
 import com.vaadin.flow.shared.Registration;
 import com.vaadin.starter.responsivelayoutgrid.ui.components.*;
-import com.vaadin.starter.responsivelayoutgrid.ui.views.ICODetailsView;
-import com.vaadin.starter.responsivelayoutgrid.ui.views.ICOMasterView;
-import com.vaadin.starter.responsivelayoutgrid.ui.views.IDVerifications;
+import com.vaadin.starter.responsivelayoutgrid.ui.views.*;
 
 @HtmlImport("frontend://styles/shared-styles.html")
 @Viewport("width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes")
@@ -64,26 +64,33 @@ public class MainLayout extends FlexLayout
 
 	@Override
 	public void beforeEnter(BeforeEnterEvent beforeEnterEvent) {
-		Class<?> navigationTarget = beforeEnterEvent.getNavigationTarget();
 
-		// TODO: Certain views sport a back button instead of a menu button. We remove the registration by default when a navigation change happens.
-		if (reverseNavigation != null) {
-			reverseNavigation.remove();
-			reverseNavigation = null;
-		}
+		// When using the navigation drawer with link items.
+		if (navigationDrawer instanceof NavigationLinkDrawer) {
 
-		appBar.reset();
+			appBar.reset();
+			Class<?> navigationTarget = beforeEnterEvent.getNavigationTarget();
 
-		// TODO: Who is responsible for configuring the AppBar based on the selected view?
-		if (navigationTarget == ICOMasterView.class || navigationTarget == IDVerifications.class) {
-			createTabs();
-			createActionItems();
+			// TODO: Certain views sport a back button instead of a menu button. We remove the registration by default when a navigation change happens.
+			if (reverseNavigation != null) {
+				reverseNavigation.remove();
+				reverseNavigation = null;
+			}
 
-		} else if (navigationTarget == ICODetailsView.class) {
-			appBar.setNavigationMode(AppBar.NavigationMode.CONTEXTUAL);
-			appBar.setContextualNavigationIcon(VaadinIcon.ARROW_BACKWARD);
-			reverseNavigation = appBar.getContextualNavigationIcon().addClickListener(e -> UI.getCurrent().navigate("initial-coin-offerings"));
+			// TODO: Who is responsible for configuring the AppBar based on the selected view?
+			if (navigationTarget == ICOMasterView.class || navigationTarget == IDVerifications.class) {
+				createTabs();
+				createActionItems();
 
+			} else if (navigationTarget == ICODetailsView.class) {
+				appBar.setNavigationMode(AppBar.NavigationMode.CONTEXTUAL);
+				appBar.setContextualNavigationIcon(VaadinIcon.ARROW_BACKWARD);
+				reverseNavigation = appBar.getContextualNavigationIcon().addClickListener(e -> UI.getCurrent().navigate("initial-coin-offerings"));
+			}
+
+			// When using the navigation drawer with tab items.
+		} else {
+			appBar.setAddTabButtonVisible(true);
 		}
 	}
 
@@ -113,6 +120,13 @@ public class MainLayout extends FlexLayout
 		navigationDrawer.addNavigationItem(VaadinIcon.GRID, "Initial Coin Offerings", ICOMasterView.class);
 		navigationDrawer.addNavigationItem(VaadinIcon.USER_CHECK, "ID Verifications", IDVerifications.class);
 
+		NavigationItem view1 = navigationDrawer.addNavigationItem(VaadinIcon.RANDOM, "View 1", View1.class);
+		navigationDrawer.addNavigationItem(view1, "View 2", View2.class);
+
+		NavigationItem view3 = navigationDrawer.addNavigationItem(view1, "View 3", View3.class);
+		navigationDrawer.addNavigationItem(view3, "View 4", View4.class);
+		navigationDrawer.addNavigationItem(view3, "View 5", View5.class);
+
 		this.navigationDrawer = navigationDrawer;
 	}
 
@@ -121,28 +135,41 @@ public class MainLayout extends FlexLayout
 		add(navigationDrawer);
 
 		// Dashboard
-		NavigationItem dashboard = navigationDrawer.addNavigationItem(VaadinIcon.GRID_BIG, "Dashboard");
+		navigationDrawer.addNavigationItem(VaadinIcon.GRID_BIG, "Dashboard");
 
 		NavigationItem charts = navigationDrawer.addNavigationItem(VaadinIcon.CHART, "Charts");
 
 		NavigationItem pieCharts = navigationDrawer.addNavigationItem(charts, "Pie Charts");
-		NavigationItem doughtnut = navigationDrawer.addNavigationItem(pieCharts, "Doughnut");
-		NavigationItem spie = navigationDrawer.addNavigationItem(pieCharts, "Spie");
+		navigationDrawer.addNavigationItem(pieCharts, "Doughnut");
+		navigationDrawer.addNavigationItem(pieCharts, "Spie");
 
 		NavigationItem flowchart = navigationDrawer.addNavigationItem(charts, "Flowchart");
-		NavigationItem document = navigationDrawer.addNavigationItem(flowchart, "Document");
-		NavigationItem data = navigationDrawer.addNavigationItem(flowchart, "Data");
-		NavigationItem system = navigationDrawer.addNavigationItem(flowchart, "System");
+		navigationDrawer.addNavigationItem(flowchart, "Document");
+		navigationDrawer.addNavigationItem(flowchart, "Data");
+		navigationDrawer.addNavigationItem(flowchart, "System");
 
 		// Workflows
-		NavigationItem workflow = navigationDrawer.addNavigationItem(VaadinIcon.SITEMAP, "Workflows");
+		navigationDrawer.addNavigationItem(VaadinIcon.SITEMAP, "Workflows");
 
-		// Leaf nodes can be added as tabs.
-		navigationDrawer.getNavigationItems().forEach(navigationItem -> {
-			if (navigationItem.hasSubItems()) {
-				navigationItem.addClickListener(e -> appBar.setSelectedTab(appBar.addClosableTab(navigationItem.getText())));
-			}
-		});
+		// Open in current or new tab
+		for (NavigationItem item : navigationDrawer.getNavigationItems()) {
+			((ClickNotifier<Div>) item).addClickListener(event -> {
+
+				// New tab
+				if (event.getButton() == 0 && event.isShiftKey()) {
+					appBar.setSelectedTab(appBar.addTab(item.getText()));
+				}
+
+				// Current tab
+				else if (event.getButton() == 0) {
+					if (appBar.getTabCount() > 0) {
+						appBar.getTabs().getSelectedTab().setLabel(item.getText());
+					} else {
+						appBar.setSelectedTab(appBar.addTab(item.getText()));
+					}
+				}
+			});
+		}
 
 		this.navigationDrawer = navigationDrawer;
 	}

@@ -27,10 +27,12 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
 	private H4 title;
 	private FlexLayout actionItems;
 
+	private Button addTab;
 	private Tabs tabs;
 
 	private Registration searchRegistration;
 	private TextField search;
+	private final FlexLayout tabContainer;
 
 
 	public enum NavigationMode {
@@ -73,12 +75,21 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
 		container.setFlexGrow(1, search);
 		add(container);
 
-		// Row 2
+		addTab = UIUtils.createSmallTertiaryIconButton(VaadinIcon.PLUS);
+		addTab.addClickListener(e -> setSelectedTab(addClosableTab("New Tab")));
+		addTab.setVisible(false);
+
 		tabs = new Tabs();
 		tabs.setVisible(false);
 		tabs.setClassName(CLASS_NAME + "__tabs");
+		// tabs.addClassName(LumoStyles.Margin.Horizontal.AUTO);
 		tabs.getElement().setAttribute("overflow", "end");
-		add(tabs);
+
+		tabContainer = new FlexLayout(tabs, addTab);
+		tabContainer.setAlignItems(Alignment.CENTER);
+		tabContainer.setClassName(CLASS_NAME + "__tab-container");
+
+		add(tabContainer);
 	}
 
 	public void setNavigationMode(NavigationMode mode) {
@@ -131,6 +142,10 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
 		updateActionItemsVisibility();
 	}
 
+	public void setAddTabButtonVisible(boolean visible) {
+		addTab.setVisible(visible);
+	}
+
 	private Tab addTab(Tab tab) {
 		tab.setClassName(CLASS_NAME + "__tab");
 		tabs.add(tab);
@@ -156,6 +171,14 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
 
 	public void setSelectedTab(Tab selectedTab) {
 		tabs.setSelectedTab(selectedTab);
+	}
+
+	public Tabs getTabs() {
+		return tabs;
+	}
+
+	public Long getTabCount() {
+		return tabs.getChildren().filter(component -> component instanceof Tab).count();
 	}
 
 	public void removeAllTabs() {
