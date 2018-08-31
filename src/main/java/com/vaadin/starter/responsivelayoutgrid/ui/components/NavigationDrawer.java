@@ -12,6 +12,7 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.AfterNavigationEvent;
 import com.vaadin.flow.router.AfterNavigationObserver;
+import com.vaadin.starter.responsivelayoutgrid.backend.UIConfig;
 import com.vaadin.starter.responsivelayoutgrid.ui.utils.LumoStyles;
 import com.vaadin.starter.responsivelayoutgrid.ui.utils.UIUtils;
 
@@ -60,7 +61,7 @@ public abstract class NavigationDrawer extends Div implements AfterNavigationObs
 		content.add(scrollArea);
 
 		// Header: account switcher or brand logo.
-		if (true) {
+		if (UIConfig.getNavigationHeader().equals(UIConfig.NavigationHeader.ACCOUNT_SWITCHER)) {
 			initAccountSwitcher();
 		} else {
 			initBrandExpression();
@@ -87,12 +88,12 @@ public abstract class NavigationDrawer extends Div implements AfterNavigationObs
 	private void initAccountSwitcher() {
 		avatar = new Image();
 		avatar.setClassName(CLASS_NAME + "__avatar");
-		avatar.setSrc("https://pbs.twimg.com/profile_images/1009479665705074688/0oLHVbs8_400x400.jpg");
+		avatar.setSrc("https://pbs.twimg.com/profile_images/798351849984294912/okhePpJW_400x400.jpg");
 
-		username = new H4("Theodore Fortelius");
+		username = new H4("Conor McGregor");
 		username.setClassName(CLASS_NAME + "__title");
 
-		email = new Label("theodore@gmail.com");
+		email = new Label("conor.mcgregor@gmail.com");
 		email.setClassName(CLASS_NAME + "__email");
 		email.getElement().setAttribute(LumoStyles.THEME, LumoStyles.FontSize.S);
 
@@ -101,17 +102,20 @@ public abstract class NavigationDrawer extends Div implements AfterNavigationObs
 
 		ContextMenu contextMenu = new ContextMenu(dropdown);
 		contextMenu.setOpenOnClick(true);
-		contextMenu.addItem("joacim@gmail.com", e -> System.out.println("Testing..."));
-		contextMenu.addItem("tove@gmail.com", e -> System.out.println("Testing..."));
+		contextMenu.addItem("conor.mcgregor@outlook.com", e -> System.out.println("Testing..."));
+		contextMenu.addItem("conor.mcgregor@yahoo.com", e -> System.out.println("Testing..."));
 
 		scrollArea.add(avatar, username, email);
 	}
 
 	private void initBrandExpression() {
 		Image logo = new Image();
-		logo.setClassName(CLASS_NAME + "__logo");
-		logo.setSrc("https://upload.wikimedia.org/wikipedia/commons/7/76/Vaadin_Logo.svg");
-		scrollArea.add(logo);
+		logo.setSrc("https://upload.wikimedia.org/wikipedia/en/thumb/b/bf/KFC_logo.svg/300px-KFC_logo.svg.png");
+
+		Div logoWrapper = new Div(logo);
+		logoWrapper.setClassName(CLASS_NAME + "__logo");
+
+		scrollArea.add(logoWrapper);
 	}
 
 	private void setRailModeEnabled(boolean enabled) {

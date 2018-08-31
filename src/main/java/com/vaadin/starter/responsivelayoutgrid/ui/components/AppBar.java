@@ -175,7 +175,11 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
 		tab.getCloseButton().addClickListener(event -> {
 			tabs.remove(tab);
 			tabNavigationTargets.remove(tab);
-			navigateToSelectedTab();
+			try {
+				navigateToSelectedTab();
+			} catch (Exception e) {
+				navigateToDefaultView();
+			}
 		});
 
 		return tab;
@@ -213,6 +217,10 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
 
 	private void navigateToSelectedTab() {
 		UI.getCurrent().navigate(tabNavigationTargets.get(getSelectedTab()));
+	}
+
+	private void navigateToDefaultView() {
+		UI.getCurrent().navigate(Default.class);
 	}
 
 	public void searchModeOn() {

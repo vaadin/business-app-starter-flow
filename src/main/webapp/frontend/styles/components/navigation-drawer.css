@@ -60,10 +60,19 @@
 
 /* Brand expression */
 .navigation-drawer__logo {
+  align-items: center;
   box-shadow: inset 0 -1px var(--lumo-contrast-20pct);
   box-sizing: border-box;
+  display: flex;
+  /* Application header height with tabs */
+  height: calc(calc(var(--lumo-space-l) + var(--lumo-size-s)) + var(--lumo-size-l));
+  justify-content: center;
   padding: var(--lumo-space-m);
-  width: 100%;
+}
+
+.navigation-drawer__logo img {
+  max-height: 100%;
+  max-width: 100%;
 }
 
 /* Search */
