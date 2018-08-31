@@ -10,6 +10,7 @@ import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.dom.Element;
 import com.vaadin.flow.router.AfterNavigationEvent;
 import com.vaadin.flow.router.AfterNavigationObserver;
 import com.vaadin.flow.shared.Registration;
@@ -151,27 +152,31 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
 		addTab.setVisible(visible);
 	}
 
-	public Tab addTab(String text, Class<? extends Component> navigationTarget) {
-		Tab tab = new Tab(text);
+	private void addTab(Tab tab, Class<? extends Component> navigationTarget) {
 		tab.setClassName(CLASS_NAME + "__tab");
 
 		tabs.add(tab);
 		tabNavigationTargets.put(tab, navigationTarget);
 
 		updateTabsVisibility();
+	}
+
+	public Tab addTab(String text, Class<? extends Component> navigationTarget) {
+		Tab tab = new Tab(text);
+		addTab(tab, navigationTarget);
 
 		return tab;
 	}
 
 	public Tab addClosableTab(String text, Class<? extends Component> navigationTarget) {
-		Tab tab = addTab(text, navigationTarget);
+		ClosableTab tab = new ClosableTab(text);
+		addTab(tab, navigationTarget);
 
-		Button close = UIUtils.createSmallTertiaryIconButton(VaadinIcon.CLOSE);
-		close.addClickListener(event -> {
+		tab.getCloseButton().addClickListener(event -> {
 			tabs.remove(tab);
 			tabNavigationTargets.remove(tab);
+			navigateToSelectedTab();
 		});
-		tab.add(close);
 
 		return tab;
 	}
@@ -182,8 +187,14 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
 	}
 
 	public void updateSelectedTab(String text, Class<? extends Component> navigationTarget) {
-		getSelectedTab().setLabel(text);
-		tabNavigationTargets.put(getSelectedTab(), navigationTarget);
+		Tab tab = getSelectedTab();
+		tab.setLabel(text);
+
+		if (tab instanceof ClosableTab) {
+			tab.add(((ClosableTab) tab).getCloseButton());
+		}
+
+		tabNavigationTargets.put(tab, navigationTarget);
 		navigateToSelectedTab();
 	}
 
