@@ -7,9 +7,11 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.contextmenu.ContextMenu;
 import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.page.Viewport;
+import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.RouterLayout;
@@ -18,6 +20,7 @@ import com.vaadin.flow.server.PageConfigurator;
 import com.vaadin.flow.shared.Registration;
 import com.vaadin.starter.responsivelayoutgrid.backend.UIConfig;
 import com.vaadin.starter.responsivelayoutgrid.ui.components.*;
+import com.vaadin.starter.responsivelayoutgrid.ui.utils.UIUtils;
 import com.vaadin.starter.responsivelayoutgrid.ui.views.*;
 
 @HtmlImport("frontend://styles/shared-styles.html")
@@ -53,6 +56,12 @@ public class MainLayout extends FlexLayout
 		appBar = new AppBar("App Bar");
 		appBar.getMenuNavigationIcon().addClickListener(appBarEvent -> navigationDrawer.toggle());
 		content.add(appBar);
+
+		if (UIConfig.getNavigationMode().equals(UIConfig.NavigationMode.TABS)) {
+			createActionItems();
+			appBar.setAvatarVisible(true);
+			appBar.setAddTabButtonVisible(true);
+		}
 	}
 
 	@Override
@@ -69,7 +78,6 @@ public class MainLayout extends FlexLayout
 
 	@Override
 	public void beforeEnter(BeforeEnterEvent beforeEnterEvent) {
-
 		// When using the navigation drawer with link items.
 		if (UIConfig.getNavigationMode().equals(UIConfig.NavigationMode.LINKS)) {
 
@@ -92,10 +100,6 @@ public class MainLayout extends FlexLayout
 				appBar.setContextualNavigationIcon(VaadinIcon.ARROW_BACKWARD);
 				reverseNavigation = appBar.getContextualNavigationIcon().addClickListener(e -> UI.getCurrent().navigate("initial-coin-offerings"));
 			}
-
-			// When using the navigation drawer with tab items.
-		} else {
-			appBar.setAddTabButtonVisible(true);
 		}
 	}
 

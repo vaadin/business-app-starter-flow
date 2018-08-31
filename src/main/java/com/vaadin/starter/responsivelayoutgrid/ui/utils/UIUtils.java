@@ -6,6 +6,7 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
+import com.vaadin.flow.component.textfield.TextField;
 
 public class UIUtils {
 
@@ -71,6 +72,13 @@ public class UIUtils {
 		Button button = new Button(icon);
 		button.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Button.SMALL_PRIMARY_ICON);
 		return button;
+	}
+
+	/* Create small textfield */
+	public static TextField createSmallTextField() {
+		TextField textField = new TextField();
+		textField.getElement().setAttribute(LumoStyles.THEME, LumoStyles.TextField.SMALL);
+		return textField;
 	}
 
 }

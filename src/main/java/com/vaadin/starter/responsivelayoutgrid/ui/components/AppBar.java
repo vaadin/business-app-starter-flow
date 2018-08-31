@@ -3,7 +3,9 @@ package com.vaadin.starter.responsivelayoutgrid.ui.components;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.contextmenu.ContextMenu;
 import com.vaadin.flow.component.html.H4;
+import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
@@ -32,6 +34,7 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
 
 	private H4 title;
 	private FlexLayout actionItems;
+	private Image avatar;
 
 	private Button addTab;
 	private Tabs tabs;
@@ -61,21 +64,34 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
 		this.title = new H4(title);
 		this.title.setClassName(CLASS_NAME + "__title");
 
-		search = new TextField();
+		search = UIUtils.createSmallTextField();
 		search.setPlaceholder("Search");
+		search.setPrefixComponent(new Icon(VaadinIcon.SEARCH));
 		search.setVisible(false);
 
-		actionItems = new FlexLayout();
+		avatar = new Image();
+		avatar.setClassName(CLASS_NAME + "__avatar");
+		avatar.setSrc("https://pbs.twimg.com/profile_images/798351849984294912/okhePpJW_400x400.jpg");
+		avatar.setVisible(false);
+
+		ContextMenu contextMenu = new ContextMenu(avatar);
+		contextMenu.setOpenOnClick(true);
+		contextMenu.addItem("conor.mcgregor@outlook.com", e -> System.out.println("Testing..."));
+		contextMenu.addItem("conor.mcgregor@yahoo.com", e -> System.out.println("Testing..."));
+		contextMenu.addItem("Settings", e -> System.out.println("Testing..."));
+		contextMenu.addItem("Logout", e -> System.out.println("Testing..."));
+
+		actionItems = new FlexLayout(avatar);
 		actionItems.setClassName(CLASS_NAME + "__action-items");
 		actionItems.setVisible(false);
 
-		container = new FlexLayout(menuNavigationIcon, contextualNavigationIcon, this.title, search, actionItems);
+		container = new FlexLayout(menuNavigationIcon, contextualNavigationIcon, this.title, search, actionItems, avatar);
 		container.setAlignItems(Alignment.CENTER);
 		container.setClassName(CLASS_NAME + "__container");
 		container.setFlexGrow(1, search);
 		add(container);
 
-		addTab = UIUtils.createSmallTertiaryIconButton(VaadinIcon.PLUS);
+		addTab = UIUtils.createSmallIconButton(VaadinIcon.PLUS);
 		addTab.addClickListener(e -> setSelectedTab(addClosableTab("New Tab", Default.class)));
 		addTab.setVisible(false);
 
@@ -134,18 +150,25 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
 		}
 	}
 
+	public Component addActionItem(Component component) {
+		actionItems.add(component);
+		updateActionItemsVisibility();
+		return component;
+	}
+
 	public Button addActionItem(VaadinIcon icon) {
 		Button button = UIUtils.createSmallTertiaryIconButton(icon);
-		actionItems.add(button);
-
-		updateActionItemsVisibility();
-
+		addActionItem(button);
 		return button;
 	}
 
 	public void removeAllActionItems() {
 		actionItems.removeAll();
 		updateActionItemsVisibility();
+	}
+
+	public void setAvatarVisible(boolean visible) {
+		avatar.setVisible(true);
 	}
 
 	public void setAddTabButtonVisible(boolean visible) {
@@ -227,7 +250,7 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
 		menuNavigationIcon.setVisible(false);
 		title.setVisible(false);
 		actionItems.setVisible(false);
-		tabs.setVisible(false);
+		tabContainer.setVisible(false);
 
 		contextualNavigationIcon.setIcon(new Icon(VaadinIcon.ARROW_BACKWARD));
 		contextualNavigationIcon.setVisible(true);
@@ -240,6 +263,7 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
 	private void searchModeOff() {
 		menuNavigationIcon.setVisible(true);
 		title.setVisible(true);
+		tabContainer.setVisible(true);
 
 		updateActionItemsVisibility();
 		updateTabsVisibility();

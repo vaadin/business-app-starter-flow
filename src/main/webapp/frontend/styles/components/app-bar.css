@@ -29,6 +29,9 @@
 /* Title */
 .app-bar__title {
   margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 /* Action items */
@@ -37,13 +40,19 @@
 }
 
 .app-bar__action-items > *:not(:last-child) {
-  margin-right: var(--lumo-space-s);
+  margin-right: var(--lumo-space-m);
+}
+
+/* Search */
+.app-bar vaadin-text-field {
+  padding: 0;
 }
 
 /* Avatar */
 .app-bar__avatar {
   border-radius: 100%;
   height: var(--lumo-size-s);
+  margin-left: var(--lumo-space-m);
   width: var(--lumo-size-s);
 }
 

@@ -23,6 +23,10 @@ public class LumoStyles {
 		public static final String CONTRAST = "badge contrast";
 	}
 
+	public class TextField {
+		public static final String SMALL = "small";
+	}
+
 	public class Button {
 		public static final String SMALL = "small";
 		public static final String SMALL_ICON = "small icon";
