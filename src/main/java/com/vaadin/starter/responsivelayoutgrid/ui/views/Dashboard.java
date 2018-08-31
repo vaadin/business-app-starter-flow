@@ -1,6 +1,7 @@
 package com.vaadin.starter.responsivelayoutgrid.ui.views;
 
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.starter.responsivelayoutgrid.ui.MainLayout;
@@ -10,6 +11,8 @@ import com.vaadin.starter.responsivelayoutgrid.ui.MainLayout;
 public class Dashboard extends Div {
 
 	public Dashboard() {
+
+		add(new Label("I'm a dashboard!"));
 
 	}
 }

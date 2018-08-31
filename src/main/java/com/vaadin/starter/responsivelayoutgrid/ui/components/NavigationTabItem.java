@@ -1,5 +1,6 @@
 package com.vaadin.starter.responsivelayoutgrid.ui.components;
 
+import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
@@ -11,8 +12,8 @@ public class NavigationTabItem extends NavigationItem {
 
 	private Div link;
 
-	public NavigationTabItem(VaadinIcon icon, String text) {
-		super(icon, text);
+	public NavigationTabItem(VaadinIcon icon, String text, Class<? extends Component> navigationTarget) {
+		super(icon, text, navigationTarget);
 
 		link = new Div();
 		if (icon != null) {
@@ -25,8 +26,8 @@ public class NavigationTabItem extends NavigationItem {
 		getElement().insertChild(0, link.getElement());
 	}
 
-	public NavigationTabItem(String text) {
-		this(null, text);
+	public NavigationTabItem(String text, Class<? extends Component> navigationTarget) {
+		this(null, text, navigationTarget);
 	}
 
 	@Override

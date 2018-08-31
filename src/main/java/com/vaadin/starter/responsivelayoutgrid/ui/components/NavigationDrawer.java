@@ -1,5 +1,6 @@
 package com.vaadin.starter.responsivelayoutgrid.ui.components;
 
+import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.contextmenu.ContextMenu;
 import com.vaadin.flow.component.html.Div;
@@ -16,7 +17,7 @@ import com.vaadin.starter.responsivelayoutgrid.ui.utils.UIUtils;
 
 import java.util.ArrayList;
 
-public class NavigationDrawer extends Div implements AfterNavigationObserver {
+public abstract class NavigationDrawer extends Div implements AfterNavigationObserver {
 
 	private final String CLASS_NAME = "navigation-drawer";
 	private final String OPEN = CLASS_NAME + "--open";
@@ -148,6 +149,10 @@ public class NavigationDrawer extends Div implements AfterNavigationObserver {
 		parent.addSubItem(item);
 		addNavigationItem(item);
 	}
+
+	public abstract NavigationItem addNavigationItem(VaadinIcon icon, String text, Class<? extends Component> navigationTarget);
+
+	public abstract NavigationItem addNavigationItem(NavigationItem parent, String text, Class<? extends Component> navigationTarget);
 
 	public ArrayList<NavigationItem> getNavigationItems() {
 		return items;

@@ -12,7 +12,7 @@ public class NavigationLinkItem extends NavigationItem {
 	private RouterLink link;
 
 	public NavigationLinkItem(VaadinIcon icon, String text, Class<? extends Component> navigationTarget) {
-		super(icon, text);
+		super(icon, text, navigationTarget);
 
 		link = new RouterLink(null, navigationTarget);
 		if (icon != null) {

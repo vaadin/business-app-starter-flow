@@ -1,5 +1,6 @@
 package com.vaadin.starter.responsivelayoutgrid.ui.components;
 
+import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H4;
@@ -12,8 +13,12 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.AfterNavigationEvent;
 import com.vaadin.flow.router.AfterNavigationObserver;
 import com.vaadin.flow.shared.Registration;
+import com.vaadin.starter.responsivelayoutgrid.backend.UIConfig;
 import com.vaadin.starter.responsivelayoutgrid.ui.utils.LumoStyles;
 import com.vaadin.starter.responsivelayoutgrid.ui.utils.UIUtils;
+import com.vaadin.starter.responsivelayoutgrid.ui.views.Default;
+
+import java.util.HashMap;
 
 public class AppBar extends FlexLayout implements AfterNavigationObserver {
 
@@ -33,7 +38,7 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
 	private Registration searchRegistration;
 	private TextField search;
 	private final FlexLayout tabContainer;
-
+	private HashMap<Tab, Class<? extends Component>> tabNavigationTargets;
 
 	public enum NavigationMode {
 		MENU, CONTEXTUAL
@@ -63,12 +68,6 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
 		actionItems.setClassName(CLASS_NAME + "__action-items");
 		actionItems.setVisible(false);
 
-		/*
-		avatar = new Image();
-		avatar.setClassName(CLASS_NAME + "__avatar");
-		avatar.setSrc("https://pbs.twimg.com/profile_images/1009479665705074688/0oLHVbs8_400x400.jpg");
-		*/
-
 		container = new FlexLayout(menuNavigationIcon, contextualNavigationIcon, this.title, search, actionItems);
 		container.setAlignItems(Alignment.CENTER);
 		container.setClassName(CLASS_NAME + "__container");
@@ -76,19 +75,23 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
 		add(container);
 
 		addTab = UIUtils.createSmallTertiaryIconButton(VaadinIcon.PLUS);
-		addTab.addClickListener(e -> setSelectedTab(addClosableTab("New Tab")));
+		addTab.addClickListener(e -> setSelectedTab(addClosableTab("New Tab", Default.class)));
 		addTab.setVisible(false);
 
 		tabs = new Tabs();
 		tabs.setVisible(false);
 		tabs.setClassName(CLASS_NAME + "__tabs");
-		// tabs.addClassName(LumoStyles.Margin.Horizontal.AUTO);
+		if (UIConfig.getNavigationMode().equals(UIConfig.NavigationMode.LINKS)) {
+			tabs.addClassName(LumoStyles.Margin.Horizontal.AUTO);
+		}
 		tabs.getElement().setAttribute("overflow", "end");
+		tabs.addSelectedChangeListener(event -> UI.getCurrent().navigate(tabNavigationTargets.get(tabs.getSelectedTab())));
+
+		tabNavigationTargets = new HashMap<>();
 
 		tabContainer = new FlexLayout(tabs, addTab);
 		tabContainer.setAlignItems(Alignment.CENTER);
 		tabContainer.setClassName(CLASS_NAME + "__tab-container");
-
 		add(tabContainer);
 	}
 
@@ -125,7 +128,9 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
 	@Override
 	public void afterNavigation(AfterNavigationEvent afterNavigationEvent) {
 		// TODO: what's the best way to update the title when a navigation change occurs?
-		setTitle(UI.getCurrent().getInternals().getTitle());
+		if (UIConfig.getNavigationMode().equals(UIConfig.NavigationMode.LINKS)) {
+			setTitle(UI.getCurrent().getInternals().getTitle());
+		}
 	}
 
 	public Button addActionItem(VaadinIcon icon) {
@@ -146,24 +151,26 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
 		addTab.setVisible(visible);
 	}
 
-	private Tab addTab(Tab tab) {
+	public Tab addTab(String text, Class<? extends Component> navigationTarget) {
+		Tab tab = new Tab(text);
 		tab.setClassName(CLASS_NAME + "__tab");
+
 		tabs.add(tab);
+		tabNavigationTargets.put(tab, navigationTarget);
 
 		updateTabsVisibility();
 
 		return tab;
 	}
 
-	public Tab addTab(String text) {
-		return addTab(new Tab(text));
-	}
-
-	public Tab addClosableTab(String text) {
-		Tab tab = addTab(new Tab(text));
+	public Tab addClosableTab(String text, Class<? extends Component> navigationTarget) {
+		Tab tab = addTab(text, navigationTarget);
 
 		Button close = UIUtils.createSmallTertiaryIconButton(VaadinIcon.CLOSE);
-		close.addClickListener(event -> tabs.remove(tab));
+		close.addClickListener(event -> {
+			tabs.remove(tab);
+			tabNavigationTargets.remove(tab);
+		});
 		tab.add(close);
 
 		return tab;
@@ -171,10 +178,17 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
 
 	public void setSelectedTab(Tab selectedTab) {
 		tabs.setSelectedTab(selectedTab);
+		navigateToSelectedTab();
 	}
 
-	public Tabs getTabs() {
-		return tabs;
+	public void updateSelectedTab(String text, Class<? extends Component> navigationTarget) {
+		getSelectedTab().setLabel(text);
+		tabNavigationTargets.put(getSelectedTab(), navigationTarget);
+		navigateToSelectedTab();
+	}
+
+	public Tab getSelectedTab() {
+		return tabs.getSelectedTab();
 	}
 
 	public Long getTabCount() {
@@ -184,6 +198,10 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
 	public void removeAllTabs() {
 		tabs.removeAll();
 		updateTabsVisibility();
+	}
+
+	private void navigateToSelectedTab() {
+		UI.getCurrent().navigate(tabNavigationTargets.get(getSelectedTab()));
 	}
 
 	public void searchModeOn() {

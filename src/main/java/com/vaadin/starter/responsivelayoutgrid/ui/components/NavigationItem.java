@@ -1,5 +1,6 @@
 package com.vaadin.starter.responsivelayoutgrid.ui.components;
 
+import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.icon.Icon;
@@ -9,11 +10,12 @@ import com.vaadin.starter.responsivelayoutgrid.ui.utils.UIUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NavigationItem extends Div {
+public abstract class NavigationItem extends Div {
 
 	protected final String CLASS_NAME = "navigation-item";
 
 	private String text;
+	private Class<? extends Component> navigationTarget;
 
 	private Button expandCollapse;
 
@@ -25,10 +27,11 @@ public class NavigationItem extends Div {
 
 	private int level = 0;
 
-	public NavigationItem(VaadinIcon icon, String text) {
+	public NavigationItem(VaadinIcon icon, String text, Class<? extends Component> navigationTarget) {
 		setClassName(CLASS_NAME);
 
 		this.text = text;
+		this.navigationTarget = navigationTarget;
 
 		expandCollapse = UIUtils.createSmallTertiaryIconButton(up);
 		expandCollapse.setVisible(false);
@@ -43,8 +46,8 @@ public class NavigationItem extends Div {
 		setLevel(0);
 	}
 
-	public NavigationItem(String text) {
-		this(null, text);
+	public NavigationItem(String text, Class<? extends Component> navigationTarget) {
+		this(null, text, navigationTarget);
 	}
 
 	public void addSubItem(NavigationItem item) {
@@ -68,6 +71,10 @@ public class NavigationItem extends Div {
 
 	public String getText() {
 		return text;
+	}
+
+	public Class<? extends Component> getNavigationTarget() {
+		return navigationTarget;
 	}
 
 	@Override

@@ -16,6 +16,7 @@ import com.vaadin.flow.router.RouterLayout;
 import com.vaadin.flow.server.InitialPageSettings;
 import com.vaadin.flow.server.PageConfigurator;
 import com.vaadin.flow.shared.Registration;
+import com.vaadin.starter.responsivelayoutgrid.backend.UIConfig;
 import com.vaadin.starter.responsivelayoutgrid.ui.components.*;
 import com.vaadin.starter.responsivelayoutgrid.ui.views.*;
 
@@ -24,19 +25,23 @@ import com.vaadin.starter.responsivelayoutgrid.ui.views.*;
 public class MainLayout extends FlexLayout
 		implements RouterLayout, PageConfigurator, BeforeEnterObserver {
 
+	private NavigationDrawer navigationDrawer;
+
 	private final FlexLayout content;
 	private final AppBar appBar;
 
-	Registration reverseNavigation;
+	private Registration reverseNavigation;
 	private ContextMenu menu;
-	private NavigationDrawer navigationDrawer;
 
 	public MainLayout() {
 		addClassName("root");
 
 		// Navigation
-		// initNavigationLinkDrawer();
-		initNavigationTabDrawer();
+		if (UIConfig.getNavigationMode().equals(UIConfig.NavigationMode.LINKS)) {
+			initNavigationLinkDrawer();
+		} else {
+			initNavigationTabDrawer();
+		}
 
 		// Content
 		content = new FlexLayout();
@@ -66,7 +71,7 @@ public class MainLayout extends FlexLayout
 	public void beforeEnter(BeforeEnterEvent beforeEnterEvent) {
 
 		// When using the navigation drawer with link items.
-		if (navigationDrawer instanceof NavigationLinkDrawer) {
+		if (UIConfig.getNavigationMode().equals(UIConfig.NavigationMode.LINKS)) {
 
 			appBar.reset();
 			Class<?> navigationTarget = beforeEnterEvent.getNavigationTarget();
@@ -109,7 +114,7 @@ public class MainLayout extends FlexLayout
 
 	private void createTabs() {
 		for (String tab : new String[]{"Ongoing", "Upcoming", "Closed"}) {
-			appBar.addTab(tab);
+			appBar.addTab(tab, Default.class);
 		}
 	}
 
@@ -135,21 +140,21 @@ public class MainLayout extends FlexLayout
 		add(navigationDrawer);
 
 		// Dashboard
-		navigationDrawer.addNavigationItem(VaadinIcon.GRID_BIG, "Dashboard");
+		navigationDrawer.addNavigationItem(VaadinIcon.GRID_BIG, "Dashboard", Dashboard.class);
 
-		NavigationItem charts = navigationDrawer.addNavigationItem(VaadinIcon.CHART, "Charts");
+		NavigationItem charts = navigationDrawer.addNavigationItem(VaadinIcon.CHART, "Charts", View1.class);
 
-		NavigationItem pieCharts = navigationDrawer.addNavigationItem(charts, "Pie Charts");
-		navigationDrawer.addNavigationItem(pieCharts, "Doughnut");
-		navigationDrawer.addNavigationItem(pieCharts, "Spie");
+		NavigationItem pieCharts = navigationDrawer.addNavigationItem(charts, "Pie Charts", View2.class);
+		navigationDrawer.addNavigationItem(pieCharts, "Doughnut", View3.class);
+		navigationDrawer.addNavigationItem(pieCharts, "Spie", View4.class);
 
-		NavigationItem flowchart = navigationDrawer.addNavigationItem(charts, "Flowchart");
-		navigationDrawer.addNavigationItem(flowchart, "Document");
-		navigationDrawer.addNavigationItem(flowchart, "Data");
-		navigationDrawer.addNavigationItem(flowchart, "System");
+		NavigationItem flowchart = navigationDrawer.addNavigationItem(charts, "Flowchart", View5.class);
+		navigationDrawer.addNavigationItem(flowchart, "Document", View6.class);
+		navigationDrawer.addNavigationItem(flowchart, "Data", View7.class);
+		navigationDrawer.addNavigationItem(flowchart, "System", View8.class);
 
 		// Workflows
-		navigationDrawer.addNavigationItem(VaadinIcon.SITEMAP, "Workflows");
+		navigationDrawer.addNavigationItem(VaadinIcon.SITEMAP, "Workflows", View9.class);
 
 		// Open in current or new tab
 		for (NavigationItem item : navigationDrawer.getNavigationItems()) {
@@ -157,15 +162,15 @@ public class MainLayout extends FlexLayout
 
 				// New tab
 				if (event.getButton() == 0 && event.isShiftKey()) {
-					appBar.setSelectedTab(appBar.addTab(item.getText()));
+					appBar.setSelectedTab(appBar.addClosableTab(item.getText(), item.getNavigationTarget()));
 				}
 
-				// Current tab
+				// Current or first tab
 				else if (event.getButton() == 0) {
 					if (appBar.getTabCount() > 0) {
-						appBar.getTabs().getSelectedTab().setLabel(item.getText());
+						appBar.updateSelectedTab(item.getText(), item.getNavigationTarget());
 					} else {
-						appBar.setSelectedTab(appBar.addTab(item.getText()));
+						appBar.setSelectedTab(appBar.addClosableTab(item.getText(), item.getNavigationTarget()));
 					}
 				}
 			});
