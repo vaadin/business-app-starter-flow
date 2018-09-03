@@ -1,6 +1,14 @@
 .navigation-item {
   align-items: center;
   display: flex;
+  font-size: var(--lumo-font-size-s);
+  font-weight: 600;
+  height: var(--lumo-size-l);
+}
+
+.navigation-item[level] {
+  background-color: var(--lumo-contrast-5pct);
+  font-weight: normal;
 }
 
 /* Hover */
@@ -22,9 +30,6 @@
   align-items: center;
   display: flex;
   flex-grow: 1;
-  font-size: var(--lumo-font-size-s);
-  font-weight: 600;
-  height: var(--lumo-size-l);
   overflow: hidden;
   padding: 0 var(--lumo-space-m);
 }
@@ -55,11 +60,11 @@
 }
 
 .navigation-item[level="2"] label {
-  margin-left: var(--lumo-space-l);
+  margin-left: calc(var(--lumo-space-m) * 3);
 }
 
 .navigation-item[level="3"] label {
-  margin-left: var(--lumo-space-xl);
+  margin-left: calc(var(--lumo-space-m) * 2);
 }
 
 /* Expand/collapse button */
