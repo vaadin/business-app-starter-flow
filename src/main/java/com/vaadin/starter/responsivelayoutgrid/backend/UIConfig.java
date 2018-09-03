@@ -19,7 +19,7 @@ public class UIConfig {
 	}
 
 	public static NavigationHeader getNavigationHeader() {
-		return NavigationHeader.ACCOUNT_SWITCHER;
+		return NavigationHeader.BRAND_EXPRESSION;
 	}
 
 }

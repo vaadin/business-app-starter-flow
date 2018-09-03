@@ -72,7 +72,7 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
 		avatar = new Image();
 		avatar.setClassName(CLASS_NAME + "__avatar");
 		avatar.setSrc("https://pbs.twimg.com/profile_images/798351849984294912/okhePpJW_400x400.jpg");
-		avatar.setVisible(false);
+		avatar.setVisible(UIConfig.getNavigationHeader().equals(UIConfig.NavigationHeader.BRAND_EXPRESSION));
 
 		ContextMenu contextMenu = new ContextMenu(avatar);
 		contextMenu.setOpenOnClick(true);
@@ -102,7 +102,7 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
 			tabs.addClassName(LumoStyles.Margin.Horizontal.AUTO);
 		}
 		tabs.getElement().setAttribute("overflow", "end");
-		tabs.addSelectedChangeListener(event -> UI.getCurrent().navigate(tabNavigationTargets.get(tabs.getSelectedTab())));
+		tabs.addSelectedChangeListener(event -> navigateToSelectedTab());
 
 		tabNavigationTargets = new HashMap<>();
 
@@ -198,11 +198,7 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
 		tab.getCloseButton().addClickListener(event -> {
 			tabs.remove(tab);
 			tabNavigationTargets.remove(tab);
-			try {
-				navigateToSelectedTab();
-			} catch (Exception e) {
-				navigateToDefaultView();
-			}
+			navigateToSelectedTab();
 		});
 
 		return tab;
@@ -210,7 +206,6 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
 
 	public void setSelectedTab(Tab selectedTab) {
 		tabs.setSelectedTab(selectedTab);
-		navigateToSelectedTab();
 	}
 
 	public void updateSelectedTab(String text, Class<? extends Component> navigationTarget) {
@@ -229,8 +224,8 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
 		return tabs.getSelectedTab();
 	}
 
-	public Long getTabCount() {
-		return tabs.getChildren().filter(component -> component instanceof Tab).count();
+	public int getTabCount() {
+		return Math.toIntExact(tabs.getChildren().filter(component -> component instanceof Tab).count());
 	}
 
 	public void removeAllTabs() {
@@ -238,12 +233,17 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
 		updateTabsVisibility();
 	}
 
-	private void navigateToSelectedTab() {
-		UI.getCurrent().navigate(tabNavigationTargets.get(getSelectedTab()));
-	}
-
-	private void navigateToDefaultView() {
-		UI.getCurrent().navigate(Default.class);
+	public void navigateToSelectedTab() {
+		try {
+			UI.getCurrent().navigate(tabNavigationTargets.get(getSelectedTab()));
+		} catch (Exception e) {
+			// BUG: If the right-most tab is closed, the  Tabs component does not auto-select tabs on the left.
+			if (getTabCount() > 0) {
+				tabs.setSelectedIndex(getTabCount() - 1);
+			} else {
+				UI.getCurrent().navigate(Default.class);
+			}
+		}
 	}
 
 	public void searchModeOn() {

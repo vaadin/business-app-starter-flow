@@ -11,6 +11,7 @@ import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.page.Viewport;
+import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
@@ -59,7 +60,6 @@ public class MainLayout extends FlexLayout
 
 		if (UIConfig.getNavigationMode().equals(UIConfig.NavigationMode.TABS)) {
 			createActionItems();
-			appBar.setAvatarVisible(true);
 			appBar.setAddTabButtonVisible(true);
 		}
 	}
@@ -160,22 +160,30 @@ public class MainLayout extends FlexLayout
 		// Workflows
 		navigationDrawer.addNavigationItem(VaadinIcon.SITEMAP, "Workflows", View9.class);
 
-		// Open in current or new tab
+		// Navigation listeners
 		for (NavigationItem item : navigationDrawer.getNavigationItems()) {
 			((ClickNotifier<Div>) item).addClickListener(event -> {
 
-				// New tab
+				// BUG: A selection change event isn't triggered when the first tab is added.
+				boolean firstTab = appBar.getTabCount() == 0;
+
+				// Shift-click to add a new tab.
 				if (event.getButton() == 0 && event.isShiftKey()) {
 					appBar.setSelectedTab(appBar.addClosableTab(item.getText(), item.getNavigationTarget()));
 				}
 
-				// Current or first tab
+				// Update the current tab, or create the first one.
 				else if (event.getButton() == 0) {
 					if (appBar.getTabCount() > 0) {
 						appBar.updateSelectedTab(item.getText(), item.getNavigationTarget());
 					} else {
 						appBar.setSelectedTab(appBar.addClosableTab(item.getText(), item.getNavigationTarget()));
 					}
+				}
+
+				// Fix for the bug mentioned above.
+				if (firstTab) {
+					appBar.navigateToSelectedTab();
 				}
 			});
 		}
