@@ -11,6 +11,10 @@
   margin-right: var(--lumo-space-l);
 }
 
+.list-item__icon {
+  color: var(--lumo-secondary-text-color);
+}
+
 .list-item__img,
 .list-item__initials {
   border-radius: var(--lumo-border-radius);

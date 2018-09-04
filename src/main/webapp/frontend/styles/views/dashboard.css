@@ -1,0 +1,19 @@
+@media (max-width: 1023px) {
+  .dashboard__bookmarks-recent-items {
+    flex-direction: column;
+  }
+
+  .dashboard__bookmarks-recent-items > * {
+    width: 100%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .dashboard__bookmarks-recent-items > * {
+    width: 50%;
+  }
+
+  .dashboard__bookmarks-recent-items > *:not(:last-child) {
+    margin-right: var(--lumo-space-l);
+  }
+}

@@ -1,0 +1,146 @@
+package com.vaadin.starter.applayout.ui.utils;
+
+import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.H3;
+import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.html.Paragraph;
+import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.orderedlayout.FlexLayout;
+import com.vaadin.flow.component.textfield.TextField;
+
+import java.util.Collection;
+
+public class UIUtils {
+
+    public static Div createRightAlignedDiv(Component... components) {
+        Div div = new Div(components);
+        div.getStyle().set(CSSProperties.TextAlign.PROPERTY, CSSProperties.TextAlign.RIGHT);
+        return div;
+    }
+
+    public static FlexLayout createWrappingFlexLayout(Component... components) {
+        FlexLayout layout = new FlexLayout(components);
+        layout.getStyle().set(CSSProperties.FlexWrap.PROPERTY, CSSProperties.FlexWrap.WRAP);
+        return layout;
+    }
+
+    public static FlexLayout createWrappingFlexLayout(Collection<String> classNames, Component... components) {
+        FlexLayout layout = createWrappingFlexLayout(components);
+        classNames.forEach(layout::addClassName);
+        return layout;
+    }
+
+    public static FlexLayout createFlexLayout(Collection<String> classNames, Component... components) {
+        FlexLayout layout = new FlexLayout(components);
+        classNames.forEach(layout::addClassName);
+        return layout;
+    }
+
+    /* Small buttons */
+    public static Button createSmallButton(String text) {
+        Button button = new Button(text);
+        button.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Button.SMALL);
+        return button;
+    }
+
+    public static Button createSmallButton(VaadinIcon icon, String text) {
+        Button button = new Button(text, new Icon(icon));
+        button.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Button.SMALL);
+        return button;
+    }
+
+    /* Small icon buttons */
+    public static Button createSmallIconButton(VaadinIcon icon) {
+        Button button = new Button(new Icon(icon));
+        button.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Button.SMALL_ICON);
+        return button;
+    }
+
+    public static Button createSmallIconButton(Icon icon) {
+        Button button = new Button(icon);
+        button.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Button.SMALL_ICON);
+        return button;
+    }
+
+    /* Small tertiary icon buttons */
+    public static Button createSmallTertiaryIconButton(VaadinIcon icon) {
+        Button button = new Button(new Icon(icon));
+        button.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Button.SMALL_TERTIARY_ICON);
+        return button;
+    }
+
+    public static Button createSmallTertiaryIconButton(Icon icon) {
+        Button button = new Button(icon);
+        button.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Button.SMALL_TERTIARY_ICON);
+        return button;
+    }
+
+    /* Small primary icon buttons */
+    public static Button createSmallPrimaryIconButton(VaadinIcon icon) {
+        Button button = new Button(new Icon(icon));
+        button.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Button.SMALL_PRIMARY_ICON);
+        return button;
+    }
+
+    public static Button createSmallPrimaryIconButton(Icon icon) {
+        Button button = new Button(icon);
+        button.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Button.SMALL_PRIMARY_ICON);
+        return button;
+    }
+
+    /* Create small textfield */
+    public static TextField createSmallTextField() {
+        TextField textField = new TextField();
+        textField.getElement().setAttribute(LumoStyles.THEME, LumoStyles.TextField.SMALL);
+        return textField;
+    }
+
+    /* Paragraphs */
+    public static Paragraph createParagraph(Collection<String> classNames, String text) {
+        Paragraph p = new Paragraph(text);
+        classNames.forEach(p::addClassName);
+        return p;
+    }
+
+    /* Headers */
+    public static H3 createH3(Collection<String> classNames, String text) {
+        H3 h3 = new H3(text);
+        classNames.forEach(h3::addClassName);
+        return h3;
+    }
+
+    /* Labels */
+    public static Label createLabel(Collection<String> classNames, String text) {
+        Label label = new Label(text);
+        classNames.forEach(label::addClassName);
+        return label;
+    }
+
+    /* Icons */
+    public static Icon createSmallIcon(VaadinIcon icon) {
+        Icon i = new Icon(icon);
+        i.addClassName(LumoStyles.IconSize.S);
+        return i;
+    }
+
+    public static Icon createSmallIcon(Collection<String> classNames, VaadinIcon icon) {
+        Icon i = createSmallIcon(icon);
+        classNames.forEach(i::addClassName);
+        return i;
+    }
+
+    public static Icon createLargeIcon(VaadinIcon icon) {
+        Icon i = new Icon(icon);
+        i.addClassName(LumoStyles.IconSize.L);
+        return i;
+    }
+
+    public static Icon createLargeIcon(Collection<String> classNames, VaadinIcon icon) {
+        Icon i = createLargeIcon(icon);
+        classNames.forEach(i::addClassName);
+        return i;
+    }
+}
