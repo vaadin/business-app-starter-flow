@@ -7,16 +7,16 @@ import com.vaadin.starter.responsivelayoutgrid.ui.utils.UIUtils;
 
 public class ClosableTab extends Tab {
 
-	private Button close;
+    private Button close;
 
-	public ClosableTab(String label) {
-		super(label);
+    public ClosableTab(String label) {
+        super(label);
 
-		close = UIUtils.createSmallTertiaryIconButton(VaadinIcon.CLOSE);
-		add(close);
-	}
+        close = UIUtils.createSmallTertiaryIconButton(VaadinIcon.CLOSE);
+        add(close);
+    }
 
-	public Button getCloseButton() {
-		return close;
-	}
+    public Button getCloseButton() {
+        return close;
+    }
 }

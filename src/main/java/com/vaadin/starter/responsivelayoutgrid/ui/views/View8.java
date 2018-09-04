@@ -9,7 +9,7 @@ import com.vaadin.starter.responsivelayoutgrid.ui.MainLayout;
 @PageTitle("View 8")
 public class View8 extends Div {
 
-	public View8() {
+    public View8() {
 
-	}
+    }
 }

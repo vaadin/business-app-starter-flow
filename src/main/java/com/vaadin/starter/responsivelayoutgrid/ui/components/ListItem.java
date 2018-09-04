@@ -13,85 +13,85 @@ import com.vaadin.starter.responsivelayoutgrid.ui.utils.LumoStyles;
 
 public class ListItem extends FlexLayout {
 
-	private final String CLASS_NAME = "list-item";
-	private Label primaryLabel;
-	private Label secondaryLabel;
-	private Div divider;
+    private final String CLASS_NAME = "list-item";
+    private Label primaryLabel;
+    private Label secondaryLabel;
+    private Div divider;
 
-	public ListItem(String primary) {
-		setAlignItems(FlexComponent.Alignment.CENTER);
-		setClassName(CLASS_NAME);
+    public ListItem(String primary) {
+        setAlignItems(FlexComponent.Alignment.CENTER);
+        setClassName(CLASS_NAME);
 
-		primaryLabel = new Label(primary);
+        primaryLabel = new Label(primary);
 
-		divider = new Div();
-		divider.setClassName(CLASS_NAME + "__divider");
-		divider.setVisible(false);
-		add(divider);
-	}
+        divider = new Div();
+        divider.setClassName(CLASS_NAME + "__divider");
+        divider.setVisible(false);
+        add(divider);
+    }
 
-	public ListItem(VaadinIcon icon, String primary, String secondary) {
-		this(primary);
+    public ListItem(VaadinIcon icon, String primary, String secondary) {
+        this(primary);
 
-		Icon visual = new Icon(icon);
-		visual.setClassName(CLASS_NAME + "__icon");
+        Icon visual = new Icon(icon);
+        visual.setClassName(CLASS_NAME + "__icon");
 
-		secondaryLabel = new Label(secondary);
-		secondaryLabel.getElement().setAttribute(LumoStyles.THEME, LumoStyles.FontSize.S);
-		secondaryLabel.addClassName(LumoStyles.Text.SECONDARY);
+        secondaryLabel = new Label(secondary);
+        secondaryLabel.getElement().setAttribute(LumoStyles.THEME, LumoStyles.FontSize.S);
+        secondaryLabel.addClassName(LumoStyles.Text.SECONDARY);
 
-		FlexLayout column = new FlexLayout(primaryLabel, secondaryLabel);
-		column.getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN);
+        FlexLayout column = new FlexLayout(primaryLabel, secondaryLabel);
+        column.getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN);
 
-		add(visual, column);
-	}
+        add(visual, column);
+    }
 
-	public ListItem(String initials, String primary, String secondary) {
-		this(primary);
+    public ListItem(String initials, String primary, String secondary) {
+        this(primary);
 
-		FlexLayout visual = new FlexLayout(new Text(initials));
-		visual.setAlignItems(FlexComponent.Alignment.CENTER);
-		visual.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
-		visual.setClassName(CLASS_NAME + "__initials");
-		visual.getElement().setAttribute(LumoStyles.THEME, LumoStyles.DARK + " " + LumoStyles.FontSize.S);
+        FlexLayout visual = new FlexLayout(new Text(initials));
+        visual.setAlignItems(FlexComponent.Alignment.CENTER);
+        visual.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
+        visual.setClassName(CLASS_NAME + "__initials");
+        visual.getElement().setAttribute(LumoStyles.THEME, LumoStyles.DARK + " " + LumoStyles.FontSize.S);
 
-		secondaryLabel = new Label(secondary);
-		secondaryLabel.getElement().setAttribute(LumoStyles.THEME, LumoStyles.FontSize.S);
-		secondaryLabel.addClassName(LumoStyles.Text.SECONDARY);
+        secondaryLabel = new Label(secondary);
+        secondaryLabel.getElement().setAttribute(LumoStyles.THEME, LumoStyles.FontSize.S);
+        secondaryLabel.addClassName(LumoStyles.Text.SECONDARY);
 
-		FlexLayout column = new FlexLayout(primaryLabel, secondaryLabel);
-		column.getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN);
+        FlexLayout column = new FlexLayout(primaryLabel, secondaryLabel);
+        column.getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN);
 
-		add(visual, column);
-	}
+        add(visual, column);
+    }
 
-	public ListItem(VaadinIcon icon, String primary) {
-		this(primary);
+    public ListItem(VaadinIcon icon, String primary) {
+        this(primary);
 
-		Icon visual = new Icon(icon);
-		visual.setClassName(CLASS_NAME + "__icon");
+        Icon visual = new Icon(icon);
+        visual.setClassName(CLASS_NAME + "__icon");
 
-		add(visual, primaryLabel);
-	}
+        add(visual, primaryLabel);
+    }
 
-	public ListItem(String source, String primary) {
-		this(primary);
+    public ListItem(String source, String primary) {
+        this(primary);
 
-		Image image = new Image(source, "");
-		image.setClassName(CLASS_NAME + "__img");
+        Image image = new Image(source, "");
+        image.setClassName(CLASS_NAME + "__img");
 
-		add(image, primaryLabel);
-	}
+        add(image, primaryLabel);
+    }
 
-	public void setPrimaryText(String text) {
-		primaryLabel.setText(text);
-	}
+    public void setPrimaryText(String text) {
+        primaryLabel.setText(text);
+    }
 
-	public Label getPrimaryLabel() {
-		return this.primaryLabel;
-	}
+    public Label getPrimaryLabel() {
+        return this.primaryLabel;
+    }
 
-	public void setDividerVisible(boolean visible) {
-		divider.setVisible(visible);
-	}
+    public void setDividerVisible(boolean visible) {
+        divider.setVisible(visible);
+    }
 }

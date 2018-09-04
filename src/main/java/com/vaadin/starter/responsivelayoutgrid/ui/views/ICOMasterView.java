@@ -22,50 +22,50 @@ import static com.vaadin.starter.responsivelayoutgrid.ui.utils.ViewStyles.GRID_V
 @PageTitle("Initial Coin Offerings")
 public class ICOMasterView extends Div {
 
-	private final Grid<InitialCoinOffering> grid;
+    private final Grid<InitialCoinOffering> grid;
 
-	public ICOMasterView() {
-		setClassName(GRID_VIEW);
-		getStyle().set(CSSProperties.Flex.PROPERTY, "1");
+    public ICOMasterView() {
+        setClassName(GRID_VIEW);
+        getStyle().set(CSSProperties.Flex.PROPERTY, "1");
 
-		grid = new Grid();
-		grid.addColumn(new ComponentRenderer<>(this::createICOInfo))
-				.setHeader("Name")
-				.setFrozen(true)
-				.setSortable(true)
-				.setWidth("200px")
-				.setFlexGrow(1);
-		grid.addColumn(new LocalDateRenderer<>(InitialCoinOffering::getStartDate, "MMM dd, YYYY"))
-				.setHeader("Start Date")
-				.setSortable(true)
-				.setWidth("160px")
-				.setFlexGrow(0);
-		grid.addColumn(new LocalDateRenderer<>(InitialCoinOffering::getEndDate, "MMM dd, YYYY"))
-				.setHeader("End Date")
-				.setSortable(true)
-				.setWidth("160px")
-				.setFlexGrow(0);
-		grid.addColumn(new ComponentRenderer<>(this::createAmountRaised))
-				.setHeader(UIUtils.createRightAlignedDiv(new Text("Amount Raised")))
-				.setSortable(true)
-				.setWidth("160px")
-				.setFlexGrow(0);
+        grid = new Grid();
+        grid.addColumn(new ComponentRenderer<>(this::createICOInfo))
+                .setHeader("Name")
+                .setFrozen(true)
+                .setSortable(true)
+                .setWidth("200px")
+                .setFlexGrow(1);
+        grid.addColumn(new LocalDateRenderer<>(InitialCoinOffering::getStartDate, "MMM dd, YYYY"))
+                .setHeader("Start Date")
+                .setSortable(true)
+                .setWidth("160px")
+                .setFlexGrow(0);
+        grid.addColumn(new LocalDateRenderer<>(InitialCoinOffering::getEndDate, "MMM dd, YYYY"))
+                .setHeader("End Date")
+                .setSortable(true)
+                .setWidth("160px")
+                .setFlexGrow(0);
+        grid.addColumn(new ComponentRenderer<>(this::createAmountRaised))
+                .setHeader(UIUtils.createRightAlignedDiv(new Text("Amount Raised")))
+                .setSortable(true)
+                .setWidth("160px")
+                .setFlexGrow(0);
 
-		grid.addSelectionListener(event -> event.getFirstSelectedItem().ifPresent(this::viewDetails));
-		grid.setItems(DummyData.getAll());
-		grid.setSizeFull();
-		add(grid);
-	}
+        grid.addSelectionListener(event -> event.getFirstSelectedItem().ifPresent(this::viewDetails));
+        grid.setItems(DummyData.getAll());
+        grid.setSizeFull();
+        add(grid);
+    }
 
-	private Component createICOInfo(InitialCoinOffering ico) {
-		return new ListItem(ico.getSource(), ico.getName());
-	}
+    private Component createICOInfo(InitialCoinOffering ico) {
+        return new ListItem(ico.getSource(), ico.getName());
+    }
 
-	private Component createAmountRaised(InitialCoinOffering ico) {
-		return UIUtils.createRightAlignedDiv(new Text(Double.toString(ico.getAmountRaised())));
-	}
+    private Component createAmountRaised(InitialCoinOffering ico) {
+        return UIUtils.createRightAlignedDiv(new Text(Double.toString(ico.getAmountRaised())));
+    }
 
-	private void viewDetails(InitialCoinOffering ico) {
-		UI.getCurrent().navigate(ICODetailsView.class, ico.getId());
-	}
+    private void viewDetails(InitialCoinOffering ico) {
+        UI.getCurrent().navigate(ICODetailsView.class, ico.getId());
+    }
 }

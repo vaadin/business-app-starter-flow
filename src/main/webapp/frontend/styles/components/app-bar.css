@@ -27,7 +27,9 @@
 }
 
 /* Title */
-.app-bar__title {
+.app-bar__title,
+.app-bar h4 {
+  flex-grow: 1;
   margin: 0;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -36,7 +38,7 @@
 
 /* Action items */
 .app-bar__action-items {
-  margin-left: auto;
+  
 }
 
 /* Search */
@@ -73,7 +75,7 @@
 
 @media (max-width: 1023px) {
   .app-bar__container {
-    padding: var(--lumo-space-wide-m);
+    padding: var(--lumo-space-s) var(--lumo-space-s);
   }
 
   .app-bar__tab-container {

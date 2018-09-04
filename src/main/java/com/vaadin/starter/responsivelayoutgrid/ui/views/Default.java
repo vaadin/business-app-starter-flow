@@ -9,7 +9,7 @@ import com.vaadin.starter.responsivelayoutgrid.ui.MainLayout;
 @PageTitle("Welcome")
 public class Default extends Div {
 
-	public Default() {
+    public Default() {
 
-	}
+    }
 }
