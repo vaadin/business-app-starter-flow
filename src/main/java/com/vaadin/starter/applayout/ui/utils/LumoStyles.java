@@ -32,6 +32,10 @@ public class LumoStyles {
         public static final String TERTIARY = "tertiary";
     }
 
+    public class Color {
+        public static final String BASE_COLOR = "var(--lumo-base-color)";
+    }
+
     public class FontSize {
         public static final String H1 = "h1";
         public static final String H2 = "h2";

@@ -48,11 +48,11 @@ public class Dashboard extends Div {
         viewport.add(createHeader(VaadinIcon.TRENDING_UP, "Sales"));
         viewport.add(createSalesChart());
 
-        FlexLayout row = new FlexLayout(
+        FlexLayout row = UIUtils.createFlexLayout(
+                Collections.singleton(CLASS_NAME + "__bookmarks-recent-items"),
                 new Div(createHeader(VaadinIcon.BOOKMARK, "Bookmark"), createTabbedList()),
                 new Div(createHeader(VaadinIcon.TIME_BACKWARD, "Recent Items"), createTabbedList())
         );
-        row.setClassName(CLASS_NAME + "__bookmarks-recent-items");
         viewport.add(row);
 
     }
@@ -73,9 +73,9 @@ public class Dashboard extends Div {
     }
 
     private Component createProgressCharts() {
-        FlexLayout card = UIUtils.createWrappingFlexLayout(Arrays.asList(LumoStyles.BorderRadius.S, LumoStyles.Shadow.S));
+        FlexLayout card = UIUtils.createWrappingFlexLayout(Arrays.asList(CLASS_NAME + "__progress", LumoStyles.BorderRadius.S, LumoStyles.Shadow.S));
         card.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
-        card.getStyle().set(CSSProperties.BackgroundColor.PROPERTY, "var(--lumo-base-color)");
+        card.getStyle().set(CSSProperties.BackgroundColor.PROPERTY, LumoStyles.Color.BASE_COLOR);
 
         for (String section : new String[]{"Today", "Week", "Month", "Year"}) {
             card.add(createProgressSection(section));
@@ -109,7 +109,7 @@ public class Dashboard extends Div {
         );
         column.setAlignItems(FlexComponent.Alignment.CENTER);
         column.getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN);
-        column.getStyle().set(CSSProperties.MinWidth.PROPERTY, "200px");
+        
         return column;
     }
 
@@ -165,7 +165,7 @@ public class Dashboard extends Div {
         conf.addSeries(new ListSeries(220, 240, 400, 360, 420, 640, 580, 800, 600, 580, 740, 800));
 
         FlexLayout card = UIUtils.createWrappingFlexLayout(Arrays.asList(LumoStyles.BorderRadius.S, LumoStyles.Padding.All.M, LumoStyles.Shadow.S), chart);
-        card.getStyle().set(CSSProperties.BackgroundColor.PROPERTY, "var(--lumo-base-color)");
+        card.getStyle().set(CSSProperties.BackgroundColor.PROPERTY, LumoStyles.Color.BASE_COLOR);
         card.getStyle().set(CSSProperties.BoxSizing.PROPERTY, CSSProperties.BoxSizing.BORDER_BOX);
         card.setHeight("400px");
         return card;
@@ -186,7 +186,7 @@ public class Dashboard extends Div {
         items.getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN);
 
         FlexLayout card = UIUtils.createWrappingFlexLayout(Arrays.asList(LumoStyles.BorderRadius.S, LumoStyles.Shadow.S), tabs, items);
-        card.getStyle().set(CSSProperties.BackgroundColor.PROPERTY, "var(--lumo-base-color)");
+        card.getStyle().set(CSSProperties.BackgroundColor.PROPERTY, LumoStyles.Color.BASE_COLOR);
         card.getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN);
         return card;
     }

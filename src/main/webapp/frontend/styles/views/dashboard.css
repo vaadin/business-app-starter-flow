@@ -1,3 +1,37 @@
+@media (max-width: 399px) {
+  .dashboard__progress > * {
+    width: 100%;
+  }
+  .dashboard__progress > *:not(:last-child) {
+    box-shadow: inset 0 -1px var(--lumo-contrast-20pct);
+  }
+}
+
+@media (min-width: 400px) and (max-width: 599px) {
+  .dashboard__progress > * {
+    width: 50%;
+  }
+  .dashboard__progress > *:first-child {
+    box-shadow: inset 0 -1px var(--lumo-contrast-20pct),
+                inset -1px 0 var(--lumo-contrast-20pct);
+  }
+  .dashboard__progress > *:nth-child(2) {
+    box-shadow: inset 0 -1px var(--lumo-contrast-20pct);
+  }
+  .dashboard__progress > *:nth-child(3) {
+    box-shadow: inset -1px 0 var(--lumo-contrast-20pct);
+  }
+}
+
+@media (min-width: 600px) {
+  .dashboard__progress > * {
+    width: 25%;
+  }
+  .dashboard__progress > *:not(:last-child) {
+    box-shadow: inset -1px 0 var(--lumo-contrast-20pct);
+  }
+}
+
 @media (max-width: 1023px) {
   .dashboard__bookmarks-recent-items {
     flex-direction: column;
