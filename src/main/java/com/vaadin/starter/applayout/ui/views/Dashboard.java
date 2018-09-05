@@ -109,7 +109,7 @@ public class Dashboard extends Div {
         );
         column.setAlignItems(FlexComponent.Alignment.CENTER);
         column.getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN);
-        
+
         return column;
     }
 

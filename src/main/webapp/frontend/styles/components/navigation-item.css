@@ -30,6 +30,7 @@
   align-items: center;
   display: flex;
   flex-grow: 1;
+  height: 100%;
   overflow: hidden;
   padding: 0 var(--lumo-space-m);
 }
@@ -50,6 +51,7 @@
 
 /* Link label */
 .navigation-item__link label {
+  cursor: inherit;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -60,11 +62,11 @@
 }
 
 .navigation-item[level="2"] label {
-  margin-left: calc(var(--lumo-space-m) * 3);
+  margin-left: calc(var(--lumo-space-m) * 2);
 }
 
 .navigation-item[level="3"] label {
-  margin-left: calc(var(--lumo-space-m) * 2);
+  margin-left: calc(var(--lumo-space-m) * 3);
 }
 
 /* Expand/collapse button */

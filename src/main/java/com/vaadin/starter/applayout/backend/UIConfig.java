@@ -15,11 +15,11 @@ public class UIConfig {
     }
 
     public static NavigationMode getNavigationMode() {
-        return NavigationMode.TABS;
+        return NavigationMode.LINKS;
     }
 
     public static NavigationHeader getNavigationHeader() {
-        return NavigationHeader.BRAND_EXPRESSION;
+        return NavigationHeader.ACCOUNT_SWITCHER;
     }
 
 }
