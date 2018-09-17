@@ -2,22 +2,24 @@ package com.vaadin.starter.applayout.backend;
 
 import java.time.LocalDate;
 
-public class InitialCoinOffering {
+public class Report {
 
     private Long id;
     private String source;
     private String name;
     private LocalDate startDate;
     private LocalDate endDate;
-    private Double amountRaised;
+    private Double balance;
+    private String currency;
 
-    public InitialCoinOffering(Long id, String source, String name, LocalDate startDate, LocalDate endDate, Double amountRaised) {
+    public Report(Long id, String source, String name, LocalDate startDate, LocalDate endDate, Double balance, String currency) {
         this.id = id;
         this.source = source;
         this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.amountRaised = amountRaised;
+        this.balance = balance;
+        this.currency = currency;
     }
 
     public Long getId() {
@@ -56,12 +58,16 @@ public class InitialCoinOffering {
         this.endDate = endDate;
     }
 
-    public Double getAmountRaised() {
-        return amountRaised;
+    public Double getBalance() {
+        return balance;
     }
 
-    public void setAmountRaised(Double amountRaised) {
-        this.amountRaised = amountRaised;
+    public void setBalance(Double balance) {
+        this.balance = balance;
     }
+
+    public String getCurrency() { return currency; }
+
+    public void setCurrency(String currency) { this.currency = currency; }
 
 }

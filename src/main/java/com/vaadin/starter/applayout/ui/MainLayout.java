@@ -87,14 +87,14 @@ public class MainLayout extends FlexLayout
             }
 
             // TODO: Who is responsible for configuring the AppBar based on the selected view?
-            if (navigationTarget == ICOMasterView.class || navigationTarget == IDVerifications.class) {
+            if (navigationTarget == ReportsView.class || navigationTarget == IDVerifications.class) {
                 createTabs();
                 createActionItems();
 
-            } else if (navigationTarget == ICODetailsView.class) {
+            } else if (navigationTarget == ReportDetailsView.class) {
                 appBar.setNavigationMode(AppBar.NavigationMode.CONTEXTUAL);
                 appBar.setContextualNavigationIcon(VaadinIcon.ARROW_BACKWARD);
-                reverseNavigation = appBar.getContextualNavigationIcon().addClickListener(e -> UI.getCurrent().navigate("initial-coin-offerings"));
+                reverseNavigation = appBar.getContextualNavigationIcon().addClickListener(e -> UI.getCurrent().navigate("reports"));
             }
         }
     }
@@ -122,15 +122,20 @@ public class MainLayout extends FlexLayout
         NavigationLinkDrawer navigationDrawer = new NavigationLinkDrawer();
         add(navigationDrawer);
 
-        navigationDrawer.addNavigationItem(VaadinIcon.GRID, "Initial Coin Offerings", ICOMasterView.class);
+        navigationDrawer.addNavigationItem(VaadinIcon.GRID_BIG, "Dashboard", Dashboard.class);
+        navigationDrawer.addNavigationItem(VaadinIcon.FILE_TEXT, "Reports", ReportsView.class);
+
+        NavigationItem workflows = navigationDrawer.addNavigationItem(VaadinIcon.SITEMAP, "Workflows", View1.class);
+        NavigationItem teams = navigationDrawer.addNavigationItem(workflows, "Teams", View2.class);
+        navigationDrawer.addNavigationItem(teams, "Payments team", View3.class);
+        navigationDrawer.addNavigationItem(teams, "Reporting team", View4.class);
+
+        NavigationItem flowchart = navigationDrawer.addNavigationItem(workflows, "Data exchange", View5.class);
+        navigationDrawer.addNavigationItem(flowchart, "Document", View6.class);
+        navigationDrawer.addNavigationItem(flowchart, "Data", View7.class);
+        navigationDrawer.addNavigationItem(flowchart, "System", View8.class);
+
         navigationDrawer.addNavigationItem(VaadinIcon.USER_CHECK, "ID Verifications", IDVerifications.class);
-
-        NavigationItem view1 = navigationDrawer.addNavigationItem(VaadinIcon.RANDOM, "View 1", View1.class);
-        navigationDrawer.addNavigationItem(view1, "View 2", View2.class);
-
-        NavigationItem view3 = navigationDrawer.addNavigationItem(view1, "View 3", View3.class);
-        navigationDrawer.addNavigationItem(view3, "View 4", View4.class);
-        navigationDrawer.addNavigationItem(view3, "View 5", View5.class);
 
         this.navigationDrawer = navigationDrawer;
     }
@@ -139,22 +144,20 @@ public class MainLayout extends FlexLayout
         NavigationTabDrawer navigationDrawer = new NavigationTabDrawer();
         add(navigationDrawer);
 
-        // Dashboard
         navigationDrawer.addNavigationItem(VaadinIcon.GRID_BIG, "Dashboard", Dashboard.class);
+        navigationDrawer.addNavigationItem(VaadinIcon.FILE_TEXT, "Reports", ReportsView.class);
 
-        NavigationItem charts = navigationDrawer.addNavigationItem(VaadinIcon.CHART, "Charts", View1.class);
+        NavigationItem workflows = navigationDrawer.addNavigationItem(VaadinIcon.SITEMAP, "Workflows", View1.class);
+        NavigationItem teams = navigationDrawer.addNavigationItem(workflows, "Teams", View2.class);
+        navigationDrawer.addNavigationItem(teams, "Payments team", View3.class);
+        navigationDrawer.addNavigationItem(teams, "Reporting team", View4.class);
 
-        NavigationItem pieCharts = navigationDrawer.addNavigationItem(charts, "Pie Charts", View2.class);
-        navigationDrawer.addNavigationItem(pieCharts, "Doughnut", View3.class);
-        navigationDrawer.addNavigationItem(pieCharts, "Spie", View4.class);
-
-        NavigationItem flowchart = navigationDrawer.addNavigationItem(charts, "Flowchart", View5.class);
+        NavigationItem flowchart = navigationDrawer.addNavigationItem(workflows, "Data exchange", View5.class);
         navigationDrawer.addNavigationItem(flowchart, "Document", View6.class);
         navigationDrawer.addNavigationItem(flowchart, "Data", View7.class);
         navigationDrawer.addNavigationItem(flowchart, "System", View8.class);
 
-        // Workflows
-        navigationDrawer.addNavigationItem(VaadinIcon.SITEMAP, "Workflows", View9.class);
+        navigationDrawer.addNavigationItem(VaadinIcon.USER_CHECK, "ID Verifications", IDVerifications.class);
 
         // Navigation listeners
         for (NavigationItem item : navigationDrawer.getNavigationItems()) {

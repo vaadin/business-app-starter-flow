@@ -110,7 +110,7 @@ public abstract class NavigationDrawer extends Div implements AfterNavigationObs
 
     private void initBrandExpression() {
         Image logo = new Image();
-        logo.setSrc("https://upload.wikimedia.org/wikipedia/en/thumb/b/bf/KFC_logo.svg/300px-KFC_logo.svg.png");
+        logo.setSrc("frontend/styles/images/sample-logo1.jpg");
 
         Div logoWrapper = new Div(logo);
         logoWrapper.setClassName(CLASS_NAME + "__logo");

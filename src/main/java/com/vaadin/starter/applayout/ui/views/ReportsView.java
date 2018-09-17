@@ -10,7 +10,7 @@ import com.vaadin.flow.data.renderer.LocalDateRenderer;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.starter.applayout.backend.DummyData;
-import com.vaadin.starter.applayout.backend.InitialCoinOffering;
+import com.vaadin.starter.applayout.backend.Report;
 import com.vaadin.starter.applayout.ui.MainLayout;
 import com.vaadin.starter.applayout.ui.components.ListItem;
 import com.vaadin.starter.applayout.ui.utils.CSSProperties;
@@ -18,35 +18,35 @@ import com.vaadin.starter.applayout.ui.utils.UIUtils;
 
 import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
 
-@Route(value = "initial-coin-offerings", layout = MainLayout.class)
-@PageTitle("Initial Coin Offerings")
-public class ICOMasterView extends Div {
+@Route(value = "reports", layout = MainLayout.class)
+@PageTitle("Reports")
+public class ReportsView extends Div {
 
-    private final Grid<InitialCoinOffering> grid;
+    private final Grid<Report> grid;
 
-    public ICOMasterView() {
+    public ReportsView() {
         setClassName(GRID_VIEW);
         getStyle().set(CSSProperties.Flex.PROPERTY, "1");
 
         grid = new Grid();
-        grid.addColumn(new ComponentRenderer<>(this::createICOInfo))
-                .setHeader("Name")
+        grid.addColumn(new ComponentRenderer<>(this::createreportInfo))
+                .setHeader("Company")
                 .setFrozen(true)
                 .setSortable(true)
                 .setWidth("200px")
                 .setFlexGrow(1);
-        grid.addColumn(new LocalDateRenderer<>(InitialCoinOffering::getStartDate, "MMM dd, YYYY"))
+        grid.addColumn(new LocalDateRenderer<>(Report::getStartDate, "MMM dd, YYYY"))
                 .setHeader("Start Date")
                 .setSortable(true)
                 .setWidth("160px")
                 .setFlexGrow(0);
-        grid.addColumn(new LocalDateRenderer<>(InitialCoinOffering::getEndDate, "MMM dd, YYYY"))
+        grid.addColumn(new LocalDateRenderer<>(Report::getEndDate, "MMM dd, YYYY"))
                 .setHeader("End Date")
                 .setSortable(true)
                 .setWidth("160px")
                 .setFlexGrow(0);
-        grid.addColumn(new ComponentRenderer<>(this::createAmountRaised))
-                .setHeader(UIUtils.createRightAlignedDiv(new Text("Amount Raised")))
+        grid.addColumn(new ComponentRenderer<>(this::createBalance))
+                .setHeader(UIUtils.createRightAlignedDiv(new Text("Balance")))
                 .setSortable(true)
                 .setWidth("160px")
                 .setFlexGrow(0);
@@ -57,15 +57,15 @@ public class ICOMasterView extends Div {
         add(grid);
     }
 
-    private Component createICOInfo(InitialCoinOffering ico) {
-        return new ListItem(ico.getSource(), ico.getName());
+    private Component createreportInfo(Report report) {
+        return new ListItem(report.getSource(), report.getName());
     }
 
-    private Component createAmountRaised(InitialCoinOffering ico) {
-        return UIUtils.createRightAlignedDiv(new Text(Double.toString(ico.getAmountRaised())));
+    private Component createBalance(Report report) {
+        return UIUtils.createRightAlignedDiv(new Text(Double.toString(report.getBalance()) + " " + report.getCurrency()));
     }
 
-    private void viewDetails(InitialCoinOffering ico) {
-        UI.getCurrent().navigate(ICODetailsView.class, ico.getId());
+    private void viewDetails(Report report) {
+        UI.getCurrent().navigate(ReportDetailsView.class, report.getId());
     }
 }
