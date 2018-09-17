@@ -37,6 +37,11 @@
   right: 0;
 }
 
+.list-item.error-text .list-item__icon,
+.list-item.success-text .list-item__icon {
+  color: inherit;
+}
+
 vaadin-grid .list-item {
   padding: var(--lumo-space-s) 0;
 }
