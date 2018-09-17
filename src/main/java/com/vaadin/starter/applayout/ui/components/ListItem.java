@@ -45,7 +45,7 @@ public class ListItem extends FlexLayout {
 
         secondaryLabel = new Label(secondary);
         secondaryLabel.getElement().setAttribute(LumoStyles.THEME, LumoStyles.FontSize.S);
-        secondaryLabel.addClassName(LumoStyles.Text.SECONDARY);
+        secondaryLabel.addClassName(LumoStyles.TextColor.SECONDARY);
 
         FlexLayout column = new FlexLayout(primaryLabel, secondaryLabel);
         column.getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN);
@@ -65,7 +65,7 @@ public class ListItem extends FlexLayout {
 
         secondaryLabel = new Label(secondary);
         secondaryLabel.getElement().setAttribute(LumoStyles.THEME, LumoStyles.FontSize.S);
-        secondaryLabel.addClassName(LumoStyles.Text.SECONDARY);
+        secondaryLabel.addClassName(LumoStyles.TextColor.SECONDARY);
 
         FlexLayout column = new FlexLayout(primaryLabel, secondaryLabel);
         column.getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN);

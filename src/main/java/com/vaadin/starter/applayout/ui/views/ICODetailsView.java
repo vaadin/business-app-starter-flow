@@ -135,11 +135,11 @@ public class ICODetailsView extends Div implements HasUrlParameter<Long> {
         ListItem item = new ListItem(icon, primary, secondary);
 
         if (icon.equals(VaadinIcon.TIMER)) {
-            item.addClassName(LumoStyles.Text.SECONDARY);
+            item.addClassName(LumoStyles.TextColor.SECONDARY);
         } else if (icon.equals(VaadinIcon.CHECK) || icon.equals(VaadinIcon.FLAG_CHECKERED)) {
-            item.addClassName(LumoStyles.Text.SUCCESS);
+            item.addClassName(LumoStyles.TextColor.SUCCESS);
         } else if (icon.equals(VaadinIcon.BAN)) {
-            item.addClassName(LumoStyles.Text.ERROR);
+            item.addClassName(LumoStyles.TextColor.ERROR);
         }
 
         item.getPrimaryLabel().addClassName(LumoStyles.FontSize.H3);

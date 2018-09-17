@@ -4,6 +4,7 @@
   font-size: var(--lumo-font-size-s);
   font-weight: 600;
   height: var(--lumo-size-l);
+  transition: background-color var(--transition-duration-s);
 }
 
 .navigation-item[level] {
@@ -13,7 +14,7 @@
 
 /* Hover */
 .navigation-item:hover {
-  background-color: var(--lumo-contrast-5pct);
+  background-color: var(--lumo-contrast-10pct);
 }
 
 .navigation-item__link:hover {
@@ -22,7 +23,7 @@
 
 /* Active */
 .navigation-item:active {
-  background-color: var(--lumo-contrast-10pct);
+  background-color: var(--lumo-contrast-20pct);
 }
 
 /* Link */

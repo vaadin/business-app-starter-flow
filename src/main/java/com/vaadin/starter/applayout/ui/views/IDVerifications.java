@@ -69,9 +69,9 @@ public class IDVerifications extends Div {
     private Component createOriginOfFunds(Person person) {
         Icon icon = new Icon(VaadinIcon.FILE);
         if (person.isOriginOfFunds()) {
-            icon.addClassName(LumoStyles.Text.PRIMARY);
+            icon.addClassName(LumoStyles.TextColor.PRIMARY);
         } else {
-            icon.addClassName(LumoStyles.Text.SECONDARY);
+            icon.addClassName(LumoStyles.TextColor.SECONDARY);
         }
         return icon;
     }

@@ -245,7 +245,7 @@ public class LumoStyles {
         }
     }
 
-    public class Text {
+    public class TextColor {
         public static final String HEADER = "header-text";
         public static final String BODY = "body-text";
         public static final String SECONDARY = "secondary-text";

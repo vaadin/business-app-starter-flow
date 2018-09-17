@@ -65,7 +65,7 @@ public class Dashboard extends Div {
                         LumoStyles.Margin.Top.XL,
                         LumoStyles.Spacing.Right.M
                 ),
-                UIUtils.createSmallIcon(Collections.singleton(LumoStyles.Text.TERTIARY), icon),
+                UIUtils.createSmallIcon(Collections.singleton(LumoStyles.TextColor.TERTIARY), icon),
                 UIUtils.createLabel(Collections.singleton(LumoStyles.FontSize.H3), title)
         );
         header.setAlignItems(FlexComponent.Alignment.CENTER);
