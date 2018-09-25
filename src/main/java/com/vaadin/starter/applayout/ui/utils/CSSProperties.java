@@ -15,6 +15,13 @@ public class CSSProperties {
         public static final String BORDER_BOX = new String("border-box");
     }
 
+    public static class Display {
+        public static final String PROPERTY = new String("display");
+        public static final String BLOCK = new String("block");
+        public static final String FLEX = new String("flex");
+        public static final String INLINE_BLOCK = new String("inline-block");
+    }
+
     public static class Flex {
         public static final String PROPERTY = new String("flex");
     }
