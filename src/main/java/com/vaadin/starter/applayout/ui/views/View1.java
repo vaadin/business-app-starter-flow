@@ -1,6 +1,7 @@
 package com.vaadin.starter.applayout.ui.views;
 
 import com.sun.javafx.print.Units;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
@@ -55,11 +56,7 @@ public class View1 extends Div {
         FormLayout form = new FormLayout();
 
         Div formWrapper = new Div(form);
-        formWrapper.setClassName(LumoStyles.Padding.All.L);
         formWrapper.getElement().getStyle().set(CSSProperties.Display.PROPERTY, CSSProperties.Display.INLINE_BLOCK);
-
-        splitter.addToSecondary(formWrapper);
-        splitter.getSecondaryComponent().getElement().getStyle().set("flex-grow", "0");
 
         TextField name = new TextField();
         name.setLabel("Name");
@@ -68,7 +65,6 @@ public class View1 extends Div {
         firstName.setLabel("First Name");
 
         Label label = new Label("Text Information");
-
 
         TextField lastName = new TextField();
         lastName.setLabel("Last Name");
@@ -85,8 +81,24 @@ public class View1 extends Div {
         TextField timesDenied = new TextField();
         timesDenied.setLabel("Last Modified");
 
+        Button cancel = new Button("Cancel");
+        Button save = new Button("Save");
+        save.getElement().setAttribute("theme", "primary");
+
+        Div actions = new Div();
+        actions.setClassName(LumoStyles.Padding.Top.M);
+        actions.getElement().getStyle().set(CSSProperties.Display.PROPERTY, CSSProperties.Display.FLEX);
+        actions.getElement().getStyle().set(CSSProperties.JustifyContent.PROPERTY, CSSProperties.JustifyContent.SPACE_BETWEEN);
+        actions.add( cancel, save);
+        splitter.addToSecondary(formWrapper, actions);
+
+
         form.add(name, firstName, label, lastName, email, radioButtonGroup, lastModified, timesDenied);
 
+        splitter.getSecondaryComponent().getElement().getStyle().set("flex-grow", "0");
+
+
+        splitter.getSecondaryComponent().getElement().setAttribute("class",LumoStyles.Padding.All.L);
         form.setResponsiveSteps(
                 new FormLayout.ResponsiveStep("0", 1),
                 new FormLayout.ResponsiveStep("21em", 2),

@@ -40,6 +40,11 @@ public class CSSProperties {
         public static final String WRAP = new String("wrap");
     }
 
+    public static class JustifyContent {
+        public static final String PROPERTY = new String("justify-content");
+        public static final String SPACE_BETWEEN = new String("space-between");
+    }
+
     public static class Margin {
         public static final String PROPERTY = new String("margin");
         public static final String LEFT = new String("margin-left");
