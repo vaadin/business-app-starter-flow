@@ -64,7 +64,7 @@ public class View1 extends Div {
         TextField firstName = new TextField();
         firstName.setLabel("First Name");
 
-        Label label = new Label("Text Information");
+        TextField label = new TextField("Text Information");
 
         TextField lastName = new TextField();
         lastName.setLabel("Last Name");
@@ -73,7 +73,9 @@ public class View1 extends Div {
         email.setLabel("Email");
 
         RadioButtonGroup radioButtonGroup = new RadioButtonGroup();
-        radioButtonGroup.setItems("Option A", "Option B", "Option C");
+        radioButtonGroup.setItems("Option A", "Option B");
+        radioButtonGroup.getElement().getStyle().set("display", "flex");
+        radioButtonGroup.getElement().getStyle().set("flexDirection", "column");
 
         TextField lastModified = new TextField();
         lastModified.setLabel("Last Modified");
@@ -103,7 +105,6 @@ public class View1 extends Div {
                 new FormLayout.ResponsiveStep("0", 1),
                 new FormLayout.ResponsiveStep("21em", 2),
                 new FormLayout.ResponsiveStep("22em", 3));
-
         add(splitter);
 
     }
