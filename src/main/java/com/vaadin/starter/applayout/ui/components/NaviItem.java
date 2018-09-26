@@ -10,7 +10,7 @@ import com.vaadin.starter.applayout.ui.utils.UIUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class NavigationItem extends Div {
+public abstract class NaviItem extends Div {
 
     protected final String CLASS_NAME = "navigation-item";
 
@@ -20,14 +20,14 @@ public abstract class NavigationItem extends Div {
     private Button expandCollapse;
 
     private boolean subItemsVisible;
-    private List<NavigationItem> subItems;
+    private List<NaviItem> subItems;
 
     private Icon down = new Icon(VaadinIcon.CARET_DOWN);
     private Icon up = new Icon(VaadinIcon.CARET_UP);
 
     private int level = 0;
 
-    public NavigationItem(VaadinIcon icon, String text, Class<? extends Component> navigationTarget) {
+    public NaviItem(VaadinIcon icon, String text, Class<? extends Component> navigationTarget) {
         setClassName(CLASS_NAME);
 
         this.text = text;
@@ -46,11 +46,11 @@ public abstract class NavigationItem extends Div {
         setLevel(0);
     }
 
-    public NavigationItem(String text, Class<? extends Component> navigationTarget) {
+    public NaviItem(String text, Class<? extends Component> navigationTarget) {
         this(null, text, navigationTarget);
     }
 
-    public void addSubItem(NavigationItem item) {
+    public void addSubItem(NaviItem item) {
         if (!expandCollapse.isVisible()) {
             expandCollapse.setVisible(true);
         }

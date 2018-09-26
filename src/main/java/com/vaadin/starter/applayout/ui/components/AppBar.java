@@ -28,8 +28,8 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
 
     private FlexLayout container;
 
-    private Button menuNavigationIcon;
-    private Button contextualNavigationIcon;
+    private Button menuNaviIcon;
+    private Button contextualNaviIcon;
 
     private H4 title;
     private FlexLayout actionItems;
@@ -41,9 +41,9 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
     private Registration searchRegistration;
     private TextField search;
     private final FlexLayout tabContainer;
-    private HashMap<Tab, Class<? extends Component>> tabNavigationTargets;
+    private HashMap<Tab, Class<? extends Component>> tabNaviTargets;
 
-    public enum NavigationMode {
+    public enum NaviMode {
         MENU, CONTEXTUAL
     }
 
@@ -52,13 +52,13 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
         setClassName(CLASS_NAME);
         getElement().setAttribute(LumoStyles.THEME, LumoStyles.DARK);
 
-        menuNavigationIcon = UIUtils.createSmallTertiaryIconButton(VaadinIcon.MENU);
-        menuNavigationIcon.setClassName(CLASS_NAME + "__navigation-icon");
+        menuNaviIcon = UIUtils.createSmallTertiaryIconButton(VaadinIcon.MENU);
+        menuNaviIcon.setClassName(CLASS_NAME + "__navigation-icon");
 
-        contextualNavigationIcon = UIUtils.createSmallTertiaryIconButton(VaadinIcon.ARROW_BACKWARD);
-        contextualNavigationIcon.setClassName(CLASS_NAME + "__navigation-icon");
-        contextualNavigationIcon.addClassName(CLASS_NAME + "__navigation-icon--visible");
-        contextualNavigationIcon.setVisible(false);
+        contextualNaviIcon = UIUtils.createSmallTertiaryIconButton(VaadinIcon.ARROW_BACKWARD);
+        contextualNaviIcon.setClassName(CLASS_NAME + "__navigation-icon");
+        contextualNaviIcon.addClassName(CLASS_NAME + "__navigation-icon--visible");
+        contextualNaviIcon.setVisible(false);
 
         this.title = new H4(title);
         this.title.setClassName(CLASS_NAME + "__title");
@@ -71,7 +71,7 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
         avatar = new Image();
         avatar.setClassName(CLASS_NAME + "__avatar");
         avatar.setSrc("https://pbs.twimg.com/profile_images/798351849984294912/okhePpJW_400x400.jpg");
-        avatar.setVisible(UIConfig.getNavigationHeader().equals(UIConfig.NavigationHeader.BRAND_EXPRESSION));
+        avatar.setVisible(UIConfig.getNaviHeader().equals(UIConfig.NaviHeader.BRAND_EXPRESSION));
 
         ContextMenu contextMenu = new ContextMenu(avatar);
         contextMenu.setOpenOnClick(true);
@@ -84,26 +84,26 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
         actionItems.setClassName(CLASS_NAME + "__action-items");
         actionItems.setVisible(false);
 
-        container = new FlexLayout(menuNavigationIcon, contextualNavigationIcon, this.title, search, actionItems, avatar);
+        container = new FlexLayout(menuNaviIcon, contextualNaviIcon, this.title, search, actionItems, avatar);
         container.setAlignItems(Alignment.CENTER);
         container.setClassName(CLASS_NAME + "__container");
         container.setFlexGrow(1, search);
         add(container);
 
         addTab = UIUtils.createSmallIconButton(VaadinIcon.PLUS);
-        addTab.addClickListener(e -> setSelectedTab(addClosableTab("New Tab", Default.class)));
+        addTab.addClickListener(e -> tabs.setSelectedTab(addClosableTab("New Tab", Default.class)));
         addTab.setVisible(false);
 
         tabs = new Tabs();
         tabs.setVisible(false);
         tabs.setClassName(CLASS_NAME + "__tabs");
-        if (UIConfig.getNavigationMode().equals(UIConfig.NavigationMode.LINKS)) {
+        if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
             tabs.addClassName(LumoStyles.Margin.Horizontal.AUTO);
         }
         tabs.getElement().setAttribute("overflow", "end");
         tabs.addSelectedChangeListener(event -> navigateToSelectedTab());
 
-        tabNavigationTargets = new HashMap<>();
+        tabNaviTargets = new HashMap<>();
 
         tabContainer = new FlexLayout(tabs, addTab);
         tabContainer.setAlignItems(Alignment.CENTER);
@@ -111,26 +111,26 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
         add(tabContainer);
     }
 
-    public void setNavigationMode(NavigationMode mode) {
-        if (mode.equals(NavigationMode.MENU)) {
-            menuNavigationIcon.setVisible(true);
-            contextualNavigationIcon.setVisible(false);
+    public void setNaviMode(NaviMode mode) {
+        if (mode.equals(NaviMode.MENU)) {
+            menuNaviIcon.setVisible(true);
+            contextualNaviIcon.setVisible(false);
         } else {
-            menuNavigationIcon.setVisible(false);
-            contextualNavigationIcon.setVisible(true);
+            menuNaviIcon.setVisible(false);
+            contextualNaviIcon.setVisible(true);
         }
     }
 
-    public Button getMenuNavigationIcon() {
-        return menuNavigationIcon;
+    public Button getMenuNaviIcon() {
+        return menuNaviIcon;
     }
 
-    public Button getContextualNavigationIcon() {
-        return contextualNavigationIcon;
+    public Button getContextualNaviIcon() {
+        return contextualNaviIcon;
     }
 
-    public void setContextualNavigationIcon(VaadinIcon icon) {
-        contextualNavigationIcon.setIcon(new Icon(icon));
+    public void setContextualNaviIcon(Icon icon) {
+        contextualNaviIcon.setIcon(icon);
     }
 
     public String getTitle() {
@@ -144,7 +144,7 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
     @Override
     public void afterNavigation(AfterNavigationEvent afterNavigationEvent) {
         // TODO: what's the best way to update the title when a navigation change occurs?
-        if (UIConfig.getNavigationMode().equals(UIConfig.NavigationMode.LINKS)) {
+        if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
             setTitle(UI.getCurrent().getInternals().getTitle());
         }
     }
@@ -155,7 +155,7 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
         return component;
     }
 
-    public Button addActionItem(VaadinIcon icon) {
+    public Button addActionItem(Icon icon) {
         Button button = UIUtils.createSmallTertiaryIconButton(icon);
         addActionItem(button);
         return button;
@@ -166,19 +166,11 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
         updateActionItemsVisibility();
     }
 
-    public void setAvatarVisible(boolean visible) {
-        avatar.setVisible(true);
-    }
-
-    public void setAddTabButtonVisible(boolean visible) {
-        addTab.setVisible(visible);
-    }
-
     private void addTab(Tab tab, Class<? extends Component> navigationTarget) {
         tab.setClassName(CLASS_NAME + "__tab");
 
         tabs.add(tab);
-        tabNavigationTargets.put(tab, navigationTarget);
+        tabNaviTargets.put(tab, navigationTarget);
 
         updateTabsVisibility();
     }
@@ -196,31 +188,23 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
 
         tab.getCloseButton().addClickListener(event -> {
             tabs.remove(tab);
-            tabNavigationTargets.remove(tab);
+            tabNaviTargets.remove(tab);
             navigateToSelectedTab();
         });
 
         return tab;
     }
 
-    public void setSelectedTab(Tab selectedTab) {
-        tabs.setSelectedTab(selectedTab);
-    }
-
     public void updateSelectedTab(String text, Class<? extends Component> navigationTarget) {
-        Tab tab = getSelectedTab();
+        Tab tab = tabs.getSelectedTab();
         tab.setLabel(text);
 
         if (tab instanceof ClosableTab) {
             tab.add(((ClosableTab) tab).getCloseButton());
         }
 
-        tabNavigationTargets.put(tab, navigationTarget);
+        tabNaviTargets.put(tab, navigationTarget);
         navigateToSelectedTab();
-    }
-
-    public Tab getSelectedTab() {
-        return tabs.getSelectedTab();
     }
 
     public int getTabCount() {
@@ -234,7 +218,7 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
 
     public void navigateToSelectedTab() {
         try {
-            UI.getCurrent().navigate(tabNavigationTargets.get(getSelectedTab()));
+            UI.getCurrent().navigate(tabNaviTargets.get(tabs.getSelectedTab()));
         } catch (Exception e) {
             // BUG: If the right-most tab is closed, the  Tabs component does not auto-select tabs on the left.
             if (getTabCount() > 0) {
@@ -246,35 +230,35 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
     }
 
     public void searchModeOn() {
-        menuNavigationIcon.setVisible(false);
+        menuNaviIcon.setVisible(false);
         title.setVisible(false);
         actionItems.setVisible(false);
         tabContainer.setVisible(false);
 
-        contextualNavigationIcon.setIcon(new Icon(VaadinIcon.ARROW_BACKWARD));
-        contextualNavigationIcon.setVisible(true);
-        searchRegistration = contextualNavigationIcon.addClickListener(e -> searchModeOff());
+        contextualNaviIcon.setIcon(new Icon(VaadinIcon.ARROW_BACKWARD));
+        contextualNaviIcon.setVisible(true);
+        searchRegistration = contextualNaviIcon.addClickListener(e -> searchModeOff());
 
         search.setVisible(true);
         search.focus();
     }
 
     private void searchModeOff() {
-        menuNavigationIcon.setVisible(true);
+        menuNaviIcon.setVisible(true);
         title.setVisible(true);
         tabContainer.setVisible(true);
 
         updateActionItemsVisibility();
         updateTabsVisibility();
 
-        contextualNavigationIcon.setVisible(false);
+        contextualNaviIcon.setVisible(false);
         searchRegistration.remove();
 
         search.setVisible(false);
     }
 
     public void reset() {
-        setNavigationMode(AppBar.NavigationMode.MENU);
+        setNaviMode(AppBar.NaviMode.MENU);
 
         removeAllActionItems();
         removeAllTabs();

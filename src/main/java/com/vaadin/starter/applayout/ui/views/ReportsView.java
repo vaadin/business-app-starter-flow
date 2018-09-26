@@ -11,14 +11,14 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.starter.applayout.backend.DummyData;
 import com.vaadin.starter.applayout.backend.Report;
-import com.vaadin.starter.applayout.ui.MainLayout;
+import com.vaadin.starter.applayout.ui.Root;
 import com.vaadin.starter.applayout.ui.components.ListItem;
 import com.vaadin.starter.applayout.ui.utils.CSSProperties;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
 
 import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
 
-@Route(value = "reports", layout = MainLayout.class)
+@Route(value = "reports", layout = Root.class)
 @PageTitle("Reports")
 public class ReportsView extends Div {
 

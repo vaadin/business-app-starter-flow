@@ -6,20 +6,20 @@ public class UIConfig {
 
     }
 
-    public enum NavigationMode {
+    public enum NaviMode {
         LINKS, TABS
     }
 
-    public enum NavigationHeader {
+    public enum NaviHeader {
         ACCOUNT_SWITCHER, BRAND_EXPRESSION
     }
 
-    public static NavigationMode getNavigationMode() {
-        return NavigationMode.LINKS;
+    public static NaviMode getNaviMode() {
+        return NaviMode.LINKS;
     }
 
-    public static NavigationHeader getNavigationHeader() {
-        return NavigationHeader.BRAND_EXPRESSION;
+    public static NaviHeader getNaviHeader() {
+        return NaviHeader.BRAND_EXPRESSION;
     }
 
 }

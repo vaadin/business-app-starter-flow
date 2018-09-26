@@ -39,6 +39,18 @@ public class UIUtils {
         return layout;
     }
 
+    public static FlexLayout createColumn(Component... components) {
+        FlexLayout layout = new FlexLayout(components);
+        layout.getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN);
+        return layout;
+    }
+
+    public static FlexLayout createColumn(Collection<String> classNames, Component... components) {
+        FlexLayout layout = createColumn(components);
+        classNames.forEach(layout::addClassName);
+        return layout;
+    }
+
     /* Small buttons */
     public static Button createSmallButton(String text) {
         Button button = new Button(text);
@@ -54,9 +66,7 @@ public class UIUtils {
 
     /* Small icon buttons */
     public static Button createSmallIconButton(VaadinIcon icon) {
-        Button button = new Button(new Icon(icon));
-        button.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Button.SMALL_ICON);
-        return button;
+        return createSmallIconButton(new Icon(icon));
     }
 
     public static Button createSmallIconButton(Icon icon) {
@@ -67,9 +77,7 @@ public class UIUtils {
 
     /* Small tertiary icon buttons */
     public static Button createSmallTertiaryIconButton(VaadinIcon icon) {
-        Button button = new Button(new Icon(icon));
-        button.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Button.SMALL_TERTIARY_ICON);
-        return button;
+        return createSmallTertiaryIconButton(new Icon(icon));
     }
 
     public static Button createSmallTertiaryIconButton(Icon icon) {
@@ -80,9 +88,7 @@ public class UIUtils {
 
     /* Small primary icon buttons */
     public static Button createSmallPrimaryIconButton(VaadinIcon icon) {
-        Button button = new Button(new Icon(icon));
-        button.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Button.SMALL_PRIMARY_ICON);
-        return button;
+        return createSmallPrimaryIconButton(new Icon(icon));
     }
 
     public static Button createSmallPrimaryIconButton(Icon icon) {

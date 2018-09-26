@@ -8,7 +8,6 @@ import com.vaadin.flow.component.charts.model.ListSeries;
 import com.vaadin.flow.component.charts.model.XAxis;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Image;
-import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
@@ -18,7 +17,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.starter.applayout.backend.Report;
 import com.vaadin.starter.applayout.backend.DummyData;
-import com.vaadin.starter.applayout.ui.MainLayout;
+import com.vaadin.starter.applayout.ui.Root;
 import com.vaadin.starter.applayout.ui.components.ListItem;
 import com.vaadin.starter.applayout.ui.utils.BoxShadowBorders;
 import com.vaadin.starter.applayout.ui.utils.CSSProperties;
@@ -31,7 +30,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Random;
 
-@Route(value = "report-details", layout = MainLayout.class)
+@Route(value = "report-details", layout = Root.class)
 @PageTitle("Report Details")
 public class ReportDetailsView extends Div implements HasUrlParameter<Long> {
 
@@ -70,8 +69,7 @@ public class ReportDetailsView extends Div implements HasUrlParameter<Long> {
 
         status = new ListItem(VaadinIcon.LOCK, "", "Status");
 
-        FlexLayout column = new FlexLayout(UIUtils.createH3(Collections.singleton(LumoStyles.Margin.Responsive.Horizontal.ML), "Company name"), balance, runningDate, status);
-        column.getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN);
+        FlexLayout column = UIUtils.createColumn(UIUtils.createH3(Collections.singleton(LumoStyles.Margin.Responsive.Horizontal.ML), "Company name"), balance, runningDate, status);
         column.getStyle().set(CSSProperties.Flex.PROPERTY, "1");
 
         FlexLayout row = UIUtils.createWrappingFlexLayout(image, column);

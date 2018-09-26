@@ -11,6 +11,7 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.starter.applayout.ui.utils.CSSProperties;
 import com.vaadin.starter.applayout.ui.utils.LumoStyles;
+import com.vaadin.starter.applayout.ui.utils.UIUtils;
 
 public class ListItem extends FlexLayout {
 
@@ -47,10 +48,7 @@ public class ListItem extends FlexLayout {
         secondaryLabel.getElement().setAttribute(LumoStyles.THEME, LumoStyles.FontSize.S);
         secondaryLabel.addClassName(LumoStyles.TextColor.SECONDARY);
 
-        FlexLayout column = new FlexLayout(primaryLabel, secondaryLabel);
-        column.getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN);
-
-        add(visual, column);
+        add(visual, UIUtils.createColumn(primaryLabel, secondaryLabel));
     }
 
     public ListItem(String initials, String primary, String secondary) {
@@ -67,10 +65,7 @@ public class ListItem extends FlexLayout {
         secondaryLabel.getElement().setAttribute(LumoStyles.THEME, LumoStyles.FontSize.S);
         secondaryLabel.addClassName(LumoStyles.TextColor.SECONDARY);
 
-        FlexLayout column = new FlexLayout(primaryLabel, secondaryLabel);
-        column.getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN);
-
-        add(visual, column);
+        add(visual, UIUtils.createColumn(primaryLabel, secondaryLabel));
     }
 
     public ListItem(VaadinIcon icon, String primary) {

@@ -11,7 +11,7 @@ import com.vaadin.flow.data.renderer.LocalDateRenderer;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.starter.applayout.backend.Person;
-import com.vaadin.starter.applayout.ui.MainLayout;
+import com.vaadin.starter.applayout.ui.Root;
 import com.vaadin.starter.applayout.ui.components.ListItem;
 import com.vaadin.starter.applayout.ui.utils.CSSProperties;
 import com.vaadin.starter.applayout.ui.utils.LumoStyles;
@@ -22,7 +22,7 @@ import java.util.List;
 
 import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
 
-@Route(value = "id-verifications", layout = MainLayout.class)
+@Route(value = "id-verifications", layout = Root.class)
 @PageTitle("ID Verifications")
 public class IDVerifications extends Div {
 

@@ -11,11 +11,14 @@
 <link rel="stylesheet" href="lumo-spacing.css">
 <link rel="stylesheet" href="lumo-typography.css">
 
+<link rel="stylesheet" href="components/abstract-view.css">
+<link rel="stylesheet" href="components/account-switcher.css">
 <link rel="stylesheet" href="components/app-bar.css">
+<link rel="stylesheet" href="components/brand-expression.css">
 <link rel="import"     href="components/charts.html">
 <link rel="stylesheet" href="components/list-item.css">
-<link rel="stylesheet" href="components/navigation-drawer.css">
-<link rel="stylesheet" href="components/navigation-item.css">
+<link rel="stylesheet" href="components/navi-drawer.css">
+<link rel="stylesheet" href="components/navi-item.css">
 
 <link rel="stylesheet" href="misc/box-shadow-borders.css">
 
@@ -26,7 +29,7 @@
 <custom-style>
   <style include="lumo-badge">
     :root {
-      --navigation-drawer-width: calc(var(--lumo-size-m) * 7);
+      --navi-drawer-width: calc(var(--lumo-size-m) * 7);
       --transition-duration-s: 160ms;
       --transition-duration-m: 240ms;
       --transition-duration-l: 320ms;
@@ -35,20 +38,28 @@
     html,
     body {
       height: 100%;
+      overflow: hidden;
       width: 100%;
     }
 
     .root {
       background-color: var(--lumo-shade-5pct);
+      flex-direction: column;
       height: 100%;
       width: 100%;
     }
 
-    .content {
-      flex-direction: column;
-      overflow: hidden;
-      width: 100%;
-      z-index: 0;
+    .root__row {
+      flex-grow: 1;
     }
+
+    .root__column {
+      flex-grow: 1;
+    }
+
+    .root__view-container {
+      flex-grow: 1;
+    }
+
   </style>
 </custom-style>

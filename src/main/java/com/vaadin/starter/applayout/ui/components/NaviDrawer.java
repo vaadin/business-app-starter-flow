@@ -2,7 +2,6 @@ package com.vaadin.starter.applayout.ui.components;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.contextmenu.ContextMenu;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H4;
 import com.vaadin.flow.component.html.Image;
@@ -13,14 +12,13 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.AfterNavigationEvent;
 import com.vaadin.flow.router.AfterNavigationObserver;
 import com.vaadin.starter.applayout.backend.UIConfig;
-import com.vaadin.starter.applayout.ui.utils.LumoStyles;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
 
 import java.util.ArrayList;
 
-public abstract class NavigationDrawer extends Div implements AfterNavigationObserver {
+public abstract class NaviDrawer extends Div implements AfterNavigationObserver {
 
-    private final String CLASS_NAME = "navigation-drawer";
+    private final String CLASS_NAME = "navi-drawer";
     private final String OPEN = CLASS_NAME + "--open";
     private final String RAIL = CLASS_NAME + "--rail";
 
@@ -34,11 +32,11 @@ public abstract class NavigationDrawer extends Div implements AfterNavigationObs
     private Button dropdown;
 
     protected Div list;
-    private ArrayList<NavigationItem> items;
+    private ArrayList<NaviItem> items;
 
     private final Button railButton = UIUtils.createSmallButton(VaadinIcon.CARET_LEFT, "Collapse");
 
-    public NavigationDrawer() {
+    public NaviDrawer() {
         setClassName(CLASS_NAME);
         init();
     }
@@ -61,7 +59,7 @@ public abstract class NavigationDrawer extends Div implements AfterNavigationObs
         content.add(scrollArea);
 
         // Header: account switcher or brand logo.
-        if (UIConfig.getNavigationHeader().equals(UIConfig.NavigationHeader.ACCOUNT_SWITCHER)) {
+        if (UIConfig.getNaviHeader().equals(UIConfig.NaviHeader.ACCOUNT_SWITCHER)) {
             initAccountSwitcher();
         } else {
             initBrandExpression();
@@ -86,36 +84,11 @@ public abstract class NavigationDrawer extends Div implements AfterNavigationObs
     }
 
     private void initAccountSwitcher() {
-        avatar = new Image();
-        avatar.setClassName(CLASS_NAME + "__avatar");
-        avatar.setSrc("https://pbs.twimg.com/profile_images/798351849984294912/okhePpJW_400x400.jpg");
-
-        username = new H4("Conor McGregor");
-        username.setClassName(CLASS_NAME + "__title");
-
-        email = new Label("conor.mcgregor@gmail.com");
-        email.setClassName(CLASS_NAME + "__email");
-        email.getElement().setAttribute(LumoStyles.THEME, LumoStyles.FontSize.S);
-
-        dropdown = UIUtils.createSmallTertiaryIconButton(VaadinIcon.ANGLE_DOWN);
-        email.add(dropdown);
-
-        ContextMenu contextMenu = new ContextMenu(dropdown);
-        contextMenu.setOpenOnClick(true);
-        contextMenu.addItem("conor.mcgregor@outlook.com", e -> System.out.println("Testing..."));
-        contextMenu.addItem("conor.mcgregor@yahoo.com", e -> System.out.println("Testing..."));
-
-        scrollArea.add(avatar, username, email);
+        scrollArea.add(new AccountSwitcher());
     }
 
     private void initBrandExpression() {
-        Image logo = new Image();
-        logo.setSrc("frontend/styles/images/sample-logo1.jpg");
-
-        Div logoWrapper = new Div(logo);
-        logoWrapper.setClassName(CLASS_NAME + "__logo");
-
-        scrollArea.add(logoWrapper);
+        scrollArea.add(new BrandExpression());
     }
 
     private void setRailModeEnabled(boolean enabled) {
@@ -144,21 +117,21 @@ public abstract class NavigationDrawer extends Div implements AfterNavigationObs
         removeClassName(OPEN);
     }
 
-    protected void addNavigationItem(NavigationItem item) {
+    protected void addNaviItem(NaviItem item) {
         list.add(item);
         items.add(item);
     }
 
-    protected void addNavigationItem(NavigationItem parent, NavigationItem item) {
+    protected void addNaviItem(NaviItem parent, NaviItem item) {
         parent.addSubItem(item);
-        addNavigationItem(item);
+        addNaviItem(item);
     }
 
-    public abstract NavigationItem addNavigationItem(VaadinIcon icon, String text, Class<? extends Component> navigationTarget);
+    public abstract NaviItem addNaviItem(VaadinIcon icon, String text, Class<? extends Component> navigationTarget);
 
-    public abstract NavigationItem addNavigationItem(NavigationItem parent, String text, Class<? extends Component> navigationTarget);
+    public abstract NaviItem addNaviItem(NaviItem parent, String text, Class<? extends Component> navigationTarget);
 
-    public ArrayList<NavigationItem> getNavigationItems() {
+    public ArrayList<NaviItem> getNaviItems() {
         return items;
     }
 

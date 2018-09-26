@@ -12,7 +12,7 @@ import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import com.vaadin.starter.applayout.ui.MainLayout;
+import com.vaadin.starter.applayout.ui.Root;
 import com.vaadin.starter.applayout.ui.components.ListItem;
 import com.vaadin.starter.applayout.ui.utils.CSSProperties;
 import com.vaadin.starter.applayout.ui.utils.LumoStyles;
@@ -22,7 +22,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Random;
 
-@Route(value = "dashboard", layout = MainLayout.class)
+@Route(value = "dashboard", layout = Root.class)
 @PageTitle("Dashboard")
 public class Dashboard extends Div {
 
@@ -102,14 +102,12 @@ public class Dashboard extends Div {
         chartContainer.setHeight("120px");
         chartContainer.setWidth("120px");
 
-        FlexLayout column = UIUtils.createFlexLayout(
+        FlexLayout column = UIUtils.createColumn(
                 Arrays.asList(LumoStyles.Padding.Bottom.S, LumoStyles.Padding.Top.M),
                 new Label(title),
                 chartContainer
         );
         column.setAlignItems(FlexComponent.Alignment.CENTER);
-        column.getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN);
-
         return column;
     }
 
@@ -178,16 +176,14 @@ public class Dashboard extends Div {
         tabs.add(new Tab("Workflows"));
         tabs.add(new Tab("Support"));
 
-        FlexLayout items = UIUtils.createFlexLayout(
+        FlexLayout items = UIUtils.createColumn(
                 Collections.singleton(LumoStyles.Margin.Vertical.S),
                 new ListItem(VaadinIcon.CHART, "My Weekly Report", "Last opened May 5, 2018"),
                 new ListItem(VaadinIcon.SITEMAP, "My Workflow", "Last opened May 5, 2018")
         );
-        items.getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN);
 
-        FlexLayout card = UIUtils.createWrappingFlexLayout(Arrays.asList(LumoStyles.BorderRadius.S, LumoStyles.Shadow.S), tabs, items);
+        FlexLayout card = UIUtils.createColumn(Arrays.asList(LumoStyles.BorderRadius.S, LumoStyles.Shadow.S), tabs, items);
         card.getStyle().set(CSSProperties.BackgroundColor.PROPERTY, LumoStyles.Color.BASE_COLOR);
-        card.getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN);
         return card;
     }
 
