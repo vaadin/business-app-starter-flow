@@ -13,6 +13,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.starter.applayout.backend.Person;
 import com.vaadin.starter.applayout.ui.Root;
+import com.vaadin.starter.applayout.ui.components.AbstractView;
 import com.vaadin.starter.applayout.ui.utils.CSSProperties;
 import com.vaadin.starter.applayout.ui.utils.LumoStyles;
 
@@ -22,13 +23,12 @@ import java.util.List;
 
 @Route(value = "view-2", layout = Root.class)
 @PageTitle("AbstractView 2")
-public class View2 extends Div {
+public class View2 extends AbstractView {
+
+    private final SplitLayout splitter;
 
     public View2() {
-        getElement().getStyle().set("flex-grow", "1");
-        getElement().getStyle().set(CSSProperties.Display.PROPERTY, CSSProperties.Display.FLEX);
-
-        SplitLayout splitter = new SplitLayout();
+        splitter = new SplitLayout();
         splitter.setWidth("100%");
         splitter.setOrientation(SplitLayout.Orientation.HORIZONTAL);
 
@@ -116,8 +116,13 @@ public class View2 extends Div {
         form.setResponsiveSteps(
                 new FormLayout.ResponsiveStep("0", 1, FormLayout.ResponsiveStep.LabelsPosition.TOP ),
                 new FormLayout.ResponsiveStep("21em", 2, FormLayout.ResponsiveStep.LabelsPosition.TOP));
-        add(splitter);
 
+
+    }
+
+    @Override
+    protected void initSlots() {
+        setContent(splitter);
     }
 
     private List<Person> getItems() {

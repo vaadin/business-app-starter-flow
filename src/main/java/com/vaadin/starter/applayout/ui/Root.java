@@ -57,8 +57,6 @@ public class Root extends FlexLayout
      */
     private void initStructure() {
         naviDrawer = NaviDrawerProvider.getNaviDrawer();
-        System.out.println(UIConfig.getNaviMode());
-        System.out.println(naviDrawer);
 
         // TODO: Explore DOM event triggering/listening.
         // naviDrawer.getElement().addEventListener("my-event", e -> naviDrawer.toggle());

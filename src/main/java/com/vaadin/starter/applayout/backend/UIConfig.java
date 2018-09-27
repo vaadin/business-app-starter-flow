@@ -15,7 +15,7 @@ public class UIConfig {
     }
 
     public static NaviMode getNaviMode() {
-        return NaviMode.TABS;
+        return NaviMode.LINKS;
     }
 
     public static NaviHeader getNaviHeader() {
