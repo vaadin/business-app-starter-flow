@@ -4,21 +4,27 @@ import java.time.LocalDate;
 
 public class Person {
 
+    public enum Role {
+        DESIGNER, DEVELOPER, MANAGER
+    }
+
     private int id;
     private String firstName;
     private String lastName;
+    private Role role;
     private String email;
-    private boolean originOfFunds;
-    private int timesDenied;
+    private String twitter;
+    private int forumPosts;
     private LocalDate lastModified;
 
-    public Person(int id, String firstName, String lastName, String email, boolean originOfFunds, int timesDenied, LocalDate lastModified) {
+    public Person(int id, String firstName, String lastName, Role role, String email, String twitter, int forumPosts, LocalDate lastModified) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.role = role;
         this.email = email;
-        this.originOfFunds = originOfFunds;
-        this.timesDenied = timesDenied;
+        this.twitter = twitter;
+        this.forumPosts = forumPosts;
         this.lastModified = lastModified;
     }
 
@@ -42,6 +48,14 @@ public class Person {
         return lastName;
     }
 
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
@@ -54,20 +68,20 @@ public class Person {
         this.email = email;
     }
 
-    public boolean isOriginOfFunds() {
-        return originOfFunds;
+    public String getTwitter() {
+        return twitter;
     }
 
-    public void setOriginOfFunds(boolean originOfFunds) {
-        this.originOfFunds = originOfFunds;
+    public void setTwitter(String twitter) {
+        this.twitter = twitter;
     }
 
-    public int getTimesDenied() {
-        return timesDenied;
+    public int getForumPosts() {
+        return forumPosts;
     }
 
-    public void setTimesDenied(int timesDenied) {
-        this.timesDenied = timesDenied;
+    public void setForumPosts(int forumPosts) {
+        this.forumPosts = forumPosts;
     }
 
     public LocalDate getLastModified() {

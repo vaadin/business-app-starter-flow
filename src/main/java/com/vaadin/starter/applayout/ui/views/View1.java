@@ -40,7 +40,7 @@ public class View1 extends Div {
         grid.addColumn(Person::getLastName).setHeader("Last Name");
         grid.addColumn(Person::getEmail).setHeader("Email");
         grid.addColumn(Person::getLastModified).setHeader("Last Modified");
-        grid.addColumn(Person::getTimesDenied).setHeader("Times Denied");
+        grid.addColumn(Person::getForumPosts).setHeader("Forum Posts");
 
         Div gridWrapper = new Div(grid);
         gridWrapper.addClassNames(LumoStyles.Padding.Top.L, LumoStyles.Padding.Left.L, LumoStyles.Padding.Right.L);
@@ -88,7 +88,7 @@ public class View1 extends Div {
         actions.setClassName(LumoStyles.Padding.Top.M);
         actions.getStyle().set(CSSProperties.Display.PROPERTY, CSSProperties.Display.FLEX);
         actions.getStyle().set(CSSProperties.JustifyContent.PROPERTY, CSSProperties.JustifyContent.SPACE_BETWEEN);
-        actions.add( cancel, save);
+        actions.add(cancel, save);
         splitter.addToSecondary(formWrapper, actions);
 
 
@@ -97,7 +97,7 @@ public class View1 extends Div {
         splitter.getSecondaryComponent().getElement().getStyle().set("flex-grow", "0");
 
 
-        splitter.getSecondaryComponent().getElement().setAttribute("class",LumoStyles.Padding.All.L);
+        splitter.getSecondaryComponent().getElement().setAttribute("class", LumoStyles.Padding.All.L);
         form.setResponsiveSteps(
                 new FormLayout.ResponsiveStep("0", 1),
                 new FormLayout.ResponsiveStep("21em", 2),
@@ -109,22 +109,14 @@ public class View1 extends Div {
     private List<Person> getItems() {
         List<Person> items = new ArrayList<>();
         int i = 0;
-        items.add(new Person(i++, "Rolf", "Smeds", "rolfa@email.com", true, 10, LocalDate.now()));
-        items.add(new Person(i++, "Haijian", "Wang", "haijian@email.com", false, 1, LocalDate.now()));
-        items.add(new Person(i++, "Jaska", "Kemppainen", "jaska@email.com", true, 0, LocalDate.now()));
-        items.add(new Person(i++, "Marcio", "Dantas", "marcio@email.com", false, 8, LocalDate.now()));
-        items.add(new Person(i++, "Vesa", "Nieminen", "vesa@email.com", false, 0, LocalDate.now()));
-        items.add(new Person(i++, "Susanna", "Laalo", "susanna@email.com", true, 64, LocalDate.now()));
-        items.add(new Person(i++, "Hannu", "Salonen", "hannu@email.com", false, 4, LocalDate.now()));
-        items.add(new Person(i++, "Juuso", "Kantonen", "juuso@email.com", true, 7, LocalDate.now()));
-        items.add(new Person(i++, "Rolf", "Smeds", "rolfa@email.com", true, 10, LocalDate.now()));
-        items.add(new Person(i++, "Haijian", "Wang", "haijian@email.com", false, 1, LocalDate.now()));
-        items.add(new Person(i++, "Jaska", "Kemppainen", "jaska@email.com", true, 0, LocalDate.now()));
-        items.add(new Person(i++, "Marcio", "Dantas", "marcio@email.com", false, 8, LocalDate.now()));
-        items.add(new Person(i++, "Vesa", "Nieminen", "vesa@email.com", false, 0, LocalDate.now()));
-        items.add(new Person(i++, "Susanna", "Laalo", "susanna@email.com", true, 64, LocalDate.now()));
-        items.add(new Person(i++, "Hannu", "Salonen", "hannu@email.com", false, 4, LocalDate.now()));
-        items.add(new Person(i++, "Juuso", "Kantonen", "juuso@email.com", true, 7, LocalDate.now()));
+        items.add(new Person(i++, "Rolf", "Smeds", Person.Role.DESIGNER, "rolf@email.com", "rofa", 10, LocalDate.now()));
+        items.add(new Person(i++, "Haijian", "Wang", Person.Role.DEVELOPER, "haijian@email.com", null, 1, LocalDate.now()));
+        items.add(new Person(i++, "Jaska", "Kemppainen", Person.Role.DESIGNER, "jaska@email.com", "jaska", 0, LocalDate.now()));
+        items.add(new Person(i++, "Marcio", "Dantas", Person.Role.DEVELOPER, "marcio@email.com", null, 8, LocalDate.now()));
+        items.add(new Person(i++, "Vesa", "Nieminen", Person.Role.DEVELOPER, "vesa@email.com", null, 0, LocalDate.now()));
+        items.add(new Person(i++, "Susanna", "Laalo", Person.Role.MANAGER, "susanna@email.com", "susanna", 64, LocalDate.now()));
+        items.add(new Person(i++, "Hannu", "Salonen", Person.Role.DESIGNER, "hannu@email.com", null, 4, LocalDate.now()));
+        items.add(new Person(i++, "Juuso", "Kantonen", Person.Role.DESIGNER, "juuso@email.com", "juuso", 7, LocalDate.now()));
         return items;
     }
 }

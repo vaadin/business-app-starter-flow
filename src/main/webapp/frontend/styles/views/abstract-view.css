@@ -1,3 +1,17 @@
 .abstract-view {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
 
+.abstract-view__header {
+  z-index: 1;
+}
+
+.abstract-view__content {
+  flex: 1;
+}
+
+.abstract-view__footer {
+  z-index: 1;
 }

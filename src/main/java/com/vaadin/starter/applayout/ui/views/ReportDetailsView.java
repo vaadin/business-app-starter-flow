@@ -15,8 +15,8 @@ import com.vaadin.flow.router.BeforeEvent;
 import com.vaadin.flow.router.HasUrlParameter;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import com.vaadin.starter.applayout.backend.Report;
 import com.vaadin.starter.applayout.backend.DummyData;
+import com.vaadin.starter.applayout.backend.Report;
 import com.vaadin.starter.applayout.ui.Root;
 import com.vaadin.starter.applayout.ui.components.ListItem;
 import com.vaadin.starter.applayout.ui.utils.BoxShadowBorders;
@@ -155,7 +155,7 @@ public class ReportDetailsView extends Div implements HasUrlParameter<Long> {
 
         conf.getyAxis().setTitle("");
 
-        conf.addSeries(new ListSeries("Withdrawals",220, 100, 400, 360, 60, 660, 740, 800));
+        conf.addSeries(new ListSeries("Withdrawals", 220, 100, 400, 360, 60, 660, 740, 800));
         conf.addSeries(new ListSeries("Deposits", 400, 300, 0, 440, 480, 400, 0, 0));
 
         FlexLayout card = UIUtils.createWrappingFlexLayout(Arrays.asList(LumoStyles.BorderRadius.S, LumoStyles.Padding.All.M, LumoStyles.Shadow.S), chart);

@@ -16,7 +16,7 @@
 }
 
 /* Menu button */
-.app-bar__navigation-icon {
+.app-bar__navi-icon {
   margin-right: var(--lumo-space-m);
   transition: margin-right var(--transition-duration-m),
               min-width var(--transition-duration-m),
@@ -38,7 +38,7 @@
 
 /* Action items */
 .app-bar__action-items {
-  
+
 }
 
 /* Search */
@@ -92,7 +92,7 @@
     margin-right: var(--lumo-space-m);
   }
 
-  .app-bar__navigation-icon:not(.app-bar__navigation-icon--visible) {
+  .app-bar__navi-icon:not(.app-bar__navi-icon--visible) {
     margin-right: 0;
     min-width: 0;
     opacity: 0;

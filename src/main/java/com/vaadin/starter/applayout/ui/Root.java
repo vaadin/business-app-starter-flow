@@ -3,6 +3,7 @@ package com.vaadin.starter.applayout.ui;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasElement;
 import com.vaadin.flow.component.dependency.HtmlImport;
+import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.page.Viewport;
 import com.vaadin.flow.router.RouterLayout;
@@ -12,6 +13,9 @@ import com.vaadin.flow.shared.Registration;
 import com.vaadin.starter.applayout.backend.UIConfig;
 import com.vaadin.starter.applayout.ui.components.*;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
+import com.vaadin.starter.applayout.ui.views.Dashboard;
+import com.vaadin.starter.applayout.ui.views.Personnel;
+import com.vaadin.starter.applayout.ui.views.ReportsView;
 
 @HtmlImport("frontend://styles/shared-styles.html")
 @Viewport("width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes")
@@ -40,7 +44,9 @@ public class Root extends FlexLayout
         init();
 
         // App specific stuff goes here.
-
+        naviDrawer.addNaviItem(VaadinIcon.GRID_BIG, "Dashboard", Dashboard.class);
+        naviDrawer.addNaviItem(VaadinIcon.FILE_TEXT, "Reports", ReportsView.class);
+        naviDrawer.addNaviItem(VaadinIcon.USERS, "Personnel", Personnel.class);
     }
 
     private void init() {

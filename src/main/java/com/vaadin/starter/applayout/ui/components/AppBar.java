@@ -1,6 +1,7 @@
 package com.vaadin.starter.applayout.ui.components;
 
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.contextmenu.ContextMenu;
@@ -53,11 +54,11 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
         getElement().setAttribute(LumoStyles.THEME, LumoStyles.DARK);
 
         menuNaviIcon = UIUtils.createSmallTertiaryIconButton(VaadinIcon.MENU);
-        menuNaviIcon.setClassName(CLASS_NAME + "__navigation-icon");
+        menuNaviIcon.setClassName(CLASS_NAME + "__navi-icon");
 
         contextualNaviIcon = UIUtils.createSmallTertiaryIconButton(VaadinIcon.ARROW_BACKWARD);
-        contextualNaviIcon.setClassName(CLASS_NAME + "__navigation-icon");
-        contextualNaviIcon.addClassName(CLASS_NAME + "__navigation-icon--visible");
+        contextualNaviIcon.setClassName(CLASS_NAME + "__navi-icon");
+        contextualNaviIcon.addClassName(CLASS_NAME + "__navi-icon--visible");
         contextualNaviIcon.setVisible(false);
 
         this.title = new H4(title);
@@ -166,25 +167,34 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
         updateActionItemsVisibility();
     }
 
-    private void addTab(Tab tab, Class<? extends Component> navigationTarget) {
+    /**
+     * Creates a regular tab without any click listeners.
+     */
+    public Tab addTab(String text) {
+        Tab tab = new Tab(text);
         tab.setClassName(CLASS_NAME + "__tab");
 
         tabs.add(tab);
-        tabNaviTargets.put(tab, navigationTarget);
-
         updateTabsVisibility();
-    }
-
-    public Tab addTab(String text, Class<? extends Component> navigationTarget) {
-        Tab tab = new Tab(text);
-        addTab(tab, navigationTarget);
 
         return tab;
     }
 
+    /**
+     * Creates a tab that when clicked navigates to the specified target.
+     */
+    public Tab addNaviTab(String text, Class<? extends Component> navigationTarget) {
+        Tab tab = addTab(text);
+        tabNaviTargets.put(tab, navigationTarget);
+        return tab;
+    }
+
+    /**
+     * Creates a closable tab that when clicked navigates to the specified target.
+     */
     public Tab addClosableTab(String text, Class<? extends Component> navigationTarget) {
         ClosableTab tab = new ClosableTab(text);
-        addTab(tab, navigationTarget);
+        tabNaviTargets.put(tab, navigationTarget);
 
         tab.getCloseButton().addClickListener(event -> {
             tabs.remove(tab);
@@ -207,6 +217,22 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
         navigateToSelectedTab();
     }
 
+    public Tab getSelectedTab() {
+        return tabs.getSelectedTab();
+    }
+
+    public void setSelectedTabIndex(int index) {
+        tabs.setSelectedIndex(index);
+    }
+
+    public void setSelectedTab(Tab tab) {
+        tabs.setSelectedTab(tab);
+    }
+
+    public void addTabSelectionListener(ComponentEventListener<Tabs.SelectedChangeEvent> listener) {
+        tabs.addSelectedChangeListener(listener);
+    }
+
     public int getTabCount() {
         return Math.toIntExact(tabs.getChildren().filter(component -> component instanceof Tab).count());
     }
@@ -217,14 +243,17 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
     }
 
     public void navigateToSelectedTab() {
-        try {
-            UI.getCurrent().navigate(tabNaviTargets.get(tabs.getSelectedTab()));
-        } catch (Exception e) {
-            // BUG: If the right-most tab is closed, the  Tabs component does not auto-select tabs on the left.
-            if (getTabCount() > 0) {
-                tabs.setSelectedIndex(getTabCount() - 1);
-            } else {
-                UI.getCurrent().navigate(Default.class);
+        // Is this a "navi" or "regular" tab?
+        if (tabNaviTargets.get(tabs.getSelectedTab()) != null) {
+            try {
+                UI.getCurrent().navigate(tabNaviTargets.get(tabs.getSelectedTab()));
+            } catch (Exception e) {
+                // If the right-most tab is closed, the  Tabs component does not auto-select tabs on the left.
+                if (getTabCount() > 0) {
+                    tabs.setSelectedIndex(getTabCount() - 1);
+                } else {
+                    UI.getCurrent().navigate(Default.class);
+                }
             }
         }
     }
@@ -259,7 +288,6 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
 
     public void reset() {
         setNaviMode(AppBar.NaviMode.MENU);
-
         removeAllActionItems();
         removeAllTabs();
     }

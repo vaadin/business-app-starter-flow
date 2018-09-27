@@ -66,8 +66,12 @@ public class Report {
         this.balance = balance;
     }
 
-    public String getCurrency() { return currency; }
+    public String getCurrency() {
+        return currency;
+    }
 
-    public void setCurrency(String currency) { this.currency = currency; }
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
 
 }
