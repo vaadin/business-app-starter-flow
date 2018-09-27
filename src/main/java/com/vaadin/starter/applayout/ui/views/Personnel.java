@@ -5,7 +5,6 @@ import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.data.provider.DataProvider;
 import com.vaadin.flow.data.provider.ListDataProvider;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
@@ -19,7 +18,6 @@ import com.vaadin.starter.applayout.ui.components.AppBar;
 import com.vaadin.starter.applayout.ui.components.ListItem;
 import com.vaadin.starter.applayout.ui.utils.LumoStyles;
 
-import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,12 +29,11 @@ import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
 public class Personnel extends AbstractView {
 
     private final Grid<Person> grid;
-    private final String DESIGNERS = "Designers";
-    private final String DEVELOPERS = "Developers";
-    private final String MANAGERS = "Managers";
     private final ListDataProvider<Person> dataProvider;
+    private final AppBar appBar;
 
     public Personnel() {
+        // Grid
         grid = new Grid();
         grid.addColumn(Person::getId)
                 .setHeader("ID")
@@ -66,16 +63,21 @@ public class Personnel extends AbstractView {
         grid.setDataProvider(dataProvider);
         grid.setSizeFull();
 
-        AppBar appBar = new AppBar("Personnel");
+        // Header
+        appBar = new AppBar("Personnel");
         for (Person.Role role : Person.Role.values()) {
             appBar.addTab(role.name().substring(0, 1).toUpperCase() + role.name().substring(1).toLowerCase());
         }
-        appBar.addTabSelectionListener(e -> dataProvider.setFilterByValue(Person::getRole, Person.Role.valueOf(appBar.getSelectedTab().getLabel().toUpperCase())));
+        appBar.addTabSelectionListener(e -> filter());
+        filter();
+    }
 
-        // TODO: Find a proper way.
-        appBar.setSelectedTabIndex(1);
-        appBar.setSelectedTabIndex(0);
+    private void filter() {
+        dataProvider.setFilterByValue(Person::getRole, Person.Role.valueOf(appBar.getSelectedTab().getLabel().toUpperCase()));
+    }
 
+    @Override
+    protected void initSlots() {
         setHeader(appBar);
         setContent(grid);
         getContent().addClassName(GRID_VIEW);

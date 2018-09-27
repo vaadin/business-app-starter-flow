@@ -1,6 +1,7 @@
 package com.vaadin.starter.applayout.ui.views;
 
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.charts.Chart;
 import com.vaadin.flow.component.charts.model.ChartType;
 import com.vaadin.flow.component.charts.model.Configuration;
@@ -8,6 +9,7 @@ import com.vaadin.flow.component.charts.model.ListSeries;
 import com.vaadin.flow.component.charts.model.XAxis;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Image;
+import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
@@ -18,6 +20,8 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.starter.applayout.backend.DummyData;
 import com.vaadin.starter.applayout.backend.Report;
 import com.vaadin.starter.applayout.ui.Root;
+import com.vaadin.starter.applayout.ui.components.AbstractView;
+import com.vaadin.starter.applayout.ui.components.AppBar;
 import com.vaadin.starter.applayout.ui.components.ListItem;
 import com.vaadin.starter.applayout.ui.utils.BoxShadowBorders;
 import com.vaadin.starter.applayout.ui.utils.CSSProperties;
@@ -32,30 +36,30 @@ import java.util.Random;
 
 @Route(value = "report-details", layout = Root.class)
 @PageTitle("Report Details")
-public class ReportDetailsView extends Div implements HasUrlParameter<Long> {
+public class ReportDetailsView extends AbstractView implements HasUrlParameter<Long> {
 
+    private final Random random;
+
+    private final AppBar appBar;
+    private final Div viewport;
     private final Image image;
     private final ListItem balance;
     private final ListItem runningDate;
     private final ListItem status;
     private final DateTimeFormatter formatter;
-    private final Div viewport;
-    private final Random random;
 
     public ReportDetailsView() {
-        getStyle().set(CSSProperties.Overflow.PROPERTY, CSSProperties.Overflow.AUTO);
-        getStyle().set(CSSProperties.Flex.PROPERTY, "1");
-
-        viewport = new Div();
-        viewport.addClassNames(LumoStyles.Margin.Horizontal.AUTO, LumoStyles.Margin.Responsive.Vertical.ML);
-        viewport.getStyle().set(CSSProperties.MaxWidth.PROPERTY, CSSProperties.MaxWidth._800);
-        add(viewport);
-
         formatter = DateTimeFormatter.ofPattern("MMM dd, YYYY");
         random = new Random();
         Integer randBalance = random.nextInt(5000);
 
-        /* Header section */
+        // Header
+        appBar = new AppBar("Details");
+        appBar.setNaviMode(AppBar.NaviMode.CONTEXTUAL);
+        appBar.setContextualNaviIcon(new Icon(VaadinIcon.ARROW_BACKWARD));
+        appBar.getContextualNaviIcon().addClickListener(e -> UI.getCurrent().navigate("reports"));
+
+        // Logo section
         image = new Image("", "");
         image.getStyle().set(CSSProperties.BorderRadius.PROPERTY, "100%");
         image.setHeight("240px");
@@ -69,45 +73,56 @@ public class ReportDetailsView extends Div implements HasUrlParameter<Long> {
 
         status = new ListItem(VaadinIcon.LOCK, "", "Status");
 
-        FlexLayout column = UIUtils.createColumn(UIUtils.createH3(Collections.singleton(LumoStyles.Margin.Responsive.Horizontal.ML), "Company name"), balance, runningDate, status);
+        FlexLayout column = UIUtils.createColumn(balance, runningDate, status);
         column.getStyle().set(CSSProperties.Flex.PROPERTY, "1");
 
-        FlexLayout row = UIUtils.createWrappingFlexLayout(image, column);
+        FlexLayout row = UIUtils.createWrappingFlexLayout(Arrays.asList(LumoStyles.Padding.Bottom.L, BoxShadowBorders.BOTTOM), image, column);
         row.setAlignItems(FlexComponent.Alignment.CENTER);
         row.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
-        row.addClassNames(LumoStyles.Padding.Bottom.L, BoxShadowBorders.BOTTOM);
 
-        viewport.add(row);
-
-        /* Dashboard sections */
+        // Transactions
         FlexLayout transactions = UIUtils.createWrappingFlexLayout(
+                Arrays.asList(LumoStyles.Padding.Bottom.L, BoxShadowBorders.BOTTOM),
                 createLargeListItem(VaadinIcon.PLUS, Math.round((randBalance * 0.4)) + ".00 EUR", "14 deposits"),
                 createLargeListItem(VaadinIcon.MINUS, Math.round((randBalance * 0.6)) + ".00 EUR", "9 withdrawals"),
                 createLargeListItem(VaadinIcon.PLUS_MINUS, (randBalance) + ".00 EUR", "23 in total")
         );
-        transactions.addClassNames(LumoStyles.Padding.Bottom.L, BoxShadowBorders.BOTTOM);
 
+        // Pending events
         FlexLayout pending = UIUtils.createWrappingFlexLayout(
+                Collections.singleton(LumoStyles.Padding.Bottom.XL),
                 createLargeListItem(VaadinIcon.TIMER, Integer.toString(random.nextInt(50)), "Open"),
                 createLargeListItem(VaadinIcon.CHECK, Integer.toString(random.nextInt(100)), "Closed"),
                 createLargeListItem(VaadinIcon.BAN, Integer.toString(random.nextInt(50)), "Failed")
         );
-        pending.addClassNames(LumoStyles.Padding.Bottom.XL);
 
-        viewport.add(
+        // Transactions chart
+        Component transactionsChart = createTransactionsChart();
+
+        // Add it all to the viewport
+        viewport = UIUtils.createDiv(
+                Arrays.asList(LumoStyles.Margin.Horizontal.AUTO, LumoStyles.Margin.Responsive.Vertical.ML),
+                row,
                 UIUtils.createH3(Collections.singleton(LumoStyles.Margin.Responsive.Horizontal.ML), "Transactions"),
                 transactions,
-                UIUtils.createH3(Collections.singleton(LumoStyles.Margin.Responsive.Horizontal.ML), "Pending events"),
-                pending
+                UIUtils.createH3(Collections.singleton(LumoStyles.Margin.Responsive.Horizontal.ML), "Pending Events"),
+                pending,
+                transactionsChart
         );
+        viewport.getStyle().set(CSSProperties.MaxWidth.PROPERTY, CSSProperties.MaxWidth._800);
+    }
 
-        viewport.add(createTransactionsChart());
+    @Override
+    protected void initSlots() {
+        setHeader(appBar);
+        setContent(viewport);
     }
 
     @Override
     public void setParameter(BeforeEvent beforeEvent, Long id) {
         Report report = DummyData.get(id);
 
+        appBar.setTitle(report.getName());
         image.setSrc(report.getSource());
 
         balance.setPrimaryText(Double.toString(report.getBalance()) + " " + report.getCurrency());

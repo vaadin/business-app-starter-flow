@@ -15,6 +15,12 @@ import java.util.Collection;
 
 public class UIUtils {
 
+    public static Div createDiv(Collection<String> classNames, Component... components) {
+        Div div = new Div(components);
+        classNames.forEach(div::addClassName);
+        return div;
+    }
+
     public static Div createRightAlignedDiv(Component... components) {
         Div div = new Div(components);
         div.getStyle().set(CSSProperties.TextAlign.PROPERTY, CSSProperties.TextAlign.RIGHT);

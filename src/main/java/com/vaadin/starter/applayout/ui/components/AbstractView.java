@@ -2,8 +2,10 @@ package com.vaadin.starter.applayout.ui.components;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.router.BeforeEnterEvent;
+import com.vaadin.flow.router.BeforeEnterObserver;
 
-public abstract class AbstractView extends Div {
+public abstract class AbstractView extends Div implements BeforeEnterObserver {
 
     private final String CLASS_NAME = "abstract-view";
 
@@ -20,6 +22,8 @@ public abstract class AbstractView extends Div {
 
         add(header, content, footer);
     }
+
+    protected abstract void initSlots();
 
     protected void initHeader() {
         header = new Div();
@@ -63,4 +67,8 @@ public abstract class AbstractView extends Div {
         footer.add(component);
     }
 
+    @Override
+    public void beforeEnter(BeforeEnterEvent beforeEnterEvent) {
+        initSlots();
+    }
 }

@@ -4,7 +4,6 @@ import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.grid.Grid;
-import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.data.renderer.LocalDateRenderer;
 import com.vaadin.flow.router.PageTitle;
@@ -12,24 +11,27 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.starter.applayout.backend.DummyData;
 import com.vaadin.starter.applayout.backend.Report;
 import com.vaadin.starter.applayout.ui.Root;
+import com.vaadin.starter.applayout.ui.components.AbstractView;
+import com.vaadin.starter.applayout.ui.components.AppBar;
 import com.vaadin.starter.applayout.ui.components.ListItem;
-import com.vaadin.starter.applayout.ui.utils.CSSProperties;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
 
 import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
 
 @Route(value = "reports", layout = Root.class)
 @PageTitle("Reports")
-public class ReportsView extends Div {
+public class ReportsView extends AbstractView {
 
     private final Grid<Report> grid;
+    private final AppBar appBar;
 
     public ReportsView() {
-        setClassName(GRID_VIEW);
-        getStyle().set(CSSProperties.Flex.PROPERTY, "1");
+        // Header
+        appBar = new AppBar("Reports");
 
+        // Grid
         grid = new Grid();
-        grid.addColumn(new ComponentRenderer<>(this::createreportInfo))
+        grid.addColumn(new ComponentRenderer<>(this::createReportInfo))
                 .setHeader("Company")
                 .setFrozen(true)
                 .setSortable(true)
@@ -54,10 +56,16 @@ public class ReportsView extends Div {
         grid.addSelectionListener(event -> event.getFirstSelectedItem().ifPresent(this::viewDetails));
         grid.setItems(DummyData.getAll());
         grid.setSizeFull();
-        add(grid);
     }
 
-    private Component createreportInfo(Report report) {
+    @Override
+    protected void initSlots() {
+        setHeader(appBar);
+        setContent(grid);
+        getContent().addClassName(GRID_VIEW);
+    }
+
+    private Component createReportInfo(Report report) {
         return new ListItem(report.getSource(), report.getName());
     }
 

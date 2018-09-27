@@ -13,8 +13,6 @@ import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.router.AfterNavigationEvent;
-import com.vaadin.flow.router.AfterNavigationObserver;
 import com.vaadin.flow.shared.Registration;
 import com.vaadin.starter.applayout.backend.UIConfig;
 import com.vaadin.starter.applayout.ui.utils.LumoStyles;
@@ -23,7 +21,7 @@ import com.vaadin.starter.applayout.ui.views.Default;
 
 import java.util.HashMap;
 
-public class AppBar extends FlexLayout implements AfterNavigationObserver {
+public class AppBar extends FlexLayout {
 
     private final String CLASS_NAME = "app-bar";
 
@@ -71,13 +69,13 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
 
         avatar = new Image();
         avatar.setClassName(CLASS_NAME + "__avatar");
-        avatar.setSrc("https://pbs.twimg.com/profile_images/798351849984294912/okhePpJW_400x400.jpg");
+        avatar.setSrc("https://pbs.twimg.com/profile_images/2642704545/a77c0524766c6f3b4be4929f2005e627_400x400.png");
         avatar.setVisible(UIConfig.getNaviHeader().equals(UIConfig.NaviHeader.BRAND_EXPRESSION));
 
         ContextMenu contextMenu = new ContextMenu(avatar);
         contextMenu.setOpenOnClick(true);
-        contextMenu.addItem("conor.mcgregor@outlook.com", e -> System.out.println("Testing..."));
-        contextMenu.addItem("conor.mcgregor@yahoo.com", e -> System.out.println("Testing..."));
+        contextMenu.addItem("john.smith@gmail.com", e -> System.out.println("Testing..."));
+        contextMenu.addItem("john.smith@yahoo.com", e -> System.out.println("Testing..."));
         contextMenu.addItem("Settings", e -> System.out.println("Testing..."));
         contextMenu.addItem("Logout", e -> System.out.println("Testing..."));
 
@@ -140,14 +138,6 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
 
     public void setTitle(String title) {
         this.title.setText(title);
-    }
-
-    @Override
-    public void afterNavigation(AfterNavigationEvent afterNavigationEvent) {
-        // TODO: what's the best way to update the title when a navigation change occurs?
-        if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-            setTitle(UI.getCurrent().getInternals().getTitle());
-        }
     }
 
     public Component addActionItem(Component component) {

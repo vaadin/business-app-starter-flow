@@ -6,6 +6,8 @@ import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.page.Viewport;
+import com.vaadin.flow.router.BeforeEnterEvent;
+import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.RouterLayout;
 import com.vaadin.flow.server.InitialPageSettings;
 import com.vaadin.flow.server.PageConfigurator;
@@ -20,7 +22,7 @@ import com.vaadin.starter.applayout.ui.views.ReportsView;
 @HtmlImport("frontend://styles/shared-styles.html")
 @Viewport("width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes")
 public class Root extends FlexLayout
-        implements RouterLayout, PageConfigurator {
+        implements RouterLayout, PageConfigurator, BeforeEnterObserver {
 
     private String CLASS_NAME = "root";
 
@@ -131,5 +133,11 @@ public class Root extends FlexLayout
     @Override
     public void showRouterLayoutContent(HasElement content) {
         this.viewContainer.getElement().appendChild(content.getElement());
+    }
+
+    @Override
+    public void beforeEnter(BeforeEnterEvent beforeEnterEvent) {
+        Class<?> navigationTarget = beforeEnterEvent.getNavigationTarget();
+        System.out.println(navigationTarget.getClasses());
     }
 }
