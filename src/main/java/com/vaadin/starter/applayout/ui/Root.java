@@ -6,12 +6,9 @@ import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.page.Viewport;
-import com.vaadin.flow.router.BeforeEnterEvent;
-import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.RouterLayout;
 import com.vaadin.flow.server.InitialPageSettings;
 import com.vaadin.flow.server.PageConfigurator;
-import com.vaadin.flow.shared.Registration;
 import com.vaadin.starter.applayout.backend.UIConfig;
 import com.vaadin.starter.applayout.ui.components.*;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
@@ -22,7 +19,7 @@ import com.vaadin.starter.applayout.ui.views.ReportsView;
 @HtmlImport("frontend://styles/shared-styles.html")
 @Viewport("width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes")
 public class Root extends FlexLayout
-        implements RouterLayout, PageConfigurator, BeforeEnterObserver {
+        implements RouterLayout, PageConfigurator {
 
     private String CLASS_NAME = "root";
 
@@ -35,9 +32,6 @@ public class Root extends FlexLayout
     private NaviDrawer naviDrawer;
 
     private FlexLayout viewContainer;
-
-    // App specific fields goes here.
-    private Registration contextualNaviListener;
 
     public Root() {
         setClassName(CLASS_NAME);
@@ -133,11 +127,5 @@ public class Root extends FlexLayout
     @Override
     public void showRouterLayoutContent(HasElement content) {
         this.viewContainer.getElement().appendChild(content.getElement());
-    }
-
-    @Override
-    public void beforeEnter(BeforeEnterEvent beforeEnterEvent) {
-        Class<?> navigationTarget = beforeEnterEvent.getNavigationTarget();
-        System.out.println(navigationTarget.getClasses());
     }
 }

@@ -14,6 +14,7 @@ import com.vaadin.starter.applayout.ui.Root;
 import com.vaadin.starter.applayout.ui.components.AbstractView;
 import com.vaadin.starter.applayout.ui.components.AppBar;
 import com.vaadin.starter.applayout.ui.components.ListItem;
+import com.vaadin.starter.applayout.ui.components.NaviDrawer;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
 
 import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;

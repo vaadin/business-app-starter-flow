@@ -34,7 +34,7 @@ public abstract class NaviDrawer extends Div implements AfterNavigationObserver 
     protected Div list;
     private ArrayList<NaviItem> items;
 
-    private final Button railButton = UIUtils.createSmallButton(VaadinIcon.CARET_LEFT, "Collapse");
+    private Button railButton;
 
     public NaviDrawer() {
         setClassName(CLASS_NAME);
@@ -78,6 +78,7 @@ public abstract class NaviDrawer extends Div implements AfterNavigationObserver 
         items = new ArrayList<>();
 
         // "Footer", currently only a collapse/expand button.
+        railButton = UIUtils.createSmallButton(VaadinIcon.CARET_LEFT, "Collapse");
         railButton.setClassName(CLASS_NAME + "__footer");
         railButton.addClickListener(event -> setRailModeEnabled(getClassName().contains(RAIL)));
         content.add(railButton);
