@@ -3,17 +3,51 @@
   display: flex;
   font-size: var(--lumo-font-size-s);
   font-weight: 600;
-  height: var(--lumo-size-l);
+  height: calc( 2 * var(--lumo-size-s) );
+}
+
+.navigation-item .navigation-item__link:not([highlight]) {
+  color: var(--lumo-secondary-text-color);
 }
 
 .navigation-item[level] {
   background-color: var(--lumo-contrast-5pct);
   font-weight: normal;
+  height: var(--lumo-size-m);
+  padding-left: calc(var(--lumo-size-s) / 2);
+}
+
+.navigation-item[level] vaadin-button {
+  order: 1;
+  margin: 0;
+  transition: transform 0.2s;
+}
+
+.navigation-item.not-visible[level] vaadin-button {
+  order: 1;
+  margin: 0;
+}
+.navigation-item[level] vaadin-button iron-icon {
+  transition: transform 0.1s;
+  color: var(--lumo-tertiary-text-color)
+}
+.navigation-item.not-visible[level] vaadin-button iron-icon {
+  transform: rotate(-90deg);
+}
+
+.navigation-item[level] .navigation-item__link {
+  order: 2;
+  padding-left: 0;
 }
 
 /* Hover */
 .navigation-item:hover {
-  background-color: var(--lumo-contrast-5pct);
+  background: var(--lumo-shade-5pct);
+}
+
+.navigation-item:hover .navigation-item__link:not([highlight]) {
+  color: var(--lumo-shade);
+  cursor: default;
 }
 
 .navigation-item__link:hover {
@@ -41,12 +75,17 @@
 }
 
 .navigation-item__link:not([highlight]) iron-icon {
-  color: var(--lumo-secondary-text-color);
+  color: var(--lumo-tertiary-text-color);
 }
 
 /* Link icon */
 .navigation-item__link iron-icon {
   margin-right: var(--lumo-space-l);
+  --iron-icon-width: var(--lumo-font-size-m);
+  --iron-icon-height: var(--lumo-font-size-m);
+  padding: var(--lumo-space-s);
+  background: var(--lumo-shade-5pct);
+  border-radius: var(--lumo-border-radius);
 }
 
 /* Link label */
@@ -57,16 +96,12 @@
   white-space: nowrap;
 }
 
-.navigation-item[level="1"] label {
-  margin-left: var(--lumo-space-m);
-}
-
 .navigation-item[level="2"] label {
-  margin-left: calc(var(--lumo-space-m) * 2);
+  margin-left: calc(var(--lumo-space-m) * 3);
 }
 
 .navigation-item[level="3"] label {
-  margin-left: calc(var(--lumo-space-m) * 3);
+  margin-left: calc(var(--lumo-space-m) * 4);
 }
 
 /* Expand/collapse button */

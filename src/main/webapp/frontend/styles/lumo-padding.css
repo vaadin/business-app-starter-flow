@@ -142,6 +142,12 @@
     padding-right: var(--lumo-space-m);
   }
 
+  /* (r)esponsive-(h)orizontal-(s)all-to-(m)edium */
+  .padding-r-h-sm {
+    padding-left: var(--lumo-space-s);
+    padding-right: var(--lumo-space-s);
+  }
+
   /* (r)esponsive-(v)ertical-(m)edium-to-(l)arge */
   .padding-r-v-ml {
     padding-bottom: var(--lumo-space-m);
@@ -154,6 +160,12 @@
   .padding-r-h-ml {
     padding-left: var(--lumo-space-l);
     padding-right: var(--lumo-space-l);
+  }
+
+  /* (r)esponsive-(h)orizontal-(s)all-to-(m)edium */
+  .padding-r-h-sm {
+    padding-left: var(--lumo-space-m);
+    padding-right: var(--lumo-space-m);
   }
 
   /* (r)esponsive-(v)ertical-(m)edium-to-(l)arge */

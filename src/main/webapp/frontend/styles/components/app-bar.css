@@ -1,13 +1,15 @@
 .app-bar {
-  box-shadow: var(--lumo-box-shadow-m);
   flex-direction: column;
   z-index: 1;
 }
 
 /* Container */
 .app-bar__container {
-  padding: var(--lumo-space-wide-l);
-  transition: padding var(--transition-duration-m);
+  height: calc( 2 * var(--lumo-size-s));
+  transition: var(--transition-duration-m);
+  padding: 0 var(--lumo-size-s) 0 var(--lumo-size-s);
+  box-shadow: var(--lumo-box-shadow-s);
+  background: var(--lumo-base-color);
 }
 
 .app-bar__container vaadin-button {
@@ -52,11 +54,13 @@
   height: var(--lumo-size-s);
   margin-left: var(--lumo-space-m);
   width: var(--lumo-size-s);
+  border: solid 1px var(--lumo-contrast-10pct);
 }
 
 /* Tabs */
 .app-bar__tab-container {
   padding: 0 var(--lumo-space-l);
+  box-shadow: inset 0 -1px 0 0 var(--lumo-contrast-10pct);
 }
 
 .app-bar__tab-container vaadin-button {
@@ -71,6 +75,16 @@
 
 .app-bar__tab vaadin-button {
   margin: 0;
+  --iron-icon-fill-color: var(--lumo-shade-30pct);
+}
+
+.app-bar__tab:before, .app-bar__tab:after {
+  left: calc(50% - (var(--lumo-size-m) / 2));
+}
+
+.app-bar__tab vaadin-button:hover {
+  margin: 0;
+  --iron-icon-fill-color: var(--lumo-shade-70pct);
 }
 
 @media (max-width: 1023px) {

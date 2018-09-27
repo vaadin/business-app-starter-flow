@@ -1,0 +1,23 @@
+.token[theme~="badge"]  {
+  padding: 0;
+  padding-left: var(--lumo-space-s);
+  margin: var(--lumo-space-s) 0;
+}
+
+.token + .token {
+  margin-left: var(--lumo-space-m);
+}
+
+.token[theme~="badge"] iron-icon {
+  margin: 0;
+}
+
+.token label {
+  font-size: var(--lumo-font-size-s);
+}
+
+.token vaadin-button {
+  padding: 0;
+  margin: 0;
+  height: var(--lumo-size-xs);
+}

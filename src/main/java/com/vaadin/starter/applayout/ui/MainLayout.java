@@ -51,6 +51,7 @@ public class MainLayout extends FlexLayout
 
         // Header
         appBar = new AppBar("App Bar");
+
         appBar.getMenuNavigationIcon().addClickListener(appBarEvent -> navigationDrawer.toggle());
         content.add(appBar);
 
@@ -101,7 +102,6 @@ public class MainLayout extends FlexLayout
 
     private void createActionItems() {
         appBar.addActionItem(VaadinIcon.SEARCH).addClickListener(e -> appBar.searchModeOn());
-        appBar.addActionItem(VaadinIcon.FILTER);
         createContextMenu(appBar.addActionItem(VaadinIcon.ELLIPSIS_DOTS_V));
     }
 
@@ -152,6 +152,8 @@ public class MainLayout extends FlexLayout
         navigationDrawer.addNavigationItem(flowchart, "Document", View6.class);
         navigationDrawer.addNavigationItem(flowchart, "Data", View7.class);
         navigationDrawer.addNavigationItem(flowchart, "System", View8.class);
+
+        NavigationItem filterList = navigationDrawer.addNavigationItem(VaadinIcon.TABLE, "Filter list", FilterList.class);
 
         // Workflows
         navigationDrawer.addNavigationItem(VaadinIcon.SITEMAP, "Workflows", View9.class);

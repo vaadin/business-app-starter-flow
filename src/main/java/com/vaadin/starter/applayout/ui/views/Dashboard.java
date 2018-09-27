@@ -38,8 +38,7 @@ public class Dashboard extends Div {
         random = new Random();
 
         viewport = new Div();
-        viewport.addClassNames(LumoStyles.Margin.Horizontal.AUTO, LumoStyles.Margin.Responsive.Vertical.ML);
-        viewport.getStyle().set(CSSProperties.MaxWidth.PROPERTY, CSSProperties.MaxWidth._1024);
+        viewport.addClassNames(LumoStyles.Margin.Responsive.Horizontal.LXL, LumoStyles.Margin.Responsive.Vertical.ML);
         add(viewport);
 
         viewport.add(createHeader(VaadinIcon.CHECK, "Progress"));
@@ -61,7 +60,6 @@ public class Dashboard extends Div {
         FlexLayout header = UIUtils.createFlexLayout(
                 Arrays.asList(
                         LumoStyles.Margin.Bottom.L,
-                        LumoStyles.Margin.Responsive.Horizontal.ML,
                         LumoStyles.Margin.Top.XL,
                         LumoStyles.Spacing.Right.M
                 ),

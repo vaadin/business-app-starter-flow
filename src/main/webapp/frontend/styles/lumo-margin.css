@@ -170,6 +170,12 @@
     margin-bottom: var(--lumo-space-m);
     margin-top: var(--lumo-space-m);
   }
+
+  /* (r)esponsive-(h)orizontal-(l)-arge-to-(xl)extra-large */
+  .margin-r-h-lxl {
+    margin-left: var(--lumo-space-l);
+    margin-right: var(--lumo-space-l);
+  }
 }
 
 @media (min-width: 1024px) {
@@ -183,5 +189,11 @@
   .margin-r-v-ml {
     margin-bottom: var(--lumo-space-l);
     margin-top: var(--lumo-space-l);
+  }
+
+  /* (r)esponsive-(h)orizontal-(xl)extra-large */
+  .margin-r-h-lxl {
+    margin-left: var(--lumo-space-xl);
+    margin-right: var(--lumo-space-xl);
   }
 }

@@ -50,7 +50,6 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
     public AppBar(String title) {
         super();
         setClassName(CLASS_NAME);
-        getElement().setAttribute(LumoStyles.THEME, LumoStyles.DARK);
 
         menuNavigationIcon = UIUtils.createSmallTertiaryIconButton(VaadinIcon.MENU);
         menuNavigationIcon.setClassName(CLASS_NAME + "__navigation-icon");
@@ -70,7 +69,7 @@ public class AppBar extends FlexLayout implements AfterNavigationObserver {
 
         avatar = new Image();
         avatar.setClassName(CLASS_NAME + "__avatar");
-        avatar.setSrc("https://pbs.twimg.com/profile_images/798351849984294912/okhePpJW_400x400.jpg");
+        avatar.setSrc("../frontend/styles/images/Riitta-Pitkanen.png");
         avatar.setVisible(UIConfig.getNavigationHeader().equals(UIConfig.NavigationHeader.BRAND_EXPRESSION));
 
         ContextMenu contextMenu = new ContextMenu(avatar);

@@ -14,6 +14,7 @@
 <link rel="stylesheet" href="components/app-bar.css">
 <link rel="import"     href="components/charts.html">
 <link rel="stylesheet" href="components/list-item.css">
+<link rel="stylesheet" href="components/token.css">
 <link rel="stylesheet" href="components/navigation-drawer.css">
 <link rel="stylesheet" href="components/navigation-item.css">
 
@@ -21,12 +22,15 @@
 
 <link rel="stylesheet" href="views/dashboard.css">
 <link rel="stylesheet" href="views/grid-view.css">
+<link rel="stylesheet" href="views/filter-list.css">
 
 
 <custom-style>
   <style include="lumo-badge">
+
     :root {
       --navigation-drawer-width: calc(var(--lumo-size-m) * 7);
+      --navigation-drawer-rail-width: 64px;
       --transition-duration-s: 160ms;
       --transition-duration-m: 240ms;
       --transition-duration-l: 320ms;
@@ -50,5 +54,11 @@
       width: 100%;
       z-index: 0;
     }
+
+    /* Label vertical align issue */
+    .dashboard__progress vaadin-chart + .spacing-r-xs {
+      height: var(--lumo-space-xl);
+    }
+
   </style>
 </custom-style>

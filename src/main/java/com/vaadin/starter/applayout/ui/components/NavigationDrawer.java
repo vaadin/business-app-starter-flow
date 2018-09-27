@@ -27,6 +27,7 @@ public abstract class NavigationDrawer extends Div implements AfterNavigationObs
     private Div scrim;
     private Div content;
     private Div scrollArea;
+    private Div footerArea;
 
     private Image avatar;
     private H4 username;
@@ -36,11 +37,26 @@ public abstract class NavigationDrawer extends Div implements AfterNavigationObs
     protected Div list;
     private ArrayList<NavigationItem> items;
 
-    private final Button railButton = UIUtils.createSmallButton(VaadinIcon.CARET_LEFT, "Collapse");
+    private final Button railButton = UIUtils.createSmallButton(VaadinIcon.CHEVRON_LEFT_SMALL, "");
 
     public NavigationDrawer() {
         setClassName(CLASS_NAME);
         init();
+    }
+
+    private void initBrandExpression() {
+        Image logo = new Image();
+        logo.setSrc("../frontend/styles/images/logo.svg");
+
+        Div logoWrapper = new Div();
+        logoWrapper.setClassName(CLASS_NAME + "__logo");
+
+        // "Footer", currently only a collapse/expand button.
+        railButton.setClassName(CLASS_NAME + "__toggle");
+        railButton.addClickListener(event -> setRailModeEnabled(getClassName().contains(RAIL)));
+        logoWrapper.add(railButton);
+        logoWrapper.add(logo);
+        content.add(logoWrapper);
     }
 
     private void init() {
@@ -55,11 +71,6 @@ public abstract class NavigationDrawer extends Div implements AfterNavigationObs
         content.setClassName(CLASS_NAME + "__content");
         add(content);
 
-        // Scrollable area.
-        scrollArea = new Div();
-        scrollArea.setClassName(CLASS_NAME + "__scroll-area");
-        content.add(scrollArea);
-
         // Header: account switcher or brand logo.
         if (UIConfig.getNavigationHeader().equals(UIConfig.NavigationHeader.ACCOUNT_SWITCHER)) {
             initAccountSwitcher();
@@ -70,7 +81,17 @@ public abstract class NavigationDrawer extends Div implements AfterNavigationObs
         // Search field.
         TextField search = new TextField();
         search.setPlaceholder("Search");
-        scrollArea.add(search);
+        content.add(search);
+
+        // Scrollable area.
+        scrollArea = new Div();
+        scrollArea.setClassName(CLASS_NAME + "__scroll-area");
+        content.add(scrollArea);
+
+        // Footer.
+        footerArea = new Div();
+        footerArea.setClassName(CLASS_NAME + "__footer-area");
+        content.add(footerArea);
 
         // Wrapper for navigation items.
         list = new Div();
@@ -78,17 +99,12 @@ public abstract class NavigationDrawer extends Div implements AfterNavigationObs
         scrollArea.add(list);
 
         items = new ArrayList<>();
-
-        // "Footer", currently only a collapse/expand button.
-        railButton.setClassName(CLASS_NAME + "__footer");
-        railButton.addClickListener(event -> setRailModeEnabled(getClassName().contains(RAIL)));
-        content.add(railButton);
     }
 
     private void initAccountSwitcher() {
         avatar = new Image();
         avatar.setClassName(CLASS_NAME + "__avatar");
-        avatar.setSrc("https://pbs.twimg.com/profile_images/798351849984294912/okhePpJW_400x400.jpg");
+        avatar.setSrc("../frontend/styles/images/Riitta-Pitkanen.png");
 
         username = new H4("Conor McGregor");
         username.setClassName(CLASS_NAME + "__title");
@@ -102,29 +118,19 @@ public abstract class NavigationDrawer extends Div implements AfterNavigationObs
 
         ContextMenu contextMenu = new ContextMenu(dropdown);
         contextMenu.setOpenOnClick(true);
-        contextMenu.addItem("conor.mcgregor@outlook.com", e -> System.out.println("Testing..."));
-        contextMenu.addItem("conor.mcgregor@yahoo.com", e -> System.out.println("Testing..."));
+        contextMenu.addItem("riitta.pitkanen@vaadin.com", e -> System.out.println("Testing..."));
+        contextMenu.addItem("riitta@vaadin.com", e -> System.out.println("Testing..."));
 
         scrollArea.add(avatar, username, email);
-    }
-
-    private void initBrandExpression() {
-        Image logo = new Image();
-        logo.setSrc("https://upload.wikimedia.org/wikipedia/en/thumb/b/bf/KFC_logo.svg/300px-KFC_logo.svg.png");
-
-        Div logoWrapper = new Div(logo);
-        logoWrapper.setClassName(CLASS_NAME + "__logo");
-
-        scrollArea.add(logoWrapper);
     }
 
     private void setRailModeEnabled(boolean enabled) {
         if (enabled) {
             removeClassName(RAIL);
-            railButton.setIcon(new Icon(VaadinIcon.CARET_LEFT));
+            railButton.setIcon(new Icon(VaadinIcon.CHEVRON_LEFT_SMALL));
         } else {
             addClassName(RAIL);
-            railButton.setIcon(new Icon(VaadinIcon.CARET_RIGHT));
+            railButton.setIcon(new Icon(VaadinIcon.CHEVRON_RIGHT_SMALL));
         }
     }
 

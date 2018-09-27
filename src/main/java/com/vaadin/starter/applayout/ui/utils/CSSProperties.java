@@ -26,11 +26,17 @@ public class CSSProperties {
     public static class FlexDirection {
         public static final String PROPERTY = new String("flex-direction");
         public static final String COLUMN = new String("column");
+        public static final String ROW = new String("row");
     }
 
     public static class FlexWrap {
         public static final String PROPERTY = new String("flex-wrap");
         public static final String WRAP = new String("wrap");
+    }
+
+    public static class FlexShrink {
+        public static final String PROPERTY = new String("flex-shrink");
+        public static final String _0 = new String("0");
     }
 
     public static class Margin {
