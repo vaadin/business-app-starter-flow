@@ -2,7 +2,6 @@ package com.vaadin.starter.applayout.ui.components;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentEventListener;
-import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.contextmenu.ContextMenu;
 import com.vaadin.flow.component.html.H4;
@@ -19,8 +18,6 @@ import com.vaadin.starter.applayout.ui.utils.LumoStyles;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
 import com.vaadin.starter.applayout.ui.views.Default;
 
-import java.util.HashMap;
-
 public class AppBar extends FlexLayout {
 
     private final String CLASS_NAME = "app-bar";
@@ -28,19 +25,18 @@ public class AppBar extends FlexLayout {
     private FlexLayout container;
 
     private Button menuNaviIcon;
-    private Button contextualNaviIcon;
+    private Button contextNaviIcon;
 
     private H4 title;
     private FlexLayout actionItems;
     private Image avatar;
 
     private Button addTab;
-    private Tabs tabs;
+    private NaviTabs tabs;
 
     private Registration searchRegistration;
     private TextField search;
     private final FlexLayout tabContainer;
-    private HashMap<Tab, Class<? extends Component>> tabNaviTargets;
 
     public enum NaviMode {
         MENU, CONTEXTUAL
@@ -54,10 +50,10 @@ public class AppBar extends FlexLayout {
         menuNaviIcon = UIUtils.createSmallTertiaryIconButton(VaadinIcon.MENU);
         menuNaviIcon.setClassName(CLASS_NAME + "__navi-icon");
 
-        contextualNaviIcon = UIUtils.createSmallTertiaryIconButton(VaadinIcon.ARROW_BACKWARD);
-        contextualNaviIcon.setClassName(CLASS_NAME + "__navi-icon");
-        contextualNaviIcon.addClassName(CLASS_NAME + "__navi-icon--visible");
-        contextualNaviIcon.setVisible(false);
+        contextNaviIcon = UIUtils.createSmallTertiaryIconButton(VaadinIcon.ARROW_BACKWARD);
+        contextNaviIcon.setClassName(CLASS_NAME + "__navi-icon");
+        contextNaviIcon.addClassName(CLASS_NAME + "__navi-icon--visible");
+        contextNaviIcon.setVisible(false);
 
         this.title = new H4(title);
         this.title.setClassName(CLASS_NAME + "__title");
@@ -83,26 +79,23 @@ public class AppBar extends FlexLayout {
         actionItems.setClassName(CLASS_NAME + "__action-items");
         actionItems.setVisible(false);
 
-        container = new FlexLayout(menuNaviIcon, contextualNaviIcon, this.title, search, actionItems, avatar);
+        container = new FlexLayout(menuNaviIcon, contextNaviIcon, this.title, search, actionItems, avatar);
         container.setAlignItems(Alignment.CENTER);
         container.setClassName(CLASS_NAME + "__container");
         container.setFlexGrow(1, search);
         add(container);
 
         addTab = UIUtils.createSmallIconButton(VaadinIcon.PLUS);
-        addTab.addClickListener(e -> tabs.setSelectedTab(addClosableTab("New Tab", Default.class)));
+        addTab.addClickListener(e -> tabs.setSelectedTab(addClosableNaviTab("New Tab", Default.class)));
         addTab.setVisible(false);
 
-        tabs = new Tabs();
+        tabs = new NaviTabs();
         tabs.setVisible(false);
         tabs.setClassName(CLASS_NAME + "__tabs");
         if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
             tabs.addClassName(LumoStyles.Margin.Horizontal.AUTO);
         }
         tabs.getElement().setAttribute("overflow", "end");
-        tabs.addSelectedChangeListener(event -> navigateToSelectedTab());
-
-        tabNaviTargets = new HashMap<>();
 
         tabContainer = new FlexLayout(tabs, addTab);
         tabContainer.setAlignItems(Alignment.CENTER);
@@ -113,10 +106,10 @@ public class AppBar extends FlexLayout {
     public void setNaviMode(NaviMode mode) {
         if (mode.equals(NaviMode.MENU)) {
             menuNaviIcon.setVisible(true);
-            contextualNaviIcon.setVisible(false);
+            contextNaviIcon.setVisible(false);
         } else {
             menuNaviIcon.setVisible(false);
-            contextualNaviIcon.setVisible(true);
+            contextNaviIcon.setVisible(true);
         }
     }
 
@@ -124,12 +117,12 @@ public class AppBar extends FlexLayout {
         return menuNaviIcon;
     }
 
-    public Button getContextualNaviIcon() {
-        return contextualNaviIcon;
+    public Button getContextNaviIcon() {
+        return contextNaviIcon;
     }
 
-    public void setContextualNaviIcon(Icon icon) {
-        contextualNaviIcon.setIcon(icon);
+    public void setContextNaviIcon(Icon icon) {
+        contextNaviIcon.setIcon(icon);
     }
 
     public String getTitle() {
@@ -157,95 +150,27 @@ public class AppBar extends FlexLayout {
         updateActionItemsVisibility();
     }
 
-    /**
-     * Creates a regular tab without any click listeners.
-     */
     public Tab addTab(String text) {
-        Tab tab = new Tab(text);
-        tab.setClassName(CLASS_NAME + "__tab");
-
-        tabs.add(tab);
+        Tab tab = tabs.addTab(text);
         updateTabsVisibility();
-
         return tab;
     }
 
-    /**
-     * Creates a tab that when clicked navigates to the specified target.
-     */
-    public Tab addNaviTab(String text, Class<? extends Component> navigationTarget) {
-        Tab tab = addTab(text);
-        tabNaviTargets.put(tab, navigationTarget);
-        return tab;
-    }
-
-    /**
-     * Creates a closable tab that when clicked navigates to the specified target.
-     */
-    public Tab addClosableTab(String text, Class<? extends Component> navigationTarget) {
-        ClosableTab tab = new ClosableTab(text);
-        tabNaviTargets.put(tab, navigationTarget);
-
-        tab.getCloseButton().addClickListener(event -> {
-            tabs.remove(tab);
-            tabNaviTargets.remove(tab);
-            navigateToSelectedTab();
-        });
-
-        return tab;
-    }
-
-    public void updateSelectedTab(String text, Class<? extends Component> navigationTarget) {
-        Tab tab = tabs.getSelectedTab();
-        tab.setLabel(text);
-
-        if (tab instanceof ClosableTab) {
-            tab.add(((ClosableTab) tab).getCloseButton());
-        }
-
-        tabNaviTargets.put(tab, navigationTarget);
-        navigateToSelectedTab();
+    public Tab addClosableNaviTab(String text, Class<? extends Component> navigationTarget) {
+        return tabs.addClosableNaviTab(text, navigationTarget);
     }
 
     public Tab getSelectedTab() {
         return tabs.getSelectedTab();
     }
 
-    public void setSelectedTabIndex(int index) {
-        tabs.setSelectedIndex(index);
-    }
-
-    public void setSelectedTab(Tab tab) {
-        tabs.setSelectedTab(tab);
-    }
-
     public void addTabSelectionListener(ComponentEventListener<Tabs.SelectedChangeEvent> listener) {
         tabs.addSelectedChangeListener(listener);
-    }
-
-    public int getTabCount() {
-        return Math.toIntExact(tabs.getChildren().filter(component -> component instanceof Tab).count());
     }
 
     public void removeAllTabs() {
         tabs.removeAll();
         updateTabsVisibility();
-    }
-
-    public void navigateToSelectedTab() {
-        // Is this a "navi" or "regular" tab?
-        if (tabNaviTargets.get(tabs.getSelectedTab()) != null) {
-            try {
-                UI.getCurrent().navigate(tabNaviTargets.get(tabs.getSelectedTab()));
-            } catch (Exception e) {
-                // If the right-most tab is closed, the  Tabs component does not auto-select tabs on the left.
-                if (getTabCount() > 0) {
-                    tabs.setSelectedIndex(getTabCount() - 1);
-                } else {
-                    UI.getCurrent().navigate(Default.class);
-                }
-            }
-        }
     }
 
     public void searchModeOn() {
@@ -254,9 +179,9 @@ public class AppBar extends FlexLayout {
         actionItems.setVisible(false);
         tabContainer.setVisible(false);
 
-        contextualNaviIcon.setIcon(new Icon(VaadinIcon.ARROW_BACKWARD));
-        contextualNaviIcon.setVisible(true);
-        searchRegistration = contextualNaviIcon.addClickListener(e -> searchModeOff());
+        contextNaviIcon.setIcon(new Icon(VaadinIcon.ARROW_BACKWARD));
+        contextNaviIcon.setVisible(true);
+        searchRegistration = contextNaviIcon.addClickListener(e -> searchModeOff());
 
         search.setVisible(true);
         search.focus();
@@ -270,7 +195,7 @@ public class AppBar extends FlexLayout {
         updateActionItemsVisibility();
         updateTabsVisibility();
 
-        contextualNaviIcon.setVisible(false);
+        contextNaviIcon.setVisible(false);
         searchRegistration.remove();
 
         search.setVisible(false);

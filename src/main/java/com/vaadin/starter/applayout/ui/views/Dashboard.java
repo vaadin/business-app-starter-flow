@@ -13,6 +13,8 @@ import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.starter.applayout.ui.Root;
+import com.vaadin.starter.applayout.ui.components.AbstractView;
+import com.vaadin.starter.applayout.ui.components.AppBar;
 import com.vaadin.starter.applayout.ui.components.ListItem;
 import com.vaadin.starter.applayout.ui.utils.CSSProperties;
 import com.vaadin.starter.applayout.ui.utils.LumoStyles;
@@ -24,7 +26,7 @@ import java.util.Random;
 
 @Route(value = "dashboard", layout = Root.class)
 @PageTitle("Dashboard")
-public class Dashboard extends Div {
+public class Dashboard extends AbstractView {
 
     private final String CLASS_NAME = "dashboard";
 
@@ -32,29 +34,27 @@ public class Dashboard extends Div {
     private final Div viewport;
 
     public Dashboard() {
-        getStyle().set(CSSProperties.Overflow.PROPERTY, CSSProperties.Overflow.AUTO);
-        getStyle().set(CSSProperties.Flex.PROPERTY, "1");
-
         random = new Random();
 
-        viewport = new Div();
-        viewport.addClassNames(LumoStyles.Margin.Horizontal.AUTO, LumoStyles.Margin.Responsive.Vertical.ML);
-        viewport.getStyle().set(CSSProperties.MaxWidth.PROPERTY, CSSProperties.MaxWidth._1024);
-        add(viewport);
-
-        viewport.add(createHeader(VaadinIcon.CHECK, "Progress"));
-        viewport.add(createProgressCharts());
-
-        viewport.add(createHeader(VaadinIcon.TRENDING_UP, "Sales"));
-        viewport.add(createSalesChart());
-
-        FlexLayout row = UIUtils.createFlexLayout(
-                Collections.singleton(CLASS_NAME + "__bookmarks-recent-items"),
-                new Div(createHeader(VaadinIcon.BOOKMARK, "Bookmark"), createTabbedList()),
-                new Div(createHeader(VaadinIcon.TIME_BACKWARD, "Recent Items"), createTabbedList())
+        viewport = UIUtils.createDiv(
+                Arrays.asList(LumoStyles.Margin.Horizontal.AUTO, LumoStyles.Margin.Responsive.Vertical.ML),
+                createHeader(VaadinIcon.CHECK, "Progress"),
+                createProgressCharts(),
+                createHeader(VaadinIcon.TRENDING_UP, "Sales"),
+                createSalesChart(),
+                UIUtils.createFlexLayout(
+                        Collections.singleton(CLASS_NAME + "__bookmarks-recent-items"),
+                        new Div(createHeader(VaadinIcon.BOOKMARK, "Bookmark"), createTabbedList()),
+                        new Div(createHeader(VaadinIcon.TIME_BACKWARD, "Recent Items"), createTabbedList())
+                )
         );
-        viewport.add(row);
+        viewport.getStyle().set(CSSProperties.MaxWidth.PROPERTY, CSSProperties.MaxWidth._1024);
+    }
 
+    @Override
+    protected void initSlots() {
+        setHeader(new AppBar("Dashboard"));
+        setContent(viewport);
     }
 
     private Component createHeader(VaadinIcon icon, String title) {

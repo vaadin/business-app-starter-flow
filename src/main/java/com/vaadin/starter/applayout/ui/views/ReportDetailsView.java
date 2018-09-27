@@ -56,8 +56,8 @@ public class ReportDetailsView extends AbstractView implements HasUrlParameter<L
         // Header
         appBar = new AppBar("Details");
         appBar.setNaviMode(AppBar.NaviMode.CONTEXTUAL);
-        appBar.setContextualNaviIcon(new Icon(VaadinIcon.ARROW_BACKWARD));
-        appBar.getContextualNaviIcon().addClickListener(e -> UI.getCurrent().navigate("reports"));
+        appBar.setContextNaviIcon(new Icon(VaadinIcon.ARROW_BACKWARD));
+        appBar.getContextNaviIcon().addClickListener(e -> UI.getCurrent().navigate("reports"));
 
         // Logo section
         image = new Image("", "");

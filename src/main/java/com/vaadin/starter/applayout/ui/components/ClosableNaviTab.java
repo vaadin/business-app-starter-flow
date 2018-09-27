@@ -1,16 +1,17 @@
 package com.vaadin.starter.applayout.ui.components;
 
+import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
 
-public class ClosableTab extends Tab {
+public class ClosableNaviTab extends NaviTab {
 
     private Button close;
 
-    public ClosableTab(String label) {
-        super(label);
+    public ClosableNaviTab(String label, Class<? extends Component> navigationTarget) {
+        super(label, navigationTarget);
 
         close = UIUtils.createSmallTertiaryIconButton(VaadinIcon.CLOSE);
         add(close);
