@@ -17,7 +17,6 @@ public class NaviDrawerProvider {
                 naviDrawer = new NaviTabDrawer();
             }
         }
-
         return naviDrawer;
     }
 

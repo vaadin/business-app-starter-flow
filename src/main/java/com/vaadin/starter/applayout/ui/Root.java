@@ -42,20 +42,23 @@ public class Root extends FlexLayout
     public Root() {
         setClassName(CLASS_NAME);
 
-        // Initialise all the building blocks.
-        init();
+        // Initialise the UI building blocks.
+        initStructure();
 
-        // App specific stuff goes here.
-        naviDrawer.addNaviItem(VaadinIcon.GRID_BIG, "Dashboard", Dashboard.class);
-        naviDrawer.addNaviItem(VaadinIcon.FILE_TEXT, "Reports", ReportsView.class);
-        naviDrawer.addNaviItem(VaadinIcon.USERS, "Personnel", Personnel.class);
+        // Populate the navigation drawer.
+        initNaviItems();
+
+        // Configure the headers and footers (optional).
+        initHeadersAndFooters();
     }
 
     /**
      * Initialise the required components and containers.
      */
-    private void init() {
+    private void initStructure() {
         naviDrawer = NaviDrawerProvider.getNaviDrawer();
+        System.out.println(UIConfig.getNaviMode());
+        System.out.println(naviDrawer);
 
         // TODO: Explore DOM event triggering/listening.
         // naviDrawer.getElement().addEventListener("my-event", e -> naviDrawer.toggle());
@@ -69,14 +72,21 @@ public class Root extends FlexLayout
         row = new FlexLayout(naviDrawer, column);
         row.setClassName(CLASS_NAME + "__row");
         add(row);
+    }
 
-        configHeadersAndFooters();
+    /**
+     * Initialise the navigation items.
+     */
+    private void initNaviItems() {
+        naviDrawer.addNaviItem(VaadinIcon.GRID_BIG, "Dashboard", Dashboard.class);
+        naviDrawer.addNaviItem(VaadinIcon.FILE_TEXT, "Reports", ReportsView.class);
+        naviDrawer.addNaviItem(VaadinIcon.USERS, "Personnel", Personnel.class);
     }
 
     /**
      * Configure the app's inner and outer headers and footers.
      */
-    private void configHeadersAndFooters() {
+    private void initHeadersAndFooters() {
         // setAppHeaderOuter(new Label("Outer header"));
         // setAppHeaderInner(new Label("Inner header"));
         // setAppFooterOuter(new Label("Outer footer"));
