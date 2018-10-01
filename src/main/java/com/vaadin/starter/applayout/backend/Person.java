@@ -8,7 +8,7 @@ public class Person {
         DESIGNER, DEVELOPER, MANAGER
     }
 
-    private int id;
+    private Long id;
     private String firstName;
     private String lastName;
     private Role role;
@@ -17,7 +17,7 @@ public class Person {
     private int forumPosts;
     private LocalDate lastModified;
 
-    public Person(int id, String firstName, String lastName, Role role, String email, String twitter, int forumPosts, LocalDate lastModified) {
+    public Person(Long id, String firstName, String lastName, Role role, String email, String twitter, int forumPosts, LocalDate lastModified) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -28,11 +28,11 @@ public class Person {
         this.lastModified = lastModified;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

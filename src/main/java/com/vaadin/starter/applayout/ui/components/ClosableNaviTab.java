@@ -3,7 +3,6 @@ package com.vaadin.starter.applayout.ui.components;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
 
 public class ClosableNaviTab extends NaviTab {

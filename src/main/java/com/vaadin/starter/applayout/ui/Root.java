@@ -1,5 +1,6 @@
 package com.vaadin.starter.applayout.ui;
 
+import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.ClickNotifier;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasElement;
@@ -9,7 +10,6 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.page.Viewport;
 import com.vaadin.flow.component.tabs.Tab;
-import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.RouterLayout;
@@ -23,6 +23,8 @@ import com.vaadin.starter.applayout.ui.views.Dashboard;
 import com.vaadin.starter.applayout.ui.views.Personnel;
 import com.vaadin.starter.applayout.ui.views.ReportsView;
 
+import java.util.Collections;
+
 @HtmlImport("frontend://styles/shared-styles.html")
 @Viewport("width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes")
 public class Root extends FlexLayout
@@ -30,14 +32,16 @@ public class Root extends FlexLayout
 
     private String CLASS_NAME = "root";
 
-    private AppHeaderOuter appHeaderOuter;
+    private Div appHeaderOuter;
+    private Div appHeaderInner;
+    private Div appFooterInner;
+    private Div appFooterOuter;
+
     private FlexLayout row;
-    private NaviDrawer naviDrawer;
     private FlexLayout column;
-    private AppHeaderInner appHeaderInner;
+
+    private NaviDrawer naviDrawer;
     private FlexLayout viewContainer;
-    private AppFooterInner appFooterInner;
-    private AppFooterOuter appFooterOuter;
 
     public Root() {
         setClassName(CLASS_NAME);
@@ -95,37 +99,42 @@ public class Root extends FlexLayout
             setAppHeaderInner(tabs);
 
             for (NaviItem item : naviDrawer.getNaviItems()) {
-                ((ClickNotifier<Div>) item).addClickListener(event -> {
-                    int tabCount = tabs.getTabCount();
-
-                    // Shift-click to add a new tab.
-                    if (event.getButton() == 0 && event.isShiftKey()) {
-                        Tab tab = tabs.addClosableNaviTab(item.getText(), item.getNavigationTarget());
-                        tabs.setSelectedTab(tab);
-                    }
-
-                    // Update the current tab, or create the first one.
-                    else if (event.getButton() == 0) {
-                        if (tabs.getTabCount() > 0) {
-                            tabs.updateSelectedTab(item.getText(), item.getNavigationTarget());
-                        } else {
-                            Tab tab = tabs.addClosableNaviTab(item.getText(), item.getNavigationTarget());
-                            tabs.setSelectedTab(tab);
-                        }
-                    }
-
-                    // A selection change event isn't triggered when the first tab is added.
-                    if (tabCount == 0) {
-                        tabs.setSelectedTab(tabs.getSelectedTab());
-                    }
-                });
+                ((ClickNotifier<Div>) item).addClickListener(event -> naviItemClicked(tabs, item, event));
             }
+        }
+    }
+
+    /**
+     * Handles the click event for navigation items when in NaviMode.TABS.
+     */
+    private void naviItemClicked(NaviTabs tabs, NaviItem item, ClickEvent<Div> event) {
+        int tabCount = tabs.getTabCount();
+
+        // Shift-click to add a new tab.
+        if (event.getButton() == 0 && event.isShiftKey()) {
+            Tab tab = tabs.addClosableNaviTab(item.getText(), item.getNavigationTarget());
+            tabs.setSelectedTab(tab);
+        }
+
+        // Update the current tab, or create the first one.
+        else if (event.getButton() == 0) {
+            if (tabs.getTabCount() > 0) {
+                tabs.updateSelectedTab(item.getText(), item.getNavigationTarget());
+            } else {
+                Tab tab = tabs.addClosableNaviTab(item.getText(), item.getNavigationTarget());
+                tabs.setSelectedTab(tab);
+            }
+        }
+
+        // A selection change event isn't triggered when the first tab is added.
+        if (tabCount == 0) {
+            tabs.setSelectedTab(tabs.getSelectedTab());
         }
     }
 
     private void setAppHeaderOuter(Component component) {
         if (appHeaderOuter == null) {
-            appHeaderOuter = new AppHeaderOuter();
+            appHeaderOuter = UIUtils.createDiv(Collections.singleton("app-header-outer"));
             getElement().insertChild(0, appHeaderOuter.getElement());
         }
 
@@ -135,7 +144,7 @@ public class Root extends FlexLayout
 
     private void setAppHeaderInner(Component component) {
         if (appHeaderInner == null) {
-            appHeaderInner = new AppHeaderInner();
+            appHeaderInner = UIUtils.createDiv(Collections.singleton("app-header-inner"));
             column.getElement().insertChild(0, appHeaderInner.getElement());
         }
 
@@ -150,7 +159,7 @@ public class Root extends FlexLayout
 
     private void setAppFooterInner(Component component) {
         if (appFooterInner == null) {
-            appFooterInner = new AppFooterInner();
+            appFooterInner = UIUtils.createDiv(Collections.singleton("app-footer-inner"));
             column.getElement().insertChild(column.getElement().getChildCount(), appFooterInner.getElement());
         }
         appFooterInner.removeAll();
@@ -159,7 +168,7 @@ public class Root extends FlexLayout
 
     private void setAppFooterOuter(Component component) {
         if (appFooterOuter == null) {
-            appFooterOuter = new AppFooterOuter();
+            appFooterOuter = UIUtils.createDiv(Collections.singleton("app-footer-outer"));
             getElement().insertChild(getElement().getChildCount(), appFooterOuter.getElement());
         }
         appFooterOuter.removeAll();

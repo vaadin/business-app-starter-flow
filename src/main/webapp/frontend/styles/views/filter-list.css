@@ -1,0 +1,60 @@
+.filter-list {
+  transition: padding var(--transition-duration-m);
+}
+
+.filter-area-header {
+  display: flex;
+}
+
+.filter-area vaadin-combo-box {
+  max-width: 300px;
+}
+
+.filter-tokens,
+.filter-options {
+  width: 50%;
+  display: inline-block;
+  float: left;
+  padding: var(--lumo-space-m) var(--lumo-space-s);
+  box-sizing: border-box;
+ }
+
+.filter-toggle [theme~="badge"] {
+  margin-left: 0.5em;
+}
+
+.collapsed .filter-tokens,
+.collapsed .filter-options {
+  display: none !important;
+}
+
+.grid-view vaadin-grid {
+  margin: 0 auto;
+  max-width: 1024px;
+}
+
+@media (max-width: 399px) {
+  .filter-list {
+    padding: 0;
+  }
+}
+
+@media (min-width: 400px) and (max-width: 1023px) {
+  .filter-list {
+    padding: var(--lumo-space-m) var(--lumo-space-m) 0 var(--lumo-space-m);
+  }
+}
+
+@media (min-width: 1024px) {
+  .filter-list{
+    padding: var(--lumo-space-l) var(--lumo-space-l) 0 var(--lumo-space-l);
+  }
+}
+
+@media (max-width: 1023px) {
+  .filter-tokens,
+  .filter-options {
+    padding-left: var(--lumo-space-xs);
+    padding-right: var(--lumo-space-xs);
+  }
+}

@@ -22,8 +22,8 @@ public abstract class NaviItem extends Div {
     private boolean subItemsVisible;
     private List<NaviItem> subItems;
 
-    private Icon down = new Icon(VaadinIcon.CARET_DOWN);
-    private Icon up = new Icon(VaadinIcon.CARET_UP);
+    private Icon down = new Icon(VaadinIcon.PLUS);
+    private Icon up = new Icon(VaadinIcon.MINUS);
 
     private int level = 0;
 
@@ -62,6 +62,7 @@ public abstract class NaviItem extends Div {
         this.level = level;
         if (level > 0) {
             getElement().setAttribute("level", Integer.toString(level));
+            expandCollapse.setIcon(up = new Icon(VaadinIcon.CARET_DOWN));
         }
     }
 
@@ -83,14 +84,23 @@ public abstract class NaviItem extends Div {
 
         // If true, we only update the icon. If false, we hide all the sub items.
         if (visible) {
-            expandCollapse.setIcon(down);
+            if (level == 0) {
+                expandCollapse.setIcon(down);
+            }
         } else {
-            setSubItemsVisible(visible);
+            setSubItemsVisible(false);
         }
     }
 
     private void setSubItemsVisible(boolean visible) {
-        expandCollapse.setIcon(visible ? up : down);
+        if (level == 0) {
+            expandCollapse.setIcon(visible ? up : down);
+        }
+        if (visible) {
+            removeClassName("not-visible");
+        } else {
+            addClassName("not-visible");
+        }
         subItems.forEach(item -> item.setVisible(visible));
         subItemsVisible = visible;
     }

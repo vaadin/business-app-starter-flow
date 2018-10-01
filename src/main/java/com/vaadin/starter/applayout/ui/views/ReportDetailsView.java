@@ -120,7 +120,7 @@ public class ReportDetailsView extends AbstractView implements HasUrlParameter<L
 
     @Override
     public void setParameter(BeforeEvent beforeEvent, Long id) {
-        Report report = DummyData.get(id);
+        Report report = DummyData.getReport(id);
 
         appBar.setTitle(report.getName());
         image.setSrc(report.getSource());

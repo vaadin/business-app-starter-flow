@@ -47,51 +47,49 @@
 /* Footer button */
 .navi-drawer__footer {
   border-radius: 0;
-  /* Bug fix */
   height: var(--lumo-size-m);
   margin: auto 0 0 0;
   min-width: 0;
 }
 
-/* Rail navi */
-.navi-drawer--rail:not(.navi-drawer--open) .navi-item__link iron-icon {
-  margin: 0;
-}
-
-.navi-drawer--rail:not(.navi-drawer--open) .navi-drawer__title,
-.navi-drawer--rail:not(.navi-drawer--open) .navi-drawer__email,
-.navi-drawer--rail:not(.navi-drawer--open) vaadin-text-field,
-.navi-drawer--rail:not(.navi-drawer--open) .navi-item vaadin-button,
-.navi-drawer--rail:not(.navi-drawer--open) .navi-item__link label,
-.navi-drawer--rail:not(.navi-drawer--open) .navi-drawer__footer span {
-  display: none;
-}
-
-.navi-drawer--rail:not(.navi-drawer--open) .navi-item[level] {
-  display: none;
-}
-
+/* Rail navigation */
 .navi-drawer--rail:not(.navi-drawer--open) .navi-drawer__content {
-  width: 56px;
+  left: 0;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  transition: width var(--transition-duration-s);
+  width: var(--navi-drawer-rail-width);
 }
 
-.navi-drawer--rail:not(.navi-drawer--open) .navi-drawer__avatar {
-  box-sizing: border-box;
-  height: auto;
-  margin: auto;
-  padding: var(--lumo-space-s);
-  width: 100%;
+.navi-drawer--rail:not(.navi-drawer--open):hover .navi-drawer__content {
+  width: var(--navi-drawer-width);
 }
+
+.navi-drawer--rail:not(:hover) .navi-drawer__footer span {
+  display: none;
+}
+
+/* Push the content in rail mode. */
+.navi-drawer--rail:not(.navi-drawer--open) + .root__column {
+  padding-left: var(--navi-drawer-rail-width);
+}
+
 
 @media (max-width: 1023px) {
-  .navi-drawer__content {
-    position: fixed;
-  }
-
   /* Show scrim when drawer is open */
   .navi-drawer--open .navi-drawer__scrim {
     opacity: 1;
     pointer-events: all;
+  }
+
+  .navi-drawer--rail:not(.navi-drawer--open) + .root__column {
+    padding-left: 0;
+  }
+
+  /* Fixed positioning on narrow viewports. */
+  .navi-drawer__content {
+    position: fixed;
   }
 
   /* Push the drawer out of view */

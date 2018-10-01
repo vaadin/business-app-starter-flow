@@ -30,6 +30,7 @@ public class LumoStyles {
         public static final String PRIMARY = "primary";
 
         public static final String TERTIARY = "tertiary";
+        public static final String TERTIARY_ICON = "tertiary icon";
     }
 
     public class Color {
@@ -93,6 +94,7 @@ public class LumoStyles {
         public class Responsive {
             public class Horizontal {
                 public static final String ML = "margin-r-h-ml";
+                public static final String LXL = "margin-r-h-lxl";
             }
 
             public class Vertical {
@@ -164,10 +166,11 @@ public class LumoStyles {
         public class Responsive {
             public class Horizontal {
                 public static final String ML = "padding-r-h-ml";
+                public static final String SM = "padding-r-h-sm";
             }
 
             public class Vertical {
-                public static final String VL = "padding-r-v-ml";
+                public static final String ML = "padding-r-v-ml";
             }
         }
 

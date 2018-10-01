@@ -1,4 +1,16 @@
+.dashboard {
+  max-width: calc(100% - calc(2 * var(--lumo-space-l)));
+  width: 1024px;
+}
+
+.dashboard__progress vaadin-chart + div {
+  height: var(--lumo-space-xl);
+}
+
 @media (max-width: 399px) {
+  .dashboard {
+    max-width: 100%;
+  }
   .dashboard__progress > * {
     width: 100%;
   }
@@ -36,7 +48,6 @@
   .dashboard__bookmarks-recent-items {
     flex-direction: column;
   }
-
   .dashboard__bookmarks-recent-items > * {
     width: 100%;
   }
@@ -46,7 +57,6 @@
   .dashboard__bookmarks-recent-items > * {
     width: 50%;
   }
-
   .dashboard__bookmarks-recent-items > *:not(:last-child) {
     margin-right: var(--lumo-space-l);
   }

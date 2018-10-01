@@ -64,9 +64,21 @@ public class UIUtils {
         return button;
     }
 
+    public static Button createSmallButton(Collection<String> classNames, String text) {
+        Button button = createSmallButton(text);
+        classNames.forEach(button::addClassName);
+        return button;
+    }
+
     public static Button createSmallButton(VaadinIcon icon, String text) {
-        Button button = new Button(text, new Icon(icon));
-        button.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Button.SMALL);
+        Button button = createSmallButton(text);
+        button.setIcon(new Icon(icon));
+        return button;
+    }
+
+    public static Button createSmallButton(Collection<String> classNames, VaadinIcon icon, String text) {
+        Button button = createSmallButton(icon, text);
+        classNames.forEach(button::addClassName);
         return button;
     }
 

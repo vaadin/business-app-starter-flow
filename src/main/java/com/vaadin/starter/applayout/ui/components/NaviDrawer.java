@@ -3,9 +3,6 @@ package com.vaadin.starter.applayout.ui.components;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H4;
-import com.vaadin.flow.component.html.Image;
-import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.textfield.TextField;
@@ -15,6 +12,7 @@ import com.vaadin.starter.applayout.backend.UIConfig;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public abstract class NaviDrawer extends Div implements AfterNavigationObserver {
 
@@ -25,11 +23,6 @@ public abstract class NaviDrawer extends Div implements AfterNavigationObserver 
     private Div scrim;
     private Div content;
     private Div scrollArea;
-
-    private Image avatar;
-    private H4 username;
-    private Label email;
-    private Button dropdown;
 
     protected Div list;
     private ArrayList<NaviItem> items;
@@ -43,26 +36,23 @@ public abstract class NaviDrawer extends Div implements AfterNavigationObserver 
 
     private void init() {
         // Backdrop on small viewports.
-        scrim = new Div();
-        scrim.setClassName(CLASS_NAME + "__scrim");
+        scrim = UIUtils.createDiv(Collections.singleton(CLASS_NAME + "__scrim"));
         scrim.addClickListener(event -> close());
         add(scrim);
 
         // Main content.
-        content = new Div();
-        content.setClassName(CLASS_NAME + "__content");
+        content = UIUtils.createDiv(Collections.singleton(CLASS_NAME + "__content"));
         add(content);
 
         // Scrollable area.
-        scrollArea = new Div();
-        scrollArea.setClassName(CLASS_NAME + "__scroll-area");
+        scrollArea = UIUtils.createDiv(Collections.singleton(CLASS_NAME + "__scroll-area"));
         content.add(scrollArea);
 
         // Header: account switcher or brand logo.
         if (UIConfig.getNaviHeader().equals(UIConfig.NaviHeader.ACCOUNT_SWITCHER)) {
-            initAccountSwitcher();
+            scrollArea.add(new AccountSwitcher());
         } else {
-            initBrandExpression();
+            scrollArea.add(new BrandExpression());
         }
 
         // Search field.
@@ -71,34 +61,24 @@ public abstract class NaviDrawer extends Div implements AfterNavigationObserver 
         scrollArea.add(search);
 
         // Wrapper for navigation items.
-        list = new Div();
-        list.setClassName(CLASS_NAME + "__list");
+        list = UIUtils.createDiv(Collections.singleton(CLASS_NAME + "__list"));
         scrollArea.add(list);
 
         items = new ArrayList<>();
 
         // "Footer", currently only a collapse/expand button.
-        railButton = UIUtils.createSmallButton(VaadinIcon.CARET_LEFT, "Collapse");
-        railButton.setClassName(CLASS_NAME + "__footer");
+        railButton = UIUtils.createSmallButton(Collections.singleton(CLASS_NAME + "__footer"), VaadinIcon.CARET_LEFT, "Collapse");
         railButton.addClickListener(event -> setRailModeEnabled(getClassName().contains(RAIL)));
         content.add(railButton);
-    }
-
-    private void initAccountSwitcher() {
-        scrollArea.add(new AccountSwitcher());
-    }
-
-    private void initBrandExpression() {
-        scrollArea.add(new BrandExpression());
     }
 
     private void setRailModeEnabled(boolean enabled) {
         if (enabled) {
             removeClassName(RAIL);
-            railButton.setIcon(new Icon(VaadinIcon.CARET_LEFT));
+            railButton.setIcon(new Icon(VaadinIcon.CHEVRON_LEFT_SMALL));
         } else {
             addClassName(RAIL);
-            railButton.setIcon(new Icon(VaadinIcon.CARET_RIGHT));
+            railButton.setIcon(new Icon(VaadinIcon.CHEVRON_RIGHT_SMALL));
         }
     }
 

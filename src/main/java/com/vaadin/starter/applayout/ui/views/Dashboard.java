@@ -18,6 +18,7 @@ import com.vaadin.starter.applayout.ui.components.AppBar;
 import com.vaadin.starter.applayout.ui.components.ListItem;
 import com.vaadin.starter.applayout.ui.utils.CSSProperties;
 import com.vaadin.starter.applayout.ui.utils.LumoStyles;
+import com.vaadin.starter.applayout.ui.utils.NaviDrawerProvider;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
 
 import java.util.Arrays;
@@ -31,13 +32,20 @@ public class Dashboard extends AbstractView {
     private final String CLASS_NAME = "dashboard";
 
     private final Random random;
+
+    private final AppBar appBar;
     private final Div viewport;
 
     public Dashboard() {
         random = new Random();
 
+        // Header
+        appBar = new AppBar("Dashboard");
+        appBar.getMenuNaviIcon().addClickListener(e -> NaviDrawerProvider.getNaviDrawer().toggle());
+
+        // Content
         viewport = UIUtils.createDiv(
-                Arrays.asList(LumoStyles.Margin.Horizontal.AUTO, LumoStyles.Margin.Responsive.Vertical.ML),
+                Arrays.asList(CLASS_NAME, LumoStyles.Margin.Horizontal.AUTO, LumoStyles.Margin.Responsive.Vertical.ML),
                 createHeader(VaadinIcon.CHECK, "Progress"),
                 createProgressCharts(),
                 createHeader(VaadinIcon.TRENDING_UP, "Sales"),
@@ -48,12 +56,11 @@ public class Dashboard extends AbstractView {
                         new Div(createHeader(VaadinIcon.TIME_BACKWARD, "Recent Items"), createTabbedList())
                 )
         );
-        viewport.getStyle().set(CSSProperties.MaxWidth.PROPERTY, CSSProperties.MaxWidth._1024);
     }
 
     @Override
     protected void initSlots() {
-        setHeader(new AppBar("Dashboard"));
+        setHeader(appBar);
         setContent(viewport);
     }
 
@@ -171,10 +178,10 @@ public class Dashboard extends AbstractView {
 
     private Component createTabbedList() {
         Tabs tabs = new Tabs();
-        tabs.add(new Tab("All"));
-        tabs.add(new Tab("Archive"));
-        tabs.add(new Tab("Workflows"));
-        tabs.add(new Tab("Support"));
+
+        for (String label : new String[]{"All", "Archive", "Workflows", "Support"}) {
+            tabs.add(new Tab(label));
+        }
 
         FlexLayout items = UIUtils.createColumn(
                 Collections.singleton(LumoStyles.Margin.Vertical.S),

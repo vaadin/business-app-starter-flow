@@ -7,9 +7,23 @@
   transition: background-color var(--transition-duration-s);
 }
 
+/* Sub items */
 .navi-item[level] {
   background-color: var(--lumo-contrast-5pct);
   font-weight: normal;
+  padding-left: calc(var(--lumo-size-s) / 2);
+}
+
+.navi-item[level="1"] label {
+  margin-left: var(--lumo-space-m);
+}
+
+.navi-item[level="2"] label {
+  margin-left: calc(var(--lumo-space-m) * 2);
+}
+
+.navi-item[level="3"] label {
+  margin-left: calc(var(--lumo-space-m) * 3);
 }
 
 /* Hover */
@@ -47,6 +61,7 @@
 
 /* Link icon */
 .navi-item__link iron-icon {
+  flex-shrink: 0;
   margin-right: var(--lumo-space-l);
 }
 
@@ -56,18 +71,6 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
-
-.navi-item[level="1"] label {
-  margin-left: var(--lumo-space-m);
-}
-
-.navi-item[level="2"] label {
-  margin-left: calc(var(--lumo-space-m) * 2);
-}
-
-.navi-item[level="3"] label {
-  margin-left: calc(var(--lumo-space-m) * 3);
 }
 
 /* Expand/collapse button */

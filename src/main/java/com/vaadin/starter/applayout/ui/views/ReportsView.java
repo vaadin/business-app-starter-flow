@@ -56,7 +56,7 @@ public class ReportsView extends AbstractView {
                 .setFlexGrow(0);
 
         grid.addSelectionListener(event -> event.getFirstSelectedItem().ifPresent(this::viewDetails));
-        grid.setItems(DummyData.getAll());
+        grid.setItems(DummyData.getReports());
         grid.setSizeFull();
     }
 

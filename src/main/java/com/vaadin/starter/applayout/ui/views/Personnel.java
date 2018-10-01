@@ -11,16 +11,14 @@ import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.data.renderer.LocalDateRenderer;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.starter.applayout.backend.DummyData;
 import com.vaadin.starter.applayout.backend.Person;
 import com.vaadin.starter.applayout.ui.Root;
 import com.vaadin.starter.applayout.ui.components.AbstractView;
 import com.vaadin.starter.applayout.ui.components.AppBar;
 import com.vaadin.starter.applayout.ui.components.ListItem;
 import com.vaadin.starter.applayout.ui.utils.LumoStyles;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import com.vaadin.starter.applayout.ui.utils.NaviDrawerProvider;
 
 import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
 
@@ -33,6 +31,14 @@ public class Personnel extends AbstractView {
     private final AppBar appBar;
 
     public Personnel() {
+        // Header
+        appBar = new AppBar("Personnel");
+        appBar.getMenuNaviIcon().addClickListener(e -> NaviDrawerProvider.getNaviDrawer().toggle());
+        for (Person.Role role : Person.Role.values()) {
+            appBar.addTab(role.name().substring(0, 1).toUpperCase() + role.name().substring(1).toLowerCase());
+        }
+        appBar.addTabSelectionListener(e -> filter());
+
         // Grid
         grid = new Grid();
         grid.addColumn(Person::getId)
@@ -59,16 +65,9 @@ public class Personnel extends AbstractView {
                 .setWidth("160px")
                 .setFlexGrow(0);
 
-        dataProvider = DataProvider.ofCollection(getItems());
+        dataProvider = DataProvider.ofCollection(DummyData.getPersons());
         grid.setDataProvider(dataProvider);
         grid.setSizeFull();
-
-        // Header
-        appBar = new AppBar("Personnel");
-        for (Person.Role role : Person.Role.values()) {
-            appBar.addTab(role.name().substring(0, 1).toUpperCase() + role.name().substring(1).toLowerCase());
-        }
-        appBar.addTabSelectionListener(e -> filter());
         filter();
     }
 
@@ -106,19 +105,4 @@ public class Personnel extends AbstractView {
         }
         return badge;
     }
-
-    private List<Person> getItems() {
-        List<Person> items = new ArrayList<>();
-        int i = 0;
-        items.add(new Person(i++, "Rolf", "Smeds", Person.Role.DESIGNER, "rolf@email.com", null, 10, LocalDate.now()));
-        items.add(new Person(i++, "Haijian", "Wang", Person.Role.DEVELOPER, "haijian@email.com", null, 1, LocalDate.now()));
-        items.add(new Person(i++, "Jaska", "Kemppainen", Person.Role.DESIGNER, "jaska@email.com", "jaska", 0, LocalDate.now()));
-        items.add(new Person(i++, "Marcio", "Dantas", Person.Role.DEVELOPER, "marcio@email.com", null, 8, LocalDate.now()));
-        items.add(new Person(i++, "Vesa", "Nieminen", Person.Role.DEVELOPER, "vesa@email.com", null, 0, LocalDate.now()));
-        items.add(new Person(i++, "Susanna", "Laalo", Person.Role.MANAGER, "susanna@email.com", "susanna", 64, LocalDate.now()));
-        items.add(new Person(i++, "Hannu", "Salonen", Person.Role.DESIGNER, "hannu@email.com", null, 4, LocalDate.now()));
-        items.add(new Person(i++, "Juuso", "Kantonen", Person.Role.DESIGNER, "juuso@email.com", "juuso", 7, LocalDate.now()));
-        return items;
-    }
-
 }

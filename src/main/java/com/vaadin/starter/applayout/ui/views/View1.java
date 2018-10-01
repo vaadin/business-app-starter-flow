@@ -9,14 +9,11 @@ import com.vaadin.flow.component.splitlayout.SplitLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.starter.applayout.backend.DummyData;
 import com.vaadin.starter.applayout.backend.Person;
 import com.vaadin.starter.applayout.ui.Root;
 import com.vaadin.starter.applayout.ui.utils.CSSProperties;
 import com.vaadin.starter.applayout.ui.utils.LumoStyles;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 @Route(value = "view-1", layout = Root.class)
 @PageTitle("AbstractView 1")
@@ -32,7 +29,7 @@ public class View1 extends Div {
         splitter.setOrientation(SplitLayout.Orientation.VERTICAL);
 
         Grid<Person> grid = new Grid<>();
-        grid.setItems(getItems());
+        grid.setItems(DummyData.getPersons());
         grid.getStyle().set("flex-grow", "1");
 
         grid.addColumn(Person::getName).setHeader("Name");
@@ -104,19 +101,5 @@ public class View1 extends Div {
                 new FormLayout.ResponsiveStep("22em", 3));
         add(splitter);
 
-    }
-
-    private List<Person> getItems() {
-        List<Person> items = new ArrayList<>();
-        int i = 0;
-        items.add(new Person(i++, "Rolf", "Smeds", Person.Role.DESIGNER, "rolf@email.com", "rofa", 10, LocalDate.now()));
-        items.add(new Person(i++, "Haijian", "Wang", Person.Role.DEVELOPER, "haijian@email.com", null, 1, LocalDate.now()));
-        items.add(new Person(i++, "Jaska", "Kemppainen", Person.Role.DESIGNER, "jaska@email.com", "jaska", 0, LocalDate.now()));
-        items.add(new Person(i++, "Marcio", "Dantas", Person.Role.DEVELOPER, "marcio@email.com", null, 8, LocalDate.now()));
-        items.add(new Person(i++, "Vesa", "Nieminen", Person.Role.DEVELOPER, "vesa@email.com", null, 0, LocalDate.now()));
-        items.add(new Person(i++, "Susanna", "Laalo", Person.Role.MANAGER, "susanna@email.com", "susanna", 64, LocalDate.now()));
-        items.add(new Person(i++, "Hannu", "Salonen", Person.Role.DESIGNER, "hannu@email.com", null, 4, LocalDate.now()));
-        items.add(new Person(i++, "Juuso", "Kantonen", Person.Role.DESIGNER, "juuso@email.com", "juuso", 7, LocalDate.now()));
-        return items;
     }
 }
