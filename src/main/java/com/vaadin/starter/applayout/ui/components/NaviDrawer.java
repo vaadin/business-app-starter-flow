@@ -76,9 +76,11 @@ public abstract class NaviDrawer extends Div implements AfterNavigationObserver 
         if (enabled) {
             removeClassName(RAIL);
             railButton.setIcon(new Icon(VaadinIcon.CHEVRON_LEFT_SMALL));
+            railButton.setText("Collapse");
         } else {
             addClassName(RAIL);
             railButton.setIcon(new Icon(VaadinIcon.CHEVRON_RIGHT_SMALL));
+            railButton.setText("Expand");
         }
     }
 

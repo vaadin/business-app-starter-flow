@@ -70,11 +70,9 @@ public class Root extends FlexLayout
 
         initViewContainer();
 
-        column = UIUtils.createColumn(viewContainer);
-        column.setClassName(CLASS_NAME + "__column");
+        column = UIUtils.createColumn(Collections.singleton(CLASS_NAME + "__column"), viewContainer);
 
-        row = new FlexLayout(naviDrawer, column);
-        row.setClassName(CLASS_NAME + "__row");
+        row = UIUtils.createFlexLayout(Collections.singleton(CLASS_NAME + "__row"), naviDrawer, column);
         add(row);
     }
 

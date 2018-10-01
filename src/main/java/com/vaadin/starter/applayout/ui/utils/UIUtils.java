@@ -98,9 +98,21 @@ public class UIUtils {
         return createSmallTertiaryIconButton(new Icon(icon));
     }
 
+    public static Button createSmallTertiaryIconButton(Collection<String> classNames, VaadinIcon icon) {
+        Button button = createSmallTertiaryIconButton(icon);
+        classNames.forEach(button::addClassName);
+        return button;
+    }
+
     public static Button createSmallTertiaryIconButton(Icon icon) {
         Button button = new Button(icon);
         button.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Button.SMALL_TERTIARY_ICON);
+        return button;
+    }
+
+    public static Button createSmallTertiaryIconButton(Collection<String> classNames, Icon icon) {
+        Button button = createSmallTertiaryIconButton(icon);
+        classNames.forEach(button::addClassName);
         return button;
     }
 

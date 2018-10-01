@@ -12,6 +12,8 @@ import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.starter.applayout.ui.utils.LumoStyles;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
 
+import java.util.Collections;
+
 public class ListItem extends FlexLayout {
 
     private final String CLASS_NAME = "list-item";
@@ -30,8 +32,7 @@ public class ListItem extends FlexLayout {
 
         primaryLabel = new Label(primary);
 
-        divider = new Div();
-        divider.setClassName(CLASS_NAME + "__divider");
+        divider = UIUtils.createDiv(Collections.singleton(CLASS_NAME + "__divider"));
         divider.setVisible(false);
         add(divider);
     }
@@ -43,26 +44,22 @@ public class ListItem extends FlexLayout {
         visual.setClassName(CLASS_NAME + "__icon");
         prefix = visual;
 
-        secondaryLabel = new Label(secondary);
+        secondaryLabel = UIUtils.createLabel(Collections.singleton(LumoStyles.TextColor.SECONDARY), secondary);
         secondaryLabel.getElement().setAttribute(LumoStyles.THEME, LumoStyles.FontSize.S);
-        secondaryLabel.addClassName(LumoStyles.TextColor.SECONDARY);
-
         add(visual, UIUtils.createColumn(primaryLabel, secondaryLabel));
     }
 
     public ListItem(String initials, String primary, String secondary) {
         this(primary);
 
-        FlexLayout visual = new FlexLayout(new Text(initials));
+        FlexLayout visual = UIUtils.createFlexLayout(Collections.singleton(CLASS_NAME + "__initials"), new Text(initials));
         visual.setAlignItems(FlexComponent.Alignment.CENTER);
         visual.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
-        visual.setClassName(CLASS_NAME + "__initials");
         visual.getElement().setAttribute(LumoStyles.THEME, LumoStyles.DARK + " " + LumoStyles.FontSize.S);
         prefix = visual;
 
-        secondaryLabel = new Label(secondary);
+        secondaryLabel = UIUtils.createLabel(Collections.singleton(LumoStyles.TextColor.SECONDARY), secondary);
         secondaryLabel.getElement().setAttribute(LumoStyles.THEME, LumoStyles.FontSize.S);
-        secondaryLabel.addClassName(LumoStyles.TextColor.SECONDARY);
 
         add(visual, UIUtils.createColumn(primaryLabel, secondaryLabel));
     }

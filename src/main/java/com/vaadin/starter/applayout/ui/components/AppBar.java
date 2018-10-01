@@ -18,6 +18,9 @@ import com.vaadin.starter.applayout.ui.utils.LumoStyles;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
 import com.vaadin.starter.applayout.ui.views.Default;
 
+import java.util.Arrays;
+import java.util.Collections;
+
 public class AppBar extends FlexLayout {
 
     private final String CLASS_NAME = "app-bar";
@@ -47,12 +50,9 @@ public class AppBar extends FlexLayout {
         setClassName(CLASS_NAME);
         getElement().setAttribute(LumoStyles.THEME, LumoStyles.DARK);
 
-        menuNaviIcon = UIUtils.createSmallTertiaryIconButton(VaadinIcon.MENU);
-        menuNaviIcon.setClassName(CLASS_NAME + "__navi-icon");
+        menuNaviIcon = UIUtils.createSmallTertiaryIconButton(Collections.singleton(CLASS_NAME + "__navi-icon"), VaadinIcon.MENU);
 
-        contextNaviIcon = UIUtils.createSmallTertiaryIconButton(VaadinIcon.ARROW_BACKWARD);
-        contextNaviIcon.setClassName(CLASS_NAME + "__navi-icon");
-        contextNaviIcon.addClassName(CLASS_NAME + "__navi-icon--visible");
+        contextNaviIcon = UIUtils.createSmallTertiaryIconButton(Arrays.asList(CLASS_NAME + "__navi-icon", CLASS_NAME + "__navi-icon--visible"), VaadinIcon.ARROW_BACKWARD);
         contextNaviIcon.setVisible(false);
 
         this.title = new H4(title);
@@ -75,13 +75,11 @@ public class AppBar extends FlexLayout {
         contextMenu.addItem("Settings", e -> System.out.println("Testing..."));
         contextMenu.addItem("Logout", e -> System.out.println("Testing..."));
 
-        actionItems = new FlexLayout(avatar);
-        actionItems.setClassName(CLASS_NAME + "__action-items");
+        actionItems = UIUtils.createFlexLayout(Collections.singleton(CLASS_NAME + "__action-items"), avatar);
         actionItems.setVisible(false);
 
-        container = new FlexLayout(menuNaviIcon, contextNaviIcon, this.title, search, actionItems, avatar);
+        container = UIUtils.createFlexLayout(Collections.singleton(CLASS_NAME + "__container"), menuNaviIcon, contextNaviIcon, this.title, search, actionItems, avatar);
         container.setAlignItems(Alignment.CENTER);
-        container.setClassName(CLASS_NAME + "__container");
         container.setFlexGrow(1, search);
         add(container);
 
@@ -97,9 +95,8 @@ public class AppBar extends FlexLayout {
         }
         tabs.getElement().setAttribute("overflow", "end");
 
-        tabContainer = new FlexLayout(tabs, addTab);
+        tabContainer = UIUtils.createFlexLayout(Collections.singleton(CLASS_NAME + "__tab-container"), tabs, addTab);
         tabContainer.setAlignItems(Alignment.CENTER);
-        tabContainer.setClassName(CLASS_NAME + "__tab-container");
         add(tabContainer);
     }
 
