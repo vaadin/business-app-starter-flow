@@ -91,6 +91,13 @@ public class UIUtils {
         return button;
     }
 
+    /* Tertiary icon buttons */
+    public static Button createTertiaryIconButton(VaadinIcon icon) {
+        Button button = new Button(new Icon(icon));
+        button.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Button.TERTIARY);
+        return button;
+    }
+
     /* Small buttons */
     public static Button createSmallButton(String text) {
         Button button = new Button(text);

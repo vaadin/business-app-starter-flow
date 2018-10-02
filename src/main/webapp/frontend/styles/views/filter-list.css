@@ -7,22 +7,7 @@
 }
 
 .filter-section {
-  box-sizing: border-box;
-  padding: var(--lumo-space-m) var(--lumo-space-s);
-  width: 50%;
- }
-
-.filter-toggle [theme~="badge"] {
-  margin-left: 0.5em;
-}
-
-.collapsed .filter-section {
-  display: none !important;
-}
-
-.grid-view vaadin-grid {
-  margin: 0 auto;
-  max-width: 1024px;
+  flex: 1;
 }
 
 @media (max-width: 399px) {
@@ -40,13 +25,5 @@
 @media (min-width: 1024px) {
   .filter-list-view {
     padding: var(--lumo-space-l) var(--lumo-space-l) 0 var(--lumo-space-l);
-  }
-}
-
-@media (max-width: 1023px) {
-  .filter-tokens,
-  .filter-options {
-    padding-left: var(--lumo-space-xs);
-    padding-right: var(--lumo-space-xs);
   }
 }

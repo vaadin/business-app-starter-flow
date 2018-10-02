@@ -6,6 +6,7 @@ import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
@@ -38,23 +39,26 @@ import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
 @PageTitle("Filter list")
 public class FilterList extends AbstractView {
 
+    private String FILTER_SECTION = "filter-section";;
+
     private Grid<Person> grid;
 
     private Div filterArea;
     private Button toggleButton;
-
-    private String COLLAPSED = "collapsed";
+    private FlexLayout tokens;
+    private FlexLayout options;
 
     public FilterList() {
         filterArea = UIUtils.createDiv(
-                Arrays.asList("filter-area", LumoStyles.Padding.Responsive.Horizontal.SM, LumoStyles.Padding.Vertical.XS),
+                Arrays.asList("filter-area", LumoStyles.Padding.Responsive.Horizontal.ML, LumoStyles.Shadow.M),
                 createFilterHeader(),
                 UIUtils.createWrappingFlexLayout(
+                        Collections.singleton(LumoStyles.Spacing.Right.L),
                         createFilterOptions(),
                         createTokens()
                 )
         );
-        filterArea.getStyle().set(CSSProperties.FlexShrink.PROPERTY, CSSProperties.FlexShrink._0);
+        filterArea.getElement().setAttribute(LumoStyles.THEME, LumoStyles.DARK);
 
         // Grid
         grid = new Grid();
@@ -84,7 +88,7 @@ public class FilterList extends AbstractView {
         grid.setSizeFull();
 
         DataProvider dataProvider = DataProvider.ofCollection(DummyData.getPersons());
-        grid.setDataProvider(DataProvider.ofCollection(DummyData.getPersons()));
+        grid.setDataProvider(dataProvider);
     }
 
     @Override
@@ -95,25 +99,25 @@ public class FilterList extends AbstractView {
     }
 
     private FlexLayout createFilterHeader() {
-        toggleButton = UIUtils.createTertiaryButton(Collections.singleton("filter-toggle"), VaadinIcon.CHEVRON_UP_SMALL, "Filter options");
+        toggleButton = UIUtils.createTertiaryIconButton(VaadinIcon.CHEVRON_UP_SMALL);
         toggleButton.addClickListener(event -> toggleFilterArea());
 
-        Label suffix = UIUtils.createLabel(Collections.singleton("filters-badge"), "4");
-        suffix.getElement().setProperty("slot", "suffix");
-        suffix.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.CONTRAST);
-        toggleButton.getElement().appendChild(suffix.getElement());
+        Label title = UIUtils.createLabel(Collections.singleton(LumoStyles.FontSize.H4), "Filter");
+
+        Label badge = new Label("4");
+        badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.CONTRAST);
 
         TextField search = new TextField();
         search.setPlaceholder("Quick filter...");
+        search.addClassName(LumoStyles.Margin.Left.AUTO);
 
-        FlexLayout header = UIUtils.createFlexLayout(Collections.singleton(LumoStyles.Spacing.Right.M), toggleButton, search);
+        FlexLayout header = UIUtils.createFlexLayout(Arrays.asList(LumoStyles.Padding.Vertical.XS, LumoStyles.Spacing.Right.S), toggleButton, title, badge, search);
         header.setAlignItems(FlexComponent.Alignment.CENTER);
-        header.setWidth("100%");
         return header;
     }
 
     private FlexLayout createFilterOptions() {
-        Label title = UIUtils.createLabel(Arrays.asList(LumoStyles.FontSize.H5), "Filter options");
+        Label title = UIUtils.createLabel(Arrays.asList(LumoStyles.FontSize.H5), "Options");
 
         ComboBox combo = new ComboBox();
         combo.setPlaceholder("Select...");
@@ -123,11 +127,12 @@ public class FilterList extends AbstractView {
         RadioButtonGroup optionGroup = new RadioButtonGroup();
         optionGroup.setItems("Option 1", "Option 2", "Option 3");
 
-        return UIUtils.createColumn(Arrays.asList("filter-section", LumoStyles.Spacing.Bottom.S), title, combo, checkbox, optionGroup);
+        options = UIUtils.createColumn(Arrays.asList(FILTER_SECTION, LumoStyles.Padding.Vertical.M, LumoStyles.Spacing.Bottom.S), title, combo, checkbox, optionGroup);
+        return options;
     }
 
     private Component createTokens() {
-        Label title = UIUtils.createLabel(Arrays.asList(LumoStyles.FontSize.H5), "Filter tokens");
+        Label title = UIUtils.createLabel(Arrays.asList(LumoStyles.FontSize.H5), "Tokens");
 
         ComboBox combo = new ComboBox();
         combo.setClassName("token-select");
@@ -136,9 +141,10 @@ public class FilterList extends AbstractView {
         Div token = UIUtils.createDiv(Collections.singleton("token"), new Label("Filter token 1"), UIUtils.createSmallTertiaryIconButton(VaadinIcon.CLOSE_SMALL));
         token.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.DEFAULT);
 
-        Div tokenArea = UIUtils.createDiv(Collections.singleton("token-area"), token);
+        Div tokenArea = new Div(token);
 
-        return UIUtils.createColumn(Arrays.asList("filter-section", LumoStyles.Spacing.Bottom.S), title, combo, tokenArea);
+        tokens = UIUtils.createColumn(Arrays.asList(FILTER_SECTION, LumoStyles.Padding.Vertical.M, LumoStyles.Spacing.Bottom.S), title, combo, tokenArea);
+        return tokens;
     }
 
     private Component createUserInfo(Person person) {
@@ -166,13 +172,9 @@ public class FilterList extends AbstractView {
     }
 
     private void toggleFilterArea() {
-        if (filterArea.getClassName().contains(COLLAPSED)) {
-            filterArea.removeClassName(COLLAPSED);
-            toggleButton.setIcon(new Icon(VaadinIcon.CHEVRON_UP_SMALL));
-        } else {
-            filterArea.addClassName(COLLAPSED);
-            toggleButton.setIcon(new Icon(VaadinIcon.CHEVRON_DOWN_SMALL));
-        }
+        options.setVisible(!options.isVisible());
+        tokens.setVisible(!tokens.isVisible());
+        toggleButton.setIcon(options.isVisible() ? new Icon(VaadinIcon.CHEVRON_UP_SMALL) : new Icon(VaadinIcon.CHEVRON_DOWN_SMALL));
     }
 
 }
