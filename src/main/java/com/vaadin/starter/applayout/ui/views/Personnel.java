@@ -25,9 +25,9 @@ import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
 @PageTitle("Personnel")
 public class Personnel extends AbstractView {
 
-    private final Grid<Person> grid;
-    private final ListDataProvider<Person> dataProvider;
-    private final AppBar appBar;
+    private Grid<Person> grid;
+    private ListDataProvider<Person> dataProvider;
+    private AppBar appBar;
 
     public Personnel() {
         // Header

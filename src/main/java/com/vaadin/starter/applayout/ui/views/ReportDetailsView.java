@@ -38,15 +38,15 @@ import java.util.Random;
 @PageTitle("Report Details")
 public class ReportDetailsView extends AbstractView implements HasUrlParameter<Long> {
 
-    private final Random random;
+    private Random random;
 
-    private final AppBar appBar;
-    private final Div viewport;
-    private final Image image;
-    private final ListItem balance;
-    private final ListItem runningDate;
-    private final ListItem status;
-    private final DateTimeFormatter formatter;
+    private AppBar appBar;
+    private Div viewport;
+    private Image image;
+    private ListItem balance;
+    private ListItem runningDate;
+    private ListItem status;
+    private DateTimeFormatter formatter;
 
     public ReportDetailsView() {
         formatter = DateTimeFormatter.ofPattern("MMM dd, YYYY");

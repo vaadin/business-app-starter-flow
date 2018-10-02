@@ -65,9 +65,29 @@ public class UIUtils {
 
     /* ==== BUTTONS ==== */
 
+    /* Primary buttons */
     public static Button createPrimaryButton(String text) {
         Button button = new Button(text);
         button.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Button.PRIMARY);
+        return button;
+    }
+
+    /* Tertiary buttons */
+    public static Button createTertiaryButton(String text) {
+        Button button = new Button(text);
+        button.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Button.TERTIARY);
+        return button;
+    }
+
+    public static Button createTertiaryButton(VaadinIcon icon, String text) {
+        Button button = createTertiaryButton(text);
+        button.setIcon(new Icon(icon));
+        return button;
+    }
+
+    public static Button createTertiaryButton(Collection<String> classNames, VaadinIcon icon, String text) {
+        Button button = createTertiaryButton(icon, text);
+        classNames.forEach(button::addClassName);
         return button;
     }
 

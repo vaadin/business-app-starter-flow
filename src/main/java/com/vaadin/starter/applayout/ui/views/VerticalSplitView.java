@@ -28,8 +28,8 @@ import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
 @PageTitle("Vertical Split View")
 public class VerticalSplitView extends AbstractView {
 
-    private final AppBar appBar;
-    private final SplitLayout splitter;
+    private AppBar appBar;
+    private SplitLayout splitter;
 
     public VerticalSplitView() {
         // Header

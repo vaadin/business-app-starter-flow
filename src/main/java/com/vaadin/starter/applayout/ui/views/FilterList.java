@@ -10,6 +10,7 @@ import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
 import com.vaadin.flow.component.textfield.TextField;
@@ -27,119 +28,32 @@ import com.vaadin.starter.applayout.ui.utils.CSSProperties;
 import com.vaadin.starter.applayout.ui.utils.LumoStyles;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
 
+import java.util.Arrays;
+import java.util.Collections;
+
 import static com.vaadin.starter.applayout.ui.utils.ViewStyles.FILTER_LIST_VIEW;
 
 @Route(value = "filter-list", layout = Root.class)
 @PageTitle("Filter list")
 public class FilterList extends AbstractView {
 
-    private final Grid<Person> grid;
-    private final Div filterArea;
-    private final Div filterAreaHeader;
-    private final FlexLayout filterTokens;
-    private final ComboBox tokenSelect;
-    private final Div tokenArea;
-    private final Div token;
-    private final Button filterAreaToggle = UIUtils.createSmallButton(VaadinIcon.CHEVRON_UP_SMALL, "Filter options");
-    private final Label tokenLabel;
-    private final Button tokenRemove;
-    private final Label filtersBadge;
+    private Grid<Person> grid;
 
-    private final String TOGGLE = "collapsed";
-    private final FlexLayout filterOptions;
-    private final ComboBox filterSelect;
-    private final Checkbox filterOptionCheckBox;
-    private final Label filterTokensLabel;
-    private final Label filterOptionsLabel;
-    private final RadioButtonGroup FilterOptionsRadioButtons;
-    private final TextField quickFilter;
+    private Div filterArea;
+    private Button toggleButton;
+
+    private String COLLAPSED = "collapsed";
 
     public FilterList() {
-        filterArea = new Div();
-        filterArea.setClassName("filter-area");
+        filterArea = UIUtils.createDiv(
+                Arrays.asList("filter-area", LumoStyles.Padding.Responsive.Horizontal.SM, LumoStyles.Padding.Vertical.XS),
+                createFilterHeader(),
+                UIUtils.createWrappingFlexLayout(
+                        createFilterOptions(),
+                        createTokens()
+                )
+        );
         filterArea.getStyle().set(CSSProperties.FlexShrink.PROPERTY, CSSProperties.FlexShrink._0);
-        filterArea.addClassNames(LumoStyles.Padding.Responsive.Horizontal.SM);
-        filterArea.addClassNames(LumoStyles.Padding.Vertical.XS);
-        add(filterArea);
-
-        filterAreaHeader = new Div();
-        filterAreaHeader.setClassName("filter-area-header");
-        filterAreaHeader.setWidth("100%");
-        filterArea.add(filterAreaHeader);
-
-        filterAreaToggle.addClickListener(event -> setFilterAreaEnabled(filterArea.getClassName().contains(TOGGLE)));
-        filterAreaToggle.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Button.TERTIARY_ICON);
-        filterAreaToggle.setClassName("filter-toggle");
-        filterAreaHeader.add(filterAreaToggle);
-
-        filtersBadge = new Label("4");
-        filtersBadge.getElement().setProperty("slot", "suffix");
-        filtersBadge.setClassName("filters-badge");
-        filtersBadge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.CONTRAST);
-        filterAreaToggle.getElement().appendChild(filtersBadge.getElement());
-
-        quickFilter = new TextField();
-        quickFilter.setPlaceholder("Quick filter...");
-        filterAreaHeader.add(quickFilter);
-
-        filterTokens = new FlexLayout();
-        filterTokens.getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN);
-        filterTokens.setClassName("filter-tokens");
-        filterArea.add(filterTokens);
-
-        filterTokensLabel = new Label("Filter tokens");
-        filterTokensLabel.addClassName("h5");
-        filterTokensLabel.addClassNames(LumoStyles.Margin.Vertical.XS);
-        filterTokens.add(filterTokensLabel);
-
-        tokenSelect = new ComboBox();
-        tokenSelect.setClassName("token-select");
-        tokenSelect.setPlaceholder("Add filter...");
-        tokenSelect.addClassNames(LumoStyles.Margin.Vertical.XS);
-        filterTokens.add(tokenSelect);
-
-        tokenArea = new Div();
-        tokenArea.setClassName("token-area");
-        filterTokens.add(tokenArea);
-
-        token = new Div();
-        token.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.DEFAULT);
-        token.setClassName("token");
-        tokenArea.add(token);
-
-        tokenLabel = new Label("Filter token 1");
-        token.add(tokenLabel);
-
-        tokenRemove = new Button();
-        tokenRemove.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Button.SMALL_TERTIARY_ICON);
-        tokenRemove.setIcon(new Icon(VaadinIcon.CLOSE_SMALL));
-        token.add(tokenRemove);
-
-        filterOptions = new FlexLayout();
-        filterOptions.getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN);
-        filterOptions.setClassName("filter-options");
-        filterArea.add(filterOptions);
-
-        filterOptionsLabel = new Label("Filter options");
-        filterOptionsLabel.addClassName("h5");
-        filterOptionsLabel.addClassNames(LumoStyles.Margin.Vertical.XS);
-        filterOptionsLabel.setWidth("100%");
-        filterOptions.add(filterOptionsLabel);
-
-        filterSelect = new ComboBox();
-        filterSelect.setPlaceholder("Select...");
-        filterSelect.addClassNames(LumoStyles.Margin.Vertical.XS);
-        filterOptions.add(filterSelect);
-
-        filterOptionCheckBox = new Checkbox();
-        filterOptionCheckBox.setLabel("Checkbox label");
-        filterOptionCheckBox.addClassNames(LumoStyles.Margin.Vertical.XS);
-        filterOptions.add(filterOptionCheckBox);
-
-        FilterOptionsRadioButtons = new RadioButtonGroup();
-        FilterOptionsRadioButtons.setItems("Option 1", "Option 2", "Option 3");
-        FilterOptionsRadioButtons.addClassNames(LumoStyles.Margin.Vertical.XS);
-        filterOptions.add(FilterOptionsRadioButtons);
 
         // Grid
         grid = new Grid();
@@ -174,8 +88,55 @@ public class FilterList extends AbstractView {
 
     @Override
     protected void initSlots() {
+        setHeader(filterArea);
         setContent(grid);
-        getContent().addClassName(FILTER_LIST_VIEW);
+    }
+
+    private FlexLayout createFilterHeader() {
+        toggleButton = UIUtils.createTertiaryButton(Collections.singleton("filter-toggle"), VaadinIcon.CHEVRON_UP_SMALL, "Filter options");
+        toggleButton.addClickListener(event -> toggleFilterArea());
+
+        Label suffix = UIUtils.createLabel(Collections.singleton("filters-badge"), "4");
+        suffix.getElement().setProperty("slot", "suffix");
+        suffix.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.CONTRAST);
+        toggleButton.getElement().appendChild(suffix.getElement());
+
+        TextField search = new TextField();
+        search.setPlaceholder("Quick filter...");
+
+        FlexLayout header = UIUtils.createFlexLayout(Collections.singleton(LumoStyles.Spacing.Right.M), toggleButton, search);
+        header.setAlignItems(FlexComponent.Alignment.CENTER);
+        header.setWidth("100%");
+        return header;
+    }
+
+    private FlexLayout createFilterOptions() {
+        Label title = UIUtils.createLabel(Arrays.asList(LumoStyles.FontSize.H5), "Filter options");
+
+        ComboBox combo = new ComboBox();
+        combo.setPlaceholder("Select...");
+
+        Checkbox checkbox = new Checkbox("Checkbox label");
+
+        RadioButtonGroup optionGroup = new RadioButtonGroup();
+        optionGroup.setItems("Option 1", "Option 2", "Option 3");
+
+        return UIUtils.createColumn(Arrays.asList("filter-section", LumoStyles.Spacing.Bottom.S), title, combo, checkbox, optionGroup);
+    }
+
+    private Component createTokens() {
+        Label title = UIUtils.createLabel(Arrays.asList(LumoStyles.FontSize.H5), "Filter tokens");
+
+        ComboBox combo = new ComboBox();
+        combo.setClassName("token-select");
+        combo.setPlaceholder("Add filter...");
+
+        Div token = UIUtils.createDiv(Collections.singleton("token"), new Label("Filter token 1"), UIUtils.createSmallTertiaryIconButton(VaadinIcon.CLOSE_SMALL));
+        token.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.DEFAULT);
+
+        Div tokenArea = UIUtils.createDiv(Collections.singleton("token-area"), token);
+
+        return UIUtils.createColumn(Arrays.asList("filter-section", LumoStyles.Spacing.Bottom.S), title, combo, tokenArea);
     }
 
     private Component createUserInfo(Person person) {
@@ -202,13 +163,13 @@ public class FilterList extends AbstractView {
         return badge;
     }
 
-    private void setFilterAreaEnabled(boolean enabled) {
-        if (enabled) {
-            filterArea.removeClassName(TOGGLE);
-            filterAreaToggle.setIcon(new Icon(VaadinIcon.CHEVRON_UP_SMALL));
+    private void toggleFilterArea() {
+        if (filterArea.getClassName().contains(COLLAPSED)) {
+            filterArea.removeClassName(COLLAPSED);
+            toggleButton.setIcon(new Icon(VaadinIcon.CHEVRON_UP_SMALL));
         } else {
-            filterArea.addClassName(TOGGLE);
-            filterAreaToggle.setIcon(new Icon(VaadinIcon.CHEVRON_DOWN_SMALL));
+            filterArea.addClassName(COLLAPSED);
+            toggleButton.setIcon(new Icon(VaadinIcon.CHEVRON_DOWN_SMALL));
         }
     }
 

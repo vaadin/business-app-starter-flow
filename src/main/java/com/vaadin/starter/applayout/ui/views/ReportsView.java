@@ -22,8 +22,8 @@ import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
 @PageTitle("Reports")
 public class ReportsView extends AbstractView {
 
-    private final Grid<Report> grid;
-    private final AppBar appBar;
+    private Grid<Report> grid;
+    private AppBar appBar;
 
     public ReportsView() {
         // Header

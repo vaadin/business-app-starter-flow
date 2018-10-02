@@ -28,12 +28,12 @@ import java.util.Random;
 @PageTitle("Dashboard")
 public class Dashboard extends AbstractView {
 
-    private final String CLASS_NAME = "dashboard";
+    private String CLASS_NAME = "dashboard";
 
-    private final Random random;
+    private Random random;
 
-    private final AppBar appBar;
-    private final Div viewport;
+    private AppBar appBar;
+    private Div viewport;
 
     public Dashboard() {
         random = new Random();
