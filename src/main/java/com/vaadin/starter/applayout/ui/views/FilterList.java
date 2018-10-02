@@ -32,6 +32,7 @@ import java.util.Arrays;
 import java.util.Collections;
 
 import static com.vaadin.starter.applayout.ui.utils.ViewStyles.FILTER_LIST_VIEW;
+import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
 
 @Route(value = "filter-list", layout = Root.class)
 @PageTitle("Filter list")
@@ -80,16 +81,17 @@ public class FilterList extends AbstractView {
                 .setSortable(true)
                 .setWidth("160px")
                 .setFlexGrow(0);
+        grid.setSizeFull();
 
         DataProvider dataProvider = DataProvider.ofCollection(DummyData.getPersons());
-        grid.setDataProvider(dataProvider);
-        grid.setSizeFull();
+        grid.setDataProvider(DataProvider.ofCollection(DummyData.getPersons()));
     }
 
     @Override
     protected void initSlots() {
         setHeader(filterArea);
         setContent(grid);
+        getContent().addClassName(FILTER_LIST_VIEW);
     }
 
     private FlexLayout createFilterHeader() {

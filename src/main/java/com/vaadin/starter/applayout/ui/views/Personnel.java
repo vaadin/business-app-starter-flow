@@ -62,10 +62,11 @@ public class Personnel extends AbstractView {
                 .setSortable(true)
                 .setWidth("160px")
                 .setFlexGrow(0);
+        grid.setSizeFull();
 
         dataProvider = DataProvider.ofCollection(DummyData.getPersons());
         grid.setDataProvider(dataProvider);
-        grid.setSizeFull();
+
         filter();
     }
 
