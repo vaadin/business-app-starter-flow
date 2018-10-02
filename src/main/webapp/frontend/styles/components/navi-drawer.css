@@ -66,6 +66,8 @@
   width: var(--navi-drawer-width);
 }
 
+.navi-drawer--rail:not(:hover) .navi-item[level] label,
+.navi-drawer--rail:not(:hover) .navi-item > vaadin-button,
 .navi-drawer--rail:not(:hover) .navi-drawer__footer span {
   display: none;
 }
