@@ -66,7 +66,8 @@
 
 @media (max-width: 1023px) {
   .app-bar__container {
-    padding: var(--lumo-space-s) var(--lumo-space-s);
+    height: var(--app-bar-height-mobile);
+    padding: 0 var(--lumo-space-s);
   }
 
   .app-bar__action-items > *:not(:last-child) {
@@ -80,9 +81,10 @@
 
 @media (min-width: 1024px) {
   .app-bar__container {
-    padding: var(--lumo-space-wide-l);
+    height: var(--app-bar-height-desktop);
+    padding: 0 var(--lumo-space-l);
   }
-  
+
   .app-bar__navi-icon:not(.app-bar__navi-icon--visible) {
     margin-right: 0;
     min-width: 0;

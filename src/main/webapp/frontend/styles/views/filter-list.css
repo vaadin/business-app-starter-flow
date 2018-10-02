@@ -1,13 +1,17 @@
 .filter-list-view {
+  box-sizing: border-box;
   transition: padding var(--transition-duration-m);
+}
+
+.filter-area {
+  background-color: var(--lumo-base-color);
+  box-shadow: inset 0  1px var(--lumo-contrast-20pct),
+              inset -1px 0 var(--lumo-contrast-20pct),
+              inset 1px  0 var(--lumo-contrast-20pct);
 }
 
 .filter-area vaadin-combo-box {
   max-width: 300px;
-}
-
-.filter-section {
-  flex: 1;
 }
 
 @media (max-width: 399px) {
