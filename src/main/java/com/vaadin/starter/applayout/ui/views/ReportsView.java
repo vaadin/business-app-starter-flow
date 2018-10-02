@@ -14,7 +14,6 @@ import com.vaadin.starter.applayout.ui.Root;
 import com.vaadin.starter.applayout.ui.components.AbstractView;
 import com.vaadin.starter.applayout.ui.components.AppBar;
 import com.vaadin.starter.applayout.ui.components.ListItem;
-import com.vaadin.starter.applayout.ui.utils.NaviDrawerProvider;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
 
 import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
@@ -29,7 +28,6 @@ public class ReportsView extends AbstractView {
     public ReportsView() {
         // Header
         appBar = new AppBar("Reports");
-        appBar.getMenuNaviIcon().addClickListener(e -> NaviDrawerProvider.getNaviDrawer().toggle());
 
         // Grid
         grid = new Grid();

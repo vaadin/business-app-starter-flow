@@ -18,7 +18,6 @@ import com.vaadin.starter.applayout.ui.components.AppBar;
 import com.vaadin.starter.applayout.ui.components.ListItem;
 import com.vaadin.starter.applayout.ui.utils.CSSProperties;
 import com.vaadin.starter.applayout.ui.utils.LumoStyles;
-import com.vaadin.starter.applayout.ui.utils.NaviDrawerProvider;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
 
 import java.util.Arrays;
@@ -41,7 +40,6 @@ public class Dashboard extends AbstractView {
 
         // Header
         appBar = new AppBar("Dashboard");
-        appBar.getMenuNaviIcon().addClickListener(e -> NaviDrawerProvider.getNaviDrawer().toggle());
 
         // Content
         viewport = UIUtils.createDiv(

@@ -21,9 +21,7 @@ import com.vaadin.starter.applayout.ui.components.NaviItem;
 import com.vaadin.starter.applayout.ui.components.NaviTabs;
 import com.vaadin.starter.applayout.ui.utils.NaviDrawerProvider;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
-import com.vaadin.starter.applayout.ui.views.Dashboard;
-import com.vaadin.starter.applayout.ui.views.Personnel;
-import com.vaadin.starter.applayout.ui.views.ReportsView;
+import com.vaadin.starter.applayout.ui.views.*;
 
 import java.util.Collections;
 
@@ -82,7 +80,9 @@ public class Root extends FlexLayout
     private void initNaviItems() {
         naviDrawer.addNaviItem(VaadinIcon.GRID_BIG, "Dashboard", Dashboard.class);
         naviDrawer.addNaviItem(VaadinIcon.FILE_TEXT, "Reports", ReportsView.class);
-        naviDrawer.addNaviItem(VaadinIcon.USERS, "Personnel", Personnel.class);
+        NaviItem personnel = naviDrawer.addNaviItem(VaadinIcon.USERS, "Personnel", Personnel.class);
+        naviDrawer.addNaviItem(personnel, "Vertical Split", VerticalSplitView.class);
+        naviDrawer.addNaviItem(personnel, "Horizontal Split", HorizontalSplitView.class);
     }
 
     /**

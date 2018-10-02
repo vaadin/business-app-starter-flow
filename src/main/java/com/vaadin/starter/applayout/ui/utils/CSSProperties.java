@@ -36,6 +36,17 @@ public class CSSProperties {
         public static final String ROW = new String("row");
     }
 
+    public static class FlexGrow {
+        public static final String PROPERTY = new String("flex-grow");
+        public static final String _1 = new String("1");
+        public static final String _0 = new String("0");
+    }
+
+    public static class FlexShrink {
+        public static final String PROPERTY = new String("flex-shrink");
+        public static final String _0 = new String("0");
+    }
+
     public static class FlexWrap {
         public static final String PROPERTY = new String("flex-wrap");
         public static final String WRAP = new String("wrap");
@@ -44,11 +55,6 @@ public class CSSProperties {
     public static class JustifyContent {
         public static final String PROPERTY = new String("justify-content");
         public static final String SPACE_BETWEEN = new String("space-between");
-    }
-
-    public static class FlexShrink {
-        public static final String PROPERTY = new String("flex-shrink");
-        public static final String _0 = new String("0");
     }
 
     public static class Margin {
@@ -82,6 +88,10 @@ public class CSSProperties {
     public static class TextAlign {
         public static final String PROPERTY = new String("text-align");
         public static final String RIGHT = new String("right");
+    }
+
+    public static class Width {
+        public static final String PROPERTY = new String("width");
     }
 
 }

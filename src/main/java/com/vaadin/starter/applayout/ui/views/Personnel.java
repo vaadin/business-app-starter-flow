@@ -18,7 +18,6 @@ import com.vaadin.starter.applayout.ui.components.AbstractView;
 import com.vaadin.starter.applayout.ui.components.AppBar;
 import com.vaadin.starter.applayout.ui.components.ListItem;
 import com.vaadin.starter.applayout.ui.utils.LumoStyles;
-import com.vaadin.starter.applayout.ui.utils.NaviDrawerProvider;
 
 import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
 
@@ -33,7 +32,6 @@ public class Personnel extends AbstractView {
     public Personnel() {
         // Header
         appBar = new AppBar("Personnel");
-        appBar.getMenuNaviIcon().addClickListener(e -> NaviDrawerProvider.getNaviDrawer().toggle());
         for (Person.Role role : Person.Role.values()) {
             appBar.addTab(role.name().substring(0, 1).toUpperCase() + role.name().substring(1).toLowerCase());
         }

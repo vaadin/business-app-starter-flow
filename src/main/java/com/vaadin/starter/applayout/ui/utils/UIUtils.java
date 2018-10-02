@@ -15,6 +15,10 @@ import java.util.Collection;
 
 public class UIUtils {
 
+
+
+    /* ==== LAYOUTS ==== */
+
     public static Div createDiv(Collection<String> classNames, Component... components) {
         Div div = new Div(components);
         classNames.forEach(div::addClassName);
@@ -55,6 +59,16 @@ public class UIUtils {
         FlexLayout layout = createColumn(components);
         classNames.forEach(layout::addClassName);
         return layout;
+    }
+
+
+
+    /* ==== BUTTONS ==== */
+
+    public static Button createPrimaryButton(String text) {
+        Button button = new Button(text);
+        button.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Button.PRIMARY);
+        return button;
     }
 
     /* Small buttons */
@@ -127,12 +141,20 @@ public class UIUtils {
         return button;
     }
 
+
+
+    /* ==== TEXTFIELDS ==== */
+
     /* Create small textfield */
     public static TextField createSmallTextField() {
         TextField textField = new TextField();
         textField.getElement().setAttribute(LumoStyles.THEME, LumoStyles.TextField.SMALL);
         return textField;
     }
+
+
+
+    /* ==== TEXT ==== */
 
     /* Paragraphs */
     public static Paragraph createParagraph(Collection<String> classNames, String text) {
@@ -154,6 +176,10 @@ public class UIUtils {
         classNames.forEach(label::addClassName);
         return label;
     }
+
+
+
+    /* ==== ICONS ==== */
 
     /* Icons */
     public static Icon createSmallIcon(VaadinIcon icon) {
