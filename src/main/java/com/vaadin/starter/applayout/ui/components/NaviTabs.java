@@ -6,6 +6,9 @@ import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.starter.applayout.ui.views.Default;
 
+/**
+ * NaviTabs supports tabs that can be closed, and that can navigate to a specific target when clicked.
+ */
 public class NaviTabs extends Tabs {
 
     public NaviTabs() {
@@ -31,7 +34,7 @@ public class NaviTabs extends Tabs {
     }
 
     /**
-     * Creates a closable tab that when clicked navigates to the specified target.
+     * Creates a (closable) tab that when clicked navigates to the specified target.
      */
     public Tab addClosableNaviTab(String text, Class<? extends Component> navigationTarget) {
         ClosableNaviTab tab = new ClosableNaviTab(text, navigationTarget);
