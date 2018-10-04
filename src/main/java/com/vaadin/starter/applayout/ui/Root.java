@@ -16,6 +16,7 @@ import com.vaadin.flow.router.RouterLayout;
 import com.vaadin.flow.server.InitialPageSettings;
 import com.vaadin.flow.server.PageConfigurator;
 import com.vaadin.starter.applayout.backend.UIConfig;
+import com.vaadin.starter.applayout.ui.components.AppBar;
 import com.vaadin.starter.applayout.ui.components.NaviDrawer;
 import com.vaadin.starter.applayout.ui.components.NaviItem;
 import com.vaadin.starter.applayout.ui.components.NaviTabs;
@@ -42,6 +43,7 @@ public class Root extends FlexLayout
 
     private NaviDrawer naviDrawer;
     private FlexLayout viewContainer;
+    private AppBar appBar;
 
     public Root() {
         setClassName(CLASS_NAME);
@@ -86,6 +88,17 @@ public class Root extends FlexLayout
         naviDrawer.addNaviItem(personnel, "Horizontal Split", HorizontalSplitView.class);
 
         naviDrawer.addNaviItem(VaadinIcon.FILTER, "Filter List", FilterList.class);
+
+        NaviItem documents = naviDrawer.addNaviItem(VaadinIcon.ARCHIVES, "Documents", Default.class);
+        naviDrawer.addNaviItem(documents, "Item level 1", Default.class);
+        NaviItem itemLevel1 = naviDrawer.addNaviItem(documents, "Item level 1", Default.class);
+
+        naviDrawer.addNaviItem(itemLevel1, "Item level 2", Default.class);
+        naviDrawer.addNaviItem(itemLevel1, "Item level 2", Default.class);
+        NaviItem itemLevel2 = naviDrawer.addNaviItem(itemLevel1, "Item level 2", Default.class);
+        naviDrawer.addNaviItem(itemLevel2, "Item level 3", Default.class);
+        naviDrawer.addNaviItem(itemLevel2, "Item level 3", Default.class);
+        naviDrawer.addNaviItem(itemLevel1, "Item level 2", Default.class);
     }
 
     /**
@@ -98,11 +111,12 @@ public class Root extends FlexLayout
         // setAppFooterInner(new Label("Inner footer"));
 
         if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.TABS)) {
-            NaviTabs tabs = new NaviTabs();
-            setAppHeaderInner(tabs);
+            appBar = new AppBar("Welcome");
+            appBar.setAddTabVisible(true);
+            setAppHeaderInner(appBar);
 
             for (NaviItem item : naviDrawer.getNaviItems()) {
-                ((ClickNotifier<Div>) item).addClickListener(event -> naviItemClicked(tabs, item, event));
+                ((ClickNotifier<Div>) item).addClickListener(event -> naviItemClicked(item, event));
             }
         }
     }
@@ -110,28 +124,19 @@ public class Root extends FlexLayout
     /**
      * Handles the click event for navigation items when in NaviMode.TABS.
      */
-    private void naviItemClicked(NaviTabs tabs, NaviItem item, ClickEvent<Div> event) {
-        int tabCount = tabs.getTabCount();
-
+    private void naviItemClicked(NaviItem item, ClickEvent<Div> event) {
         // Shift-click to add a new tab.
         if (event.getButton() == 0 && event.isShiftKey()) {
-            Tab tab = tabs.addClosableNaviTab(item.getText(), item.getNavigationTarget());
-            tabs.setSelectedTab(tab);
+            appBar.setSelectedTab(appBar.addClosableNaviTab(item.getText(), item.getNavigationTarget()));
         }
 
         // Update the current tab, or create the first one.
         else if (event.getButton() == 0) {
-            if (tabs.getTabCount() > 0) {
-                tabs.updateSelectedTab(item.getText(), item.getNavigationTarget());
+            if (appBar.getTabCount() > 0) {
+                appBar.updateSelectedTab(item.getText(), item.getNavigationTarget());
             } else {
-                Tab tab = tabs.addClosableNaviTab(item.getText(), item.getNavigationTarget());
-                tabs.setSelectedTab(tab);
+                appBar.addClosableNaviTab(item.getText(), item.getNavigationTarget());
             }
-        }
-
-        // A selection change event isn't triggered when the first tab is added.
-        if (tabCount == 0) {
-            tabs.setSelectedTab(tabs.getSelectedTab());
         }
     }
 

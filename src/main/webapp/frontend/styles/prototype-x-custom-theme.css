@@ -34,6 +34,11 @@
   --iron-icon-fill-color: var(--lumo-shade-70pct);
 }
 
+[theme="dark"] .closable-tab vaadin-button:hover {
+  margin: 0;
+  --iron-icon-fill-color: var(--lumo-contrast-70pct);
+}
+
 
 /* ==== Navigation drawer ==== */
 .brand-expression {
@@ -54,8 +59,8 @@
 
 .navi-drawer__footer {
   position: absolute;
-  top: 1em;
-  left: 1em;
+  top: var(--lumo-space-m);
+  left: var(--lumo-space-m);
   width: calc(var(--lumo-font-size-m) + var(--lumo-space-m));
   height: calc(var(--lumo-font-size-m) + var(--lumo-space-m));
   border-radius: var(--lumo-border-radius);
@@ -80,6 +85,7 @@
 .navi-drawer vaadin-text-field {
   padding-top: 0;
   box-shadow: inset 0 -1px 0 0 var(--lumo-contrast-10pct);
+  flex-shrink: 0;
 }
 
 .navi-drawer--rail:not(:hover) vaadin-text-field [part="value"] {
@@ -112,22 +118,43 @@
 /* Sub items */
 .navi-item[level] {
   height: var(--lumo-size-m);
-}
-
-.navi-item[level] .navi-item__link {
-  order: 2;
-  padding-left: 0;
+  position: relative;
 }
 
 .navi-item[level] vaadin-button {
+  position: absolute;
+  left: 0;
   margin: 0;
-  order: 1;
   padding: 0;
   transition: transform 0.2s;
 }
 
 .navi-item[level="1"] label {
-  margin-left: var(--lumo-space-m);
+  margin-left: var(--lumo-space-l);
+  font-size: var(--lumo-font-size-s);
+  font-weight: 500;
+}
+
+.navi-item[level="2"] label {
+  margin-left: calc(2 * var(--lumo-space-l));
+  font-size: var(--lumo-font-size-s);
+}
+
+.navi-item[level="3"] label {
+  margin-left: calc(3 * var(--lumo-space-l));
+  font-size: var(--lumo-font-size-xs);
+}
+
+.navi-item[level="1"] vaadin-button {
+  left: var(--lumo-space-l);
+}
+
+.navi-item[level="2"] vaadin-button {
+  left: calc(2 * var(--lumo-space-l));
+}
+
+.navi-item[level="3"] vaadin-button {
+  left: calc(3 * var(--lumo-space-l));
 }
 
 .navi-item[level] vaadin-button iron-icon {
@@ -135,12 +162,9 @@
   transition: transform 0.1s;
 }
 
-.navi-item[level="2"] label {
-  margin-left: calc(var(--lumo-space-m) * 3);
-}
-
-.navi-item[level="3"] label {
-  margin-left: calc(var(--lumo-space-m) * 4);
+.navi-item[level] vaadin-button iron-icon {
+  color: var(--lumo-tertiary-text-color);
+  transition: transform 0.1s;
 }
 
 /* Hover */
@@ -151,12 +175,6 @@
 .navi-item:hover .navi-item__link:not([highlight]) {
   color: var(--lumo-shade);
   cursor: default;
-}
-
-/* Not visible */
-.navi-item.not-visible[level] vaadin-button {
-  margin: 0;
-  order: 1;
 }
 
 .navi-item.not-visible[level] vaadin-button iron-icon {
