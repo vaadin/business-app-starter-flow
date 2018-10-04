@@ -4,6 +4,7 @@ public class CSSProperties {
 
     public static class BackgroundColor {
         public static final String PROPERTY = new String("background-color");
+        public static final String WHITE = new String("#fff");
     }
 
     public static class BorderRadius {
@@ -34,6 +35,7 @@ public class CSSProperties {
         public static final String PROPERTY = new String("flex-direction");
         public static final String COLUMN = new String("column");
         public static final String ROW = new String("row");
+        public static final String ROW_REVERSE = new String("row-reverse");
     }
 
     public static class FlexGrow {

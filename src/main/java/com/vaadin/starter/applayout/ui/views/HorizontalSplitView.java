@@ -6,6 +6,8 @@ import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
 import com.vaadin.flow.component.splitlayout.SplitLayout;
@@ -32,15 +34,16 @@ import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
 public class HorizontalSplitView extends AbstractView {
 
     private final AppBar appBar;
-    private final SplitLayout splitter;
+    private final Div splitter;
 
     public HorizontalSplitView() {
         // Header
         appBar = new AppBar("Personnel");
 
         // Splitter
-        splitter = new SplitLayout();
-        splitter.setOrientation(SplitLayout.Orientation.HORIZONTAL);
+        splitter = new Div();
+        splitter.getStyle().set(CSSProperties.Display.PROPERTY, CSSProperties.Display.FLEX);
+//        splitter.setOrientation(SplitLayout.Orientation.HORIZONTAL);
         splitter.setSizeFull();
 
         // Grid
@@ -56,10 +59,19 @@ public class HorizontalSplitView extends AbstractView {
 
         // Grid wrapper for some nice padding.
         Div gridWrapper = UIUtils.createDiv(Collections.singleton(GRID_VIEW), grid);
+        gridWrapper.getStyle().set(CSSProperties.Flex.PROPERTY, "1 0 auto");
+
+        // Form close container
+        Button formCloseButton = new Button("Close");
+        FlexLayout formClose = UIUtils.createFlexLayout(Arrays.asList(LumoStyles.Padding.All.M, LumoStyles.Spacing.Right.S), formCloseButton);
+        formClose.getElement().getStyle().set(CSSProperties.BackgroundColor.PROPERTY, CSSProperties.BackgroundColor.WHITE);
 
         // Form
         FormLayout form = new FormLayout();
-        form.addClassName(LumoStyles.Padding.All.L);
+        form.addClassNames(LumoStyles.Padding.Left.M, LumoStyles.Padding.Right.M);
+        form.getStyle().set("overflow-y", "auto");
+        form.getStyle().set("overflow-x", "hidden");
+        form.getStyle().set("flex-grow", "1");
 
         TextField firstName = new TextField();
         firstName.setWidth("100%");
@@ -99,19 +111,15 @@ public class HorizontalSplitView extends AbstractView {
         // Actions
         Button cancel = new Button("Cancel");
         Button save = UIUtils.createPrimaryButton("Save");
-        FlexLayout actions = UIUtils.createFlexLayout(Arrays.asList(LumoStyles.Padding.All.L, LumoStyles.Spacing.Right.S), cancel, save);
+        FlexLayout actions = UIUtils.createFlexLayout(Arrays.asList(LumoStyles.Padding.All.M, LumoStyles.Spacing.Right.S), cancel, save);
+        actions.setJustifyContentMode(FlexComponent.JustifyContentMode.BETWEEN);
 
-        // These wrappers are only required if you wish to have a minimum width for the form,
-        // that when exceeded, causes overflow.
-        Div minWidthWrapper = new Div(form, actions);
-        minWidthWrapper.getStyle().set(CSSProperties.MinWidth.PROPERTY, "360px");
 
-        Div formWrapper = new Div(minWidthWrapper);
+        FlexLayout formWrapper = UIUtils.createColumn(Arrays.asList(LumoStyles.Shadow.L), formClose, form, actions);
+        formWrapper.addClassName("abstract-view__detail");
 
         // Set the splitter's content.
-        splitter.addToPrimary(gridWrapper);
-        splitter.addToSecondary(formWrapper);
-        splitter.setSplitterPosition(75);
+        splitter.add(gridWrapper, formWrapper);
     }
 
     @Override
