@@ -12,6 +12,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.starter.applayout.backend.DummyData;
 import com.vaadin.starter.applayout.backend.Person;
+import com.vaadin.starter.applayout.backend.UIConfig;
 import com.vaadin.starter.applayout.ui.Root;
 import com.vaadin.starter.applayout.ui.components.AbstractView;
 import com.vaadin.starter.applayout.ui.components.AppBar;
@@ -28,8 +29,8 @@ import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
 @PageTitle("Vertical Split View")
 public class VerticalSplitView extends AbstractView {
 
-    private final AppBar appBar;
-    private final SplitLayout splitter;
+    private AppBar appBar;
+    private SplitLayout splitter;
 
     public VerticalSplitView() {
         // Header
@@ -88,7 +89,9 @@ public class VerticalSplitView extends AbstractView {
 
     @Override
     protected void initSlots() {
-        setHeader(appBar);
+        if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
+            setHeader(appBar);
+        }
         setContent(splitter);
     }
 }

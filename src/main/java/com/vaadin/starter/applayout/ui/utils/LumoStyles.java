@@ -167,6 +167,7 @@ public class LumoStyles {
             public class Horizontal {
                 public static final String ML = "padding-r-h-ml";
                 public static final String SM = "padding-r-h-sm";
+                public static final String SL = "padding-r-h-sl";
             }
 
             public class Vertical {

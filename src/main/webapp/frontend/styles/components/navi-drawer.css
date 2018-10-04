@@ -27,16 +27,19 @@
   width: var(--navi-drawer-width);
 }
 
-/* Scrollable area */
-.navi-drawer__scroll-area {
-  overflow: auto;
-}
-
 /* Search */
 .navi-drawer vaadin-text-field {
+  box-shadow: inset 0 -1px var(--lumo-contrast-20pct);
   box-sizing: border-box;
-  padding: var(--lumo-space-m) var(--lumo-space-m) var(--lumo-space-s) var(--lumo-space-m);
+  padding: var(--lumo-space-m);
   width: 100%;
+}
+
+/* Scrollable area */
+.navi-drawer__scroll-area {
+  box-shadow: inset 0 -1px var(--lumo-contrast-20pct);
+  flex: 1;
+  overflow: auto;
 }
 
 /* List */
@@ -66,6 +69,8 @@
   width: var(--navi-drawer-width);
 }
 
+.navi-drawer--rail:not(:hover) .navi-item[level] label,
+.navi-drawer--rail:not(:hover) .navi-item > vaadin-button,
 .navi-drawer--rail:not(:hover) .navi-drawer__footer span {
   display: none;
 }

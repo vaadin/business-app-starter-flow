@@ -4,11 +4,17 @@ import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
+import com.vaadin.starter.applayout.ui.utils.CSSProperties;
 import com.vaadin.starter.applayout.ui.views.Default;
 
+/**
+ * NaviTabs supports tabs that can be closed, and that can navigate to a specific target when clicked.
+ */
 public class NaviTabs extends Tabs {
 
     public NaviTabs() {
+        getElement().setAttribute("overflow", "end");
+        getStyle().set(CSSProperties.Overflow.PROPERTY, CSSProperties.Overflow.HIDDEN);
         addSelectedChangeListener(event -> navigateToSelectedTab());
     }
 
@@ -31,7 +37,7 @@ public class NaviTabs extends Tabs {
     }
 
     /**
-     * Creates a closable tab that when clicked navigates to the specified target.
+     * Creates a (closable) tab that when clicked navigates to the specified target.
      */
     public Tab addClosableNaviTab(String text, Class<? extends Component> navigationTarget) {
         ClosableNaviTab tab = new ClosableNaviTab(text, navigationTarget);

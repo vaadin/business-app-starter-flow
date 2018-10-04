@@ -19,6 +19,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.starter.applayout.backend.DummyData;
 import com.vaadin.starter.applayout.backend.Report;
+import com.vaadin.starter.applayout.backend.UIConfig;
 import com.vaadin.starter.applayout.ui.Root;
 import com.vaadin.starter.applayout.ui.components.AbstractView;
 import com.vaadin.starter.applayout.ui.components.AppBar;
@@ -38,15 +39,15 @@ import java.util.Random;
 @PageTitle("Report Details")
 public class ReportDetailsView extends AbstractView implements HasUrlParameter<Long> {
 
-    private final Random random;
+    private Random random;
 
-    private final AppBar appBar;
-    private final Div viewport;
-    private final Image image;
-    private final ListItem balance;
-    private final ListItem runningDate;
-    private final ListItem status;
-    private final DateTimeFormatter formatter;
+    private AppBar appBar;
+    private Div viewport;
+    private Image image;
+    private ListItem balance;
+    private ListItem runningDate;
+    private ListItem status;
+    private DateTimeFormatter formatter;
 
     public ReportDetailsView() {
         formatter = DateTimeFormatter.ofPattern("MMM dd, YYYY");
@@ -114,7 +115,9 @@ public class ReportDetailsView extends AbstractView implements HasUrlParameter<L
 
     @Override
     protected void initSlots() {
-        setHeader(appBar);
+        if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
+            setHeader(appBar);
+        }
         setContent(viewport);
     }
 

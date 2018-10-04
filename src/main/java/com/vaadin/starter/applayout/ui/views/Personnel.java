@@ -13,6 +13,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.starter.applayout.backend.DummyData;
 import com.vaadin.starter.applayout.backend.Person;
+import com.vaadin.starter.applayout.backend.UIConfig;
 import com.vaadin.starter.applayout.ui.Root;
 import com.vaadin.starter.applayout.ui.components.AbstractView;
 import com.vaadin.starter.applayout.ui.components.AppBar;
@@ -25,9 +26,9 @@ import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
 @PageTitle("Personnel")
 public class Personnel extends AbstractView {
 
-    private final Grid<Person> grid;
-    private final ListDataProvider<Person> dataProvider;
-    private final AppBar appBar;
+    private Grid<Person> grid;
+    private ListDataProvider<Person> dataProvider;
+    private AppBar appBar;
 
     public Personnel() {
         // Header
@@ -62,10 +63,11 @@ public class Personnel extends AbstractView {
                 .setSortable(true)
                 .setWidth("160px")
                 .setFlexGrow(0);
+        grid.setSizeFull();
 
         dataProvider = DataProvider.ofCollection(DummyData.getPersons());
         grid.setDataProvider(dataProvider);
-        grid.setSizeFull();
+
         filter();
     }
 
@@ -75,7 +77,9 @@ public class Personnel extends AbstractView {
 
     @Override
     protected void initSlots() {
-        setHeader(appBar);
+        if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
+            setHeader(appBar);
+        }
         setContent(grid);
         getContent().addClassName(GRID_VIEW);
     }
