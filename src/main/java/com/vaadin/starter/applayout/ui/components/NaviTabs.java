@@ -1,9 +1,11 @@
 package com.vaadin.starter.applayout.ui.components;
 
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.ComponentUtil;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
+import com.vaadin.starter.applayout.ui.utils.CSSProperties;
 import com.vaadin.starter.applayout.ui.views.Default;
 
 /**
@@ -12,6 +14,8 @@ import com.vaadin.starter.applayout.ui.views.Default;
 public class NaviTabs extends Tabs {
 
     public NaviTabs() {
+        getElement().setAttribute("overflow", "end");
+        getStyle().set(CSSProperties.Overflow.PROPERTY, CSSProperties.Overflow.AUTO);
         addSelectedChangeListener(event -> navigateToSelectedTab());
     }
 

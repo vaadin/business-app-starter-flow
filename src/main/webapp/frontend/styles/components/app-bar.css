@@ -64,6 +64,10 @@
   overflow: hidden;
 }
 
+.app-bar__tab vaadin-button {
+  margin: 0;
+}
+
 @media (max-width: 1023px) {
   .app-bar__container {
     height: var(--app-bar-height-mobile);

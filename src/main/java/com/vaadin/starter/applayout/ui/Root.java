@@ -86,15 +86,6 @@ public class Root extends FlexLayout
         naviDrawer.addNaviItem(personnel, "Horizontal Split", HorizontalSplitView.class);
 
         naviDrawer.addNaviItem(VaadinIcon.FILTER, "Filter List", FilterList.class);
-
-        NaviItem documents = naviDrawer.addNaviItem(VaadinIcon.ARCHIVES, "Documents", Default.class);
-        NaviItem folder1 = naviDrawer.addNaviItem(documents, "Folder 1", Default.class);
-        NaviItem item1 = naviDrawer.addNaviItem(folder1, "item 1", Default.class);
-        NaviItem item2 = naviDrawer.addNaviItem(folder1, "item 2", Default.class);
-        NaviItem item3 = naviDrawer.addNaviItem(folder1, "item 3", Default.class);
-        NaviItem item4 = naviDrawer.addNaviItem(folder1, "item 4", Default.class);
-        NaviItem subItem1 = naviDrawer.addNaviItem(item4, "Sub item 1", Default.class);
-        NaviItem subItem2 = naviDrawer.addNaviItem(item4, "Sub item 2", Default.class);
     }
 
     /**
