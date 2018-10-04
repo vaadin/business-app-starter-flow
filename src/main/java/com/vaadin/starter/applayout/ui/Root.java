@@ -80,7 +80,7 @@ public class Root extends FlexLayout
      * Initialise the navigation items.
      */
     private void initNaviItems() {
-
+/*
         naviDrawer.addNaviItem(VaadinIcon.GRID_BIG, "Dashboard", Dashboard.class);
         naviDrawer.addNaviItem(VaadinIcon.FILE_TEXT, "Reports", ReportsView.class);
 
@@ -89,7 +89,7 @@ public class Root extends FlexLayout
         naviDrawer.addNaviItem(personnel, "Horizontal Split", HorizontalSplitView.class);
 
         naviDrawer.addNaviItem(VaadinIcon.FILTER, "Filter List", FilterList.class);
-        /*
+  */
 
 
         // === Hannu's example ==== //
@@ -249,7 +249,7 @@ public class Root extends FlexLayout
                 }
             }
         }
-        */
+
     }
 
     /**

@@ -44,21 +44,21 @@ public abstract class NaviDrawer extends Div implements AfterNavigationObserver 
         content = UIUtils.createDiv(Collections.singleton(CLASS_NAME + "__content"));
         add(content);
 
-        // Scrollable area.
-        scrollArea = UIUtils.createDiv(Collections.singleton(CLASS_NAME + "__scroll-area"));
-        content.add(scrollArea);
-
         // Header: account switcher or brand logo.
         if (UIConfig.getNaviHeader().equals(UIConfig.NaviHeader.ACCOUNT_SWITCHER)) {
-            scrollArea.add(new AccountSwitcher());
+            content.add(new AccountSwitcher());
         } else {
-            scrollArea.add(new BrandExpression());
+            content.add(new BrandExpression());
         }
 
         // Search field.
         TextField search = new TextField();
         search.setPlaceholder("Search");
-        scrollArea.add(search);
+        content.add(search);
+
+        // Scrollable area.
+        scrollArea = UIUtils.createDiv(Collections.singleton(CLASS_NAME + "__scroll-area"));
+        content.add(scrollArea);
 
         // Wrapper for navigation items.
         list = UIUtils.createDiv(Collections.singleton(CLASS_NAME + "__list"));
