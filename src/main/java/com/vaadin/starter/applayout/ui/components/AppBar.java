@@ -94,7 +94,6 @@ public class AppBar extends FlexLayout {
         if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
             tabs.addClassName(LumoStyles.Margin.Horizontal.AUTO);
         }
-        tabs.getElement().setAttribute("overflow", "end");
         tabs.setVisible(false);
 
         tabContainer = UIUtils.createFlexLayout(Collections.singleton(CLASS_NAME + "__tab-container"), tabs, addTab);

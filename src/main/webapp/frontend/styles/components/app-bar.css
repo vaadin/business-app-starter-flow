@@ -61,7 +61,6 @@
 
 .app-bar__tabs {
   box-shadow: none;
-  overflow: hidden;
 }
 
 .app-bar__tab vaadin-button {

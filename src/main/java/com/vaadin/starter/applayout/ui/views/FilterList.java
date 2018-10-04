@@ -6,7 +6,6 @@ import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
@@ -36,7 +35,6 @@ import java.util.Arrays;
 import java.util.Collections;
 
 import static com.vaadin.starter.applayout.ui.utils.ViewStyles.FILTER_LIST_VIEW;
-import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
 
 @Route(value = "filter-list", layout = Root.class)
 @PageTitle("Filter list")

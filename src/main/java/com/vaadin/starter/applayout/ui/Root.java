@@ -9,20 +9,19 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.page.Viewport;
-import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.RouterLayout;
 import com.vaadin.flow.server.InitialPageSettings;
 import com.vaadin.flow.server.PageConfigurator;
 import com.vaadin.starter.applayout.backend.UIConfig;
-import com.vaadin.starter.applayout.ui.components.AppBar;
 import com.vaadin.starter.applayout.ui.components.NaviDrawer;
 import com.vaadin.starter.applayout.ui.components.NaviItem;
-import com.vaadin.starter.applayout.ui.components.NaviTabs;
+import com.vaadin.starter.applayout.ui.components.TabBar;
 import com.vaadin.starter.applayout.ui.utils.NaviDrawerProvider;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
-import com.vaadin.starter.applayout.ui.views.*;
+import com.vaadin.starter.applayout.ui.views.Dashboard;
+import com.vaadin.starter.applayout.ui.views.Default;
 
 import java.util.Collections;
 
@@ -42,7 +41,7 @@ public class Root extends FlexLayout
     private FlexLayout column;
 
     private NaviDrawer naviDrawer;
-    private AppBar appBar;
+    private TabBar tabBar;
     private FlexLayout viewContainer;
 
     public Root() {
@@ -262,9 +261,8 @@ public class Root extends FlexLayout
         // setAppFooterInner(new Label("Inner footer"));
 
         if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.TABS)) {
-            appBar = new AppBar("Welcome");
-            appBar.setAddTabVisible(true);
-            setAppHeaderInner(appBar);
+            tabBar = new TabBar();
+            setAppHeaderInner(tabBar);
 
             for (NaviItem item : naviDrawer.getNaviItems()) {
                 ((ClickNotifier<Div>) item).addClickListener(event -> naviItemClicked(item, event));
@@ -278,15 +276,15 @@ public class Root extends FlexLayout
     private void naviItemClicked(NaviItem item, ClickEvent<Div> event) {
         // Shift-click to add a new tab.
         if (event.getButton() == 0 && event.isShiftKey()) {
-            appBar.setSelectedTab(appBar.addClosableNaviTab(item.getText(), item.getNavigationTarget()));
+            tabBar.setSelectedTab(tabBar.addClosableNaviTab(item.getText(), item.getNavigationTarget()));
         }
 
         // Update the current tab, or create the first one.
         else if (event.getButton() == 0) {
-            if (appBar.getTabCount() > 0) {
-                appBar.updateSelectedTab(item.getText(), item.getNavigationTarget());
+            if (tabBar.getTabCount() > 0) {
+                tabBar.updateSelectedTab(item.getText(), item.getNavigationTarget());
             } else {
-                appBar.addClosableNaviTab(item.getText(), item.getNavigationTarget());
+                tabBar.addClosableNaviTab(item.getText(), item.getNavigationTarget());
             }
         }
     }
