@@ -49,7 +49,6 @@ public class AppBar extends FlexLayout {
     public AppBar(String title) {
         super();
         setClassName(CLASS_NAME);
-        getElement().setAttribute(LumoStyles.THEME, LumoStyles.DARK);
 
         menuNaviIcon = UIUtils.createSmallTertiaryIconButton(Collections.singleton(CLASS_NAME + "__navi-icon"), VaadinIcon.MENU);
         menuNaviIcon.addClickListener(e -> NaviDrawerProvider.getNaviDrawer().toggle());

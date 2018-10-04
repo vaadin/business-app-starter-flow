@@ -11,6 +11,7 @@ public class ClosableNaviTab extends NaviTab {
 
     public ClosableNaviTab(String label, Class<? extends Component> navigationTarget) {
         super(label, navigationTarget);
+        setClassName("closable-tab");
 
         close = UIUtils.createSmallTertiaryIconButton(VaadinIcon.CLOSE);
         add(close);
