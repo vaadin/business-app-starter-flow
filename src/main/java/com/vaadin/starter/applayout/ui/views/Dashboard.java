@@ -12,6 +12,7 @@ import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.starter.applayout.backend.UIConfig;
 import com.vaadin.starter.applayout.ui.Root;
 import com.vaadin.starter.applayout.ui.components.AbstractView;
 import com.vaadin.starter.applayout.ui.components.AppBar;
@@ -58,7 +59,9 @@ public class Dashboard extends AbstractView {
 
     @Override
     protected void initSlots() {
-        setHeader(appBar);
+        if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
+            setHeader(appBar);
+        }
         setContent(viewport);
     }
 

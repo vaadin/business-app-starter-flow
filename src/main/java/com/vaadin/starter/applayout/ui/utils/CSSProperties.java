@@ -44,6 +44,7 @@ public class CSSProperties {
 
     public static class FlexShrink {
         public static final String PROPERTY = new String("flex-shrink");
+        public static final String _1 = new String("1");
         public static final String _0 = new String("0");
     }
 
@@ -77,6 +78,7 @@ public class CSSProperties {
     public static class Overflow {
         public static final String PROPERTY = new String("overflow");
         public static final String AUTO = new String("auto");
+        public static final String HIDDEN = new String("hidden");
     }
 
     public static class Position {

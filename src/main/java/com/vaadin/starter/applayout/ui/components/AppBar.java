@@ -90,12 +90,12 @@ public class AppBar extends FlexLayout {
         addTab.setVisible(false);
 
         tabs = new NaviTabs();
-        tabs.setVisible(false);
         tabs.setClassName(CLASS_NAME + "__tabs");
         if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
             tabs.addClassName(LumoStyles.Margin.Horizontal.AUTO);
         }
         tabs.getElement().setAttribute("overflow", "end");
+        tabs.setVisible(false);
 
         tabContainer = UIUtils.createFlexLayout(Collections.singleton(CLASS_NAME + "__tab-container"), tabs, addTab);
         tabContainer.setAlignItems(Alignment.CENTER);
@@ -149,27 +149,50 @@ public class AppBar extends FlexLayout {
         updateActionItemsVisibility();
     }
 
+    private void configureTab(Tab tab) {
+        tab.setClassName(CLASS_NAME + "__tab");
+        updateTabsVisibility();
+    }
+
     public Tab addTab(String text) {
         Tab tab = tabs.addTab(text);
-        updateTabsVisibility();
+        configureTab(tab);
         return tab;
     }
 
     public Tab addClosableNaviTab(String text, Class<? extends Component> navigationTarget) {
-        return tabs.addClosableNaviTab(text, navigationTarget);
+        Tab tab = tabs.addClosableNaviTab(text, navigationTarget);
+        configureTab(tab);
+        return tab;
     }
 
     public Tab getSelectedTab() {
         return tabs.getSelectedTab();
     }
 
+    public void setSelectedTab(Tab selectedTab) {
+        tabs.setSelectedTab(selectedTab);
+    }
+
+    public void updateSelectedTab(String text, Class<? extends Component> navigationTarget) {
+        tabs.updateSelectedTab(text, navigationTarget);
+    }
+
     public void addTabSelectionListener(ComponentEventListener<Tabs.SelectedChangeEvent> listener) {
         tabs.addSelectedChangeListener(listener);
+    }
+
+    public int getTabCount() {
+        return tabs.getTabCount();
     }
 
     public void removeAllTabs() {
         tabs.removeAll();
         updateTabsVisibility();
+    }
+
+    public void setAddTabVisible(boolean visible) {
+        addTab.setVisible(visible);
     }
 
     public void searchModeOn() {
