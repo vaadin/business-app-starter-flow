@@ -4,9 +4,9 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
-import com.vaadin.flow.component.splitlayout.SplitLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
@@ -30,15 +30,15 @@ import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
 public class VerticalSplitView extends AbstractView {
 
     private AppBar appBar;
-    private SplitLayout splitter;
+    private FlexLayout splitter;
 
     public VerticalSplitView() {
         // Header
         appBar = new AppBar("Personnel");
 
         // Splitter
-        splitter = new SplitLayout();
-        splitter.setOrientation(SplitLayout.Orientation.VERTICAL);
+        splitter = UIUtils.createColumn();
+        splitter.getStyle().set(CSSProperties.Display.PROPERTY, CSSProperties.Display.FLEX);
         splitter.setSizeFull();
 
         // Grid
@@ -54,37 +54,65 @@ public class VerticalSplitView extends AbstractView {
 
         // Grid wrapper for some nice padding.
         Div gridWrapper = UIUtils.createDiv(Collections.singleton(GRID_VIEW), grid);
+        gridWrapper.setHeight("100%");
 
         // Form
-        TextField name = new TextField("Name");
-        TextField firstName = new TextField("First Name");
-        TextField lastName = new TextField("Last Name");
-        TextField email = new TextField("Email");
-        TextField forumPosts = new TextField("Forum Posts");
-        TextField lastModified = new TextField("Last Modified");
+
+        FormLayout form = new FormLayout();
+        form.addClassNames(LumoStyles.Padding.Left.M, LumoStyles.Padding.Right.M);
+        form.getStyle().set(CSSProperties.FlexGrow.PROPERTY, CSSProperties.FlexGrow._1);
+        form.getStyle().set(CSSProperties.Overflow.PROPERTY, CSSProperties.Overflow.AUTO);
+        form.setResponsiveSteps(
+                new FormLayout.ResponsiveStep("0", 1, FormLayout.ResponsiveStep.LabelsPosition.TOP),
+                new FormLayout.ResponsiveStep("600px", 2, FormLayout.ResponsiveStep.LabelsPosition.TOP),
+                new FormLayout.ResponsiveStep("1024px", 3, FormLayout.ResponsiveStep.LabelsPosition.TOP)
+        );
+
+        TextField firstName = new TextField();
+        firstName.setWidth("100%");
+        form.addFormItem(firstName, "First Name");
+
+        TextField lastName = new TextField();
+        lastName.setWidth("100%");
+        form.addFormItem(lastName, "Last Name");
+
+        TextField email = new TextField();
+        email.setWidth("100%");
+        form.addFormItem(email, "Email");
+
+        TextField forumPosts = new TextField();
+        forumPosts.setWidth("100%");
+        form.addFormItem(forumPosts, "Forum Posts");
+
+        TextField lastModified = new TextField();
+        lastModified.setWidth("100%");
+        form.addFormItem(lastModified, "Last Modified");
 
         RadioButtonGroup radioButtonGroup = new RadioButtonGroup();
-        radioButtonGroup.setItems("Option A", "Option B");
-        radioButtonGroup.getElement().getStyle().set(CSSProperties.Display.PROPERTY, CSSProperties.Display.FLEX);
-        radioButtonGroup.getElement().getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN);
+        radioButtonGroup.setItems("Male", "Female", "Other");
 
-        FormLayout form = new FormLayout(name, firstName, lastName, email, radioButtonGroup, forumPosts, lastModified);
-        form.addClassName(LumoStyles.Padding.All.L);
-        form.setResponsiveSteps(
-                new FormLayout.ResponsiveStep("0", 1),
-                new FormLayout.ResponsiveStep("21em", 2),
-                new FormLayout.ResponsiveStep("22em", 3)
-        );
+        form.addFormItem(radioButtonGroup, "Gender");
 
         // Actions
         Button cancel = new Button("Cancel");
         Button save = UIUtils.createPrimaryButton("Save");
-        FlexLayout actions = UIUtils.createFlexLayout(Arrays.asList(LumoStyles.Padding.All.L, LumoStyles.Spacing.Right.S), cancel, save);
+
+        // Form close container
+        Button formCloseButton = new Button("Close");
+        FlexLayout formClose = UIUtils.createFlexLayout(Arrays.asList(LumoStyles.Padding.All.M), formCloseButton);
+        formClose.getElement().getStyle().set(CSSProperties.FlexShrink.PROPERTY, CSSProperties.FlexShrink._0);
+        formClose.getElement().getStyle().set(CSSProperties.BackgroundColor.PROPERTY, CSSProperties.BackgroundColor.WHITE);
+
+        FlexLayout actions = UIUtils.createFlexLayout(Arrays.asList(LumoStyles.Padding.All.M, LumoStyles.Spacing.Right.S), cancel, save);
+        actions.setJustifyContentMode(FlexComponent.JustifyContentMode.BETWEEN);
+        actions.getElement().getStyle().set(CSSProperties.FlexShrink.PROPERTY, CSSProperties.FlexShrink._0);
+
+        FlexLayout detail = UIUtils.createColumn(Arrays.asList(LumoStyles.Shadow.M), formClose, form, actions);
+        detail.getElement().getStyle().set(CSSProperties.BackgroundColor.PROPERTY, CSSProperties.BackgroundColor.WHITE);
+        detail.setHeight("600px");
 
         // Set the splitter's content.
-        splitter.addToPrimary(gridWrapper);
-        splitter.addToSecondary(form, actions);
-        splitter.setSplitterPosition(75);
+        splitter.add(gridWrapper, detail);
     }
 
     @Override
