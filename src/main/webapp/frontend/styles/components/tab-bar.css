@@ -1,6 +1,7 @@
 .tab-bar {
   align-items: center;
   box-shadow: var(--lumo-box-shadow-m);
+  position: relative;
   z-index: 1;
 }
 

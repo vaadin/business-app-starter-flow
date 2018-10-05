@@ -28,6 +28,7 @@ public abstract class NaviDrawer extends Div implements AfterNavigationObserver 
     private ArrayList<NaviItem> items;
 
     private Button railButton;
+    private TextField search;
 
     public NaviDrawer() {
         setClassName(CLASS_NAME);
@@ -52,8 +53,9 @@ public abstract class NaviDrawer extends Div implements AfterNavigationObserver 
         }
 
         // Search field.
-        TextField search = new TextField();
+        search = new TextField();
         search.setPlaceholder("Search");
+        search.addValueChangeListener(e -> search());
         content.add(search);
 
         // Scrollable area.
@@ -70,6 +72,12 @@ public abstract class NaviDrawer extends Div implements AfterNavigationObserver 
         railButton = UIUtils.createSmallButton(Collections.singleton(CLASS_NAME + "__footer"), VaadinIcon.CARET_LEFT, "Collapse");
         railButton.addClickListener(event -> setRailModeEnabled(getClassName().contains(RAIL)));
         content.add(railButton);
+    }
+
+    private void search() {
+        items.forEach(naviItem -> {
+            naviItem.setVisible(naviItem.getText().toLowerCase().contains(search.getValue().toLowerCase()));
+        });
     }
 
     private void setRailModeEnabled(boolean enabled) {

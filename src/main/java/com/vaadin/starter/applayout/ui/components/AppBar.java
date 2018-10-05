@@ -149,7 +149,7 @@ public class AppBar extends FlexLayout {
     }
 
     private void configureTab(Tab tab) {
-        tab.setClassName(CLASS_NAME + "__tab");
+        tab.addClassName(CLASS_NAME + "__tab");
         updateTabsVisibility();
     }
 

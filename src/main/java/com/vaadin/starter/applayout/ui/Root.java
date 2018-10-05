@@ -20,8 +20,7 @@ import com.vaadin.starter.applayout.ui.components.NaviItem;
 import com.vaadin.starter.applayout.ui.components.TabBar;
 import com.vaadin.starter.applayout.ui.utils.NaviDrawerProvider;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
-import com.vaadin.starter.applayout.ui.views.Dashboard;
-import com.vaadin.starter.applayout.ui.views.Default;
+import com.vaadin.starter.applayout.ui.views.*;
 
 import java.util.Collections;
 
@@ -79,7 +78,6 @@ public class Root extends FlexLayout
      * Initialise the navigation items.
      */
     private void initNaviItems() {
-/*
         naviDrawer.addNaviItem(VaadinIcon.GRID_BIG, "Dashboard", Dashboard.class);
         naviDrawer.addNaviItem(VaadinIcon.FILE_TEXT, "Reports", ReportsView.class);
 
@@ -88,11 +86,106 @@ public class Root extends FlexLayout
         naviDrawer.addNaviItem(personnel, "Horizontal Split", HorizontalSplitView.class);
 
         naviDrawer.addNaviItem(VaadinIcon.FILTER, "Filter List", FilterList.class);
-  */
+    }
 
+    /**
+     * Configure the app's inner and outer headers and footers.
+     */
+    private void initHeadersAndFooters() {
+        // setAppHeaderOuter(new Label("Outer header"));
+        // setAppHeaderInner(new Label("Inner header"));
+        // setAppFooterOuter(new Label("Outer footer"));
+        // setAppFooterInner(new Label("Inner footer"));
 
-        // === Hannu's example ==== //
-        NaviItem ordering = naviDrawer.addNaviItem(VaadinIcon.ABACUS, "Ordering", Dashboard.class);
+        if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.TABS)) {
+            tabBar = new TabBar();
+            setAppHeaderInner(tabBar);
+
+            for (NaviItem item : naviDrawer.getNaviItems()) {
+                ((ClickNotifier<Div>) item).addClickListener(event -> naviItemClicked(item, event));
+            }
+        }
+    }
+
+    /**
+     * Handles the click event for navigation items when in NaviMode.TABS.
+     */
+    private void naviItemClicked(NaviItem item, ClickEvent<Div> event) {
+        // Shift-click to add a new tab.
+        if (event.getButton() == 0 && event.isShiftKey()) {
+            tabBar.setSelectedTab(tabBar.addClosableNaviTab(item.getText(), item.getNavigationTarget()));
+        }
+
+        // Update the current tab, or create the first one.
+        else if (event.getButton() == 0) {
+            if (tabBar.getTabCount() > 0) {
+                tabBar.updateSelectedTab(item.getText(), item.getNavigationTarget());
+            } else {
+                tabBar.addClosableNaviTab(item.getText(), item.getNavigationTarget());
+            }
+        }
+    }
+
+    private void setAppHeaderOuter(Component... components) {
+        if (appHeaderOuter == null) {
+            appHeaderOuter = UIUtils.createDiv(Collections.singleton("app-header-outer"));
+            getElement().insertChild(0, appHeaderOuter.getElement());
+        }
+
+        appHeaderOuter.removeAll();
+        appHeaderOuter.add(components);
+    }
+
+    private void setAppHeaderInner(Component... components) {
+        if (appHeaderInner == null) {
+            appHeaderInner = UIUtils.createDiv(Collections.singleton("app-header-inner"));
+            column.getElement().insertChild(0, appHeaderInner.getElement());
+        }
+
+        appHeaderInner.removeAll();
+        appHeaderInner.add(components);
+    }
+
+    private void initViewContainer() {
+        viewContainer = UIUtils.createFlexLayout(Collections.singleton(CLASS_NAME + "__view-container"));
+    }
+
+    private void setAppFooterInner(Component... components) {
+        if (appFooterInner == null) {
+            appFooterInner = UIUtils.createDiv(Collections.singleton("app-footer-inner"));
+            column.getElement().insertChild(column.getElement().getChildCount(), appFooterInner.getElement());
+        }
+        appFooterInner.removeAll();
+        appFooterInner.add(components);
+    }
+
+    private void setAppFooterOuter(Component... components) {
+        if (appFooterOuter == null) {
+            appFooterOuter = UIUtils.createDiv(Collections.singleton("app-footer-outer"));
+            getElement().insertChild(getElement().getChildCount(), appFooterOuter.getElement());
+        }
+        appFooterOuter.removeAll();
+        appFooterOuter.add(components);
+    }
+
+    @Override
+    public void configurePage(InitialPageSettings settings) {
+        settings.addMetaTag("apple-mobile-web-app-capable", "yes");
+        settings.addMetaTag("apple-mobile-web-app-status-bar-style", "black");
+    }
+
+    @Override
+    public void showRouterLayoutContent(HasElement content) {
+        this.viewContainer.getElement().appendChild(content.getElement());
+    }
+
+    @Override
+    public void beforeEnter(BeforeEnterEvent beforeEnterEvent) {
+        // Customise the app's headers and footers when changing views.
+    }
+
+    private void initExampleNavigation() {
+        NaviItem ordering = naviDrawer.addNaviItem(VaadinIcon.ABACUS, "Ordering", Default.class);
         {
             NaviItem orderEntry = naviDrawer.addNaviItem(ordering, "Order Entry", Default.class);
             {
@@ -248,102 +341,5 @@ public class Root extends FlexLayout
                 }
             }
         }
-
-    }
-
-    /**
-     * Configure the app's inner and outer headers and footers.
-     */
-    private void initHeadersAndFooters() {
-        // setAppHeaderOuter(new Label("Outer header"));
-        // setAppHeaderInner(new Label("Inner header"));
-        // setAppFooterOuter(new Label("Outer footer"));
-        // setAppFooterInner(new Label("Inner footer"));
-
-        if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.TABS)) {
-            tabBar = new TabBar();
-            setAppHeaderInner(tabBar);
-
-            for (NaviItem item : naviDrawer.getNaviItems()) {
-                ((ClickNotifier<Div>) item).addClickListener(event -> naviItemClicked(item, event));
-            }
-        }
-    }
-
-    /**
-     * Handles the click event for navigation items when in NaviMode.TABS.
-     */
-    private void naviItemClicked(NaviItem item, ClickEvent<Div> event) {
-        // Shift-click to add a new tab.
-        if (event.getButton() == 0 && event.isShiftKey()) {
-            tabBar.setSelectedTab(tabBar.addClosableNaviTab(item.getText(), item.getNavigationTarget()));
-        }
-
-        // Update the current tab, or create the first one.
-        else if (event.getButton() == 0) {
-            if (tabBar.getTabCount() > 0) {
-                tabBar.updateSelectedTab(item.getText(), item.getNavigationTarget());
-            } else {
-                tabBar.addClosableNaviTab(item.getText(), item.getNavigationTarget());
-            }
-        }
-    }
-
-    private void setAppHeaderOuter(Component... components) {
-        if (appHeaderOuter == null) {
-            appHeaderOuter = UIUtils.createDiv(Collections.singleton("app-header-outer"));
-            getElement().insertChild(0, appHeaderOuter.getElement());
-        }
-
-        appHeaderOuter.removeAll();
-        appHeaderOuter.add(components);
-    }
-
-    private void setAppHeaderInner(Component... components) {
-        if (appHeaderInner == null) {
-            appHeaderInner = UIUtils.createDiv(Collections.singleton("app-header-inner"));
-            column.getElement().insertChild(0, appHeaderInner.getElement());
-        }
-
-        appHeaderInner.removeAll();
-        appHeaderInner.add(components);
-    }
-
-    private void initViewContainer() {
-        viewContainer = UIUtils.createFlexLayout(Collections.singleton(CLASS_NAME + "__view-container"));
-    }
-
-    private void setAppFooterInner(Component... components) {
-        if (appFooterInner == null) {
-            appFooterInner = UIUtils.createDiv(Collections.singleton("app-footer-inner"));
-            column.getElement().insertChild(column.getElement().getChildCount(), appFooterInner.getElement());
-        }
-        appFooterInner.removeAll();
-        appFooterInner.add(components);
-    }
-
-    private void setAppFooterOuter(Component... components) {
-        if (appFooterOuter == null) {
-            appFooterOuter = UIUtils.createDiv(Collections.singleton("app-footer-outer"));
-            getElement().insertChild(getElement().getChildCount(), appFooterOuter.getElement());
-        }
-        appFooterOuter.removeAll();
-        appFooterOuter.add(components);
-    }
-
-    @Override
-    public void configurePage(InitialPageSettings settings) {
-        settings.addMetaTag("apple-mobile-web-app-capable", "yes");
-        settings.addMetaTag("apple-mobile-web-app-status-bar-style", "black");
-    }
-
-    @Override
-    public void showRouterLayoutContent(HasElement content) {
-        this.viewContainer.getElement().appendChild(content.getElement());
-    }
-
-    @Override
-    public void beforeEnter(BeforeEnterEvent beforeEnterEvent) {
-        // Customise the app's headers and footers when changing views.
     }
 }
