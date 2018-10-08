@@ -3,6 +3,7 @@ package com.vaadin.starter.applayout.ui.components;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.textfield.TextField;
@@ -119,6 +120,10 @@ public abstract class NaviDrawer extends Div implements AfterNavigationObserver 
     }
 
     public abstract NaviItem addNaviItem(VaadinIcon icon, String text, Class<? extends Component> navigationTarget);
+
+    public abstract NaviItem addNaviItem(Image image, String text, Class<? extends Component> navigationTarget);
+
+    public abstract NaviItem addNaviItem(String path, String text, Class<? extends Component> navigationTarget);
 
     public abstract NaviItem addNaviItem(NaviItem parent, String text, Class<? extends Component> navigationTarget);
 

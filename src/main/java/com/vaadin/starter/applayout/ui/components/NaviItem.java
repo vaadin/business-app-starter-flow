@@ -3,10 +3,24 @@ package com.vaadin.starter.applayout.ui.components;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.Image;
+import com.vaadin.flow.component.html.Input;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.dom.Element;
+import com.vaadin.flow.server.AbstractStreamResource;
+import com.vaadin.flow.server.StreamResource;
+import com.vaadin.flow.server.VaadinService;
+import com.vaadin.flow.server.startup.FakeBrowser;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +41,7 @@ public abstract class NaviItem extends Div {
 
     private int level = 0;
 
-    public NaviItem(VaadinIcon icon, String text, Class<? extends Component> navigationTarget) {
+    public NaviItem(String text, Class<? extends Component> navigationTarget) {
         setClassName(CLASS_NAME);
 
         this.text = text;
@@ -44,10 +58,6 @@ public abstract class NaviItem extends Div {
         subItems = new ArrayList<>();
 
         setLevel(0);
-    }
-
-    public NaviItem(String text, Class<? extends Component> navigationTarget) {
-        this(null, text, navigationTarget);
     }
 
     public void addSubItem(NaviItem item) {
@@ -98,4 +108,18 @@ public abstract class NaviItem extends Div {
     public boolean hasSubItems() {
         return subItems.size() > 0;
     }
+
+    protected String readFile(String path, Charset encoding) throws IOException {
+        InputStream resourceAsStream = VaadinService.getCurrent().getResourceAsStream("frontend://" + path, FakeBrowser.getEs6(), null);
+        byte[] bytes = resourceAsStream.readAllBytes();
+        return new String(bytes, encoding);
+    }
+
+    protected Element createSVGElement(String content) {
+        Div svg = new Div();
+        svg.addClassName(CLASS_NAME + "__svg-container");
+        svg.getElement().setProperty("innerHTML", content);
+        return svg.getElement();
+    }
+
 }

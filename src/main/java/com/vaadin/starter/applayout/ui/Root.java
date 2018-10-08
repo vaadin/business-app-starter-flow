@@ -6,6 +6,8 @@ import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasElement;
 import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.Image;
+import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.page.Viewport;
@@ -78,8 +80,9 @@ public class Root extends FlexLayout
      * Initialise the navigation items.
      */
     private void initNaviItems() {
-        naviDrawer.addNaviItem(VaadinIcon.GRID_BIG, "Dashboard", Dashboard.class);
-        naviDrawer.addNaviItem(VaadinIcon.FILE_TEXT, "Reports", ReportsView.class);
+
+        naviDrawer.addNaviItem("styles/images/tickets-icon.svg", "Dashboard", Dashboard.class);
+        naviDrawer.addNaviItem(new Image("frontend/styles/images/tickets-icon.svg", ""), "Reports", ReportsView.class);
 
         NaviItem personnel = naviDrawer.addNaviItem(VaadinIcon.USERS, "Personnel", Personnel.class);
         naviDrawer.addNaviItem(personnel, "Vertical Split", VerticalSplitView.class);
