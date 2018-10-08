@@ -11,9 +11,27 @@
 
 .abstract-view__content {
   flex: 1;
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
+  position: relative;
 }
 
 .abstract-view__footer {
   z-index: 1;
+}
+
+.abstract-view__detail {
+  background: #fff;
+  width: 400px;
+  height: 100%;
+}
+
+@media(max-width: 1023px) {
+  .abstract-view__detail {
+    position: absolute;
+    z-index: 1;
+    right: 0;
+    top: 0;
+    bottom: 0;
+  }
 }

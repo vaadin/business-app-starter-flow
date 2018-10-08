@@ -3,6 +3,7 @@ package com.vaadin.starter.applayout.ui.components;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.textfield.TextField;
@@ -29,6 +30,7 @@ public abstract class NaviDrawer extends Div implements AfterNavigationObserver 
     private ArrayList<NaviItem> items;
 
     private Button railButton;
+    private TextField search;
 
     public NaviDrawer() {
         setClassName(CLASS_NAME);
@@ -53,10 +55,11 @@ public abstract class NaviDrawer extends Div implements AfterNavigationObserver 
         }
 
         // Search field.
-        TextField search = new TextField();
+        search = new TextField();
         search.setPlaceholder("Filter");
         search.setPrefixComponent(new Icon(VaadinIcon.FILTER));
         search.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Button.SMALL);
+        search.addValueChangeListener(e -> search());
         content.add(search);
 
         // Scrollable area.
@@ -73,6 +76,12 @@ public abstract class NaviDrawer extends Div implements AfterNavigationObserver 
         railButton = UIUtils.createSmallButton(Collections.singleton(CLASS_NAME + "__footer"), VaadinIcon.CHEVRON_LEFT_SMALL, "Collapse");
         railButton.addClickListener(event -> setRailModeEnabled(getClassName().contains(RAIL)));
         content.add(railButton);
+    }
+
+    private void search() {
+        items.forEach(naviItem -> {
+            naviItem.setVisible(naviItem.getText().toLowerCase().contains(search.getValue().toLowerCase()));
+        });
     }
 
     private void setRailModeEnabled(boolean enabled) {
@@ -114,6 +123,10 @@ public abstract class NaviDrawer extends Div implements AfterNavigationObserver 
     }
 
     public abstract NaviItem addNaviItem(VaadinIcon icon, String text, Class<? extends Component> navigationTarget);
+
+    public abstract NaviItem addNaviItem(Image image, String text, Class<? extends Component> navigationTarget);
+
+    public abstract NaviItem addNaviItem(String path, String text, Class<? extends Component> navigationTarget);
 
     public abstract NaviItem addNaviItem(NaviItem parent, String text, Class<? extends Component> navigationTarget);
 

@@ -82,6 +82,7 @@
     pointer-events: all;
   }
 
+  /* Don't push the content in rail mode on narrow viewports. */
   .navi-drawer--rail:not(.navi-drawer--open) + .root__column {
     padding-left: 0;
   }

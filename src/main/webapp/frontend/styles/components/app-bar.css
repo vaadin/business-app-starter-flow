@@ -1,6 +1,7 @@
 .app-bar {
   box-shadow: var(--lumo-box-shadow-m);
   flex-direction: column;
+  position: relative;
   z-index: 1;
 }
 

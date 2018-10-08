@@ -39,6 +39,8 @@ import java.util.Random;
 @PageTitle("Report Details")
 public class ReportDetailsView extends AbstractView implements HasUrlParameter<Long> {
 
+    private String CLASS_NAME = "report-details";
+
     private Random random;
 
     private AppBar appBar;
@@ -84,9 +86,9 @@ public class ReportDetailsView extends AbstractView implements HasUrlParameter<L
         // Transactions
         FlexLayout transactions = UIUtils.createWrappingFlexLayout(
                 Arrays.asList(LumoStyles.Padding.Bottom.L, BoxShadowBorders.BOTTOM),
-                createLargeListItem(VaadinIcon.PLUS, Math.round((randBalance * 0.4)) + ".00 EUR", "14 deposits"),
-                createLargeListItem(VaadinIcon.MINUS, Math.round((randBalance * 0.6)) + ".00 EUR", "9 withdrawals"),
-                createLargeListItem(VaadinIcon.PLUS_MINUS, (randBalance) + ".00 EUR", "23 in total")
+                createLargeListItem(VaadinIcon.PLUS, Math.round((randBalance * 0.4)) + ".00", "14 deposits"),
+                createLargeListItem(VaadinIcon.MINUS, Math.round((randBalance * 0.6)) + ".00", "9 withdrawals"),
+                createLargeListItem(VaadinIcon.PLUS_MINUS, (randBalance) + ".00", "23 in total")
         );
 
         // Pending events
@@ -104,9 +106,11 @@ public class ReportDetailsView extends AbstractView implements HasUrlParameter<L
         viewport = UIUtils.createDiv(
                 Arrays.asList(LumoStyles.Margin.Horizontal.AUTO, LumoStyles.Margin.Responsive.Vertical.ML),
                 row,
-                UIUtils.createH3(Collections.singleton(LumoStyles.Margin.Responsive.Horizontal.ML), "Transactions"),
+                UIUtils.createLabel(Arrays.asList(LumoStyles.FontSize.H6, LumoStyles.Margin.Bottom.M,
+                        LumoStyles.Margin.Responsive.Horizontal.ML, LumoStyles.Margin.Top.L), "Transactions (EUR)"),
                 transactions,
-                UIUtils.createH3(Collections.singleton(LumoStyles.Margin.Responsive.Horizontal.ML), "Pending Events"),
+                UIUtils.createLabel(Arrays.asList(LumoStyles.FontSize.H6, LumoStyles.Margin.Bottom.M,
+                        LumoStyles.Margin.Responsive.Horizontal.ML, LumoStyles.Margin.Top.L), "Pending Events"),
                 pending,
                 transactionsChart
         );
@@ -144,6 +148,7 @@ public class ReportDetailsView extends AbstractView implements HasUrlParameter<L
 
     private ListItem createLargeListItem(VaadinIcon icon, String primary, String secondary) {
         ListItem item = new ListItem(icon, primary, secondary);
+        item.addClassName(CLASS_NAME + "__list-item");
 
         if (icon.equals(VaadinIcon.TIMER)) {
             item.addClassName(LumoStyles.TextColor.SECONDARY);
@@ -153,9 +158,7 @@ public class ReportDetailsView extends AbstractView implements HasUrlParameter<L
             item.addClassName(LumoStyles.TextColor.ERROR);
         }
 
-        item.getPrimaryLabel().addClassName(LumoStyles.FontSize.H3);
-        item.getStyle().set(CSSProperties.MinWidth.PROPERTY, "200px");
-        item.setWidth("33%");
+        item.getPrimaryLabel().addClassName(LumoStyles.FontSize.H2);
 
         return item;
     }

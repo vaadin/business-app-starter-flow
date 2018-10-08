@@ -62,9 +62,25 @@
 }
 
 /* Link icon */
-.navi-item__link iron-icon {
+.navi-item__link iron-icon,
+.navi-item__link img,
+.navi-item__link svg {
   flex-shrink: 0;
   margin-right: var(--lumo-space-l);
+}
+
+.navi-item__link img,
+.navi-item__link svg {
+  height: 24px;
+  width: 24px;
+}
+
+.navi-item__link > div:first-child {
+  display: flex;
+}
+
+.navi-item__link path {
+  fill: var(--lumo-secondary-text-color);
 }
 
 /* Link label */

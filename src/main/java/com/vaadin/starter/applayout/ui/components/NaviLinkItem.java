@@ -1,32 +1,50 @@
 package com.vaadin.starter.applayout.ui.components;
 
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.dom.Element;
 import com.vaadin.flow.router.HighlightConditions;
 import com.vaadin.flow.router.RouterLink;
+import com.vaadin.starter.applayout.ui.utils.UIUtils;
+
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.util.Collections;
 
 public class NaviLinkItem extends NaviItem {
 
     private RouterLink link;
 
     public NaviLinkItem(VaadinIcon icon, String text, Class<? extends Component> navigationTarget) {
-        super(icon, text, navigationTarget);
+        this(text, navigationTarget);
+        link.getElement().insertChild(0, new Icon(icon).getElement());
+    }
 
-        link = new RouterLink(null, navigationTarget);
-        if (icon != null) {
-            link.add(new Icon(icon), new Label(text));
-        } else {
-            link.add(new Label(text));
+    public NaviLinkItem(Image image, String text, Class<? extends Component> navigationTarget) {
+        this(text, navigationTarget);
+        link.getElement().insertChild(0, image.getElement());
+    }
+
+    public NaviLinkItem(String path, String text, Class<? extends Component> navigationTarget) {
+        this(text, navigationTarget);
+        try {
+            String content = readFile(path, Charset.defaultCharset());
+            link.getElement().insertChild(0, createSVGElement(content));
+        } catch (Exception e) {
+            System.out.println(e);
         }
-        link.setHighlightCondition(HighlightConditions.sameLocation());
-        link.setClassName(CLASS_NAME + "__link");
-
-        getElement().insertChild(0, link.getElement());
     }
 
     public NaviLinkItem(String text, Class<? extends Component> navigationTarget) {
-        this(null, text, navigationTarget);
+        super(text, navigationTarget);
+
+        link = new RouterLink(null, navigationTarget);
+        link.add(new Label(text));
+        link.setHighlightCondition(HighlightConditions.sameLocation());
+        link.setClassName(CLASS_NAME + "__link");
+        getElement().insertChild(0, link.getElement());
     }
 }
