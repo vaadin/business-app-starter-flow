@@ -69,7 +69,6 @@ public class Dashboard extends AbstractView {
         FlexLayout header = UIUtils.createFlexLayout(
                 Arrays.asList(
                         LumoStyles.Margin.Bottom.L,
-                        LumoStyles.Margin.Responsive.Horizontal.ML,
                         LumoStyles.Margin.Top.XL,
                         LumoStyles.Spacing.Right.M
                 ),

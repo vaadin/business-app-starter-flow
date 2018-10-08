@@ -13,7 +13,7 @@ public class BrandExpression extends Div {
         setClassName(CLASS_NAME);
 
         logo = new Image();
-        logo.setSrc("frontend/styles/images/sample-logo1.jpg");
+        logo.setSrc("frontend/styles/images/logo.svg");
         add(logo);
     }
 
