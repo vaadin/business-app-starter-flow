@@ -81,8 +81,8 @@ public class Root extends FlexLayout
      */
     private void initNaviItems() {
 
-        naviDrawer.addNaviItem("styles/images/tickets-icon.svg", "Dashboard", Dashboard.class);
-        naviDrawer.addNaviItem(new Image("frontend/styles/images/tickets-icon.svg", ""), "Reports", ReportsView.class);
+        naviDrawer.addNaviItem(VaadinIcon.DASHBOARD, "Dashboard", Dashboard.class);
+        naviDrawer.addNaviItem(VaadinIcon.FILE, "Reports", ReportsView.class);
 
         NaviItem personnel = naviDrawer.addNaviItem(VaadinIcon.USERS, "Personnel", Personnel.class);
         naviDrawer.addNaviItem(personnel, "Vertical Split", VerticalSplitView.class);
