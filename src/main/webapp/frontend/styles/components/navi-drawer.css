@@ -69,12 +69,6 @@
   width: var(--navi-drawer-width);
 }
 
-.navi-drawer--rail:not(:hover) .navi-item[level] label,
-.navi-drawer--rail:not(:hover) .navi-item > vaadin-button,
-.navi-drawer--rail:not(:hover) .navi-drawer__footer span {
-  display: none;
-}
-
 /* Push the content in rail mode. */
 .navi-drawer--rail:not(.navi-drawer--open) + .root__column {
   padding-left: var(--navi-drawer-rail-width);
@@ -104,6 +98,14 @@
 
   /* Hide the footer */
   .navi-drawer__footer {
+    display: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .navi-drawer--rail:not(:hover) .navi-item[level] label,
+  .navi-drawer--rail:not(:hover) .navi-item > vaadin-button,
+  .navi-drawer--rail:not(:hover) .navi-drawer__footer span {
     display: none;
   }
 }

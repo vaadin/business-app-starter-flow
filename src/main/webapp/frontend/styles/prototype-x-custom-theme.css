@@ -30,12 +30,14 @@
 }
 
 .closable-tab vaadin-button:hover {
-  margin: 0;
   --iron-icon-fill-color: var(--lumo-shade-70pct);
 }
 
+[theme="dark"] .closable-tab vaadin-button {
+  --iron-icon-fill-color: var(--lumo-contrast-30pct);
+}
+
 [theme="dark"] .closable-tab vaadin-button:hover {
-  margin: 0;
   --iron-icon-fill-color: var(--lumo-contrast-70pct);
 }
 
@@ -54,6 +56,9 @@
 
 .brand-expression img {
   width: 150px;
+}
+
+.navi-drawer:not(.navi-drawer--open) .brand-expression img {
   margin-left: calc(var(--lumo-font-size-m) + var(--lumo-space-s) + var(--lumo-space-l));
 }
 
@@ -92,10 +97,6 @@
   display: none;
 }
 
-.navi-drawer--rail:not(:hover) .navi-item[level] label {
-  display: none;
-}
-
 
 /* ==== Navigation item ==== */
 .navi-item {
@@ -109,6 +110,7 @@
   background: var(--lumo-shade-5pct);
   border-radius: var(--lumo-border-radius);
   padding: var(--lumo-space-s);
+  margin-right: var(--lumo-space-m);
 }
 
 .navi-item__link:not([highlight]) iron-icon {
@@ -119,6 +121,7 @@
 .navi-item[level] {
   height: var(--lumo-size-m);
   position: relative;
+  padding-left: var(--lumo-space-l);
 }
 
 .navi-item[level] vaadin-button {
@@ -146,15 +149,15 @@
 }
 
 .navi-item[level="1"] vaadin-button {
-  left: var(--lumo-space-l);
+  left: calc(var(--lumo-space-l) + var(--lumo-space-s));
 }
 
 .navi-item[level="2"] vaadin-button {
-  left: calc(2 * var(--lumo-space-l));
+  left: calc((2 * var(--lumo-space-l)) + var(--lumo-space-s));
 }
 
 .navi-item[level="3"] vaadin-button {
-  left: calc(3 * var(--lumo-space-l));
+  left: calc((3 * var(--lumo-space-l)) + var(--lumo-space-s));
 }
 
 .navi-item[level] vaadin-button iron-icon {

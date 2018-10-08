@@ -66,7 +66,7 @@ public class TabBar extends FlexLayout {
     }
 
     private void configureTab(Tab tab) {
-        tab.setClassName(CLASS_NAME + "__tab");
+        tab.addClassName(CLASS_NAME + "__tab");
     }
 
     public Tab addTab(String text) {
