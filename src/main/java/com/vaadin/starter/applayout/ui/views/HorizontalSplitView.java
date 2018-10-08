@@ -6,11 +6,9 @@ import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
-import com.vaadin.flow.component.splitlayout.SplitLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.upload.Upload;
 import com.vaadin.flow.router.PageTitle;
@@ -44,7 +42,6 @@ public class HorizontalSplitView extends AbstractView {
         // Splitter
         splitter = new Div();
         splitter.getStyle().set(CSSProperties.Display.PROPERTY, CSSProperties.Display.FLEX);
-//        splitter.setOrientation(SplitLayout.Orientation.HORIZONTAL);
         splitter.setSizeFull();
 
         // Grid
@@ -70,9 +67,8 @@ public class HorizontalSplitView extends AbstractView {
         // Form
         FormLayout form = new FormLayout();
         form.addClassNames(LumoStyles.Padding.Left.M, LumoStyles.Padding.Right.M);
-        form.getStyle().set("overflow-y", "auto");
-        form.getStyle().set("overflow-x", "hidden");
-        form.getStyle().set("flex-grow", "1");
+        form.getStyle().set(CSSProperties.Overflow.PROPERTY, CSSProperties.Overflow.AUTO);
+        form.getStyle().set(CSSProperties.FlexGrow.PROPERTY, CSSProperties.FlexGrow._1);
 
         TextField firstName = new TextField();
         firstName.setWidth("100%");
