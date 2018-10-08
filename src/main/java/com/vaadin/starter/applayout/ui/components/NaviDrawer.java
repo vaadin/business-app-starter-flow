@@ -46,7 +46,7 @@ public abstract class NaviDrawer extends Div implements AfterNavigationObserver 
 
         // Header: account switcher or brand logo.
         if (UIConfig.getNaviHeader().equals(UIConfig.NaviHeader.ACCOUNT_SWITCHER)) {
-            scrollArea.add(new AccountSwitcher());
+            content.add(new AccountSwitcher());
         } else {
             content.add(new BrandExpression());
         }

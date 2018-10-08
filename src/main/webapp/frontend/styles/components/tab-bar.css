@@ -1,0 +1,62 @@
+.tab-bar {
+  align-items: center;
+  box-shadow: var(--lumo-box-shadow-m);
+  z-index: 1;
+}
+
+/* Menu button */
+.tab-bar__navi-icon {
+  transition: min-width var(--transition-duration-m),
+              opacity var(--transition-duration-s),
+              padding var(--transition-duration-m),
+              visibility var(--transition-duration-m),
+              width var(--transition-duration-m);
+}
+
+/* Avatar */
+.tab-bar__avatar {
+  border-radius: 100%;
+  height: var(--lumo-size-s);
+  margin-left: auto;
+  width: var(--lumo-size-s);
+}
+
+/* No shrinkage on these buttons! */
+.tab-bar vaadin-button {
+  flex-shrink: 0;
+}
+
+/* Tabs */
+.tab-bar vaadin-tabs {
+  box-shadow: none;
+}
+
+.tab-bar__tab vaadin-button {
+  margin: 0;
+}
+
+/* Add tab button */
+.tab-bar__add-tab {
+  margin-right: var(--lumo-space-s);
+}
+
+@media (max-width: 1023px) {
+  .tab-bar {
+    padding: 0 var(--lumo-space-s);
+  }
+}
+
+@media (min-width: 1024px) {
+  .tab-bar {
+    padding: 0 var(--lumo-space-l);
+  }
+
+  .tab-bar__navi-icon:not(.tab-bar__navi-icon--visible) {
+    min-width: 0;
+    opacity: 0;
+    padding: 0;
+    transition: opacity var(--transition-duration-l);
+    visibility: hidden;
+    width: 0;
+  }
+}

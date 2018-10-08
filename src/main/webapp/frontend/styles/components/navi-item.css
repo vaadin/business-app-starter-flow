@@ -11,10 +11,11 @@
 .navi-item[level] {
   background-color: var(--lumo-contrast-5pct);
   font-weight: normal;
-  padding-left: calc(var(--lumo-size-s) / 2);
+  height: var(--lumo-size-m);
 }
 
 .navi-item[level="1"] label {
+  font-weight: 500;
   margin-left: var(--lumo-space-m);
 }
 
@@ -23,6 +24,7 @@
 }
 
 .navi-item[level="3"] label {
+  font-weight: 300;
   margin-left: calc(var(--lumo-space-m) * 3);
 }
 
@@ -76,6 +78,7 @@
 
 /* Expand/collapse button */
 .navi-item > vaadin-button {
+  flex-shrink: 0;
   margin-left: auto;
   margin-right: var(--lumo-space-s);
 }
