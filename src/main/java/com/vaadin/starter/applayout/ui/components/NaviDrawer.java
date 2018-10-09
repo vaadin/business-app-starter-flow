@@ -19,8 +19,9 @@ import java.util.Collections;
 public abstract class NaviDrawer extends Div implements AfterNavigationObserver {
 
     private final String CLASS_NAME = "navi-drawer";
-    private final String OPEN = CLASS_NAME + "--open";
-    private final String RAIL = CLASS_NAME + "--rail";
+    private final String RAIL = "rail";
+    private final String OPEN = "open";
+
 
     private Div scrim;
     private Div content;
@@ -73,7 +74,7 @@ public abstract class NaviDrawer extends Div implements AfterNavigationObserver 
 
         // "Footer", currently only a collapse/expand button.
         railButton = UIUtils.createSmallButton(Collections.singleton(CLASS_NAME + "__footer"), VaadinIcon.CHEVRON_LEFT_SMALL, "Collapse");
-        railButton.addClickListener(event -> setRailModeEnabled(getClassName().contains(RAIL)));
+        railButton.addClickListener(event -> toggleRailMode());
         content.add(railButton);
     }
 
@@ -83,20 +84,20 @@ public abstract class NaviDrawer extends Div implements AfterNavigationObserver 
         });
     }
 
-    private void setRailModeEnabled(boolean enabled) {
-        if (enabled) {
-            removeClassName(RAIL);
+    private void toggleRailMode() {
+        if (getElement().hasAttribute(RAIL)) {
+            getElement().setAttribute(RAIL, false);
             railButton.setIcon(new Icon(VaadinIcon.CHEVRON_LEFT_SMALL));
             railButton.setText("Collapse");
         } else {
-            addClassName(RAIL);
+            getElement().setAttribute(RAIL, true);
             railButton.setIcon(new Icon(VaadinIcon.CHEVRON_RIGHT_SMALL));
             railButton.setText("Expand");
         }
     }
 
     public void toggle() {
-        if (getClassName().contains(OPEN)) {
+        if (getElement().hasAttribute(OPEN)) {
             close();
         } else {
             open();
@@ -104,11 +105,11 @@ public abstract class NaviDrawer extends Div implements AfterNavigationObserver 
     }
 
     private void open() {
-        addClassName(OPEN);
+        getElement().setAttribute(OPEN, true);
     }
 
     private void close() {
-        removeClassName(OPEN);
+        getElement().setAttribute(OPEN, false);
     }
 
     protected void addNaviItem(NaviItem item) {

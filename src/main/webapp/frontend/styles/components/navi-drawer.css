@@ -56,7 +56,7 @@
 }
 
 /* Rail navigation */
-.navi-drawer--rail:not(.navi-drawer--open) .navi-drawer__content {
+.navi-drawer[rail]:not([open]) .navi-drawer__content {
   left: 0;
   overflow: hidden;
   position: absolute;
@@ -65,25 +65,25 @@
   width: var(--navi-drawer-rail-width);
 }
 
-.navi-drawer--rail:not(.navi-drawer--open):hover .navi-drawer__content {
+.navi-drawer[rail]:not([open]):hover .navi-drawer__content {
   width: var(--navi-drawer-width);
 }
 
 /* Push the content in rail mode. */
-.navi-drawer--rail:not(.navi-drawer--open) + .root__column {
+.navi-drawer[rail]:not([open]) + .root__column {
   padding-left: var(--navi-drawer-rail-width);
 }
 
 
 @media (max-width: 1023px) {
   /* Show scrim when drawer is open */
-  .navi-drawer--open .navi-drawer__scrim {
+  .navi-drawer[open] .navi-drawer__scrim {
     opacity: 1;
     pointer-events: all;
   }
 
   /* Don't push the content in rail mode on narrow viewports. */
-  .navi-drawer--rail:not(.navi-drawer--open) + .root__column {
+  .navi-drawer[rail]:not([open]) + .root__column {
     padding-left: 0;
   }
 
@@ -93,7 +93,7 @@
   }
 
   /* Push the drawer out of view */
-  .navi-drawer:not(.navi-drawer--open) .navi-drawer__content {
+  .navi-drawer:not([open]) .navi-drawer__content {
     margin-left: calc(var(--navi-drawer-width) * -1.2);
   }
 
@@ -104,9 +104,9 @@
 }
 
 @media (min-width: 1024px) {
-  .navi-drawer--rail:not(:hover) .navi-item[level] label,
-  .navi-drawer--rail:not(:hover) .navi-item > vaadin-button,
-  .navi-drawer--rail:not(:hover) .navi-drawer__footer span {
+  .navi-drawer[rail]:not(:hover) .navi-item[level] label,
+  .navi-drawer[rail]:not(:hover) .navi-item > vaadin-button,
+  .navi-drawer[rail]:not(:hover) .navi-drawer__footer span {
     display: none;
   }
 }
