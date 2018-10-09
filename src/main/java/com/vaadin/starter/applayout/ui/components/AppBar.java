@@ -25,7 +25,7 @@ import java.util.Collections;
 
 public class AppBar extends FlexLayout {
 
-    private final String CLASS_NAME = "app-bar";
+    private String CLASS_NAME = "app-bar";
 
     private FlexLayout container;
 

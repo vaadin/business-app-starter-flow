@@ -6,11 +6,16 @@ import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.orderedlayout.FlexComponent;
+import com.vaadin.flow.component.html.Span;
+import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.upload.Upload;
+import com.vaadin.flow.data.provider.DataProvider;
+import com.vaadin.flow.data.renderer.ComponentRenderer;
+import com.vaadin.flow.data.renderer.LocalDateRenderer;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.starter.applayout.backend.DummyData;
@@ -19,104 +24,116 @@ import com.vaadin.starter.applayout.backend.UIConfig;
 import com.vaadin.starter.applayout.ui.Root;
 import com.vaadin.starter.applayout.ui.components.AbstractView;
 import com.vaadin.starter.applayout.ui.components.AppBar;
-import com.vaadin.starter.applayout.ui.utils.CSSProperties;
+import com.vaadin.starter.applayout.ui.components.ListItem;
 import com.vaadin.starter.applayout.ui.utils.LumoStyles;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
 
 import java.util.Arrays;
 import java.util.Collections;
 
-import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
-
 @Route(value = "horizontal-split-view", layout = Root.class)
 @PageTitle("Horizontal Split View")
 public class HorizontalSplitView extends AbstractView {
 
-    private final AppBar appBar;
-    private final Div splitter;
+    private String CLASS_NAME = "hsv";
+
+    private AppBar appBar;
+    private FlexLayout content;
 
     public HorizontalSplitView() {
         // Header
         appBar = new AppBar("Personnel");
 
-        // Splitter
-        splitter = new Div();
-        splitter.getStyle().set(CSSProperties.Display.PROPERTY, CSSProperties.Display.FLEX);
-        splitter.setSizeFull();
+        // Main container
+        content = new FlexLayout();
+        content.setSizeFull();
 
         // Grid
-        Grid<Person> grid = new Grid<>();
-        grid.setItems(DummyData.getPersons());
-        grid.addColumn(Person::getName).setHeader("Name");
-        grid.addColumn(Person::getFirstName).setHeader("First Name");
-        grid.addColumn(Person::getLastName).setHeader("Last Name");
-        grid.addColumn(Person::getEmail).setHeader("Email");
-        grid.addColumn(Person::getForumPosts).setHeader("Forum Posts");
-        grid.addColumn(Person::getLastModified).setHeader("Last Modified");
+        Grid<Person> grid = new Grid();
+        grid.addColumn(Person::getId)
+                .setHeader("ID")
+                .setFrozen(true)
+                .setSortable(true)
+                .setWidth("60px")
+                .setFlexGrow(0);
+        grid.addColumn(new ComponentRenderer<>(this::createUserInfo))
+                .setHeader("Name")
+                .setWidth("240px")
+                .setFlexGrow(1);
+        grid.addColumn(new ComponentRenderer<>(this::createTwitter))
+                .setHeader("Twitter")
+                .setWidth("160px")
+                .setFlexGrow(0);
+        grid.addColumn(new ComponentRenderer<>(this::createForumPosts))
+                .setHeader("Forum Posts")
+                .setWidth("160px")
+                .setFlexGrow(0);
+        grid.addColumn(new LocalDateRenderer<>(Person::getLastModified, "MMM dd, YYYY"))
+                .setHeader("Last Modified")
+                .setSortable(true)
+                .setWidth("160px")
+                .setFlexGrow(0);
         grid.setSizeFull();
 
-        // Grid wrapper for some nice padding.
-        Div gridWrapper = UIUtils.createDiv(Collections.singleton(GRID_VIEW), grid);
-        gridWrapper.getStyle().set(CSSProperties.Flex.PROPERTY, "1 0 auto");
+        DataProvider dataProvider = DataProvider.ofCollection(DummyData.getPersons());
+        grid.setDataProvider(dataProvider);
 
-        // Form close container
-        Button formCloseButton = new Button("Close");
-        FlexLayout formClose = UIUtils.createFlexLayout(Arrays.asList(LumoStyles.Padding.All.M, LumoStyles.Spacing.Right.S), formCloseButton);
-        formClose.getElement().getStyle().set(CSSProperties.BackgroundColor.PROPERTY, CSSProperties.BackgroundColor.WHITE);
+        // Grid wrapper for some nice padding.
+        Div gridWrapper = UIUtils.createDiv(Collections.singleton(CLASS_NAME + "__grid-wrapper"), grid);
+
+        // Header
+        Button formCloseButton = UIUtils.createSmallTertiaryIconButton(VaadinIcon.CLOSE);
+        FlexLayout detailsHeader = UIUtils.createFlexLayout(Collections.singleton(CLASS_NAME + "__details-header"), formCloseButton);
 
         // Form
-        FormLayout form = new FormLayout();
-        form.addClassNames(LumoStyles.Padding.Left.M, LumoStyles.Padding.Right.M);
-        form.getStyle().set(CSSProperties.Overflow.PROPERTY, CSSProperties.Overflow.AUTO);
-        form.getStyle().set(CSSProperties.FlexGrow.PROPERTY, CSSProperties.FlexGrow._1);
+        FormLayout detailsContent = new FormLayout();
+        detailsContent.addClassNames(CLASS_NAME + "__details-content");
 
         TextField firstName = new TextField();
         firstName.setWidth("100%");
-        form.addFormItem(firstName, "First Name");
+        detailsContent.addFormItem(firstName, "First Name");
 
         TextField lastName = new TextField();
         lastName.setWidth("100%");
-        form.addFormItem(lastName, "Last Name");
+        detailsContent.addFormItem(lastName, "Last Name");
 
         RadioButtonGroup gender = new RadioButtonGroup();
         gender.setItems("Male", "Female", "Other");
-        FormLayout.FormItem genderItem = form.addFormItem(gender, "Gender");
+        FormLayout.FormItem genderItem = detailsContent.addFormItem(gender, "Gender");
         setColSpan(genderItem, 2);
 
         FlexLayout phone = createPhoneLayout();
-        FormLayout.FormItem phoneItem = form.addFormItem(phone, "Phone");
+        FormLayout.FormItem phoneItem = detailsContent.addFormItem(phone, "Phone");
         setColSpan(phoneItem, 2);
 
         TextField email = new TextField();
         email.setWidth("100%");
-        FormLayout.FormItem emailItem = form.addFormItem(email, "Email");
+        FormLayout.FormItem emailItem = detailsContent.addFormItem(email, "Email");
         setColSpan(emailItem, 2);
 
         ComboBox company = new ComboBox();
         company.setWidth("100%");
-        FormLayout.FormItem companyItem = form.addFormItem(company, "Company");
+        FormLayout.FormItem companyItem = detailsContent.addFormItem(company, "Company");
         setColSpan(companyItem, 2);
 
-        FormLayout.FormItem uploadItem = form.addFormItem(new Upload(), "Image");
+        FormLayout.FormItem uploadItem = detailsContent.addFormItem(new Upload(), "Image");
         setColSpan(uploadItem, 2);
 
-        form.setResponsiveSteps(
+        detailsContent.setResponsiveSteps(
                 new FormLayout.ResponsiveStep("0", 1, FormLayout.ResponsiveStep.LabelsPosition.TOP),
                 new FormLayout.ResponsiveStep("21em", 2, FormLayout.ResponsiveStep.LabelsPosition.TOP)
         );
 
-        // Actions
+        // Details footer
         Button cancel = new Button("Cancel");
         Button save = UIUtils.createPrimaryButton("Save");
-        FlexLayout actions = UIUtils.createFlexLayout(Arrays.asList(LumoStyles.Padding.All.M, LumoStyles.Spacing.Right.S), cancel, save);
-        actions.setJustifyContentMode(FlexComponent.JustifyContentMode.BETWEEN);
+        FlexLayout detailsFooter = UIUtils.createFlexLayout(Arrays.asList(CLASS_NAME + "__details-footer"), cancel, save);
 
+        // Wrapper
+        FlexLayout formWrapper = UIUtils.createColumn(Collections.singleton(CLASS_NAME + "__details"), detailsHeader, detailsContent, detailsFooter);
 
-        FlexLayout formWrapper = UIUtils.createColumn(Arrays.asList(LumoStyles.Shadow.L), formClose, form, actions);
-        formWrapper.addClassName("abstract-view__detail");
-
-        // Set the splitter's content.
-        splitter.add(gridWrapper, formWrapper);
+        // Set the content's content.
+        content.add(gridWrapper, formWrapper);
     }
 
     @Override
@@ -124,7 +141,7 @@ public class HorizontalSplitView extends AbstractView {
         if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
             setHeader(appBar);
         }
-        setContent(splitter);
+        setContent(content);
     }
 
     private FlexLayout createPhoneLayout() {
@@ -140,6 +157,30 @@ public class HorizontalSplitView extends AbstractView {
 
     private void setColSpan(Component component, int span) {
         component.getElement().setAttribute("colspan", Integer.toString(span));
+    }
+
+    private Component createUserInfo(Person person) {
+        return new ListItem(person.getInitials(), person.getName(), person.getEmail());
+    }
+
+    private Component createTwitter(Person person) {
+        Icon icon = new Icon(VaadinIcon.TWITTER);
+        if (person.getTwitter() != null && !person.getTwitter().isEmpty()) {
+            icon.addClassName(LumoStyles.TextColor.PRIMARY);
+        } else {
+            icon.addClassName(LumoStyles.TextColor.DISABLED);
+        }
+        return icon;
+    }
+
+    private Component createForumPosts(Person person) {
+        Span badge = new Span(Integer.toString(person.getForumPosts()));
+        if (person.getForumPosts() > 5) {
+            badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.SUCCESS);
+        } else {
+            badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.ERROR);
+        }
+        return badge;
     }
 
 }
