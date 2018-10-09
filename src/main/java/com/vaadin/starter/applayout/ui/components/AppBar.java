@@ -13,6 +13,7 @@ import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.shared.Registration;
+import com.vaadin.flow.theme.lumo.Lumo;
 import com.vaadin.starter.applayout.backend.UIConfig;
 import com.vaadin.starter.applayout.ui.utils.LumoStyles;
 import com.vaadin.starter.applayout.ui.utils.NaviDrawerProvider;
@@ -49,6 +50,7 @@ public class AppBar extends FlexLayout {
     public AppBar(String title) {
         super();
         setClassName(CLASS_NAME);
+        getElement().setAttribute(LumoStyles.THEME, LumoStyles.DARK);
 
         menuNaviIcon = UIUtils.createSmallTertiaryIconButton(Collections.singleton(CLASS_NAME + "__navi-icon"), VaadinIcon.MENU);
         menuNaviIcon.addClickListener(e -> NaviDrawerProvider.getNaviDrawer().toggle());
