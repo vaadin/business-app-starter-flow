@@ -10,6 +10,7 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.AfterNavigationEvent;
 import com.vaadin.flow.router.AfterNavigationObserver;
 import com.vaadin.starter.applayout.backend.UIConfig;
+import com.vaadin.starter.applayout.ui.utils.LumoStyles;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
 
 import java.util.ArrayList;
@@ -55,7 +56,9 @@ public abstract class NaviDrawer extends Div implements AfterNavigationObserver 
 
         // Search field.
         search = new TextField();
-        search.setPlaceholder("Search");
+        search.setPlaceholder("Filter");
+        search.setPrefixComponent(new Icon(VaadinIcon.FILTER));
+        search.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Button.SMALL);
         search.addValueChangeListener(e -> search());
         content.add(search);
 
@@ -70,7 +73,7 @@ public abstract class NaviDrawer extends Div implements AfterNavigationObserver 
         items = new ArrayList<>();
 
         // "Footer", currently only a collapse/expand button.
-        railButton = UIUtils.createSmallButton(Collections.singleton(CLASS_NAME + "__footer"), VaadinIcon.CARET_LEFT, "Collapse");
+        railButton = UIUtils.createSmallButton(Collections.singleton(CLASS_NAME + "__footer"), VaadinIcon.CHEVRON_LEFT_SMALL, "Collapse");
         railButton.addClickListener(event -> setRailModeEnabled(getClassName().contains(RAIL)));
         content.add(railButton);
     }

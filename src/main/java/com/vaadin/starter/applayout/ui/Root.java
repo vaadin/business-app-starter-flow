@@ -78,15 +78,25 @@ public class Root extends FlexLayout
      * Initialise the navigation items.
      */
     private void initNaviItems() {
-
-        naviDrawer.addNaviItem(VaadinIcon.DASHBOARD, "Dashboard", Dashboard.class);
-        naviDrawer.addNaviItem(VaadinIcon.FILE, "Reports", ReportsView.class);
+        naviDrawer.addNaviItem(VaadinIcon.GRID_BIG, "Dashboard", Dashboard.class);
+        naviDrawer.addNaviItem(VaadinIcon.FILE_TEXT, "Reports", ReportsView.class);
 
         NaviItem personnel = naviDrawer.addNaviItem(VaadinIcon.USERS, "Personnel", Personnel.class);
         naviDrawer.addNaviItem(personnel, "Vertical Split", VerticalSplitView.class);
         naviDrawer.addNaviItem(personnel, "Horizontal Split", HorizontalSplitView.class);
 
         naviDrawer.addNaviItem(VaadinIcon.FILTER, "Filter List", FilterList.class);
+
+        NaviItem documents = naviDrawer.addNaviItem(VaadinIcon.ARCHIVES, "Documents", Default.class);
+        naviDrawer.addNaviItem(documents, "Item level 1", Default.class);
+        NaviItem itemLevel1 = naviDrawer.addNaviItem(documents, "Item level 1", Default.class);
+
+        naviDrawer.addNaviItem(itemLevel1, "Item level 2", Default.class);
+        naviDrawer.addNaviItem(itemLevel1, "Item level 2", Default.class);
+        NaviItem itemLevel2 = naviDrawer.addNaviItem(itemLevel1, "Item level 2", Default.class);
+        naviDrawer.addNaviItem(itemLevel2, "Item level 3", Default.class);
+        naviDrawer.addNaviItem(itemLevel2, "Item level 3", Default.class);
+        naviDrawer.addNaviItem(itemLevel1, "Item level 2", Default.class);
     }
 
     /**
@@ -232,7 +242,6 @@ public class Root extends FlexLayout
                 naviDrawer.addNaviItem(sendouts, "Search Sendouts", Default.class);
             }
         }
-
         NaviItem anatomicPathology = naviDrawer.addNaviItem(VaadinIcon.ABACUS, "Anatomic Pathology", Default.class);
         {
             naviDrawer.addNaviItem(anatomicPathology, "Pathologist Queue", Default.class);
