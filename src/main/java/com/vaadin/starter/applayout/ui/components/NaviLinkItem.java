@@ -5,14 +5,10 @@ import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.flow.dom.Element;
 import com.vaadin.flow.router.HighlightConditions;
 import com.vaadin.flow.router.RouterLink;
-import com.vaadin.starter.applayout.ui.utils.UIUtils;
 
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.util.Collections;
 
 public class NaviLinkItem extends NaviItem {
 
@@ -28,11 +24,11 @@ public class NaviLinkItem extends NaviItem {
         link.getElement().insertChild(0, image.getElement());
     }
 
-    public NaviLinkItem(String path, String text, Class<? extends Component> navigationTarget) {
+    public NaviLinkItem(String svg, String text, Class<? extends Component> navigationTarget) {
         this(text, navigationTarget);
         try {
-            String content = readFile(path, Charset.defaultCharset());
-            link.getElement().insertChild(0, createSVGElement(content));
+            String content = readFile(svg, Charset.defaultCharset());
+            link.getElement().insertChild(0, createSVGContainer(content));
         } catch (Exception e) {
             System.out.println(e);
         }

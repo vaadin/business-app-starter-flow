@@ -7,7 +7,6 @@ import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.flow.dom.Element;
 import com.vaadin.flow.shared.Registration;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
 
@@ -28,11 +27,11 @@ public class NaviTabItem extends NaviItem {
         link.getElement().insertChild(0, image.getElement());
     }
 
-    public NaviTabItem(String path, String text, Class<? extends Component> navigationTarget) {
+    public NaviTabItem(String svg, String text, Class<? extends Component> navigationTarget) {
         this(text, navigationTarget);
         try {
-            String content = readFile(path, Charset.defaultCharset());
-            link.getElement().insertChild(0, createSVGElement(content));
+            String content = readFile(svg, Charset.defaultCharset());
+            link.getElement().insertChild(0, createSVGContainer(content));
         } catch (Exception e) {
             System.out.println(e);
         }

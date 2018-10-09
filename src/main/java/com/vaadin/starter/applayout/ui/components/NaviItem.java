@@ -3,25 +3,17 @@ package com.vaadin.starter.applayout.ui.components;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.Image;
-import com.vaadin.flow.component.html.Input;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.dom.Element;
-import com.vaadin.flow.server.AbstractStreamResource;
-import com.vaadin.flow.server.StreamResource;
 import com.vaadin.flow.server.VaadinService;
 import com.vaadin.flow.server.startup.FakeBrowser;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
 import org.apache.commons.io.IOUtils;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -116,7 +108,7 @@ public abstract class NaviItem extends Div {
         return new String(bytes, encoding);
     }
 
-    protected Element createSVGElement(String content) {
+    protected Element createSVGContainer(String content) {
         Div svg = new Div();
         svg.addClassName(CLASS_NAME + "__svg-container");
         svg.getElement().setProperty("innerHTML", content);
