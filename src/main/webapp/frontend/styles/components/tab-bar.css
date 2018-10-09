@@ -42,15 +42,14 @@
 }
 
 @media (max-width: 767px) {
-  .closable-tab:not([aria-selected="true"]),
   .tab-bar__add-tab,
-  .closable-tab vaadin-button,
-  .closable-tab:after,
-  .closable-tab:before {
+  vaadin-tab[closable]:not([selected]),
+  vaadin-tab[closable] vaadin-button,
+  vaadin-tab[closable]:after,
+  vaadin-tab[closable]:before {
     display: none;
   }
 }
-
 
 @media (max-width: 1023px) {
   .tab-bar {

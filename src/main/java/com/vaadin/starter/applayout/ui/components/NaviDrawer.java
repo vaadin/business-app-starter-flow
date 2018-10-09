@@ -58,7 +58,6 @@ public abstract class NaviDrawer extends Div implements AfterNavigationObserver 
         search = new TextField();
         search.setPlaceholder("Filter");
         search.setPrefixComponent(new Icon(VaadinIcon.FILTER));
-        search.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Button.SMALL);
         search.addValueChangeListener(e -> search());
         content.add(search);
 

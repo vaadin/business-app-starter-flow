@@ -11,7 +11,6 @@
 .navi-item[level] {
   background-color: var(--lumo-contrast-5pct);
   font-weight: normal;
-  height: var(--lumo-size-m);
 }
 
 .navi-item[level="1"] label {

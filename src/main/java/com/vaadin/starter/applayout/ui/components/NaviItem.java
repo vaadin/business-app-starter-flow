@@ -29,8 +29,8 @@ public abstract class NaviItem extends Div {
     private boolean subItemsVisible;
     private List<NaviItem> subItems;
 
-    private Icon down = new Icon(VaadinIcon.PLUS);
-    private Icon up = new Icon(VaadinIcon.MINUS);
+    private Icon down = new Icon(VaadinIcon.CARET_DOWN);
+    private Icon up = new Icon(VaadinIcon.CARET_UP);
 
     private int level = 0;
 

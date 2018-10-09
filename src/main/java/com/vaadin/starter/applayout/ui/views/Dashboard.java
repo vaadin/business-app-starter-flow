@@ -70,6 +70,7 @@ public class Dashboard extends AbstractView {
                 Arrays.asList(
                         LumoStyles.Margin.Bottom.L,
                         LumoStyles.Margin.Top.XL,
+                        LumoStyles.Margin.Responsive.Horizontal.ML,
                         LumoStyles.Spacing.Right.M
                 ),
                 UIUtils.createSmallIcon(Collections.singleton(LumoStyles.TextColor.TERTIARY), icon),
