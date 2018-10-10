@@ -1,4 +1,5 @@
 .grid-view {
+  flex: 1;
   transition: padding var(--transition-duration-m);
 }
 

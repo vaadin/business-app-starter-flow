@@ -5,6 +5,7 @@ import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.contextmenu.ContextMenu;
 import com.vaadin.flow.component.html.Image;
+import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.tabs.Tab;
@@ -23,6 +24,7 @@ public class TabBar extends FlexLayout {
 
     private Button menuNaviIcon;
 
+    private FlexLayout actionItems;
     private Image avatar;
 
     private Button addTab;
@@ -48,21 +50,34 @@ public class TabBar extends FlexLayout {
         contextMenu.addItem("Settings", e -> System.out.println("Testing..."));
         contextMenu.addItem("Logout", e -> System.out.println("Testing..."));
 
+        actionItems = UIUtils.createFlexLayout(Collections.singleton(CLASS_NAME + "__action-items"), avatar);
+        actionItems.setVisible(false);
+
         addTab = UIUtils.createSmallIconButton(VaadinIcon.PLUS);
         addTab.addClickListener(e -> tabs.setSelectedTab(addClosableNaviTab("New Tab", Default.class)));
         addTab.setClassName(CLASS_NAME + "__add-tab");
 
         tabs = new NaviTabs();
         tabs.setClassName(CLASS_NAME + "__tabs");
-        if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-            tabs.addClassName(LumoStyles.Margin.Horizontal.AUTO);
-        }
 
-        add(menuNaviIcon, tabs, addTab, avatar);
+        add(menuNaviIcon, tabs, addTab, actionItems);
     }
+
+    /* === MENU ICON === */
 
     public Button getMenuNaviIcon() {
         return menuNaviIcon;
+    }
+
+    public void setMenuNaviIconVisible(boolean visible) {
+        menuNaviIcon.setVisible(visible);
+    }
+
+
+    /* === TABS === */
+
+    public void centerTabs() {
+        tabs.addClassName(LumoStyles.Margin.Horizontal.AUTO);
     }
 
     private void configureTab(Tab tab) {
@@ -71,6 +86,12 @@ public class TabBar extends FlexLayout {
 
     public Tab addTab(String text) {
         Tab tab = tabs.addTab(text);
+        configureTab(tab);
+        return tab;
+    }
+
+    public Tab addNaviTab(String text, Class<? extends Component> navigationTarget) {
+        Tab tab = tabs.addNaviTab(text, navigationTarget);
         configureTab(tab);
         return tab;
     }
@@ -103,5 +124,39 @@ public class TabBar extends FlexLayout {
 
     public void removeAllTabs() {
         tabs.removeAll();
+    }
+
+
+    /* === ADD TAB BUTTON === */
+
+    public void setAddTabVisible(boolean visible) {
+        addTab.setVisible(visible);
+    }
+
+
+    /* === ACTION ITEMS === */
+
+    public Component addActionItem(Component component) {
+        actionItems.add(component);
+        updateActionItemsVisibility();
+        return component;
+    }
+
+    public Button addActionItem(Icon icon) {
+        Button button = UIUtils.createSmallTertiaryIconButton(icon);
+        addActionItem(button);
+        return button;
+    }
+
+    public void removeAllActionItems() {
+        actionItems.removeAll();
+        updateActionItemsVisibility();
+    }
+
+
+    /* === UPDATE VISIBILITY === */
+
+    private void updateActionItemsVisibility() {
+        actionItems.setVisible(actionItems.getComponentCount() > 0);
     }
 }

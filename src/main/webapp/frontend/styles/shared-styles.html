@@ -15,6 +15,7 @@
 <link rel="stylesheet" href="components/app-bar.css">
 <link rel="stylesheet" href="components/brand-expression.css">
 <link rel="import"     href="components/charts.html">
+<link rel="stylesheet" href="components/details-drawer.css">
 <link rel="stylesheet" href="components/list-item.css">
 <link rel="stylesheet" href="components/navi-drawer.css">
 <link rel="stylesheet" href="components/navi-item.css">
@@ -27,9 +28,7 @@
 <link rel="stylesheet" href="views/dashboard.css">
 <link rel="stylesheet" href="views/filter-list.css">
 <link rel="stylesheet" href="views/grid-view.css">
-<link rel="stylesheet" href="views/horizontal-split-view.css">
 <link rel="stylesheet" href="views/report-details.css">
-<link rel="stylesheet" href="views/vertical-split-view.css">
 
 <!-- <link rel="stylesheet" href="prototype-x-custom-theme.css"> -->
 
@@ -73,6 +72,10 @@
 
     .root__view-container {
       flex-grow: 1;
+    }
+
+    vaadin-grid-cell-content {
+      text-overflow: ellipsis;
     }
   </style>
 </custom-style>

@@ -37,6 +37,7 @@ public class Personnel extends AbstractView {
             appBar.addTab(role.name().substring(0, 1).toUpperCase() + role.name().substring(1).toLowerCase());
         }
         appBar.addTabSelectionListener(e -> filter());
+        appBar.centerTabs();
 
         // Grid
         grid = new Grid();

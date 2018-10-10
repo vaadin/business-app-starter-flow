@@ -49,7 +49,7 @@ public class ReportsView extends AbstractView {
                 .setWidth("160px")
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createBalance))
-                .setHeader(UIUtils.createRightAlignedDiv(new Text("Balance")))
+                .setHeader(UIUtils.createRightAlignedDiv(new Text("Balance (EUR)")))
                 .setSortable(true)
                 .setWidth("160px")
                 .setFlexGrow(0);
@@ -73,7 +73,7 @@ public class ReportsView extends AbstractView {
     }
 
     private Component createBalance(Report report) {
-        return UIUtils.createRightAlignedDiv(new Text(Double.toString(report.getBalance()) + " " + report.getCurrency()));
+        return UIUtils.createRightAlignedDiv(new Text(Double.toString(report.getBalance())));
     }
 
     private void viewDetails(Report report) {

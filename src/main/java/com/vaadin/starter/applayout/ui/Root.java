@@ -1,9 +1,6 @@
 package com.vaadin.starter.applayout.ui;
 
-import com.vaadin.flow.component.ClickEvent;
-import com.vaadin.flow.component.ClickNotifier;
-import com.vaadin.flow.component.Component;
-import com.vaadin.flow.component.HasElement;
+import com.vaadin.flow.component.*;
 import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -40,7 +37,7 @@ public class Root extends FlexLayout
     private FlexLayout column;
 
     private NaviDrawer naviDrawer;
-    private TabBar tabBar;
+    private TabBar appInnerHeader;
     private FlexLayout viewContainer;
 
     public Root() {
@@ -62,10 +59,6 @@ public class Root extends FlexLayout
     private void initStructure() {
         naviDrawer = NaviDrawerProvider.getNaviDrawer();
 
-        // TODO: Explore DOM event triggering/listening.
-        // naviDrawer.getElement().addEventListener("my-event", e -> naviDrawer.toggle());
-        // naviDrawer.getElement().addSynchronizedPropertyEvent("my-event");
-
         initViewContainer();
 
         column = UIUtils.createColumn(Collections.singleton(CLASS_NAME + "__column"), viewContainer);
@@ -78,25 +71,26 @@ public class Root extends FlexLayout
      * Initialise the navigation items.
      */
     private void initNaviItems() {
-        naviDrawer.addNaviItem(VaadinIcon.GRID_BIG, "Dashboard", Dashboard.class);
-        naviDrawer.addNaviItem(VaadinIcon.FILE_TEXT, "Reports", ReportsView.class);
+        // Initialise the navigation items based on the showcase.
+        if (UIConfig.getShowcase().equals(UIConfig.Showcase.DEMO)) {
+            naviDrawer.addNaviItem(VaadinIcon.GRID_BIG, "Dashboard", Dashboard.class);
+            naviDrawer.addNaviItem(VaadinIcon.FILE_TEXT, "Reports", ReportsView.class);
 
-        NaviItem personnel = naviDrawer.addNaviItem(VaadinIcon.USERS, "Personnel", Personnel.class);
-        naviDrawer.addNaviItem(personnel, "Vertical Split", VerticalSplitView.class);
-        naviDrawer.addNaviItem(personnel, "Horizontal Split", HorizontalSplitView.class);
+            NaviItem personnel = naviDrawer.addNaviItem(VaadinIcon.USERS, "Personnel", Personnel.class);
+            naviDrawer.addNaviItem(personnel, "Vertical Split", VerticalSplitView.class);
+            naviDrawer.addNaviItem(personnel, "Horizontal Split", HorizontalSplitView.class);
 
-        naviDrawer.addNaviItem(VaadinIcon.FILTER, "Filter List", FilterList.class);
+            naviDrawer.addNaviItem(VaadinIcon.FILTER, "Filter List", FilterList.class);
+        }
 
-        NaviItem documents = naviDrawer.addNaviItem(VaadinIcon.ARCHIVES, "Documents", Default.class);
-        naviDrawer.addNaviItem(documents, "Item level 1", Default.class);
-        NaviItem itemLevel1 = naviDrawer.addNaviItem(documents, "Item level 1", Default.class);
+        if (UIConfig.getShowcase().equals(UIConfig.Showcase.FINANCE)) {
+            naviDrawer.addNaviItem(VaadinIcon.CALC, "Account Reporting", AccountReporting.class);
+            naviDrawer.addNaviItem(VaadinIcon.CALENDAR_BRIEFCASE, "Incoming Payments", Default.class);
+            naviDrawer.addNaviItem(VaadinIcon.BRIEFCASE, "Payments", Default.class);
+            naviDrawer.addNaviItem(VaadinIcon.ARCHIVE, "Archiving", Default.class);
+            naviDrawer.addNaviItem(VaadinIcon.OFFICE, "Others", Default.class);
+        }
 
-        naviDrawer.addNaviItem(itemLevel1, "Item level 2", Default.class);
-        naviDrawer.addNaviItem(itemLevel1, "Item level 2", Default.class);
-        NaviItem itemLevel2 = naviDrawer.addNaviItem(itemLevel1, "Item level 2", Default.class);
-        naviDrawer.addNaviItem(itemLevel2, "Item level 3", Default.class);
-        naviDrawer.addNaviItem(itemLevel2, "Item level 3", Default.class);
-        naviDrawer.addNaviItem(itemLevel1, "Item level 2", Default.class);
     }
 
     /**
@@ -109,8 +103,8 @@ public class Root extends FlexLayout
         // setAppFooterInner(new Label("Inner footer"));
 
         if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.TABS)) {
-            tabBar = new TabBar();
-            setAppHeaderInner(tabBar);
+            appInnerHeader = new TabBar();
+            setAppHeaderInner(appInnerHeader);
 
             for (NaviItem item : naviDrawer.getNaviItems()) {
                 ((ClickNotifier<Div>) item).addClickListener(event -> naviItemClicked(item, event));
@@ -124,15 +118,15 @@ public class Root extends FlexLayout
     private void naviItemClicked(NaviItem item, ClickEvent<Div> event) {
         // Shift-click to add a new tab.
         if (event.getButton() == 0 && event.isShiftKey()) {
-            tabBar.setSelectedTab(tabBar.addClosableNaviTab(item.getText(), item.getNavigationTarget()));
+            appInnerHeader.setSelectedTab(appInnerHeader.addClosableNaviTab(item.getText(), item.getNavigationTarget()));
         }
 
         // Update the current tab, or create the first one.
         else if (event.getButton() == 0) {
-            if (tabBar.getTabCount() > 0) {
-                tabBar.updateSelectedTab(item.getText(), item.getNavigationTarget());
+            if (appInnerHeader.getTabCount() > 0) {
+                appInnerHeader.updateSelectedTab(item.getText(), item.getNavigationTarget());
             } else {
-                tabBar.addClosableNaviTab(item.getText(), item.getNavigationTarget());
+                appInnerHeader.addClosableNaviTab(item.getText(), item.getNavigationTarget());
             }
         }
     }

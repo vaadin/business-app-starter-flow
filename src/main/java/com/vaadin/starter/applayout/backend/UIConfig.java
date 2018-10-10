@@ -14,12 +14,20 @@ public class UIConfig {
         ACCOUNT_SWITCHER, BRAND_EXPRESSION
     }
 
+    public enum Showcase {
+        DEMO, FINANCE
+    }
+
     public static NaviMode getNaviMode() {
-        return NaviMode.LINKS;
+        return NaviMode.TABS;
     }
 
     public static NaviHeader getNaviHeader() {
-        return NaviHeader.ACCOUNT_SWITCHER;
+        return NaviHeader.BRAND_EXPRESSION;
+    }
+
+    public static Showcase getShowcase() {
+        return Showcase.DEMO;
     }
 
 }

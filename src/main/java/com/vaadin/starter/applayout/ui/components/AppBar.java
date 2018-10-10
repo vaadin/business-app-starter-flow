@@ -13,7 +13,6 @@ import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.shared.Registration;
-import com.vaadin.flow.theme.lumo.Lumo;
 import com.vaadin.starter.applayout.backend.UIConfig;
 import com.vaadin.starter.applayout.ui.utils.LumoStyles;
 import com.vaadin.starter.applayout.ui.utils.NaviDrawerProvider;
@@ -92,9 +91,6 @@ public class AppBar extends FlexLayout {
 
         tabs = new NaviTabs();
         tabs.setClassName(CLASS_NAME + "__tabs");
-        if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-            tabs.addClassName(LumoStyles.Margin.Horizontal.AUTO);
-        }
         tabs.setVisible(false);
 
         tabContainer = UIUtils.createFlexLayout(Collections.singleton(CLASS_NAME + "__tab-container"), tabs, addTab);
@@ -112,9 +108,19 @@ public class AppBar extends FlexLayout {
         }
     }
 
+
+    /* === MENU ICON === */
+
     public Button getMenuNaviIcon() {
         return menuNaviIcon;
     }
+
+    public void setMenuNaviIconVisible(boolean visible) {
+        menuNaviIcon.setVisible(visible);
+    }
+
+
+    /* === CONTEXT ICON === */
 
     public Button getContextNaviIcon() {
         return contextNaviIcon;
@@ -124,6 +130,9 @@ public class AppBar extends FlexLayout {
         contextNaviIcon.setIcon(icon);
     }
 
+
+    /* === TITLE === */
+
     public String getTitle() {
         return this.title.getText();
     }
@@ -131,6 +140,9 @@ public class AppBar extends FlexLayout {
     public void setTitle(String title) {
         this.title.setText(title);
     }
+
+
+    /* === ACTION ITEMS === */
 
     public Component addActionItem(Component component) {
         actionItems.add(component);
@@ -149,6 +161,13 @@ public class AppBar extends FlexLayout {
         updateActionItemsVisibility();
     }
 
+
+    /* === TABS === */
+
+    public void centerTabs() {
+        tabs.addClassName(LumoStyles.Margin.Horizontal.AUTO);
+    }
+
     private void configureTab(Tab tab) {
         tab.addClassName(CLASS_NAME + "__tab");
         updateTabsVisibility();
@@ -156,6 +175,12 @@ public class AppBar extends FlexLayout {
 
     public Tab addTab(String text) {
         Tab tab = tabs.addTab(text);
+        configureTab(tab);
+        return tab;
+    }
+
+    public Tab addNaviTab(String text, Class<? extends Component> navigationTarget) {
+        Tab tab = tabs.addNaviTab(text, navigationTarget);
         configureTab(tab);
         return tab;
     }
@@ -191,9 +216,15 @@ public class AppBar extends FlexLayout {
         updateTabsVisibility();
     }
 
+
+    /* === ADD TAB BUTTON === */
+
     public void setAddTabVisible(boolean visible) {
         addTab.setVisible(visible);
     }
+
+
+    /* === SEARCH === */
 
     public void searchModeOn() {
         menuNaviIcon.setVisible(false);
@@ -223,11 +254,17 @@ public class AppBar extends FlexLayout {
         search.setVisible(false);
     }
 
+
+    /* === RESET === */
+
     public void reset() {
         setNaviMode(AppBar.NaviMode.MENU);
         removeAllActionItems();
         removeAllTabs();
     }
+
+
+    /* === UPDATE VISIBILITY === */
 
     private void updateActionItemsVisibility() {
         actionItems.setVisible(actionItems.getComponentCount() > 0);

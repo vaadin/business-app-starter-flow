@@ -24,6 +24,7 @@ import com.vaadin.starter.applayout.backend.UIConfig;
 import com.vaadin.starter.applayout.ui.Root;
 import com.vaadin.starter.applayout.ui.components.AbstractView;
 import com.vaadin.starter.applayout.ui.components.AppBar;
+import com.vaadin.starter.applayout.ui.components.DetailsDrawer;
 import com.vaadin.starter.applayout.ui.components.ListItem;
 import com.vaadin.starter.applayout.ui.utils.LumoStyles;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
@@ -31,14 +32,15 @@ import com.vaadin.starter.applayout.ui.utils.UIUtils;
 import java.util.Arrays;
 import java.util.Collections;
 
+import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
+
 @Route(value = "horizontal-split-view", layout = Root.class)
 @PageTitle("Horizontal Split View")
 public class HorizontalSplitView extends AbstractView {
 
-    private String CLASS_NAME = "hsv";
-
     private AppBar appBar;
     private FlexLayout content;
+    private final DetailsDrawer detailsDrawer;
 
     public HorizontalSplitView() {
         // Header
@@ -73,67 +75,28 @@ public class HorizontalSplitView extends AbstractView {
                 .setSortable(true)
                 .setWidth("160px")
                 .setFlexGrow(0);
+        grid.addSelectionListener(e -> {
+            if (e.getFirstSelectedItem().isPresent()) {
+                showDetails();
+            }
+        });
         grid.setSizeFull();
 
+        // Data provider
         DataProvider dataProvider = DataProvider.ofCollection(DummyData.getPersons());
         grid.setDataProvider(dataProvider);
 
         // Grid wrapper for some nice padding.
-        Div gridWrapper = UIUtils.createDiv(Collections.singleton(CLASS_NAME + "__grid-wrapper"), grid);
-
-        // Header
-        Button formCloseButton = UIUtils.createSmallTertiaryIconButton(VaadinIcon.CLOSE);
-        FlexLayout detailsHeader = UIUtils.createFlexLayout(Collections.singleton(CLASS_NAME + "__details-header"), formCloseButton);
+        Div gridWrapper = UIUtils.createDiv(Collections.singleton(GRID_VIEW), grid);
 
         // Form
-        FormLayout detailsContent = new FormLayout();
-        detailsContent.addClassNames(CLASS_NAME + "__details-content");
-
-        TextField firstName = new TextField();
-        firstName.setWidth("100%");
-        detailsContent.addFormItem(firstName, "First Name");
-
-        TextField lastName = new TextField();
-        lastName.setWidth("100%");
-        detailsContent.addFormItem(lastName, "Last Name");
-
-        RadioButtonGroup gender = new RadioButtonGroup();
-        gender.setItems("Male", "Female", "Other");
-        FormLayout.FormItem genderItem = detailsContent.addFormItem(gender, "Gender");
-        setColSpan(genderItem, 2);
-
-        FlexLayout phone = createPhoneLayout();
-        FormLayout.FormItem phoneItem = detailsContent.addFormItem(phone, "Phone");
-        setColSpan(phoneItem, 2);
-
-        TextField email = new TextField();
-        email.setWidth("100%");
-        FormLayout.FormItem emailItem = detailsContent.addFormItem(email, "Email");
-        setColSpan(emailItem, 2);
-
-        ComboBox company = new ComboBox();
-        company.setWidth("100%");
-        FormLayout.FormItem companyItem = detailsContent.addFormItem(company, "Company");
-        setColSpan(companyItem, 2);
-
-        FormLayout.FormItem uploadItem = detailsContent.addFormItem(new Upload(), "Image");
-        setColSpan(uploadItem, 2);
-
-        detailsContent.setResponsiveSteps(
-                new FormLayout.ResponsiveStep("0", 1, FormLayout.ResponsiveStep.LabelsPosition.TOP),
-                new FormLayout.ResponsiveStep("21em", 2, FormLayout.ResponsiveStep.LabelsPosition.TOP)
-        );
-
-        // Details footer
-        Button cancel = new Button("Cancel");
-        Button save = UIUtils.createPrimaryButton("Save");
-        FlexLayout detailsFooter = UIUtils.createFlexLayout(Arrays.asList(CLASS_NAME + "__details-footer"), cancel, save);
+        FormLayout form = createForm();
 
         // Wrapper
-        FlexLayout formWrapper = UIUtils.createColumn(Collections.singleton(CLASS_NAME + "__details"), detailsHeader, detailsContent, detailsFooter);
+        detailsDrawer = new DetailsDrawer(DetailsDrawer.Position.RIGHT, form);
 
         // Set the content's content.
-        content.add(gridWrapper, formWrapper);
+        content.add(gridWrapper, detailsDrawer);
     }
 
     @Override
@@ -142,6 +105,51 @@ public class HorizontalSplitView extends AbstractView {
             setHeader(appBar);
         }
         setContent(content);
+    }
+
+    private void showDetails() {
+        detailsDrawer.show();
+    }
+
+    private FormLayout createForm() {
+        FormLayout form = new FormLayout();
+
+        TextField firstName = new TextField();
+        firstName.setWidth("100%");
+        form.addFormItem(firstName, "First Name");
+
+        TextField lastName = new TextField();
+        lastName.setWidth("100%");
+        form.addFormItem(lastName, "Last Name");
+
+        RadioButtonGroup gender = new RadioButtonGroup();
+        gender.setItems("Male", "Female", "Other");
+        FormLayout.FormItem genderItem = form.addFormItem(gender, "Gender");
+        setColSpan(genderItem, 2);
+
+        FlexLayout phone = createPhoneLayout();
+        FormLayout.FormItem phoneItem = form.addFormItem(phone, "Phone");
+        setColSpan(phoneItem, 2);
+
+        TextField email = new TextField();
+        email.setWidth("100%");
+        FormLayout.FormItem emailItem = form.addFormItem(email, "Email");
+        setColSpan(emailItem, 2);
+
+        ComboBox company = new ComboBox();
+        company.setWidth("100%");
+        FormLayout.FormItem companyItem = form.addFormItem(company, "Company");
+        setColSpan(companyItem, 2);
+
+        FormLayout.FormItem uploadItem = form.addFormItem(new Upload(), "Image");
+        setColSpan(uploadItem, 2);
+
+        form.setResponsiveSteps(
+                new FormLayout.ResponsiveStep("0", 1, FormLayout.ResponsiveStep.LabelsPosition.TOP),
+                new FormLayout.ResponsiveStep("21em", 2, FormLayout.ResponsiveStep.LabelsPosition.TOP)
+        );
+
+        return form;
     }
 
     private FlexLayout createPhoneLayout() {

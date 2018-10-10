@@ -22,22 +22,23 @@ import com.vaadin.starter.applayout.backend.UIConfig;
 import com.vaadin.starter.applayout.ui.Root;
 import com.vaadin.starter.applayout.ui.components.AbstractView;
 import com.vaadin.starter.applayout.ui.components.AppBar;
+import com.vaadin.starter.applayout.ui.components.DetailsDrawer;
 import com.vaadin.starter.applayout.ui.components.ListItem;
-import com.vaadin.starter.applayout.ui.utils.CSSProperties;
 import com.vaadin.starter.applayout.ui.utils.LumoStyles;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
 
 import java.util.Arrays;
 import java.util.Collections;
 
+import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
+
 @Route(value = "vertical-split-view", layout = Root.class)
 @PageTitle("Vertical Split View")
 public class VerticalSplitView extends AbstractView {
 
-    private String CLASS_NAME = "vsv";
-
     private AppBar appBar;
     private FlexLayout content;
+    private final DetailsDrawer detailsDrawer;
 
     public VerticalSplitView() {
         // Header
@@ -72,62 +73,28 @@ public class VerticalSplitView extends AbstractView {
                 .setSortable(true)
                 .setWidth("160px")
                 .setFlexGrow(0);
+        grid.addSelectionListener(e -> {
+            if (e.getFirstSelectedItem().isPresent()) {
+                showDetails();
+            }
+        });
         grid.setSizeFull();
 
+        // Data provider
         DataProvider dataProvider = DataProvider.ofCollection(DummyData.getPersons());
         grid.setDataProvider(dataProvider);
 
         // Grid wrapper for some nice padding.
-        Div gridWrapper = UIUtils.createDiv(Collections.singleton(CLASS_NAME + "__grid-wrapper"), grid);
-
-        // Header
-        Button formCloseButton = UIUtils.createSmallTertiaryIconButton(VaadinIcon.CLOSE);
-        FlexLayout detailsHeader = UIUtils.createFlexLayout(Collections.singleton(CLASS_NAME + "__details-header"), formCloseButton);
+        Div gridWrapper = UIUtils.createDiv(Collections.singleton(GRID_VIEW), grid);
 
         // Form
-        FormLayout detailsContent = new FormLayout();
-        detailsContent.addClassNames(CLASS_NAME + "__details-content");
-        detailsContent.setResponsiveSteps(
-                new FormLayout.ResponsiveStep("0", 1, FormLayout.ResponsiveStep.LabelsPosition.TOP),
-                new FormLayout.ResponsiveStep("600px", 2, FormLayout.ResponsiveStep.LabelsPosition.TOP),
-                new FormLayout.ResponsiveStep("1024px", 3, FormLayout.ResponsiveStep.LabelsPosition.TOP)
-        );
-
-        TextField firstName = new TextField();
-        firstName.setWidth("100%");
-        detailsContent.addFormItem(firstName, "First Name");
-
-        TextField lastName = new TextField();
-        lastName.setWidth("100%");
-        detailsContent.addFormItem(lastName, "Last Name");
-
-        TextField email = new TextField();
-        email.setWidth("100%");
-        detailsContent.addFormItem(email, "Email");
-
-        TextField forumPosts = new TextField();
-        forumPosts.setWidth("100%");
-        detailsContent.addFormItem(forumPosts, "Forum Posts");
-
-        TextField lastModified = new TextField();
-        lastModified.setWidth("100%");
-        detailsContent.addFormItem(lastModified, "Last Modified");
-
-        RadioButtonGroup radioButtonGroup = new RadioButtonGroup();
-        radioButtonGroup.setItems("Male", "Female", "Other");
-
-        detailsContent.addFormItem(radioButtonGroup, "Gender");
-
-        // Details footer
-        Button cancel = new Button("Cancel");
-        Button save = UIUtils.createPrimaryButton("Save");
-        FlexLayout detailsFooter = UIUtils.createFlexLayout(Arrays.asList(CLASS_NAME + "__details-footer"), cancel, save);
+        FormLayout form = createForm();
 
         // Wrapper
-        FlexLayout formWrapper = UIUtils.createColumn(Collections.singleton(CLASS_NAME + "__details"), detailsHeader, detailsContent, detailsFooter);
+        detailsDrawer = new DetailsDrawer(DetailsDrawer.Position.BOTTOM, form);
 
         // Set the content's content.
-        content.add(gridWrapper, formWrapper);
+        content.add(gridWrapper, detailsDrawer);
     }
 
     @Override
@@ -136,6 +103,47 @@ public class VerticalSplitView extends AbstractView {
             setHeader(appBar);
         }
         setContent(content);
+    }
+
+    private void showDetails() {
+        detailsDrawer.show();
+    }
+
+    private FormLayout createForm() {
+        FormLayout form = new FormLayout();
+
+        TextField firstName = new TextField();
+        firstName.setWidth("100%");
+        form.addFormItem(firstName, "First Name");
+
+        TextField lastName = new TextField();
+        lastName.setWidth("100%");
+        form.addFormItem(lastName, "Last Name");
+
+        TextField email = new TextField();
+        email.setWidth("100%");
+        form.addFormItem(email, "Email");
+
+        TextField forumPosts = new TextField();
+        forumPosts.setWidth("100%");
+        form.addFormItem(forumPosts, "Forum Posts");
+
+        TextField lastModified = new TextField();
+        lastModified.setWidth("100%");
+        form.addFormItem(lastModified, "Last Modified");
+
+        RadioButtonGroup radioButtonGroup = new RadioButtonGroup();
+        radioButtonGroup.setItems("Male", "Female", "Other");
+
+        form.addFormItem(radioButtonGroup, "Gender");
+
+        form.setResponsiveSteps(
+                new FormLayout.ResponsiveStep("0", 1, FormLayout.ResponsiveStep.LabelsPosition.TOP),
+                new FormLayout.ResponsiveStep("600px", 2, FormLayout.ResponsiveStep.LabelsPosition.TOP),
+                new FormLayout.ResponsiveStep("1024px", 3, FormLayout.ResponsiveStep.LabelsPosition.TOP)
+        );
+
+        return form;
     }
 
     private Component createUserInfo(Person person) {

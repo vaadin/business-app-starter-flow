@@ -33,16 +33,16 @@ public class AccountSwitcher extends Div {
     private void initAvatar() {
         avatar = new Image();
         avatar.setClassName(CLASS_NAME + "__avatar");
-        avatar.setSrc("https://pbs.twimg.com/profile_images/798351849984294912/okhePpJW_400x400.jpg");
+        avatar.setSrc("https://pbs.twimg.com/profile_images/2642704545/a77c0524766c6f3b4be4929f2005e627_400x400.png");
     }
 
     private void initUsername() {
-        username = new H4("Conor McGregor");
+        username = new H4("John Smith");
         username.setClassName(CLASS_NAME + "__title");
     }
 
     private void initEmail() {
-        email = new Label("conor.mcgregor@gmail.com");
+        email = new Label("john.smith@gmail.com");
         email.setClassName(CLASS_NAME + "__email");
         email.getElement().setAttribute(LumoStyles.THEME, LumoStyles.FontSize.S);
 
@@ -51,7 +51,7 @@ public class AccountSwitcher extends Div {
 
         menu = new ContextMenu(dropdown);
         menu.setOpenOnClick(true);
-        menu.addItem("conor.mcgregor@outlook.com", e -> System.out.println("Testing..."));
-        menu.addItem("conor.mcgregor@yahoo.com", e -> System.out.println("Testing..."));
+        menu.addItem("john.smith@outlook.com", e -> System.out.println("Testing..."));
+        menu.addItem("john.smith@yahoo.com", e -> System.out.println("Testing..."));
     }
 }
