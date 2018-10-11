@@ -7,7 +7,7 @@ public class Balance {
     private Long id;
     private final String bank;
     private final String account;
-    private final String company;
+    private final String owner;
     private final Double availability;
     private final LocalDate updated;
 
@@ -15,7 +15,7 @@ public class Balance {
         this.id = id;
         this.bank = bank;
         this.account = account;
-        this.company = company;
+        this.owner = company;
         this.availability = availability;
         this.updated = updated;
     }
@@ -32,8 +32,8 @@ public class Balance {
         return account;
     }
 
-    public String getCompany() {
-        return company;
+    public String getOwner() {
+        return owner;
     }
 
     public Double getAvailability() {

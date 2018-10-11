@@ -2,45 +2,38 @@ package com.vaadin.starter.applayout.ui.views;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Text;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.Span;
-import com.vaadin.flow.component.icon.Icon;
-import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.html.H3;
+import com.vaadin.flow.component.html.H4;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
-import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.provider.DataProvider;
 import com.vaadin.flow.data.provider.ListDataProvider;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.data.renderer.LocalDateRenderer;
-import com.vaadin.flow.data.renderer.TextRenderer;
-import com.vaadin.flow.router.PageTitle;
-import com.vaadin.flow.router.ParentLayout;
-import com.vaadin.flow.router.Route;
 import com.vaadin.starter.applayout.backend.Balance;
 import com.vaadin.starter.applayout.backend.DummyData;
-import com.vaadin.starter.applayout.backend.Statement;
-import com.vaadin.starter.applayout.ui.Root;
 import com.vaadin.starter.applayout.ui.components.DetailsDrawer;
 import com.vaadin.starter.applayout.ui.components.ListItem;
 import com.vaadin.starter.applayout.ui.utils.CSSProperties;
 import com.vaadin.starter.applayout.ui.utils.LumoStyles;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
 
+import java.util.Arrays;
 import java.util.Collections;
 
 import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
 
-@Route(value = "account-reporting/balances", layout = AccountReporting.class)
 public class Balances extends FlexLayout {
 
     private Grid<Balance> grid;
     private ListDataProvider<Balance> dataProvider;
 
-    private final DetailsDrawer detailsDrawer;
+    private DetailsDrawer detailsDrawer;
 
     public Balances() {
         setHeight("100%");
@@ -57,8 +50,8 @@ public class Balances extends FlexLayout {
                 .setHeader("Bank")
                 .setWidth("320px")
                 .setFlexGrow(0);
-        grid.addColumn(Balance::getCompany)
-                .setHeader("Company")
+        grid.addColumn(Balance::getOwner)
+                .setHeader("Owner")
                 .setWidth("200px");
         grid.addColumn(new ComponentRenderer<>(this::createAvailability))
                 .setHeader(UIUtils.createRightAlignedDiv(new Text("Availability (EUR)")))
@@ -85,10 +78,25 @@ public class Balances extends FlexLayout {
         Div gridWrapper = UIUtils.createDiv(Collections.singleton(GRID_VIEW), grid);
 
         // Details drawer
-        detailsDrawer = new DetailsDrawer(DetailsDrawer.Position.RIGHT);
+        initDetailsDrawer();
 
         // TBD
         add(gridWrapper, detailsDrawer);
+    }
+
+    private void initDetailsDrawer() {
+        detailsDrawer = new DetailsDrawer(DetailsDrawer.Position.RIGHT);
+
+        Button cancel = UIUtils.createTertiaryButton("Cancel");
+        cancel.addClickListener(e -> detailsDrawer.hide());
+
+        Button save = UIUtils.createPrimaryButton("Save");
+
+        FlexLayout footer = UIUtils.createFlexLayout(Arrays.asList(LumoStyles.Padding.All.S, LumoStyles.Spacing.Right.S), cancel, save);
+        footer.getStyle().set(CSSProperties.BackgroundColor.PROPERTY, LumoStyles.Color.CONTRAST_5);
+        footer.setJustifyContentMode(JustifyContentMode.END);
+        footer.setWidth("100%");
+        detailsDrawer.setFooter(footer);
     }
 
     private void showDetails(Balance balance) {
@@ -100,14 +108,18 @@ public class Balances extends FlexLayout {
         TextField id = new TextField("ID");
         id.setValue(String.valueOf(balance.getId()));
 
+        H3 header1 = new H3("Header");
+
         TextField bank = new TextField("Bank");
         bank.setValue(balance.getBank());
 
         TextField account = new TextField("Account");
         account.setValue(balance.getAccount());
 
-        TextField company = new TextField("Company");
-        company.setValue(balance.getCompany());
+        TextField company = new TextField("Owner");
+        company.setValue(balance.getOwner());
+
+        H3 header2 = new H3("Header");
 
         TextField availability = new TextField("Availability (EUR)");
         availability.setValue(String.valueOf(balance.getAvailability()));
@@ -115,7 +127,7 @@ public class Balances extends FlexLayout {
         DatePicker updated = new DatePicker("Updated");
         updated.setValue(balance.getUpdated());
 
-        return new FormLayout(id, bank, account, company, availability, updated);
+        return new FormLayout(id, header1, bank, account, company, header2, availability, updated);
     }
 
     private Component createBankInfo(Balance balance) {

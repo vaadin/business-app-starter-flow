@@ -9,8 +9,7 @@
 }
 
 .details-drawer__header {
-  box-shadow: inset 0 -1px var(--lumo-contrast-20pct);
-  padding: 0 var(--lumo-space-s);
+
 }
 
 .details-drawer__content {
@@ -20,9 +19,7 @@
 }
 
 .details-drawer__footer {
-  background: var(--lumo-contrast-5pct);
-  justify-content: flex-end;
-  padding: var(--lumo-space-s);
+  
 }
 
 .details-drawer__footer > *:not(:last-child) {

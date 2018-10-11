@@ -206,6 +206,10 @@ public class AppBar extends FlexLayout {
         naviTabs.updateSelectedTab(text, navigationTarget);
     }
 
+    public void navigateToSelectedTab() {
+        naviTabs.navigateToSelectedTab();
+    }
+
     public void addTabSelectionListener(ComponentEventListener<Tabs.SelectedChangeEvent> listener) {
         naviTabs.addSelectedChangeListener(listener);
     }

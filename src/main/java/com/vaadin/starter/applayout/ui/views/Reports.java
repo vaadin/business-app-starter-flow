@@ -22,12 +22,12 @@ import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
 
 @Route(value = "reports", layout = Root.class)
 @PageTitle("Reports")
-public class ReportsView extends AbstractView {
+public class Reports extends AbstractView {
 
     private Grid<Report> grid;
     private AppBar appBar;
 
-    public ReportsView() {
+    public Reports() {
         // Header
         appBar = new AppBar("Reports");
 
@@ -78,6 +78,6 @@ public class ReportsView extends AbstractView {
     }
 
     private void viewDetails(Report report) {
-        UI.getCurrent().navigate(ReportDetailsView.class, report.getId());
+        UI.getCurrent().navigate(ReportDetails.class, report.getId());
     }
 }

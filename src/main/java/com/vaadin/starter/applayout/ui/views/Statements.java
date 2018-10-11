@@ -2,6 +2,7 @@ package com.vaadin.starter.applayout.ui.views;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Text;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
@@ -11,36 +12,32 @@ import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
+import com.vaadin.flow.component.tabs.Tab;
+import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.provider.DataProvider;
 import com.vaadin.flow.data.provider.ListDataProvider;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.data.renderer.LocalDateRenderer;
 import com.vaadin.flow.data.renderer.TextRenderer;
-import com.vaadin.flow.router.PageTitle;
-import com.vaadin.flow.router.Route;
 import com.vaadin.starter.applayout.backend.DummyData;
 import com.vaadin.starter.applayout.backend.Statement;
-import com.vaadin.starter.applayout.backend.UIConfig;
-import com.vaadin.starter.applayout.ui.Root;
-import com.vaadin.starter.applayout.ui.components.AbstractView;
-import com.vaadin.starter.applayout.ui.components.AppBar;
 import com.vaadin.starter.applayout.ui.components.DetailsDrawer;
 import com.vaadin.starter.applayout.ui.utils.CSSProperties;
 import com.vaadin.starter.applayout.ui.utils.LumoStyles;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
 
+import java.util.Arrays;
 import java.util.Collections;
 
 import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
 
-@Route(value = "account-reporting/statements", layout = AccountReporting.class)
 public class Statements extends FlexLayout {
 
     private Grid<Statement> grid;
     private ListDataProvider<Statement> dataProvider;
 
-    private final DetailsDrawer detailsDrawer;
+    private DetailsDrawer detailsDrawer;
 
     public Statements() {
         setHeight("100%");
@@ -58,7 +55,7 @@ public class Statements extends FlexLayout {
                 .setWidth("140px")
                 .setFlexGrow(0);
         grid.addColumn(Statement::getPayee)
-                .setHeader("Sender")
+                .setHeader("Payee")
                 .setSortable(true)
                 .setWidth("240px")
                 .setFlexGrow(1);
@@ -93,10 +90,29 @@ public class Statements extends FlexLayout {
         Div gridWrapper = UIUtils.createDiv(Collections.singleton(GRID_VIEW), grid);
 
         // Details drawer
-        detailsDrawer = new DetailsDrawer(DetailsDrawer.Position.RIGHT);
+        initDetailsDrawer();
 
         // TBD
         add(gridWrapper, detailsDrawer);
+    }
+
+    private void initDetailsDrawer() {
+        detailsDrawer = new DetailsDrawer(DetailsDrawer.Position.RIGHT);
+
+        Tabs tabs = new Tabs(new Tab("Details"), new Tab("Attachments"), new Tab("History"));
+        tabs.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Tabs.EQUAL_WIDTH_TABS);
+        detailsDrawer.setHeader(tabs);
+
+        Button cancel = UIUtils.createTertiaryButton("Cancel");
+        cancel.addClickListener(e -> detailsDrawer.hide());
+
+        Button save = UIUtils.createPrimaryButton("Save");
+
+        FlexLayout footer = UIUtils.createFlexLayout(Arrays.asList(LumoStyles.Padding.All.S, LumoStyles.Spacing.Right.S), cancel, save);
+        footer.getStyle().set(CSSProperties.BackgroundColor.PROPERTY, LumoStyles.Color.CONTRAST_5);
+        footer.setJustifyContentMode(JustifyContentMode.END);
+        footer.setWidth("100%");
+        detailsDrawer.setFooter(footer);
     }
 
     private void showDetails(Statement statement) {
@@ -104,7 +120,7 @@ public class Statements extends FlexLayout {
         detailsDrawer.show();
     }
 
-    private FormLayout createForm(Statement statement) {
+    private Component createForm(Statement statement) {
         TextField id = new TextField("ID");
         id.setValue(String.valueOf(statement.getId()));
 
@@ -133,7 +149,7 @@ public class Statements extends FlexLayout {
         statusItem.getStyle().set(CSSProperties.Display.PROPERTY, CSSProperties.Display.FLEX);
         statusItem.getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN);
 
-        return form;
+        return UIUtils.createColumn(form);
     }
 
     private Component createOutput(Statement statement) {

@@ -14,9 +14,9 @@ public class DetailsDrawer extends FlexLayout {
 
     private Position position;
 
-    private Component header;
+    private FlexLayout header;
     private FlexLayout content;
-    private Component footer;
+    private FlexLayout footer;
 
     public enum Position {
         RIGHT, BOTTOM
@@ -25,28 +25,18 @@ public class DetailsDrawer extends FlexLayout {
     public DetailsDrawer(Position position, Component... components) {
         addClassName(CLASS_NAME);
 
-        Button close = UIUtils.createSmallTertiaryIconButton(VaadinIcon.CLOSE);
-        close.addClickListener(e -> hide());
-        header = UIUtils.createFlexLayout(Collections.singleton(CLASS_NAME + "__header"), close);
-
+        header = UIUtils.createFlexLayout(Collections.singleton(CLASS_NAME + "__header"));
         content = UIUtils.createColumn(Collections.singleton(CLASS_NAME + "__content"), components);
-
-        Button cancel = new Button("Cancel");
-        Button save = UIUtils.createPrimaryButton("Save");
-        footer = UIUtils.createFlexLayout(Collections.singleton(CLASS_NAME + "__footer"), cancel, save);
-
+        footer = UIUtils.createFlexLayout(Collections.singleton(CLASS_NAME + "__footer"));
         add(header, content, footer);
 
         setPosition(position);
         hide();
     }
 
-    public void setHeader(Component header) {
-        this.header = header;
-    }
-
-    public Component getHeader() {
-        return this.header;
+    public void setHeader(Component... components) {
+        this.header.removeAll();
+        this.header.add(components);
     }
 
     public void setContent(Component... components) {
@@ -54,16 +44,9 @@ public class DetailsDrawer extends FlexLayout {
         this.content.add(components);
     }
 
-    public Component getContent() {
-        return this.content;
-    }
-
-    public void setFooter(Component footer) {
-        this.footer = footer;
-    }
-
-    public Component getFooter() {
-        return this.footer;
+    public void setFooter(Component... components) {
+        this.footer.removeAll();
+        this.footer.add(components);
     }
 
     public void setPosition(Position position) {

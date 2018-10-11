@@ -1,9 +1,6 @@
 package com.vaadin.starter.applayout.ui;
 
-import com.vaadin.flow.component.ClickEvent;
-import com.vaadin.flow.component.ClickNotifier;
-import com.vaadin.flow.component.Component;
-import com.vaadin.flow.component.HasElement;
+import com.vaadin.flow.component.*;
 import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -77,7 +74,7 @@ public class Root extends FlexLayout
         // Initialise the navigation items based on the showcase.
         if (UIConfig.getShowcase().equals(UIConfig.Showcase.DEMO)) {
             naviDrawer.addNaviItem(VaadinIcon.GRID_BIG, "Dashboard", Dashboard.class);
-            naviDrawer.addNaviItem(VaadinIcon.FILE_TEXT, "Reports", ReportsView.class);
+            naviDrawer.addNaviItem(VaadinIcon.FILE_TEXT, "Reports", Reports.class);
 
             NaviItem personnel = naviDrawer.addNaviItem(VaadinIcon.USERS, "Personnel", Personnel.class);
             naviDrawer.addNaviItem(personnel, "Vertical Split", VerticalSplitView.class);
@@ -93,7 +90,6 @@ public class Root extends FlexLayout
             naviDrawer.addNaviItem(VaadinIcon.ARCHIVE, "Archiving", Dashboard.class);
             naviDrawer.addNaviItem(VaadinIcon.OFFICE, "Others", Dashboard.class);
         }
-
     }
 
     /**

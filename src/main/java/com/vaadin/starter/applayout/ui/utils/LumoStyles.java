@@ -35,6 +35,7 @@ public class LumoStyles {
 
     public class Color {
         public static final String BASE_COLOR = "var(--lumo-base-color)";
+        public static final String CONTRAST_5 = "var(--lumo-contrast-5pct)";
     }
 
     public class FontSize {
@@ -247,6 +248,10 @@ public class LumoStyles {
             public static final String L = "spacing-t-l";
             public static final String XL = "spacing-t-xl";
         }
+    }
+
+    public class Tabs {
+        public static final String EQUAL_WIDTH_TABS = "equal-width-tabs";
     }
 
     public class TextColor {

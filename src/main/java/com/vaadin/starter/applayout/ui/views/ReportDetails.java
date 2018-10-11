@@ -37,7 +37,7 @@ import java.util.Random;
 
 @Route(value = "report-details", layout = Root.class)
 @PageTitle("Report Details")
-public class ReportDetailsView extends AbstractView implements HasUrlParameter<Long> {
+public class ReportDetails extends AbstractView implements HasUrlParameter<Long> {
 
     private String CLASS_NAME = "report-details";
 
@@ -51,7 +51,7 @@ public class ReportDetailsView extends AbstractView implements HasUrlParameter<L
     private ListItem status;
     private DateTimeFormatter formatter;
 
-    public ReportDetailsView() {
+    public ReportDetails() {
         formatter = DateTimeFormatter.ofPattern("MMM dd, YYYY");
         random = new Random();
         Integer randBalance = random.nextInt(5000);
