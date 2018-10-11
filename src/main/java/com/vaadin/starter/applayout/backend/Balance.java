@@ -5,11 +5,11 @@ import java.time.LocalDate;
 public class Balance {
 
     private Long id;
-    private final String bank;
-    private final String account;
-    private final String owner;
-    private final Double availability;
-    private final LocalDate updated;
+    private String bank;
+    private String account;
+    private String owner;
+    private Double availability;
+    private LocalDate updated;
 
     public Balance(Long id, String bank, String account, String company, Double availability, LocalDate updated) {
         this.id = id;

@@ -12,6 +12,8 @@ public class DummyData {
     private static Map<Long, Person> PERSONS = new HashMap<>();
     private static Map<Long, Statement> STATEMENTS = new HashMap<>();
     private static Map<Long, Balance> BALANCES = new HashMap<>();
+    private static Map<Long, Payment> PAYMENTS = new HashMap<>();
+
     private static final String IMG_PATH = "frontend/styles/images/";
     private static Random random = new Random();
 
@@ -54,7 +56,11 @@ public class DummyData {
 
 
         for (i = 0; i < 40; i++) {
-            BALANCES.put(i, new Balance(i, getBank(), getIban(), getCompany(), Double.valueOf(random.nextInt(20000)), LocalDate.now().minusDays(random.nextInt(20))));
+            BALANCES.put(i, new Balance(i, getBank(), getIBAN(), getCompany(), Double.valueOf(random.nextInt(20000)), LocalDate.now().minusDays(random.nextInt(20))));
+        }
+
+        for (i = 0; i < 40; i++) {
+            PAYMENTS.put(i, new Payment(Payment.Status.values()[random.nextInt(Payment.Status.values().length)], getBank(), getIBAN(), getCompany(), LocalDate.now().minusDays(random.nextInt(20)), Double.valueOf(random.nextInt(20000))));
         }
     }
 
@@ -86,7 +92,11 @@ public class DummyData {
         return BALANCES.values();
     }
 
-    private static String getIban() {
+    public static Collection<Payment> getPayments() {
+        return PAYMENTS.values();
+    }
+
+    private static String getIBAN() {
         return IBANS[random.nextInt(IBANS.length)];
     }
 

@@ -1,4 +1,4 @@
-package com.vaadin.starter.applayout.ui.components;
+package com.vaadin.starter.applayout.ui.components.navigation.drawer;
 
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Image;

@@ -1,6 +1,9 @@
 package com.vaadin.starter.applayout.ui;
 
-import com.vaadin.flow.component.*;
+import com.vaadin.flow.component.ClickEvent;
+import com.vaadin.flow.component.ClickNotifier;
+import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.HasElement;
 import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -12,12 +15,13 @@ import com.vaadin.flow.router.RouterLayout;
 import com.vaadin.flow.server.InitialPageSettings;
 import com.vaadin.flow.server.PageConfigurator;
 import com.vaadin.starter.applayout.backend.UIConfig;
-import com.vaadin.starter.applayout.ui.components.NaviDrawer;
-import com.vaadin.starter.applayout.ui.components.NaviItem;
-import com.vaadin.starter.applayout.ui.components.TabBar;
+import com.vaadin.starter.applayout.ui.components.navigation.bar.TabBar;
+import com.vaadin.starter.applayout.ui.components.navigation.drawer.NaviDrawer;
+import com.vaadin.starter.applayout.ui.components.navigation.drawer.NaviItem;
 import com.vaadin.starter.applayout.ui.utils.NaviDrawerProvider;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
 import com.vaadin.starter.applayout.ui.views.*;
+import com.vaadin.starter.applayout.ui.views.accountreporting.AccountReporting;
 
 import java.util.Collections;
 
@@ -86,7 +90,7 @@ public class Root extends FlexLayout
         if (UIConfig.getShowcase().equals(UIConfig.Showcase.FINANCE)) {
             naviDrawer.addNaviItem(VaadinIcon.CALC, "Account Reporting", AccountReporting.class);
             naviDrawer.addNaviItem(VaadinIcon.CALENDAR_BRIEFCASE, "Incoming Payments", Dashboard.class);
-            naviDrawer.addNaviItem(VaadinIcon.BRIEFCASE, "Payments", Dashboard.class);
+            naviDrawer.addNaviItem(VaadinIcon.BRIEFCASE, "Payments", Payments.class);
             naviDrawer.addNaviItem(VaadinIcon.ARCHIVE, "Archiving", Dashboard.class);
             naviDrawer.addNaviItem(VaadinIcon.OFFICE, "Others", Dashboard.class);
         }

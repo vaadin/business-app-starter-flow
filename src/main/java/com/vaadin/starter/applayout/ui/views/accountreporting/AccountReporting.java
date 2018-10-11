@@ -1,17 +1,14 @@
-package com.vaadin.starter.applayout.ui.views;
+package com.vaadin.starter.applayout.ui.views.accountreporting;
 
 import com.vaadin.flow.component.HasElement;
-import com.vaadin.flow.component.UI;
-import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.ParentLayout;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLayout;
 import com.vaadin.starter.applayout.backend.UIConfig;
 import com.vaadin.starter.applayout.ui.Root;
-import com.vaadin.starter.applayout.ui.components.AbstractView;
-import com.vaadin.starter.applayout.ui.components.AppBar;
-import com.vaadin.starter.applayout.ui.components.NaviTab;
+import com.vaadin.starter.applayout.ui.components.navigation.bar.AppBar;
+import com.vaadin.starter.applayout.ui.views.AbstractView;
 
 @Route(value = "account-reporting", layout = Root.class)
 @ParentLayout(Root.class)

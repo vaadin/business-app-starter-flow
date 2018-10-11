@@ -1,4 +1,4 @@
-package com.vaadin.starter.applayout.ui.views;
+package com.vaadin.starter.applayout.ui.views.accountreporting;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Text;
@@ -8,7 +8,6 @@ import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H3;
-import com.vaadin.flow.component.html.H4;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.provider.DataProvider;
@@ -87,6 +86,7 @@ public class Balances extends FlexLayout {
     private void initDetailsDrawer() {
         detailsDrawer = new DetailsDrawer(DetailsDrawer.Position.RIGHT);
 
+        // Footer
         Button cancel = UIUtils.createTertiaryButton("Cancel");
         cancel.addClickListener(e -> detailsDrawer.hide());
 
@@ -96,15 +96,16 @@ public class Balances extends FlexLayout {
         footer.getStyle().set(CSSProperties.BackgroundColor.PROPERTY, LumoStyles.Color.CONTRAST_5);
         footer.setJustifyContentMode(JustifyContentMode.END);
         footer.setWidth("100%");
+
         detailsDrawer.setFooter(footer);
     }
 
     private void showDetails(Balance balance) {
-        detailsDrawer.setContent(createForm(balance));
+        detailsDrawer.setContent(createDetails(balance));
         detailsDrawer.show();
     }
 
-    private FormLayout createForm(Balance balance) {
+    private FormLayout createDetails(Balance balance) {
         TextField id = new TextField("ID");
         id.setValue(String.valueOf(balance.getId()));
 
@@ -127,7 +128,9 @@ public class Balances extends FlexLayout {
         DatePicker updated = new DatePicker("Updated");
         updated.setValue(balance.getUpdated());
 
-        return new FormLayout(id, header1, bank, account, company, header2, availability, updated);
+        FormLayout form = new FormLayout(id, header1, bank, account, company, header2, availability, updated);
+        form.addClassName(LumoStyles.Padding.All.L);
+        return form;
     }
 
     private Component createBankInfo(Balance balance) {

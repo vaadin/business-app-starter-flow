@@ -15,9 +15,8 @@ import com.vaadin.starter.applayout.backend.DummyData;
 import com.vaadin.starter.applayout.backend.Person;
 import com.vaadin.starter.applayout.backend.UIConfig;
 import com.vaadin.starter.applayout.ui.Root;
-import com.vaadin.starter.applayout.ui.components.AbstractView;
-import com.vaadin.starter.applayout.ui.components.AppBar;
 import com.vaadin.starter.applayout.ui.components.ListItem;
+import com.vaadin.starter.applayout.ui.components.navigation.bar.AppBar;
 import com.vaadin.starter.applayout.ui.utils.LumoStyles;
 
 import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
@@ -26,9 +25,10 @@ import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
 @PageTitle("Personnel")
 public class Personnel extends AbstractView {
 
+    private AppBar appBar;
+
     private Grid<Person> grid;
     private ListDataProvider<Person> dataProvider;
-    private AppBar appBar;
 
     public Personnel() {
         // Header
@@ -72,10 +72,6 @@ public class Personnel extends AbstractView {
         filter();
     }
 
-    private void filter() {
-        dataProvider.setFilterByValue(Person::getRole, Person.Role.valueOf(appBar.getSelectedTab().getLabel().toUpperCase()));
-    }
-
     @Override
     protected void initSlots() {
         if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
@@ -83,6 +79,10 @@ public class Personnel extends AbstractView {
         }
         setContent(grid);
         getContent().addClassName(GRID_VIEW);
+    }
+
+    private void filter() {
+        dataProvider.setFilterByValue(Person::getRole, Person.Role.valueOf(appBar.getSelectedTab().getLabel().toUpperCase()));
     }
 
     private Component createUserInfo(Person person) {

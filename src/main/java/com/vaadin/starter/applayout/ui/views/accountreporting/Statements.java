@@ -1,4 +1,4 @@
-package com.vaadin.starter.applayout.ui.views;
+package com.vaadin.starter.applayout.ui.views.accountreporting;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Text;
@@ -116,11 +116,11 @@ public class Statements extends FlexLayout {
     }
 
     private void showDetails(Statement statement) {
-        detailsDrawer.setContent(createForm(statement));
+        detailsDrawer.setContent(createDetails(statement));
         detailsDrawer.show();
     }
 
-    private Component createForm(Statement statement) {
+    private Component createDetails(Statement statement) {
         TextField id = new TextField("ID");
         id.setValue(String.valueOf(statement.getId()));
 
@@ -144,12 +144,13 @@ public class Statements extends FlexLayout {
         status.getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN);
 
         FormLayout form = new FormLayout(id, date, sender, output, input);
+        form.addClassName(LumoStyles.Padding.All.L);
 
         FormLayout.FormItem statusItem = form.addFormItem(status, "Status");
         statusItem.getStyle().set(CSSProperties.Display.PROPERTY, CSSProperties.Display.FLEX);
         statusItem.getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN);
 
-        return UIUtils.createColumn(form);
+        return form;
     }
 
     private Component createOutput(Statement statement) {

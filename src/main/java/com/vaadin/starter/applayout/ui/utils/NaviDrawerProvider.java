@@ -3,9 +3,9 @@ package com.vaadin.starter.applayout.ui.utils;
 import com.vaadin.flow.component.ComponentUtil;
 import com.vaadin.flow.component.UI;
 import com.vaadin.starter.applayout.backend.UIConfig;
-import com.vaadin.starter.applayout.ui.components.NaviDrawer;
-import com.vaadin.starter.applayout.ui.components.NaviLinkDrawer;
-import com.vaadin.starter.applayout.ui.components.NaviTabDrawer;
+import com.vaadin.starter.applayout.ui.components.navigation.drawer.NaviDrawer;
+import com.vaadin.starter.applayout.ui.components.navigation.drawer.NaviLinkDrawer;
+import com.vaadin.starter.applayout.ui.components.navigation.drawer.NaviTabDrawer;
 
 public class NaviDrawerProvider {
 

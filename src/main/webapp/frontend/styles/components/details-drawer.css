@@ -15,15 +15,10 @@
 .details-drawer__content {
   flex: 1;
   overflow: auto;
-  padding: var(--lumo-space-l);
 }
 
 .details-drawer__footer {
-  
-}
 
-.details-drawer__footer > *:not(:last-child) {
-  margin-right: var(--lumo-space-s);
 }
 
 @media(max-width: 719px) {
@@ -62,7 +57,5 @@
 }
 
 @media(max-width: 1023px) {
-  .details-drawer__content {
-    padding: var(--lumo-space-m);
-  }
+  
 }

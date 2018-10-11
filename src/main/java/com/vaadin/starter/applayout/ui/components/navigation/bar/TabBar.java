@@ -1,4 +1,4 @@
-package com.vaadin.starter.applayout.ui.components;
+package com.vaadin.starter.applayout.ui.components.navigation.bar;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentEventListener;
@@ -11,6 +11,7 @@ import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.starter.applayout.backend.UIConfig;
+import com.vaadin.starter.applayout.ui.components.navigation.tab.NaviTabs;
 import com.vaadin.starter.applayout.ui.utils.LumoStyles;
 import com.vaadin.starter.applayout.ui.utils.NaviDrawerProvider;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
