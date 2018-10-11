@@ -36,7 +36,7 @@ public class AppBar extends FlexLayout {
     private Image avatar;
 
     private Button addTab;
-    private NaviTabs tabs;
+    private NaviTabs naviTabs;
 
     private Registration searchRegistration;
     private TextField search;
@@ -46,7 +46,7 @@ public class AppBar extends FlexLayout {
         MENU, CONTEXTUAL
     }
 
-    public AppBar(String title) {
+    public AppBar(String title, NaviTab... tabs) {
         super();
         setClassName(CLASS_NAME);
         getElement().setAttribute(LumoStyles.THEME, LumoStyles.DARK);
@@ -86,14 +86,17 @@ public class AppBar extends FlexLayout {
         add(container);
 
         addTab = UIUtils.createSmallIconButton(VaadinIcon.PLUS);
-        addTab.addClickListener(e -> tabs.setSelectedTab(addClosableNaviTab("New Tab", Default.class)));
+        addTab.addClickListener(e -> naviTabs.setSelectedTab(addClosableNaviTab("New Tab", Default.class)));
         addTab.setVisible(false);
 
-        tabs = new NaviTabs();
-        tabs.setClassName(CLASS_NAME + "__tabs");
-        tabs.setVisible(false);
+        naviTabs = new NaviTabs(tabs);
+        naviTabs.setClassName(CLASS_NAME + "__tabs");
+        naviTabs.setVisible(false);
+        for (NaviTab tab : tabs) {
+            configureTab(tab);
+        }
 
-        tabContainer = UIUtils.createFlexLayout(Collections.singleton(CLASS_NAME + "__tab-container"), tabs, addTab);
+        tabContainer = UIUtils.createFlexLayout(Collections.singleton(CLASS_NAME + "__tab-container"), naviTabs, addTab);
         tabContainer.setAlignItems(Alignment.CENTER);
         add(tabContainer);
     }
@@ -165,7 +168,7 @@ public class AppBar extends FlexLayout {
     /* === TABS === */
 
     public void centerTabs() {
-        tabs.addClassName(LumoStyles.Margin.Horizontal.AUTO);
+        naviTabs.addClassName(LumoStyles.Margin.Horizontal.AUTO);
     }
 
     private void configureTab(Tab tab) {
@@ -174,45 +177,45 @@ public class AppBar extends FlexLayout {
     }
 
     public Tab addTab(String text) {
-        Tab tab = tabs.addTab(text);
+        Tab tab = naviTabs.addTab(text);
         configureTab(tab);
         return tab;
     }
 
     public Tab addNaviTab(String text, Class<? extends Component> navigationTarget) {
-        Tab tab = tabs.addNaviTab(text, navigationTarget);
+        Tab tab = naviTabs.addNaviTab(text, navigationTarget);
         configureTab(tab);
         return tab;
     }
 
     public Tab addClosableNaviTab(String text, Class<? extends Component> navigationTarget) {
-        Tab tab = tabs.addClosableNaviTab(text, navigationTarget);
+        Tab tab = naviTabs.addClosableNaviTab(text, navigationTarget);
         configureTab(tab);
         return tab;
     }
 
     public Tab getSelectedTab() {
-        return tabs.getSelectedTab();
+        return naviTabs.getSelectedTab();
     }
 
     public void setSelectedTab(Tab selectedTab) {
-        tabs.setSelectedTab(selectedTab);
+        naviTabs.setSelectedTab(selectedTab);
     }
 
     public void updateSelectedTab(String text, Class<? extends Component> navigationTarget) {
-        tabs.updateSelectedTab(text, navigationTarget);
+        naviTabs.updateSelectedTab(text, navigationTarget);
     }
 
     public void addTabSelectionListener(ComponentEventListener<Tabs.SelectedChangeEvent> listener) {
-        tabs.addSelectedChangeListener(listener);
+        naviTabs.addSelectedChangeListener(listener);
     }
 
     public int getTabCount() {
-        return tabs.getTabCount();
+        return naviTabs.getTabCount();
     }
 
     public void removeAllTabs() {
-        tabs.removeAll();
+        naviTabs.removeAll();
         updateTabsVisibility();
     }
 
@@ -271,6 +274,6 @@ public class AppBar extends FlexLayout {
     }
 
     private void updateTabsVisibility() {
-        tabs.setVisible(tabs.getComponentCount() > 0);
+        naviTabs.setVisible(naviTabs.getComponentCount() > 0);
     }
 }

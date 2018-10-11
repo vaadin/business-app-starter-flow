@@ -4,6 +4,7 @@ import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.data.renderer.LocalDateRenderer;
 import com.vaadin.flow.router.PageTitle;
@@ -69,7 +70,7 @@ public class ReportsView extends AbstractView {
     }
 
     private Component createReportInfo(Report report) {
-        return new ListItem(report.getSource(), report.getName());
+        return new ListItem(new Image(report.getSource(), ""), report.getName());
     }
 
     private Component createBalance(Report report) {

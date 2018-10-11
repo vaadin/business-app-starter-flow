@@ -5,7 +5,6 @@
 
 .grid-view vaadin-grid {
   margin: 0 auto;
-  max-width: 1024px;
 }
 
 @media (max-width: 399px) {

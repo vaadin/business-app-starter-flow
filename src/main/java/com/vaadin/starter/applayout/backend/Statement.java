@@ -20,16 +20,18 @@ public class Statement {
 
     private Long id;
     private LocalDate date;
-    private String sender;
-    private Double amount;
+    private String payee;
+    private Double output;
+    private Double input;
     private Status status;
     private boolean attachment;
 
-    public Statement(Long id, LocalDate date, String sender, Double amount, Status status, boolean attachment) {
+    public Statement(Long id, LocalDate date, String sender, Double output, Double input, Status status, boolean attachment) {
         this.id = id;
         this.date = date;
-        this.sender = sender;
-        this.amount = amount;
+        this.payee = sender;
+        this.output = output;
+        this.input = input;
         this.status = status;
         this.attachment = attachment;
     }
@@ -46,20 +48,28 @@ public class Statement {
         this.date = date;
     }
 
-    public String getSender() {
-        return sender;
+    public String getPayee() {
+        return payee;
     }
 
-    public void setSender(String sender) {
-        this.sender = sender;
+    public void setPayee(String payee) {
+        this.payee = payee;
     }
 
-    public Double getAmount() {
-        return amount;
+    public Double getOutput() {
+        return output;
     }
 
-    public void setAmount(Double amount) {
-        this.amount = amount;
+    public void setOutput(Double output) {
+        this.output = output;
+    }
+
+    public Double getInput() {
+        return input;
+    }
+
+    public void setInput(Double input) {
+        this.input = input;
     }
 
     public Status getStatus() {

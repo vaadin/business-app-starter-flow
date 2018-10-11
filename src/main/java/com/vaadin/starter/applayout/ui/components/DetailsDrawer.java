@@ -2,7 +2,6 @@ package com.vaadin.starter.applayout.ui.components;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
@@ -46,13 +45,25 @@ public class DetailsDrawer extends FlexLayout {
         this.header = header;
     }
 
+    public Component getHeader() {
+        return this.header;
+    }
+
     public void setContent(Component... components) {
         this.content.removeAll();
         this.content.add(components);
     }
 
+    public Component getContent() {
+        return this.content;
+    }
+
     public void setFooter(Component footer) {
         this.footer = footer;
+    }
+
+    public Component getFooter() {
+        return this.footer;
     }
 
     public void setPosition(Position position) {

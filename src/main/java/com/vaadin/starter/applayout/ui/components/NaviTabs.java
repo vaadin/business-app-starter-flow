@@ -1,6 +1,7 @@
 package com.vaadin.starter.applayout.ui.components;
 
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
@@ -12,10 +13,25 @@ import com.vaadin.starter.applayout.ui.views.Default;
  */
 public class NaviTabs extends Tabs {
 
+    private ComponentEventListener<SelectedChangeEvent> listener = (ComponentEventListener<SelectedChangeEvent>) selectedChangeEvent -> navigateToSelectedTab();
+
     public NaviTabs() {
+        init();
+    }
+
+    /**
+     * When adding the first tab, the selection change event is triggered. This will cause the app to navigate to that
+     * tab's navigation target (if any). This constructor allows you to add the tabs before the event listener is set.
+     */
+    public NaviTabs(NaviTab... naviTabs) {
+        add(naviTabs);
+        init();
+    }
+
+    private void init() {
         getElement().setAttribute("overflow", "end");
         getStyle().set(CSSProperties.Overflow.PROPERTY, CSSProperties.Overflow.HIDDEN);
-        addSelectedChangeListener(event -> navigateToSelectedTab());
+        addSelectedChangeListener(listener);
     }
 
     /**
@@ -51,6 +67,9 @@ public class NaviTabs extends Tabs {
         return tab;
     }
 
+    /**
+     * Navigates to the selected tab's navigation target if available.
+     */
     public void navigateToSelectedTab() {
         if (getSelectedTab() instanceof NaviTab) {
             try {
@@ -66,6 +85,9 @@ public class NaviTabs extends Tabs {
         }
     }
 
+    /**
+     * Updates the current tab's name and navigation target.
+     */
     public void updateSelectedTab(String text, Class<? extends Component> navigationTarget) {
         Tab tab = getSelectedTab();
         tab.setLabel(text);
@@ -81,6 +103,9 @@ public class NaviTabs extends Tabs {
         navigateToSelectedTab();
     }
 
+    /**
+     * Returns the number of tabs.
+     */
     public int getTabCount() {
         return Math.toIntExact(getChildren().filter(component -> component instanceof Tab).count());
     }

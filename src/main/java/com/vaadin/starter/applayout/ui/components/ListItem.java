@@ -31,10 +31,18 @@ public class ListItem extends FlexLayout {
         setClassName(CLASS_NAME);
 
         primaryLabel = new Label(primary);
+        add(primaryLabel);
 
         divider = UIUtils.createDiv(Collections.singleton(CLASS_NAME + "__divider"));
         divider.setVisible(false);
         add(divider);
+    }
+
+    public ListItem(String primary, String secondary) {
+        this(primary);
+
+        initSecondaryLabel(secondary);
+        add(UIUtils.createColumn(primaryLabel, secondaryLabel));
     }
 
     public ListItem(VaadinIcon icon, String primary, String secondary) {
@@ -44,9 +52,8 @@ public class ListItem extends FlexLayout {
         visual.setClassName(CLASS_NAME + "__icon");
         prefix = visual;
 
-        secondaryLabel = UIUtils.createLabel(Collections.singleton(LumoStyles.TextColor.SECONDARY), secondary);
-        secondaryLabel.getElement().setAttribute(LumoStyles.THEME, LumoStyles.FontSize.S);
-        add(visual, UIUtils.createColumn(primaryLabel, secondaryLabel));
+        initSecondaryLabel(secondary);
+        add(prefix, UIUtils.createColumn(primaryLabel, secondaryLabel));
     }
 
     public ListItem(String initials, String primary, String secondary) {
@@ -58,31 +65,39 @@ public class ListItem extends FlexLayout {
         visual.getElement().setAttribute(LumoStyles.THEME, LumoStyles.DARK + " " + LumoStyles.FontSize.S);
         prefix = visual;
 
-        secondaryLabel = UIUtils.createLabel(Collections.singleton(LumoStyles.TextColor.SECONDARY), secondary);
-        secondaryLabel.getElement().setAttribute(LumoStyles.THEME, LumoStyles.FontSize.S);
+        initSecondaryLabel(secondary);
 
-        add(visual, UIUtils.createColumn(primaryLabel, secondaryLabel));
+        add(prefix, UIUtils.createColumn(primaryLabel, secondaryLabel));
     }
 
     public ListItem(VaadinIcon icon, String primary) {
         this(primary);
 
         Icon visual = new Icon(icon);
-        visual.setClassName(CLASS_NAME + "__icon");
+        visual.addClassName(CLASS_NAME + "__icon");
         prefix = visual;
 
-        add(visual, primaryLabel);
+        add(prefix, primaryLabel);
     }
 
-    public ListItem(String source, String primary) {
+    public ListItem(Image image, String primary) {
         this(primary);
 
-        Image image = new Image(source, "");
-        image.setClassName(CLASS_NAME + "__img");
+        image.addClassName(CLASS_NAME + "__img");
         prefix = image;
 
-        add(image, primaryLabel);
+        add(prefix, primaryLabel);
     }
+
+
+    /* === PREFIX === */
+
+    public Component getPrefix() {
+        return prefix;
+    }
+
+
+    /* === PRIMARY === */
 
     public void setPrimaryText(String text) {
         primaryLabel.setText(text);
@@ -92,11 +107,18 @@ public class ListItem extends FlexLayout {
         return this.primaryLabel;
     }
 
-    public void setDividerVisible(boolean visible) {
-        divider.setVisible(visible);
+
+    /* === SECONDARY LABEL === */
+
+    private void initSecondaryLabel(String text) {
+        secondaryLabel = UIUtils.createLabel(Collections.singleton(LumoStyles.TextColor.SECONDARY), text);
+        secondaryLabel.getElement().setAttribute(LumoStyles.THEME, LumoStyles.FontSize.S);
     }
 
-    public Component getPrefix() {
-        return prefix;
+
+    /* === DIVIDER === */
+
+    public void setDividerVisible(boolean visible) {
+        divider.setVisible(visible);
     }
 }

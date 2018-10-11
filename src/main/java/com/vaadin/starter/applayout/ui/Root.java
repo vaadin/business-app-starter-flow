@@ -1,6 +1,9 @@
 package com.vaadin.starter.applayout.ui;
 
-import com.vaadin.flow.component.*;
+import com.vaadin.flow.component.ClickEvent;
+import com.vaadin.flow.component.ClickNotifier;
+import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.HasElement;
 import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -85,10 +88,10 @@ public class Root extends FlexLayout
 
         if (UIConfig.getShowcase().equals(UIConfig.Showcase.FINANCE)) {
             naviDrawer.addNaviItem(VaadinIcon.CALC, "Account Reporting", AccountReporting.class);
-            naviDrawer.addNaviItem(VaadinIcon.CALENDAR_BRIEFCASE, "Incoming Payments", Default.class);
-            naviDrawer.addNaviItem(VaadinIcon.BRIEFCASE, "Payments", Default.class);
-            naviDrawer.addNaviItem(VaadinIcon.ARCHIVE, "Archiving", Default.class);
-            naviDrawer.addNaviItem(VaadinIcon.OFFICE, "Others", Default.class);
+            naviDrawer.addNaviItem(VaadinIcon.CALENDAR_BRIEFCASE, "Incoming Payments", Dashboard.class);
+            naviDrawer.addNaviItem(VaadinIcon.BRIEFCASE, "Payments", Dashboard.class);
+            naviDrawer.addNaviItem(VaadinIcon.ARCHIVE, "Archiving", Dashboard.class);
+            naviDrawer.addNaviItem(VaadinIcon.OFFICE, "Others", Dashboard.class);
         }
 
     }
