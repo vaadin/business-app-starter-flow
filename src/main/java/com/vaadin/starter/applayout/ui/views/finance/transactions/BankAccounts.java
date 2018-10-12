@@ -8,15 +8,18 @@ import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H3;
+import com.vaadin.flow.component.html.H4;
 import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.provider.DataProvider;
 import com.vaadin.flow.data.provider.ListDataProvider;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.data.renderer.LocalDateRenderer;
-import com.vaadin.starter.applayout.backend.Balance;
+import com.vaadin.starter.applayout.backend.BankAccount;
 import com.vaadin.starter.applayout.backend.DummyData;
+import com.vaadin.starter.applayout.backend.Transaction;
 import com.vaadin.starter.applayout.ui.components.DetailsDrawer;
 import com.vaadin.starter.applayout.ui.components.ListItem;
 import com.vaadin.starter.applayout.ui.utils.CSSProperties;
@@ -25,13 +28,16 @@ import com.vaadin.starter.applayout.ui.utils.UIUtils;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Random;
 
 import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
 
 public class BankAccounts extends FlexLayout {
 
-    private Grid<Balance> grid;
-    private ListDataProvider<Balance> dataProvider;
+    private Random random = new Random();
+
+    private Grid<BankAccount> grid;
+    private ListDataProvider<BankAccount> dataProvider;
 
     private DetailsDrawer detailsDrawer;
 
@@ -40,7 +46,7 @@ public class BankAccounts extends FlexLayout {
 
         // Grid
         grid = new Grid();
-        grid.addColumn(Balance::getId)
+        grid.addColumn(BankAccount::getId)
                 .setHeader("ID")
                 .setFrozen(true)
                 .setSortable(true)
@@ -50,14 +56,14 @@ public class BankAccounts extends FlexLayout {
                 .setHeader("Bank Account")
                 .setWidth("320px")
                 .setFlexGrow(0);
-        grid.addColumn(Balance::getOwner)
+        grid.addColumn(BankAccount::getOwner)
                 .setHeader("Owner")
                 .setWidth("200px");
         grid.addColumn(new ComponentRenderer<>(this::createAvailability))
                 .setHeader(UIUtils.createRightAlignedDiv(new Text("Availability (EUR)")))
                 .setWidth("240px")
                 .setFlexGrow(0);
-        grid.addColumn(new LocalDateRenderer<>(Balance::getUpdated, "MMM dd, YYYY"))
+        grid.addColumn(new LocalDateRenderer<>(BankAccount::getUpdated, "MMM dd, YYYY"))
                 .setHeader("Updated")
                 .setWidth("140px")
                 .setFlexGrow(0);
@@ -100,46 +106,42 @@ public class BankAccounts extends FlexLayout {
         detailsDrawer.setFooter(footer);
     }
 
-    private void showDetails(Balance balance) {
-        detailsDrawer.setContent(createDetails(balance));
+    private void showDetails(BankAccount bankAccount) {
+        detailsDrawer.setContent(createDetails(bankAccount));
         detailsDrawer.show();
     }
 
-    private FormLayout createDetails(Balance balance) {
-        TextField id = new TextField("ID");
-        id.setValue(String.valueOf(balance.getId()));
+    private Div createDetails(BankAccount bankAccount) {
+        Div div = new Div();
 
-        H3 header1 = new H3("Header");
+        H4 title = new H4("Transactions");
+        title.addClassName(LumoStyles.Margin.Responsive.Horizontal.ML);
+        div.add(title);
 
-        TextField bank = new TextField("Bank");
-        bank.setValue(balance.getBank());
+        for (int i = 0; i < 10; i++) {
+            Double amount = DummyData.getAmount();
+            boolean positive = amount > 0;
 
-        TextField account = new TextField("Account");
-        account.setValue(balance.getAccount());
+            // Formatting reasons. We have the "-" icon, we don't need the "-" in the actual value.
+            String value = String.valueOf(positive ? amount : amount * -1);
 
-        TextField company = new TextField("Owner");
-        company.setValue(balance.getOwner());
+            ListItem item = new ListItem(positive ? VaadinIcon.PLUS_CIRCLE : VaadinIcon.MINUS_CIRCLE, value, DummyData.getCompany());
+            item.addClassName(positive ? LumoStyles.TextColor.SUCCESS : LumoStyles.TextColor.ERROR);
+            item.setDividerVisible(true);
 
-        H3 header2 = new H3("Header");
+            div.add(item);
+        }
 
-        TextField availability = new TextField("Availability (EUR)");
-        availability.setValue(String.valueOf(balance.getAvailability()));
-
-        DatePicker updated = new DatePicker("Updated");
-        updated.setValue(balance.getUpdated());
-
-        FormLayout form = new FormLayout(id, header1, bank, account, company, header2, availability, updated);
-        form.addClassName(LumoStyles.Padding.All.L);
-        return form;
+        return div;
     }
 
-    private Component createBankInfo(Balance balance) {
-        return new ListItem(balance.getAccount(), balance.getBank());
+    private Component createBankInfo(BankAccount bankAccount) {
+        return new ListItem(bankAccount.getAccount(), bankAccount.getBank());
     }
 
 
-    private Component createAvailability(Balance balance) {
-        Double availability = balance.getAvailability();
+    private Component createAvailability(BankAccount bankAccount) {
+        Double availability = bankAccount.getAvailability();
 
         Label label = UIUtils.createLabel(Collections.singleton(LumoStyles.FontSize.H4), Double.toString(availability));
 

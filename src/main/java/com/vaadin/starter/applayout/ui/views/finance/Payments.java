@@ -8,6 +8,7 @@ import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H3;
+import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
@@ -18,7 +19,9 @@ import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.data.renderer.LocalDateRenderer;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import com.vaadin.starter.applayout.backend.*;
+import com.vaadin.starter.applayout.backend.DummyData;
+import com.vaadin.starter.applayout.backend.Payment;
+import com.vaadin.starter.applayout.backend.UIConfig;
 import com.vaadin.starter.applayout.ui.Root;
 import com.vaadin.starter.applayout.ui.components.DetailsDrawer;
 import com.vaadin.starter.applayout.ui.components.ListItem;
@@ -63,13 +66,12 @@ public class Payments extends AbstractView {
                 .setHeader("Status")
                 .setWidth("100px")
                 .setFlexGrow(0);
-        grid.addColumn(new ComponentRenderer<>(this::createBankInfo))
-                .setHeader("Bank")
-                .setWidth("320px")
-                .setFlexGrow(0);
-        grid.addColumn(Payment::getPayer)
-                .setHeader("Payer")
-                .setWidth("200px");
+        grid.addColumn(new ComponentRenderer<>(this::createFromInfo))
+                .setHeader("From")
+                .setWidth("240px");
+        grid.addColumn(new ComponentRenderer<>(this::createToInfo))
+                .setHeader("To")
+                .setWidth("240px");
         grid.addColumn(new ComponentRenderer<>(this::createAmount))
                 .setHeader(UIUtils.createRightAlignedDiv(new Text("Amount (EUR)")))
                 .setWidth("240px")
@@ -97,7 +99,7 @@ public class Payments extends AbstractView {
         // Details drawer
         initDetailsDrawer();
 
-        // Set the content's content.
+        // Set the content's content
         content.add(gridWrapper, detailsDrawer);
     }
 
@@ -134,12 +136,21 @@ public class Payments extends AbstractView {
         return badge;
     }
 
-    private Component createBankInfo(Payment payment) {
-        return new ListItem(payment.getAccount(), payment.getBank());
+    private Component createFromInfo(Payment payment) {
+        return new ListItem(payment.getFrom(), payment.getFromIBAN());
+    }
+
+    private Component createToInfo(Payment payment) {
+        return new ListItem(payment.getTo(), payment.getToIBAN());
     }
 
     private Component createAmount(Payment payment) {
-        return UIUtils.createRightAlignedDiv(UIUtils.createLabel(Arrays.asList(LumoStyles.FontSize.H4, LumoStyles.TextColor.SUCCESS), "+" + payment.getAmount()));
+        Double amount = payment.getAmount();
+
+        Label label = UIUtils.createLabel(Collections.singleton(LumoStyles.FontSize.H4), String.valueOf(amount));
+        label.addClassName(amount > 0 ? LumoStyles.TextColor.SUCCESS : LumoStyles.TextColor.ERROR);
+        
+        return UIUtils.createRightAlignedDiv(label);
     }
 
     private void initDetailsDrawer() {
@@ -165,18 +176,26 @@ public class Payments extends AbstractView {
     }
 
     private Component createDetails(Payment payment) {
-        H3 payer = new H3("Payer");
+        /* === FROM === */
+        H3 fromHeader = new H3("From");
 
-        TextField company = new TextField("Company");
-        company.setValue(payment.getPayer());
+        TextField from = new TextField("From");
+        from.setValue(payment.getFrom());
 
-        TextField account = new TextField("Account");
-        account.setValue(payment.getAccount());
+        TextField fromIBAN = new TextField("IBAN");
+        fromIBAN.setValue(payment.getFromIBAN());
 
-        TextField bank = new TextField("Bank");
-        bank.setValue(payment.getBank());
+        /* === TO === */
+        H3 toHeader = new H3("To");
 
-        H3 details = new H3("Details");
+        TextField to = new TextField("To");
+        to.setValue(payment.getTo());
+
+        TextField toIBAN = new TextField("IBAN");
+        toIBAN.setValue(payment.getToIBAN());
+
+        /* === MISC === */
+        H3 misc = new H3("Misc");
 
         TextField message = new TextField("Message");
         message.setValue("Invoice " + random.nextInt(10000));
@@ -184,7 +203,7 @@ public class Payments extends AbstractView {
         DatePicker date = new DatePicker("Due Date");
         date.setValue(payment.getDate());
 
-        FormLayout form = new FormLayout(payer, company, account, bank, details, message, date);
+        FormLayout form = new FormLayout(fromHeader, from, fromIBAN, toHeader, to, toIBAN, misc, message, date);
         form.addClassNames(LumoStyles.Padding.Bottom.L, LumoStyles.Padding.Horizontal.L);
         return form;
     }

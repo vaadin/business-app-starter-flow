@@ -2,7 +2,7 @@ package com.vaadin.starter.applayout.backend;
 
 import java.time.LocalDate;
 
-public class Balance {
+public class BankAccount {
 
     private Long id;
     private String bank;
@@ -11,7 +11,7 @@ public class Balance {
     private Double availability;
     private LocalDate updated;
 
-    public Balance(Long id, String bank, String account, String company, Double availability, LocalDate updated) {
+    public BankAccount(Long id, String bank, String account, String company, Double availability, LocalDate updated) {
         this.id = id;
         this.bank = bank;
         this.account = account;

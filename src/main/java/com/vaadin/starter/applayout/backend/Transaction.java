@@ -21,16 +21,16 @@ public class Transaction {
     private Long id;
     private Status status;
     private String company;
-    private String account;
+    private String iban;
     private Double amount;
     private boolean attachment;
     private LocalDate date;
 
-    public Transaction(Long id, Status status, String company, String account, Double amount, boolean attachment, LocalDate date) {
+    public Transaction(Long id, Status status, String company, String iban, Double amount, boolean attachment, LocalDate date) {
         this.id = id;
         this.status = status;
         this.company = company;
-        this.account = account;
+        this.iban = iban;
         this.amount = amount;
         this.attachment = attachment;
         this.date = date;
@@ -40,56 +40,27 @@ public class Transaction {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public Status getStatus() {
         return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
     }
 
     public String getCompany() {
         return company;
     }
 
-    public void setCompany(String company) {
-        this.company = company;
-    }
-
-    public String getAccount() {
-        return account;
-    }
-
-    public void setAccount(String account) {
-        this.account = account;
+    public String getIBAN() {
+        return iban;
     }
 
     public Double getAmount() {
         return amount;
     }
 
-    public void setAmount(Double amount) {
-        this.amount = amount;
-    }
-
-    public boolean isAttachment() {
+    public boolean hasAttachment() {
         return attachment;
-    }
-
-    public void setAttachment(boolean attachment) {
-        this.attachment = attachment;
     }
 
     public LocalDate getDate() {
         return date;
     }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
 }

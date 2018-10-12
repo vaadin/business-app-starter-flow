@@ -11,7 +11,7 @@ public class DummyData {
     private static Map<Long, Report> REPORTS = new HashMap<>();
     private static Map<Long, Person> PERSONS = new HashMap<>();
     private static Map<Long, Transaction> TRANSACTIONS = new HashMap<>();
-    private static Map<Long, Balance> BALANCES = new HashMap<>();
+    private static Map<Long, BankAccount> BALANCES = new HashMap<>();
     private static Map<Long, Payment> PAYMENTS = new HashMap<>();
 
     private static final String IMG_PATH = "frontend/styles/images/";
@@ -45,15 +45,15 @@ public class DummyData {
         PERSONS.put(i, new Person(i++, "Juuso", "Kantonen", Person.Role.DESIGNER, "juuso@email.com", "juuso", 7, LocalDate.now()));
 
         for (i = 0; i < 40; i++) {
-            TRANSACTIONS.put(i, new Transaction(i, getTransactionStatus(), getCompany(), getIBAN(), getAmount(), random.nextBoolean(), LocalDate.now().minusDays(random.nextInt(20))));
+            TRANSACTIONS.put(i, new Transaction(i, getTransactionStatus(), getCompany(), getIBAN(), getAmount(), random.nextBoolean(), getDate()));
         }
 
         for (i = 0; i < 40; i++) {
-            BALANCES.put(i, new Balance(i, getBank(), getIBAN(), getCompany(), Double.valueOf(random.nextInt(20000) * (random.nextBoolean() ? -1 : 1)), LocalDate.now().minusDays(random.nextInt(20))));
+            BALANCES.put(i, new BankAccount(i, getBank(), getIBAN(), getCompany(), getAmount(), getDate()));
         }
 
         for (i = 0; i < 40; i++) {
-            PAYMENTS.put(i, new Payment(Payment.Status.values()[random.nextInt(Payment.Status.values().length)], getBank(), getIBAN(), getCompany(), LocalDate.now().minusDays(random.nextInt(20)), Double.valueOf(random.nextInt(20000))));
+            PAYMENTS.put(i, new Payment(getPaymentStatus(), getCompany(), getIBAN(), getBank(), getIBAN(), getAmount(), getDate()));
         }
     }
 
@@ -73,7 +73,7 @@ public class DummyData {
         return TRANSACTIONS.values();
     }
 
-    public static Collection<Balance> getBalances() {
+    public static Collection<BankAccount> getBalances() {
         return BALANCES.values();
     }
 
@@ -85,7 +85,7 @@ public class DummyData {
         return IBANS[random.nextInt(IBANS.length)];
     }
 
-    private static String getCompany() {
+    public static String getCompany() {
         return COMPANIES[random.nextInt(COMPANIES.length)];
     }
 
@@ -97,8 +97,15 @@ public class DummyData {
         return Transaction.Status.values()[random.nextInt(Transaction.Status.values().length)];
     }
 
-    private static Double getAmount() {
+    private static Payment.Status getPaymentStatus() {
+        return Payment.Status.values()[random.nextInt(Payment.Status.values().length)];
+    }
+
+    public static Double getAmount() {
         return Double.valueOf(random.nextInt(20000) * (random.nextBoolean() ? -1 : 1));
     }
 
+    public static LocalDate getDate() {
+        return LocalDate.now().minusDays(random.nextInt(20));
+    }
 }

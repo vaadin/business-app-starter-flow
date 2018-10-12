@@ -5,11 +5,12 @@ import java.time.LocalDate;
 public class Payment {
 
     private Status status;
-    private String bank;
-    private String account;
-    private String payer;
-    private LocalDate date;
+    private String from;
+    private String fromIBAN;
+    private final String to;
+    private final String toIBAN;
     private Double amount;
+    private LocalDate date;
 
     public enum Status {
         PENDING("Pending"), OPEN("Open"), SENT("Sent"), FAILED("Failed");
@@ -25,37 +26,41 @@ public class Payment {
         }
     }
 
-    public Payment(Status status, String bank, String account, String payer, LocalDate date, Double amount) {
+    public Payment(Status status, String from, String fromIBAN, String to, String toIBAN, Double amount, LocalDate date) {
         this.status = status;
-        this.bank = bank;
-        this.account = account;
-        this.payer = payer;
-        this.date = date;
+        this.from = from;
+        this.fromIBAN = fromIBAN;
+        this.to = to;
+        this.toIBAN = toIBAN;
         this.amount = amount;
+        this.date = date;
     }
 
     public Status getStatus() {
         return status;
     }
 
-    public String getBank() {
-        return bank;
+    public String getFrom() {
+        return from;
     }
 
-    public String getAccount() {
-        return account;
+    public String getFromIBAN() {
+        return fromIBAN;
     }
 
-    public String getPayer() {
-        return payer;
+    public String getTo() {
+        return to;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public String getToIBAN() {
+        return toIBAN;
     }
 
     public Double getAmount() {
         return amount;
     }
 
+    public LocalDate getDate() {
+        return date;
+    }
 }

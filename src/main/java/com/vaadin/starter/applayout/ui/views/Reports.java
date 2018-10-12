@@ -49,7 +49,7 @@ public class Reports extends AbstractView {
                 .setWidth("160px")
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createBalance))
-                .setHeader(UIUtils.createRightAlignedDiv(new Text("Balance (EUR)")))
+                .setHeader(UIUtils.createRightAlignedDiv(new Text("BankAccount (EUR)")))
                 .setSortable(true)
                 .setWidth("160px")
                 .setFlexGrow(0);

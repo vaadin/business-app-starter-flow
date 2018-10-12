@@ -165,7 +165,7 @@ public class AllTransactions extends FlexLayout {
     }
 
     private Component createPayeePayerInfo(Transaction transaction) {
-        return new ListItem(transaction.getCompany(), transaction.getAccount());
+        return new ListItem(transaction.getCompany(), transaction.getIBAN());
     }
 
     private Component createAmount(Transaction transaction) {
@@ -182,7 +182,7 @@ public class AllTransactions extends FlexLayout {
 
     private Component createAttachment(Transaction transaction) {
         Icon icon = new Icon(VaadinIcon.FILE);
-        if (transaction.isAttachment()) {
+        if (transaction.hasAttachment()) {
             icon.addClassName(LumoStyles.TextColor.PRIMARY);
         } else {
             icon.addClassName(LumoStyles.TextColor.DISABLED);
