@@ -21,7 +21,9 @@ import com.vaadin.starter.applayout.ui.components.navigation.drawer.NaviItem;
 import com.vaadin.starter.applayout.ui.utils.NaviDrawerProvider;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
 import com.vaadin.starter.applayout.ui.views.*;
-import com.vaadin.starter.applayout.ui.views.accountreporting.AccountReporting;
+import com.vaadin.starter.applayout.ui.views.finance.Payments;
+import com.vaadin.starter.applayout.ui.views.finance.Statistics;
+import com.vaadin.starter.applayout.ui.views.finance.transactions.Transactions;
 
 import java.util.Collections;
 
@@ -77,7 +79,7 @@ public class Root extends FlexLayout
     private void initNaviItems() {
         // Initialise the navigation items based on the showcase.
         if (UIConfig.getShowcase().equals(UIConfig.Showcase.DEMO)) {
-            naviDrawer.addNaviItem(VaadinIcon.GRID_BIG, "Dashboard", Dashboard.class);
+            naviDrawer.addNaviItem(VaadinIcon.GRID_BIG, "Statistics", Dashboard.class);
             naviDrawer.addNaviItem(VaadinIcon.FILE_TEXT, "Reports", Reports.class);
 
             NaviItem personnel = naviDrawer.addNaviItem(VaadinIcon.USERS, "Personnel", Personnel.class);
@@ -88,11 +90,9 @@ public class Root extends FlexLayout
         }
 
         if (UIConfig.getShowcase().equals(UIConfig.Showcase.FINANCE)) {
-            naviDrawer.addNaviItem(VaadinIcon.CALC, "Account Reporting", AccountReporting.class);
-            naviDrawer.addNaviItem(VaadinIcon.CALENDAR_BRIEFCASE, "Incoming Payments", Dashboard.class);
-            naviDrawer.addNaviItem(VaadinIcon.BRIEFCASE, "Payments", Payments.class);
-            naviDrawer.addNaviItem(VaadinIcon.ARCHIVE, "Archiving", Dashboard.class);
-            naviDrawer.addNaviItem(VaadinIcon.OFFICE, "Others", Dashboard.class);
+            naviDrawer.addNaviItem(VaadinIcon.MONEY_EXCHANGE, "Transactions", Transactions.class);
+            naviDrawer.addNaviItem(VaadinIcon.CREDIT_CARD, "Payments", Payments.class);
+            naviDrawer.addNaviItem(VaadinIcon.CHART, "Statistics", Statistics.class);
         }
     }
 

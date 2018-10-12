@@ -1,4 +1,4 @@
-package com.vaadin.starter.applayout.ui.views;
+package com.vaadin.starter.applayout.ui.views.finance;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.charts.Chart;
@@ -12,6 +12,7 @@ import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.starter.applayout.backend.Payment;
 import com.vaadin.starter.applayout.backend.UIConfig;
 import com.vaadin.starter.applayout.ui.Root;
 import com.vaadin.starter.applayout.ui.components.ListItem;
@@ -19,15 +20,18 @@ import com.vaadin.starter.applayout.ui.components.navigation.bar.AppBar;
 import com.vaadin.starter.applayout.ui.utils.CSSProperties;
 import com.vaadin.starter.applayout.ui.utils.LumoStyles;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
+import com.vaadin.starter.applayout.ui.views.AbstractView;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Random;
 
-@Route(value = "dashboard", layout = Root.class)
+@Route(value = "statistics", layout = Root.class)
 @PageTitle("Statistics")
-public class Dashboard extends AbstractView {
+public class Statistics extends AbstractView {
 
+    public static final String REPORTS = "Reports";
+    public static final String LOGS = "Logs";
     private String CLASS_NAME = "dashboard";
 
     private Random random;
@@ -35,7 +39,7 @@ public class Dashboard extends AbstractView {
     private AppBar appBar;
     private Div viewport;
 
-    public Dashboard() {
+    public Statistics() {
         random = new Random();
 
         // Header
@@ -44,14 +48,14 @@ public class Dashboard extends AbstractView {
         // Content
         viewport = UIUtils.createDiv(
                 Arrays.asList(CLASS_NAME, LumoStyles.Margin.Horizontal.AUTO, LumoStyles.Margin.Responsive.Vertical.ML),
-                createHeader(VaadinIcon.CHECK, "Progress"),
+                createHeader(VaadinIcon.CREDIT_CARD, "Payments"),
                 createProgressCharts(),
-                createHeader(VaadinIcon.TRENDING_UP, "Sales"),
+                createHeader(VaadinIcon.MONEY_EXCHANGE, "Transactions"),
                 createSalesChart(),
                 UIUtils.createFlexLayout(
                         Collections.singleton(CLASS_NAME + "__bookmarks-recent-items"),
-                        new Div(createHeader(VaadinIcon.BOOKMARK, "Bookmark"), createTabbedList()),
-                        new Div(createHeader(VaadinIcon.TIME_BACKWARD, "Recent Items"), createTabbedList())
+                        createTabbedList(REPORTS),
+                        createTabbedList(LOGS)
                 )
         );
     }
@@ -84,15 +88,33 @@ public class Dashboard extends AbstractView {
         card.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
         card.getStyle().set(CSSProperties.BackgroundColor.PROPERTY, LumoStyles.Color.BASE_COLOR);
 
-        for (String section : new String[]{"Today", "Week", "Month", "Year"}) {
-            card.add(createProgressSection(section));
+        for (Payment.Status status : Payment.Status.values()) {
+            card.add(createProgressSection(status));
         }
 
         return card;
     }
 
-    private Component createProgressSection(String title) {
-        int value = random.nextInt(100);
+    private Component createProgressSection(Payment.Status status) {
+        int value;
+
+        switch (status) {
+            case PENDING:
+                value = 24;
+                break;
+
+            case OPEN:
+                value = 40;
+                break;
+
+            case SENT:
+                value = 32;
+                break;
+
+            default:
+                value = 4;
+                break;
+        }
 
         FlexLayout textContainer = UIUtils.createFlexLayout(
                 Collections.singleton(LumoStyles.Spacing.Right.XS),
@@ -102,7 +124,10 @@ public class Dashboard extends AbstractView {
         textContainer.setAlignItems(FlexComponent.Alignment.BASELINE);
         textContainer.getStyle().set(CSSProperties.Position.PROPERTY, CSSProperties.Position.ABSOLUTE);
 
-        FlexLayout chartContainer = new FlexLayout(createProgressChart(value), textContainer);
+        Chart chart = createProgressChart(value);
+        chart.addClassName(status.getName().toLowerCase());
+
+        FlexLayout chartContainer = new FlexLayout(chart, textContainer);
         chartContainer.setAlignItems(FlexComponent.Alignment.CENTER);
         chartContainer.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
         chartContainer.getStyle().set(CSSProperties.Position.PROPERTY, CSSProperties.Position.RELATIVE);
@@ -111,7 +136,7 @@ public class Dashboard extends AbstractView {
 
         FlexLayout column = UIUtils.createColumn(
                 Arrays.asList(LumoStyles.Padding.Bottom.S, LumoStyles.Padding.Top.M),
-                new Label(title),
+                new Label(status.getName()),
                 chartContainer
         );
         column.setAlignItems(FlexComponent.Alignment.CENTER);
@@ -158,7 +183,7 @@ public class Dashboard extends AbstractView {
         Chart chart = new Chart(ChartType.AREASPLINE);
 
         Configuration conf = chart.getConfiguration();
-        conf.setTitle("Product sales for 2018");
+        conf.setTitle("2018");
         conf.getLegend().setEnabled(false);
 
         XAxis xAxis = new XAxis();
@@ -176,10 +201,15 @@ public class Dashboard extends AbstractView {
         return card;
     }
 
-    private Component createTabbedList() {
-        Tabs tabs = new Tabs();
+    private Component createTabbedList(String title) {
+        Component header = createHeader(title.equals(REPORTS) ? VaadinIcon.RECORDS : VaadinIcon.BULLETS, title);
 
-        for (String label : new String[]{"All", "Archive", "Workflows", "Support"}) {
+        Tabs tabs = new Tabs();
+        tabs.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Tabs.EQUAL_WIDTH_TABS);
+
+        String[] labels = title.equals(REPORTS) ? new String[]{"All", "Archive", "Workflows", "Support"} : new String[]{"All", "Transfer", "Security", "Change"};
+
+        for (String label : labels) {
             tabs.add(new Tab(label));
         }
 
@@ -191,7 +221,8 @@ public class Dashboard extends AbstractView {
 
         FlexLayout card = UIUtils.createColumn(Arrays.asList(LumoStyles.BorderRadius.S, LumoStyles.Shadow.S), tabs, items);
         card.getStyle().set(CSSProperties.BackgroundColor.PROPERTY, LumoStyles.Color.BASE_COLOR);
-        return card;
+
+        return new Div(header, card);
     }
 
     private class DataSeriesItemWithRadius extends DataSeriesItem {

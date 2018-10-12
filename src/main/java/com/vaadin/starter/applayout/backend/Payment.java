@@ -12,7 +12,7 @@ public class Payment {
     private Double amount;
 
     public enum Status {
-        SENT("Sent"), OPEN("Open"), PENDING("Pending");
+        PENDING("Pending"), OPEN("Open"), SENT("Sent"), FAILED("Failed");
 
         private String name;
 

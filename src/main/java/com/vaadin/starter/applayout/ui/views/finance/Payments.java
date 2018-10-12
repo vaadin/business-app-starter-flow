@@ -1,4 +1,4 @@
-package com.vaadin.starter.applayout.ui.views;
+package com.vaadin.starter.applayout.ui.views.finance;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Text;
@@ -26,6 +26,7 @@ import com.vaadin.starter.applayout.ui.components.navigation.bar.AppBar;
 import com.vaadin.starter.applayout.ui.utils.CSSProperties;
 import com.vaadin.starter.applayout.ui.utils.LumoStyles;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
+import com.vaadin.starter.applayout.ui.views.AbstractView;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -62,27 +63,28 @@ public class Payments extends AbstractView {
                 .setHeader("Status")
                 .setWidth("100px")
                 .setFlexGrow(0);
-        grid.addColumn(Payment::getPayer)
-                .setHeader("Payer")
-                .setWidth("340px")
-                .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createBankInfo))
                 .setHeader("Bank")
                 .setWidth("320px")
-                .setFlexGrow(1);
+                .setFlexGrow(0);
+        grid.addColumn(Payment::getPayer)
+                .setHeader("Payer")
+                .setWidth("200px");
+        grid.addColumn(new ComponentRenderer<>(this::createAmount))
+                .setHeader(UIUtils.createRightAlignedDiv(new Text("Amount (EUR)")))
+                .setWidth("240px")
+                .setFlexGrow(0);
         grid.addColumn(new LocalDateRenderer<>(Payment::getDate, "MMM dd, YYYY"))
                 .setHeader("Date")
                 .setWidth("140px")
                 .setFlexGrow(0);
-        grid.addColumn(new ComponentRenderer<>(this::createAmount))
-                .setHeader(UIUtils.createRightAlignedDiv(new Text("Amount")))
-                .setWidth("140px")
-                .setFlexGrow(0);
+
         grid.addSelectionListener(e -> {
             if (e.getFirstSelectedItem().isPresent()) {
                 showDetails(e.getFirstSelectedItem().get());
             }
         });
+
         grid.setSizeFull();
 
         // Data provider
@@ -110,22 +112,34 @@ public class Payments extends AbstractView {
     private Component createStatus(Payment payment) {
         Payment.Status status = payment.getStatus();
         Span badge = new Span(status.getName());
-        if (status.equals(Payment.Status.SENT)) {
-            badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.SUCCESS);
-        } else if (status.equals(Payment.Status.PENDING)) {
-            badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.ERROR);
-        } else {
-            badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.DEFAULT);
+
+        switch (status) {
+            case PENDING:
+                badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.DEFAULT);
+                break;
+
+            case OPEN:
+                badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.CONTRAST);
+                break;
+
+            case SENT:
+                badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.SUCCESS);
+                break;
+
+            default:
+                badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.ERROR);
+                break;
         }
+
         return badge;
     }
 
     private Component createBankInfo(Payment payment) {
-        return new ListItem(payment.getBank(), payment.getAccount());
+        return new ListItem(payment.getAccount(), payment.getBank());
     }
 
     private Component createAmount(Payment payment) {
-        return UIUtils.createRightAlignedDiv(new Text(Double.toString(payment.getAmount())));
+        return UIUtils.createRightAlignedDiv(UIUtils.createLabel(Arrays.asList(LumoStyles.FontSize.H4, LumoStyles.TextColor.SUCCESS), "+" + payment.getAmount()));
     }
 
     private void initDetailsDrawer() {

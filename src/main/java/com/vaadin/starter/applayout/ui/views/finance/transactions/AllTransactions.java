@@ -1,4 +1,4 @@
-package com.vaadin.starter.applayout.ui.views.accountreporting;
+package com.vaadin.starter.applayout.ui.views.finance.transactions;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Text;
@@ -7,6 +7,7 @@ import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -21,8 +22,9 @@ import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.data.renderer.LocalDateRenderer;
 import com.vaadin.flow.data.renderer.TextRenderer;
 import com.vaadin.starter.applayout.backend.DummyData;
-import com.vaadin.starter.applayout.backend.Statement;
+import com.vaadin.starter.applayout.backend.Transaction;
 import com.vaadin.starter.applayout.ui.components.DetailsDrawer;
+import com.vaadin.starter.applayout.ui.components.ListItem;
 import com.vaadin.starter.applayout.ui.utils.CSSProperties;
 import com.vaadin.starter.applayout.ui.utils.LumoStyles;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
@@ -32,58 +34,56 @@ import java.util.Collections;
 
 import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
 
-public class Statements extends FlexLayout {
+public class AllTransactions extends FlexLayout {
 
-    private Grid<Statement> grid;
-    private ListDataProvider<Statement> dataProvider;
+    private Grid<Transaction> grid;
+    private ListDataProvider<Transaction> dataProvider;
 
     private DetailsDrawer detailsDrawer;
 
-    public Statements() {
+    public AllTransactions() {
         setHeight("100%");
 
         // Grid
         grid = new Grid();
-        grid.addColumn(Statement::getId)
+        grid.addColumn(Transaction::getId)
                 .setHeader("ID")
                 .setFrozen(true)
                 .setSortable(true)
                 .setWidth("60px")
                 .setFlexGrow(0);
-        grid.addColumn(new LocalDateRenderer<>(Statement::getDate, "MMM dd, YYYY"))
-                .setHeader("Date")
-                .setWidth("140px")
+        grid.addColumn(new ComponentRenderer<>(this::createStatus))
+                .setHeader("Status")
+                .setWidth("120px")
                 .setFlexGrow(0);
-        grid.addColumn(Statement::getPayee)
-                .setHeader("Payee")
+        grid.addColumn(new ComponentRenderer<>(this::createPayeePayerInfo))
+                .setHeader("Payee / Payer")
                 .setSortable(true)
                 .setWidth("240px")
                 .setFlexGrow(1);
-        grid.addColumn(new ComponentRenderer<>(this::createOutput))
-                .setHeader(UIUtils.createRightAlignedDiv(new Text("Output (EUR)")))
-                .setWidth("120px")
-                .setFlexGrow(0);
-        grid.addColumn(new ComponentRenderer<>(this::createInput))
-                .setHeader(UIUtils.createRightAlignedDiv(new Text("Input (EUR)")))
-                .setWidth("120px")
-                .setFlexGrow(0);
-        grid.addColumn(new ComponentRenderer<>(this::createStatus))
-                .setHeader("Status")
-                .setWidth("160px")
+        grid.addColumn(new ComponentRenderer<>(this::createAmount))
+                .setHeader(UIUtils.createRightAlignedDiv(new Text("Amount (EUR)")))
+                .setWidth("240px")
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createAttachment))
                 .setHeader("Attachment")
-                .setWidth("160px")
+                .setWidth("120px")
                 .setFlexGrow(0);
+        grid.addColumn(new LocalDateRenderer<>(Transaction::getDate, "MMM dd, YYYY"))
+                .setHeader("Date")
+                .setWidth("140px")
+                .setFlexGrow(0);
+
         grid.addSelectionListener(e -> {
             if (e.getFirstSelectedItem().isPresent()) {
                 showDetails(e.getFirstSelectedItem().get());
             }
         });
+
         grid.setSizeFull();
 
         // Data provider
-        dataProvider = DataProvider.ofCollection(DummyData.getStatements());
+        dataProvider = DataProvider.ofCollection(DummyData.getTransactions());
         grid.setDataProvider(dataProvider);
 
         // Grid wrapper for some nice padding
@@ -115,66 +115,74 @@ public class Statements extends FlexLayout {
         detailsDrawer.setFooter(footer);
     }
 
-    private void showDetails(Statement statement) {
-        detailsDrawer.setContent(createDetails(statement));
+    private void showDetails(Transaction transaction) {
+        detailsDrawer.setContent(createDetails(transaction));
         detailsDrawer.show();
     }
 
-    private Component createDetails(Statement statement) {
+    private Component createDetails(Transaction transaction) {
+        FormLayout form = new FormLayout();
+        form.addClassName(LumoStyles.Padding.All.L);
+
         TextField id = new TextField("ID");
-        id.setValue(String.valueOf(statement.getId()));
+        id.setValue(String.valueOf(transaction.getId()));
+        form.add(id);
 
-        DatePicker date = new DatePicker("Date");
-        date.setValue(statement.getDate());
-
-        TextField sender = new TextField("Payee");
-        sender.setValue(statement.getPayee());
-
-        TextField output = new TextField("Output");
-        output.setValue(String.valueOf(statement.getOutput()));
-
-        TextField input = new TextField("Input");
-        input.setValue(String.valueOf(statement.getInput()));
-
-        RadioButtonGroup<Statement.Status> status = new RadioButtonGroup();
-        status.setItems(Statement.Status.values());
-        status.setRenderer(new TextRenderer<>(Statement.Status::getName));
-        status.setValue(statement.getStatus());
+        RadioButtonGroup<Transaction.Status> status = new RadioButtonGroup();
+        status.setItems(Transaction.Status.values());
+        status.setRenderer(new TextRenderer<>(Transaction.Status::getName));
+        status.setValue(transaction.getStatus());
         status.getStyle().set(CSSProperties.Display.PROPERTY, CSSProperties.Display.FLEX);
         status.getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN);
-
-        FormLayout form = new FormLayout(id, date, sender, output, input);
-        form.addClassName(LumoStyles.Padding.All.L);
 
         FormLayout.FormItem statusItem = form.addFormItem(status, "Status");
         statusItem.getStyle().set(CSSProperties.Display.PROPERTY, CSSProperties.Display.FLEX);
         statusItem.getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN);
 
+        TextField sender = new TextField("Payee / Payer");
+        sender.setValue(transaction.getCompany());
+
+        TextField amount = new TextField("Amount (EUR)");
+        amount.setValue(String.valueOf(transaction.getAmount()));
+
+        DatePicker date = new DatePicker("Date");
+        date.setValue(transaction.getDate());
+
+        form.add(sender, amount, date);
+
         return form;
     }
 
-    private Component createOutput(Statement statement) {
-        return UIUtils.createRightAlignedDiv(new Text(Double.toString(statement.getOutput())));
-    }
-
-    private Component createInput(Statement statement) {
-        return UIUtils.createRightAlignedDiv(new Text(Double.toString(statement.getInput())));
-    }
-
-    private Component createStatus(Statement statement) {
-        Statement.Status status = statement.getStatus();
+    private Component createStatus(Transaction transaction) {
+        Transaction.Status status = transaction.getStatus();
         Span badge = new Span(status.getName());
-        if (status.equals(Statement.Status.PROCESSED)) {
-            badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.SUCCESS);
+        if (status.equals(Transaction.Status.PROCESSED)) {
+            badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.DEFAULT);
         } else {
-            badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.ERROR);
+            badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.CONTRAST);
         }
         return badge;
     }
 
-    private Component createAttachment(Statement statement) {
+    private Component createPayeePayerInfo(Transaction transaction) {
+        return new ListItem(transaction.getCompany(), transaction.getAccount());
+    }
+
+    private Component createAmount(Transaction transaction) {
+        Label label = UIUtils.createLabel(Collections.singleton(LumoStyles.FontSize.H4), String.valueOf(transaction.getAmount()));
+
+        if (transaction.getAmount() < 0) {
+            label.addClassName(LumoStyles.TextColor.ERROR);
+        } else {
+            label.addClassName(LumoStyles.TextColor.SUCCESS);
+        }
+
+        return UIUtils.createRightAlignedDiv(label);
+    }
+
+    private Component createAttachment(Transaction transaction) {
         Icon icon = new Icon(VaadinIcon.FILE);
-        if (statement.hasAttachment()) {
+        if (transaction.isAttachment()) {
             icon.addClassName(LumoStyles.TextColor.PRIMARY);
         } else {
             icon.addClassName(LumoStyles.TextColor.DISABLED);

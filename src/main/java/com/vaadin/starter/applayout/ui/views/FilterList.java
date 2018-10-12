@@ -51,7 +51,7 @@ public class FilterList extends AbstractView {
 
     public FilterList() {
         // Header
-        appBar = new AppBar("Dashboard");
+        appBar = new AppBar("Statistics");
 
         // Filters
         filterArea = UIUtils.createDiv(

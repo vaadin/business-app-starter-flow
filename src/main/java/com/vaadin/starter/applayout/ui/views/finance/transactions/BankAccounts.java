@@ -1,4 +1,4 @@
-package com.vaadin.starter.applayout.ui.views.accountreporting;
+package com.vaadin.starter.applayout.ui.views.finance.transactions;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Text;
@@ -8,6 +8,7 @@ import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H3;
+import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.provider.DataProvider;
@@ -27,14 +28,14 @@ import java.util.Collections;
 
 import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
 
-public class Balances extends FlexLayout {
+public class BankAccounts extends FlexLayout {
 
     private Grid<Balance> grid;
     private ListDataProvider<Balance> dataProvider;
 
     private DetailsDrawer detailsDrawer;
 
-    public Balances() {
+    public BankAccounts() {
         setHeight("100%");
 
         // Grid
@@ -46,7 +47,7 @@ public class Balances extends FlexLayout {
                 .setWidth("60px")
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createBankInfo))
-                .setHeader("Bank")
+                .setHeader("Bank Account")
                 .setWidth("320px")
                 .setFlexGrow(0);
         grid.addColumn(Balance::getOwner)
@@ -54,13 +55,12 @@ public class Balances extends FlexLayout {
                 .setWidth("200px");
         grid.addColumn(new ComponentRenderer<>(this::createAvailability))
                 .setHeader(UIUtils.createRightAlignedDiv(new Text("Availability (EUR)")))
-                .setWidth("140px")
+                .setWidth("240px")
                 .setFlexGrow(0);
         grid.addColumn(new LocalDateRenderer<>(Balance::getUpdated, "MMM dd, YYYY"))
                 .setHeader("Updated")
                 .setWidth("140px")
                 .setFlexGrow(0);
-
 
         grid.addSelectionListener(e -> {
             if (e.getFirstSelectedItem().isPresent()) {
@@ -134,11 +134,22 @@ public class Balances extends FlexLayout {
     }
 
     private Component createBankInfo(Balance balance) {
-        return new ListItem(balance.getBank(), balance.getAccount());
+        return new ListItem(balance.getAccount(), balance.getBank());
     }
 
 
     private Component createAvailability(Balance balance) {
-        return UIUtils.createRightAlignedDiv(new Text(Double.toString(balance.getAvailability())));
+        Double availability = balance.getAvailability();
+
+        Label label = UIUtils.createLabel(Collections.singleton(LumoStyles.FontSize.H4), Double.toString(availability));
+
+        if (availability > 0) {
+            label.setText("+" + label.getText());
+            label.addClassName(LumoStyles.TextColor.SUCCESS);
+        } else {
+            label.addClassName(LumoStyles.TextColor.ERROR);
+        }
+
+        return UIUtils.createRightAlignedDiv(label);
     }
 }

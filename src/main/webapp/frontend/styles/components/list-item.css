@@ -1,5 +1,6 @@
 .list-item {
   box-sizing: border-box;
+  overflow: hidden;
   padding: var(--lumo-space-wide-l);
   position: relative;
 }
@@ -55,5 +56,7 @@ vaadin-grid .list-item__initials {
 }
 
 vaadin-grid .list-item * {
+  overflow: hidden;
   pointer-events: none;
+  text-overflow: ellipsis;
 }

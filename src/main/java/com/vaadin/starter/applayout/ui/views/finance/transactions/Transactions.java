@@ -1,4 +1,4 @@
-package com.vaadin.starter.applayout.ui.views.accountreporting;
+package com.vaadin.starter.applayout.ui.views.finance.transactions;
 
 import com.vaadin.flow.component.HasElement;
 import com.vaadin.flow.router.PageTitle;
@@ -10,18 +10,18 @@ import com.vaadin.starter.applayout.ui.Root;
 import com.vaadin.starter.applayout.ui.components.navigation.bar.AppBar;
 import com.vaadin.starter.applayout.ui.views.AbstractView;
 
-@Route(value = "account-reporting", layout = Root.class)
+@Route(value = "transactions", layout = Root.class)
 @ParentLayout(Root.class)
-@PageTitle("Account Reporting")
-public class AccountReporting extends AbstractView implements RouterLayout {
+@PageTitle("Transactions")
+public class Transactions extends AbstractView implements RouterLayout {
 
     private AppBar appBar;
-    private String STATEMENTS = "Statements";
-    private String BALANCES = "Balances";
+    private String STATEMENTS = "All Transactions";
+    private String BALANCES = "Bank Accounts";
 
-    public AccountReporting() {
+    public Transactions() {
         // Header
-        appBar = new AppBar("Account Reporting");
+        appBar = new AppBar("Transactions");
 
         appBar.addTab(STATEMENTS);
         appBar.addTab(BALANCES);
@@ -43,10 +43,10 @@ public class AccountReporting extends AbstractView implements RouterLayout {
         String label = appBar.getSelectedTab().getLabel();
 
         if (label.equals(STATEMENTS)) {
-            setContent(new Statements());
+            setContent(new AllTransactions());
 
         } else if (label.equals(BALANCES)) {
-            setContent(new Balances());
+            setContent(new BankAccounts());
 
         }
     }

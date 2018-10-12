@@ -31,6 +31,12 @@ public class UIUtils {
         return div;
     }
 
+    public static Div createRightAlignedDiv(Collection<String> classNames, Component... components) {
+        Div div = createRightAlignedDiv(components);
+        classNames.forEach(div::addClassName);
+        return div;
+    }
+
     public static FlexLayout createWrappingFlexLayout(Component... components) {
         FlexLayout layout = new FlexLayout(components);
         layout.getStyle().set(CSSProperties.FlexWrap.PROPERTY, CSSProperties.FlexWrap.WRAP);
