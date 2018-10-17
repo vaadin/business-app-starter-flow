@@ -107,9 +107,8 @@ public class AllTransactions extends FlexLayout {
 
         Button save = UIUtils.createPrimaryButton("Save");
 
-        FlexLayout footer = UIUtils.createFlexLayout(Arrays.asList(LumoStyles.Padding.All.S, LumoStyles.Spacing.Right.S), cancel, save);
+        FlexLayout footer = UIUtils.createFlexLayout(Arrays.asList(LumoStyles.Padding.Horizontal.L, LumoStyles.Padding.Vertical.S, LumoStyles.Spacing.Right.S), save, cancel);
         footer.getStyle().set(CSSProperties.BackgroundColor.PROPERTY, LumoStyles.Color.CONTRAST_5);
-        footer.setJustifyContentMode(JustifyContentMode.END);
         footer.setWidth("100%");
         detailsDrawer.setFooter(footer);
     }

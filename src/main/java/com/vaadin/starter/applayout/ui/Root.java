@@ -98,8 +98,8 @@ public class Root extends FlexLayout
             NaviItem personnel = naviDrawer.addNaviItem(VaadinIcon.USERS, "Personnel", null);
             naviDrawer.addNaviItem(personnel, "Accountants", Accountants.class);
             naviDrawer.addNaviItem(personnel, "Managers", Managers.class);
-            naviDrawer.addNaviItem(personnel, "Payment Handlers", PaymentHandlers.class);
-            naviDrawer.addNaviItem(personnel, "Traders", Traders.class);
+            // naviDrawer.addNaviItem(personnel, "Payment Handlers", PaymentHandlers.class);
+            // naviDrawer.addNaviItem(personnel, "Traders", Traders.class);
         }
     }
 

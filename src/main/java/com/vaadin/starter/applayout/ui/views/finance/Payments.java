@@ -1,6 +1,7 @@
 package com.vaadin.starter.applayout.ui.views.finance;
 
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.HasValueAndElement;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.datepicker.DatePicker;
@@ -12,6 +13,7 @@ import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
+import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.provider.DataProvider;
 import com.vaadin.flow.data.provider.ListDataProvider;
@@ -67,7 +69,7 @@ public class Payments extends AbstractView {
         grid = new Grid();
         grid.addColumn(new ComponentRenderer<>(this::createStatus))
                 .setHeader("Status")
-                .setWidth(UIUtils.COLUMN_WIDTH_S)
+                .setWidth(UIUtils.COLUMN_WIDTH_M)
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createFromInfo))
                 .setHeader("From")
@@ -149,10 +151,7 @@ public class Payments extends AbstractView {
 
     private Component createAmount(Payment payment) {
         Double amount = payment.getAmount();
-
         Label label = UIUtils.createLabel(Collections.singleton(LumoStyles.FontSize.H4), UIUtils.formatAmount(amount));
-        label.addClassName(amount > 0 ? LumoStyles.TextColor.SUCCESS : LumoStyles.TextColor.ERROR);
-
         return UIUtils.createRightAlignedDiv(label);
     }
 
@@ -160,14 +159,11 @@ public class Payments extends AbstractView {
         detailsDrawer = new DetailsDrawer(DetailsDrawer.Position.RIGHT);
 
         // Footer
-        Button cancel = UIUtils.createTertiaryButton("Cancel");
-        cancel.addClickListener(e -> detailsDrawer.hide());
+        Button close = UIUtils.createTertiaryButton("Close");
+        close.addClickListener(e -> detailsDrawer.hide());
 
-        Button save = UIUtils.createPrimaryButton("Save");
-
-        FlexLayout footer = UIUtils.createFlexLayout(Arrays.asList(LumoStyles.Padding.All.S, LumoStyles.Spacing.Right.S), cancel, save);
+        FlexLayout footer = UIUtils.createFlexLayout(Arrays.asList(LumoStyles.Padding.Horizontal.L, LumoStyles.Padding.Vertical.S), close);
         footer.getStyle().set(CSSProperties.BackgroundColor.PROPERTY, LumoStyles.Color.CONTRAST_5);
-        footer.setJustifyContentMode(FlexComponent.JustifyContentMode.END);
         footer.setWidth("100%");
 
         detailsDrawer.setFooter(footer);
@@ -200,11 +196,16 @@ public class Payments extends AbstractView {
         /* === MISC === */
         H3 misc = new H3("Misc");
 
-        TextField message = new TextField("Message");
+        TextArea message = new TextArea("Message");
         message.setValue("Invoice " + random.nextInt(10000));
 
-        DatePicker date = new DatePicker("Due Date");
+        DatePicker date = new DatePicker("Date");
         date.setValue(payment.getDate());
+
+        // Set everything to read-only.
+        for (HasValueAndElement field : new HasValueAndElement[] {from, fromIBAN, to, toIBAN, message, date}) {
+            field.setReadOnly(true);
+        }
 
         FormLayout form = new FormLayout(fromHeader, from, fromIBAN, toHeader, to, toIBAN, misc, message, date);
         form.addClassNames(LumoStyles.Padding.Bottom.L, LumoStyles.Padding.Horizontal.L);

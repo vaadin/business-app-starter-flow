@@ -15,7 +15,7 @@ public class UIConfig {
     }
 
     public enum Showcase {
-        DEMO, FINANCE
+        DEMO, FINANCE, INVENTORY
     }
 
     public static NaviMode getNaviMode() {

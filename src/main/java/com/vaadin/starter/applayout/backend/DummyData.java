@@ -50,7 +50,7 @@ public class DummyData {
         }
 
         for (i = 0; i < 40; i++) {
-            PAYMENTS.put(i, new Payment(getPaymentStatus(), getCompany(), getIBAN(), getBank(), getIBAN(), getAmount(), getDate()));
+            PAYMENTS.put(i, new Payment(getPaymentStatus(), getCompany(), getIBAN(), getBank(), getIBAN(), getPositiveAmount(), getDate()));
         }
     }
 

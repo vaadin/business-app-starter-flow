@@ -52,7 +52,7 @@ public class Traders extends AbstractView {
                 .setWidth(UIUtils.COLUMN_WIDTH_L)
                 .setFlexGrow(1);
         grid.addColumn(new ComponentRenderer<>(this::createActive))
-                .setHeader("Twitter")
+                .setHeader("Active")
                 .setWidth(UIUtils.COLUMN_WIDTH_S)
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createNumber))
