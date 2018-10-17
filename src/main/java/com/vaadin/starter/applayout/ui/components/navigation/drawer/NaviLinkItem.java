@@ -1,6 +1,7 @@
 package com.vaadin.starter.applayout.ui.components.navigation.drawer;
 
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.Icon;
@@ -12,7 +13,7 @@ import java.nio.charset.Charset;
 
 public class NaviLinkItem extends NaviItem {
 
-    private RouterLink link;
+    private Component link;
 
     public NaviLinkItem(VaadinIcon icon, String text, Class<? extends Component> navigationTarget) {
         this(text, navigationTarget);
@@ -37,10 +38,19 @@ public class NaviLinkItem extends NaviItem {
     public NaviLinkItem(String text, Class<? extends Component> navigationTarget) {
         super(text, navigationTarget);
 
-        link = new RouterLink(null, navigationTarget);
-        link.add(new Label(text));
-        link.setHighlightCondition(HighlightConditions.locationPrefix());
-        link.setClassName(CLASS_NAME + "__link");
+        if (navigationTarget != null) {
+            RouterLink routerLink = new RouterLink(null, navigationTarget);
+            routerLink.add(new Label(text));
+            routerLink.setHighlightCondition(HighlightConditions.locationPrefix());
+            routerLink.setClassName(CLASS_NAME + "__link");
+            this.link = routerLink;
+        } else {
+            Div div = new Div(new Label(text));
+            div.setClassName(CLASS_NAME + "__link");
+            div.addClickListener(e -> expandCollapse.click());
+            this.link = div;
+        }
+
         getElement().insertChild(0, link.getElement());
     }
 }

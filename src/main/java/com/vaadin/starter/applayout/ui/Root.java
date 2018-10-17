@@ -24,6 +24,7 @@ import com.vaadin.starter.applayout.ui.views.*;
 import com.vaadin.starter.applayout.ui.views.finance.Payments;
 import com.vaadin.starter.applayout.ui.views.finance.Statistics;
 import com.vaadin.starter.applayout.ui.views.finance.transactions.Transactions;
+import com.vaadin.starter.applayout.ui.views.personnel.*;
 
 import java.util.Collections;
 
@@ -93,6 +94,12 @@ public class Root extends FlexLayout
             naviDrawer.addNaviItem(VaadinIcon.MONEY_EXCHANGE, "Transactions", Transactions.class);
             naviDrawer.addNaviItem(VaadinIcon.CREDIT_CARD, "Payments", Payments.class);
             naviDrawer.addNaviItem(VaadinIcon.CHART, "Statistics", Statistics.class);
+
+            NaviItem personnel = naviDrawer.addNaviItem(VaadinIcon.USERS, "Personnel", null);
+            naviDrawer.addNaviItem(personnel, "Accountants", Accountants.class);
+            naviDrawer.addNaviItem(personnel, "Managers", Managers.class);
+            naviDrawer.addNaviItem(personnel, "Payment Handlers", PaymentHandlers.class);
+            naviDrawer.addNaviItem(personnel, "Traders", Traders.class);
         }
     }
 

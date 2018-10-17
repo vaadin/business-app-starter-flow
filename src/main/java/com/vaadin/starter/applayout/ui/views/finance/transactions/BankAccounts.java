@@ -50,22 +50,21 @@ public class BankAccounts extends FlexLayout {
                 .setHeader("ID")
                 .setFrozen(true)
                 .setSortable(true)
-                .setWidth("60px")
+                .setWidth(UIUtils.COLUMN_WIDTH_S)
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createBankInfo))
                 .setHeader("Bank Account")
-                .setWidth("320px")
-                .setFlexGrow(0);
+                .setWidth(UIUtils.COLUMN_WIDTH_L);
         grid.addColumn(BankAccount::getOwner)
                 .setHeader("Owner")
-                .setWidth("200px");
+                .setWidth(UIUtils.COLUMN_WIDTH_L);
         grid.addColumn(new ComponentRenderer<>(this::createAvailability))
                 .setHeader(UIUtils.createRightAlignedDiv(new Text("Availability (EUR)")))
-                .setWidth("240px")
+                .setWidth(UIUtils.COLUMN_WIDTH_M)
                 .setFlexGrow(0);
         grid.addColumn(new LocalDateRenderer<>(BankAccount::getUpdated, "MMM dd, YYYY"))
                 .setHeader("Updated")
-                .setWidth("140px")
+                .setWidth(UIUtils.COLUMN_WIDTH_M)
                 .setFlexGrow(0);
 
         grid.addSelectionListener(e -> {
@@ -143,7 +142,7 @@ public class BankAccounts extends FlexLayout {
     private Component createAvailability(BankAccount bankAccount) {
         Double availability = bankAccount.getAvailability();
 
-        Label label = UIUtils.createLabel(Collections.singleton(LumoStyles.FontSize.H4), Double.toString(availability));
+        Label label = UIUtils.createLabel(Collections.singleton(LumoStyles.FontSize.H4), UIUtils.formatAmount(availability));
 
         if (availability > 0) {
             label.setText("+" + label.getText());

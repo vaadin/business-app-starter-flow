@@ -1,8 +1,9 @@
-package com.vaadin.starter.applayout.ui.views;
+package com.vaadin.starter.applayout.ui.views.personnel;
 
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.grid.Grid;
-import com.vaadin.flow.component.html.Span;
+import com.vaadin.flow.component.html.H4;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.data.provider.DataProvider;
@@ -18,26 +19,26 @@ import com.vaadin.starter.applayout.ui.Root;
 import com.vaadin.starter.applayout.ui.components.ListItem;
 import com.vaadin.starter.applayout.ui.components.navigation.bar.AppBar;
 import com.vaadin.starter.applayout.ui.utils.LumoStyles;
+import com.vaadin.starter.applayout.ui.utils.UIUtils;
+import com.vaadin.starter.applayout.ui.views.AbstractView;
+
+import java.text.DecimalFormat;
+import java.util.Collections;
 
 import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
 
-@Route(value = "personnel", layout = Root.class)
-@PageTitle("Personnel")
-public class Personnel extends AbstractView {
+@Route(value = "accountants", layout = Root.class)
+@PageTitle("Accountants")
+public class Accountants extends AbstractView {
 
     private AppBar appBar;
 
     private Grid<Person> grid;
     private ListDataProvider<Person> dataProvider;
 
-    public Personnel() {
+    public Accountants() {
         // Header
-        appBar = new AppBar("Personnel");
-        for (Person.Role role : Person.Role.values()) {
-            appBar.addTab(role.name().substring(0, 1).toUpperCase() + role.name().substring(1).toLowerCase());
-        }
-        appBar.addTabSelectionListener(e -> filter());
-        appBar.centerTabs();
+        appBar = new AppBar("Traders");
 
         // Grid
         grid = new Grid();
@@ -45,24 +46,28 @@ public class Personnel extends AbstractView {
                 .setHeader("ID")
                 .setFrozen(true)
                 .setSortable(true)
-                .setWidth("60px")
+                .setWidth(UIUtils.COLUMN_WIDTH_S)
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createUserInfo))
                 .setHeader("Name")
-                .setWidth("240px")
+                .setWidth(UIUtils.COLUMN_WIDTH_L)
                 .setFlexGrow(1);
         grid.addColumn(new ComponentRenderer<>(this::createActive))
-                .setHeader("Twitter")
-                .setWidth("160px")
+                .setHeader("Active")
+                .setWidth(UIUtils.COLUMN_WIDTH_S)
                 .setFlexGrow(0);
-        grid.addColumn(new ComponentRenderer<>(this::createForumPosts))
-                .setHeader("Forum Posts")
-                .setWidth("160px")
+        grid.addColumn(new ComponentRenderer<>(this::createReports))
+                .setHeader(UIUtils.createRightAlignedDiv(new Text("Reports")))
+                .setWidth(UIUtils.COLUMN_WIDTH_M)
+                .setFlexGrow(0);
+        grid.addColumn(new ComponentRenderer<>(this::createCompanies))
+                .setHeader(UIUtils.createRightAlignedDiv(new Text("Companies")))
+                .setWidth(UIUtils.COLUMN_WIDTH_M)
                 .setFlexGrow(0);
         grid.addColumn(new LocalDateRenderer<>(Person::getLastModified, "MMM dd, YYYY"))
-                .setHeader("Last Modified")
+                .setHeader("Last Report")
                 .setSortable(true)
-                .setWidth("160px")
+                .setWidth(UIUtils.COLUMN_WIDTH_M)
                 .setFlexGrow(0);
         grid.setSizeFull();
 
@@ -82,7 +87,7 @@ public class Personnel extends AbstractView {
     }
 
     private void filter() {
-        dataProvider.setFilterByValue(Person::getRole, Person.Role.valueOf(appBar.getSelectedTab().getLabel().toUpperCase()));
+        dataProvider.setFilterByValue(Person::getRole, Person.Role.ACCOUNTANT);
     }
 
     private Component createUserInfo(Person person) {
@@ -101,13 +106,13 @@ public class Personnel extends AbstractView {
         }
     }
 
-    private Component createForumPosts(Person person) {
-        Span badge = new Span(Integer.toString(person.getRandomInteger()));
-        if (person.getRandomInteger() > 5) {
-            badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.SUCCESS);
-        } else {
-            badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.ERROR);
-        }
-        return badge;
+    private Component createReports() {
+        int reports = DummyData.getRandomNumber(5000);
+        String format = new DecimalFormat("###,###,###").format(reports);
+        return UIUtils.createRightAlignedDiv(UIUtils.createLabel(Collections.singleton(LumoStyles.FontSize.H4), format));
+    }
+
+    private Component createCompanies() {
+        return UIUtils.createRightAlignedDiv(UIUtils.createLabel(Collections.singleton(LumoStyles.FontSize.H4), String.valueOf(DummyData.getRandomNumber(50))));
     }
 }

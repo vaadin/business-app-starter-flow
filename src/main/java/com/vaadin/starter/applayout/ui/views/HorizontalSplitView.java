@@ -170,7 +170,7 @@ public class HorizontalSplitView extends AbstractView {
 
     private Component createTwitter(Person person) {
         Icon icon = new Icon(VaadinIcon.TWITTER);
-        if (person.getTwitter() != null && !person.getTwitter().isEmpty()) {
+        if (person.getRandomBoolean()) {
             icon.addClassName(LumoStyles.TextColor.PRIMARY);
         } else {
             icon.addClassName(LumoStyles.TextColor.DISABLED);
@@ -179,8 +179,8 @@ public class HorizontalSplitView extends AbstractView {
     }
 
     private Component createForumPosts(Person person) {
-        Span badge = new Span(Integer.toString(person.getForumPosts()));
-        if (person.getForumPosts() > 5) {
+        Span badge = new Span(Integer.toString(person.getRandomInteger()));
+        if (person.getRandomInteger() > 5) {
             badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.SUCCESS);
         } else {
             badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.ERROR);

@@ -24,7 +24,7 @@ public abstract class NaviItem extends Div {
     private String text;
     private Class<? extends Component> navigationTarget;
 
-    private Button expandCollapse;
+    protected Button expandCollapse;
 
     private boolean subItemsVisible;
     private List<NaviItem> subItems;

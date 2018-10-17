@@ -31,8 +31,11 @@ import com.vaadin.starter.applayout.ui.utils.LumoStyles;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
 import com.vaadin.starter.applayout.ui.views.AbstractView;
 
+import javax.swing.text.NumberFormatter;
+import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Locale;
 import java.util.Random;
 
 import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
@@ -64,21 +67,21 @@ public class Payments extends AbstractView {
         grid = new Grid();
         grid.addColumn(new ComponentRenderer<>(this::createStatus))
                 .setHeader("Status")
-                .setWidth("100px")
+                .setWidth(UIUtils.COLUMN_WIDTH_S)
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createFromInfo))
                 .setHeader("From")
-                .setWidth("240px");
+                .setWidth(UIUtils.COLUMN_WIDTH_L);
         grid.addColumn(new ComponentRenderer<>(this::createToInfo))
                 .setHeader("To")
-                .setWidth("240px");
+                .setWidth(UIUtils.COLUMN_WIDTH_L);
         grid.addColumn(new ComponentRenderer<>(this::createAmount))
                 .setHeader(UIUtils.createRightAlignedDiv(new Text("Amount (EUR)")))
-                .setWidth("240px")
+                .setWidth(UIUtils.COLUMN_WIDTH_M)
                 .setFlexGrow(0);
         grid.addColumn(new LocalDateRenderer<>(Payment::getDate, "MMM dd, YYYY"))
                 .setHeader("Date")
-                .setWidth("140px")
+                .setWidth(UIUtils.COLUMN_WIDTH_M)
                 .setFlexGrow(0);
 
         grid.addSelectionListener(e -> {
@@ -147,9 +150,9 @@ public class Payments extends AbstractView {
     private Component createAmount(Payment payment) {
         Double amount = payment.getAmount();
 
-        Label label = UIUtils.createLabel(Collections.singleton(LumoStyles.FontSize.H4), String.valueOf(amount));
+        Label label = UIUtils.createLabel(Collections.singleton(LumoStyles.FontSize.H4), UIUtils.formatAmount(amount));
         label.addClassName(amount > 0 ? LumoStyles.TextColor.SUCCESS : LumoStyles.TextColor.ERROR);
-        
+
         return UIUtils.createRightAlignedDiv(label);
     }
 

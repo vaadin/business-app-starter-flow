@@ -50,28 +50,27 @@ public class AllTransactions extends FlexLayout {
                 .setHeader("ID")
                 .setFrozen(true)
                 .setSortable(true)
-                .setWidth("60px")
+                .setWidth(UIUtils.COLUMN_WIDTH_S)
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createStatus))
                 .setHeader("Status")
-                .setWidth("120px")
+                .setWidth(UIUtils.COLUMN_WIDTH_M)
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createPayeePayerInfo))
                 .setHeader("Payee / Payer")
                 .setSortable(true)
-                .setWidth("240px")
-                .setFlexGrow(1);
+                .setWidth(UIUtils.COLUMN_WIDTH_L);
         grid.addColumn(new ComponentRenderer<>(this::createAmount))
                 .setHeader(UIUtils.createRightAlignedDiv(new Text("Amount (EUR)")))
-                .setWidth("240px")
+                .setWidth(UIUtils.COLUMN_WIDTH_M)
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createAttachment))
                 .setHeader("Attachment")
-                .setWidth("120px")
+                .setWidth(UIUtils.COLUMN_WIDTH_M)
                 .setFlexGrow(0);
         grid.addColumn(new LocalDateRenderer<>(Transaction::getDate, "MMM dd, YYYY"))
                 .setHeader("Date")
-                .setWidth("140px")
+                .setWidth(UIUtils.COLUMN_WIDTH_M)
                 .setFlexGrow(0);
 
         grid.addSelectionListener(e -> {
@@ -169,7 +168,7 @@ public class AllTransactions extends FlexLayout {
     }
 
     private Component createAmount(Transaction transaction) {
-        Label label = UIUtils.createLabel(Collections.singleton(LumoStyles.FontSize.H4), String.valueOf(transaction.getAmount()));
+        Label label = UIUtils.createLabel(Collections.singleton(LumoStyles.FontSize.H4), UIUtils.formatAmount(transaction.getAmount()));
 
         if (transaction.getAmount() < 0) {
             label.addClassName(LumoStyles.TextColor.ERROR);

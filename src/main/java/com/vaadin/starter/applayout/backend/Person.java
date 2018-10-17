@@ -5,7 +5,7 @@ import java.time.LocalDate;
 public class Person {
 
     public enum Role {
-        DESIGNER, DEVELOPER, MANAGER
+        DESIGNER, DEVELOPER, MANAGER, TRADER, PAYMENT_HANDLER, ACCOUNTANT
     }
 
     private Long id;
@@ -13,18 +13,18 @@ public class Person {
     private String lastName;
     private Role role;
     private String email;
-    private String twitter;
-    private int forumPosts;
+    private boolean randomBoolean;
+    private int randomInteger;
     private LocalDate lastModified;
 
-    public Person(Long id, String firstName, String lastName, Role role, String email, String twitter, int forumPosts, LocalDate lastModified) {
+    public Person(Long id, String firstName, String lastName, Role role, String email, boolean randomBoolean, int randomInteger, LocalDate lastModified) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.role = role;
         this.email = email;
-        this.twitter = twitter;
-        this.forumPosts = forumPosts;
+        this.randomBoolean = randomBoolean;
+        this.randomInteger = randomInteger;
         this.lastModified = lastModified;
     }
 
@@ -32,64 +32,12 @@ public class Person {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
     public String getLastName() {
         return lastName;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getTwitter() {
-        return twitter;
-    }
-
-    public void setTwitter(String twitter) {
-        this.twitter = twitter;
-    }
-
-    public int getForumPosts() {
-        return forumPosts;
-    }
-
-    public void setForumPosts(int forumPosts) {
-        this.forumPosts = forumPosts;
-    }
-
-    public LocalDate getLastModified() {
-        return lastModified;
-    }
-
-    public void setLastModified(LocalDate lastModified) {
-        this.lastModified = lastModified;
     }
 
     public String getName() {
@@ -99,4 +47,25 @@ public class Person {
     public String getInitials() {
         return (firstName.substring(0, 1) + lastName.substring(0, 1)).toUpperCase();
     }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public boolean getRandomBoolean() {
+        return randomBoolean;
+    }
+
+    public int getRandomInteger() {
+        return randomInteger;
+    }
+
+    public LocalDate getLastModified() {
+        return lastModified;
+    }
+
 }
