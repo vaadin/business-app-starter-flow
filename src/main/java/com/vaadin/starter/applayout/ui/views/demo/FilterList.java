@@ -1,4 +1,4 @@
-package com.vaadin.starter.applayout.ui.views;
+package com.vaadin.starter.applayout.ui.views.demo;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
@@ -29,6 +29,7 @@ import com.vaadin.starter.applayout.ui.utils.BoxShadowBorders;
 import com.vaadin.starter.applayout.ui.utils.CSSProperties;
 import com.vaadin.starter.applayout.ui.utils.LumoStyles;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
+import com.vaadin.starter.applayout.ui.views.AbstractView;
 
 import java.util.Arrays;
 import java.util.Collections;

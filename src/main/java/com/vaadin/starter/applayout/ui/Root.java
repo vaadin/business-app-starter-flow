@@ -21,6 +21,7 @@ import com.vaadin.starter.applayout.ui.components.navigation.drawer.NaviItem;
 import com.vaadin.starter.applayout.ui.utils.NaviDrawerProvider;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
 import com.vaadin.starter.applayout.ui.views.*;
+import com.vaadin.starter.applayout.ui.views.demo.*;
 import com.vaadin.starter.applayout.ui.views.finance.Payments;
 import com.vaadin.starter.applayout.ui.views.finance.Statistics;
 import com.vaadin.starter.applayout.ui.views.finance.transactions.Transactions;
@@ -78,9 +79,11 @@ public class Root extends FlexLayout
      * Initialise the navigation items.
      */
     private void initNaviItems() {
+        UIConfig.Showcase showcase = UIConfig.getShowcase();
+
         // Initialise the navigation items based on the showcase.
-        if (UIConfig.getShowcase().equals(UIConfig.Showcase.DEMO)) {
-            naviDrawer.addNaviItem(VaadinIcon.GRID_BIG, "Statistics", Dashboard.class);
+        if (showcase.equals(UIConfig.Showcase.DEMO)) {
+            naviDrawer.addNaviItem(VaadinIcon.GRID_BIG, "Dashboard", Dashboard.class);
             naviDrawer.addNaviItem(VaadinIcon.FILE_TEXT, "Reports", Reports.class);
 
             NaviItem personnel = naviDrawer.addNaviItem(VaadinIcon.USERS, "Personnel", Personnel.class);
@@ -90,7 +93,7 @@ public class Root extends FlexLayout
             naviDrawer.addNaviItem(VaadinIcon.FILTER, "Filter List", FilterList.class);
         }
 
-        if (UIConfig.getShowcase().equals(UIConfig.Showcase.FINANCE)) {
+        if (showcase.equals(UIConfig.Showcase.FINANCE)) {
             naviDrawer.addNaviItem(VaadinIcon.MONEY_EXCHANGE, "Transactions", Transactions.class);
             naviDrawer.addNaviItem(VaadinIcon.CREDIT_CARD, "Payments", Payments.class);
             naviDrawer.addNaviItem(VaadinIcon.CHART, "Statistics", Statistics.class);
@@ -98,8 +101,10 @@ public class Root extends FlexLayout
             NaviItem personnel = naviDrawer.addNaviItem(VaadinIcon.USERS, "Personnel", null);
             naviDrawer.addNaviItem(personnel, "Accountants", Accountants.class);
             naviDrawer.addNaviItem(personnel, "Managers", Managers.class);
-            // naviDrawer.addNaviItem(personnel, "Payment Handlers", PaymentHandlers.class);
-            // naviDrawer.addNaviItem(personnel, "Traders", Traders.class);
+        }
+
+        if (showcase.equals(UIConfig.Showcase.INVENTORY)) {
+
         }
     }
 

@@ -1,4 +1,4 @@
-package com.vaadin.starter.applayout.ui.views;
+package com.vaadin.starter.applayout.ui.views.demo;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Text;
@@ -16,6 +16,7 @@ import com.vaadin.starter.applayout.ui.Root;
 import com.vaadin.starter.applayout.ui.components.ListItem;
 import com.vaadin.starter.applayout.ui.components.navigation.bar.AppBar;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
+import com.vaadin.starter.applayout.ui.views.AbstractView;
 
 import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
 

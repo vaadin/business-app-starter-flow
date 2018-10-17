@@ -1,4 +1,4 @@
-package com.vaadin.starter.applayout.ui.views;
+package com.vaadin.starter.applayout.ui.views.demo;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
@@ -27,6 +27,7 @@ import com.vaadin.starter.applayout.ui.utils.BoxShadowBorders;
 import com.vaadin.starter.applayout.ui.utils.CSSProperties;
 import com.vaadin.starter.applayout.ui.utils.LumoStyles;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
+import com.vaadin.starter.applayout.ui.views.AbstractView;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -64,8 +65,9 @@ public class ReportDetails extends AbstractView implements HasUrlParameter<Long>
         // Logo section
         image = new Image("", "");
         image.getStyle().set(CSSProperties.BorderRadius.PROPERTY, "100%");
-        image.setHeight("240px");
-        image.setWidth("240px");
+        image.addClassNames(LumoStyles.Margin.Horizontal.L, LumoStyles.Margin.Bottom.S);
+        image.setHeight("200px");
+        image.setWidth("200px");
 
         balance = new ListItem(VaadinIcon.MONEY, "", "Current balance");
         balance.setDividerVisible(true);
