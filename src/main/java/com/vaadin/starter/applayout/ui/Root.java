@@ -4,7 +4,6 @@ import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.ClickNotifier;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasElement;
-import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -14,7 +13,6 @@ import com.vaadin.flow.component.page.Viewport;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.RouterLayout;
-import com.vaadin.flow.server.ErrorEvent;
 import com.vaadin.flow.server.ErrorHandler;
 import com.vaadin.flow.server.InitialPageSettings;
 import com.vaadin.flow.server.PageConfigurator;
@@ -23,7 +21,6 @@ import com.vaadin.starter.applayout.backend.UIConfig;
 import com.vaadin.starter.applayout.ui.components.navigation.bar.TabBar;
 import com.vaadin.starter.applayout.ui.components.navigation.drawer.NaviDrawer;
 import com.vaadin.starter.applayout.ui.components.navigation.drawer.NaviItem;
-import com.vaadin.starter.applayout.ui.utils.NaviDrawerProvider;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
 import com.vaadin.starter.applayout.ui.views.*;
 import com.vaadin.starter.applayout.ui.views.demo.*;
@@ -79,7 +76,7 @@ public class Root extends FlexLayout
      * Initialise the required components and containers.
      */
     private void initStructure() {
-        naviDrawer = NaviDrawerProvider.getNaviDrawer();
+        naviDrawer = AppLayoutUI.getNaviDrawer();
 
         initViewContainer();
 

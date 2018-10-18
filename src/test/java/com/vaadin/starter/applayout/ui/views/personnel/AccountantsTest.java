@@ -6,6 +6,7 @@ import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.starter.applayout.backend.DummyData;
 import com.vaadin.starter.applayout.backend.Person;
+import com.vaadin.starter.applayout.ui.AppLayoutUI;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class AccountantsTest {
     @BeforeEach
     public void mockVaadin() {
-        MockVaadin.setup(new Routes().autoDiscoverViews("com.vaadin.starter.applayout"));
+        MockVaadin.setup(new Routes().autoDiscoverViews("com.vaadin.starter.applayout"), AppLayoutUI::new);
         UI.getCurrent().navigate("accountants");
     }
 
