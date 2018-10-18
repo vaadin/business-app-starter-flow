@@ -4,16 +4,21 @@ import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.ClickNotifier;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasElement;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.page.Viewport;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.RouterLayout;
+import com.vaadin.flow.server.ErrorEvent;
+import com.vaadin.flow.server.ErrorHandler;
 import com.vaadin.flow.server.InitialPageSettings;
 import com.vaadin.flow.server.PageConfigurator;
+import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.starter.applayout.backend.UIConfig;
 import com.vaadin.starter.applayout.ui.components.navigation.bar.TabBar;
 import com.vaadin.starter.applayout.ui.components.navigation.drawer.NaviDrawer;
@@ -27,6 +32,9 @@ import com.vaadin.starter.applayout.ui.views.finance.Statistics;
 import com.vaadin.starter.applayout.ui.views.finance.transactions.Transactions;
 import com.vaadin.starter.applayout.ui.views.personnel.*;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Collections;
 
 @HtmlImport("frontend://styles/shared-styles.html")
@@ -34,7 +42,8 @@ import java.util.Collections;
 public class Root extends FlexLayout
         implements RouterLayout, PageConfigurator, BeforeEnterObserver {
 
-    private String CLASS_NAME = "root";
+    private static final Logger log = LoggerFactory.getLogger(Root.class);
+    private static final String CLASS_NAME = "root";
 
     private Div appHeaderOuter;
     private Div appHeaderInner;
@@ -49,6 +58,11 @@ public class Root extends FlexLayout
     private FlexLayout viewContainer;
 
     public Root() {
+        VaadinSession.getCurrent().setErrorHandler((ErrorHandler) errorEvent -> {
+            log.error("Uncaught UI exception", errorEvent.getThrowable());
+            Notification.show("We are sorry, but an internal error occurred");
+        });
+
         setClassName(CLASS_NAME);
 
         // Initialise the UI building blocks.

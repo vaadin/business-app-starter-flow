@@ -30,10 +30,10 @@ public class NaviTabItem extends NaviItem {
     public NaviTabItem(String svg, String text, Class<? extends Component> navigationTarget) {
         this(text, navigationTarget);
         try {
-            String content = readFile(svg, Charset.defaultCharset());
+            String content = readFile(svg);
             link.getElement().insertChild(0, createSVGContainer(content));
         } catch (Exception e) {
-            System.out.println(e);
+            throw new RuntimeException(e);
         }
     }
 
