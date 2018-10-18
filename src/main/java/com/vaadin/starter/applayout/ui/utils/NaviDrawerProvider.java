@@ -9,7 +9,7 @@ import com.vaadin.starter.applayout.ui.components.navigation.drawer.NaviTabDrawe
 
 public class NaviDrawerProvider {
 
-    private static String NAVI_DRAWER = "navi-drawer";
+    private static final String NAVI_DRAWER = "navi-drawer";
 
     public static NaviDrawer getNaviDrawer() {
         if (ComponentUtil.getData(UI.getCurrent(), NAVI_DRAWER) == null) {

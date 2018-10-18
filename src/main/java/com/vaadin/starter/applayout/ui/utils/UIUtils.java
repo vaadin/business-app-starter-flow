@@ -12,18 +12,19 @@ import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.textfield.TextField;
 
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.Collection;
-import java.util.Locale;
 
 public class UIUtils {
 
 
-    public static String COLUMN_WIDTH_S = "80px";
-    public static String COLUMN_WIDTH_M = "160px";
-    public static String COLUMN_WIDTH_L = "240px";
+    public static final String COLUMN_WIDTH_S = "80px";
+    public static final String COLUMN_WIDTH_M = "160px";
+    public static final String COLUMN_WIDTH_L = "240px";
 
-    public static DecimalFormat format = new DecimalFormat("###,###,###.00");
+    /**
+     * DecimalFormat is thread-unsafe.
+     */
+    private static final ThreadLocal<DecimalFormat> formatCache = ThreadLocal.withInitial(() -> new DecimalFormat("###,###,###.00"));
 
 
     /* ==== LAYOUTS ==== */
@@ -252,10 +253,10 @@ public class UIUtils {
 
     /* === NUMBERS === */
     public static String formatAmount(Double amount) {
-        return format.format(amount);
+        return formatCache.get().format(amount);
     }
 
     public static String formatAmount(int amount) {
-        return format.format(amount);
+        return formatCache.get().format(amount);
     }
 }
