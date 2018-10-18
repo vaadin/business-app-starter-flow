@@ -8,11 +8,11 @@ import java.util.Random;
 
 public class DummyData {
 
-    private static Map<Long, Report> REPORTS = new HashMap<>();
-    private static Map<Long, Person> PERSONS = new HashMap<>();
-    private static Map<Long, Transaction> TRANSACTIONS = new HashMap<>();
-    private static Map<Long, BankAccount> BALANCES = new HashMap<>();
-    private static Map<Long, Payment> PAYMENTS = new HashMap<>();
+    private static final Map<Long, Report> REPORTS = new HashMap<>();
+    private static final Map<Long, Person> PERSONS = new HashMap<>();
+    private static final Map<Long, Transaction> TRANSACTIONS = new HashMap<>();
+    private static final Map<Long, BankAccount> BALANCES = new HashMap<>();
+    private static final Map<Long, Payment> PAYMENTS = new HashMap<>();
 
     private static final String IMG_PATH = "frontend/styles/images/";
     private static Random random = new Random();
