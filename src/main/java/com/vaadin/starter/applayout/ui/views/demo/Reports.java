@@ -16,13 +16,13 @@ import com.vaadin.starter.applayout.ui.Root;
 import com.vaadin.starter.applayout.ui.components.ListItem;
 import com.vaadin.starter.applayout.ui.components.navigation.bar.AppBar;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
-import com.vaadin.starter.applayout.ui.views.AbstractView;
+import com.vaadin.starter.applayout.ui.views.ViewFrame;
 
 import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
 
 @Route(value = "reports", layout = Root.class)
 @PageTitle("Reports")
-public class Reports extends AbstractView {
+public class Reports extends ViewFrame {
 
     private Grid<Report> grid;
     private AppBar appBar;
@@ -58,15 +58,12 @@ public class Reports extends AbstractView {
         grid.addSelectionListener(event -> event.getFirstSelectedItem().ifPresent(this::viewDetails));
         grid.setItems(DummyData.getReports());
         grid.setSizeFull();
-    }
 
-    @Override
-    protected void initSlots() {
         if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
             setHeader(appBar);
         }
         setContent(grid);
-        getContent().addClassName(GRID_VIEW);
+        getContentComponent().addClassName(GRID_VIEW);
     }
 
     private Component createReportInfo(Report report) {

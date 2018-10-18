@@ -27,7 +27,7 @@ import com.vaadin.starter.applayout.ui.components.ListItem;
 import com.vaadin.starter.applayout.ui.components.navigation.bar.AppBar;
 import com.vaadin.starter.applayout.ui.utils.LumoStyles;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
-import com.vaadin.starter.applayout.ui.views.AbstractView;
+import com.vaadin.starter.applayout.ui.views.ViewFrame;
 
 import java.util.Collections;
 
@@ -35,7 +35,7 @@ import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
 
 @Route(value = "horizontal-split-view", layout = Root.class)
 @PageTitle("Horizontal Split View")
-public class HorizontalSplitView extends AbstractView {
+public class HorizontalSplitView extends ViewFrame {
 
     private AppBar appBar;
     private FlexLayout content;
@@ -96,10 +96,7 @@ public class HorizontalSplitView extends AbstractView {
 
         // Set the content's content.
         content.add(gridWrapper, detailsDrawer);
-    }
 
-    @Override
-    protected void initSlots() {
         if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
             setHeader(appBar);
         }

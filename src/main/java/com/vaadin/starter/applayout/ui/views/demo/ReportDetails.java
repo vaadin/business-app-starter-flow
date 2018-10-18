@@ -27,7 +27,7 @@ import com.vaadin.starter.applayout.ui.utils.BoxShadowBorders;
 import com.vaadin.starter.applayout.ui.utils.CSSProperties;
 import com.vaadin.starter.applayout.ui.utils.LumoStyles;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
-import com.vaadin.starter.applayout.ui.views.AbstractView;
+import com.vaadin.starter.applayout.ui.views.ViewFrame;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -37,7 +37,7 @@ import java.util.Random;
 
 @Route(value = "report-details", layout = Root.class)
 @PageTitle("Report Details")
-public class ReportDetails extends AbstractView implements HasUrlParameter<Long> {
+public class ReportDetails extends ViewFrame implements HasUrlParameter<Long> {
 
     private static final String CLASS_NAME = "report-details";
 
@@ -114,10 +114,7 @@ public class ReportDetails extends AbstractView implements HasUrlParameter<Long>
                 transactionsChart
         );
         viewport.getStyle().set(CSSProperties.MaxWidth.PROPERTY, CSSProperties.MaxWidth._800);
-    }
 
-    @Override
-    protected void initSlots() {
         if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
             setHeader(appBar);
         }

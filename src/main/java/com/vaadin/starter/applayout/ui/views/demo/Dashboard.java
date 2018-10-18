@@ -19,7 +19,7 @@ import com.vaadin.starter.applayout.ui.components.navigation.bar.AppBar;
 import com.vaadin.starter.applayout.ui.utils.CSSProperties;
 import com.vaadin.starter.applayout.ui.utils.LumoStyles;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
-import com.vaadin.starter.applayout.ui.views.AbstractView;
+import com.vaadin.starter.applayout.ui.views.ViewFrame;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -27,7 +27,7 @@ import java.util.Random;
 
 @Route(value = "dashboard", layout = Root.class)
 @PageTitle("Statistics")
-public class Dashboard extends AbstractView {
+public class Dashboard extends ViewFrame {
 
     private String CLASS_NAME = "dashboard";
 
@@ -55,10 +55,7 @@ public class Dashboard extends AbstractView {
                         new Div(createHeader(VaadinIcon.TIME_BACKWARD, "Recent Items"), createTabbedList())
                 )
         );
-    }
 
-    @Override
-    protected void initSlots() {
         if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
             setHeader(appBar);
         }

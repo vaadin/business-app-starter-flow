@@ -29,7 +29,7 @@ import com.vaadin.starter.applayout.ui.utils.BoxShadowBorders;
 import com.vaadin.starter.applayout.ui.utils.CSSProperties;
 import com.vaadin.starter.applayout.ui.utils.LumoStyles;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
-import com.vaadin.starter.applayout.ui.views.AbstractView;
+import com.vaadin.starter.applayout.ui.views.ViewFrame;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -38,7 +38,7 @@ import static com.vaadin.starter.applayout.ui.utils.ViewStyles.FILTER_LIST_VIEW;
 
 @Route(value = "filter-list", layout = Root.class)
 @PageTitle("Filter list")
-public class FilterList extends AbstractView {
+public class FilterList extends ViewFrame {
 
     private AppBar appBar;
     private Grid<Person> grid;
@@ -98,10 +98,6 @@ public class FilterList extends AbstractView {
         content = UIUtils.createColumn(Collections.singleton(FILTER_LIST_VIEW), filterArea, grid);
         content.setHeight("100%");
 
-    }
-
-    @Override
-    protected void initSlots() {
         if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
             setHeader(appBar);
         }

@@ -5,43 +5,30 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
 
-public abstract class AbstractView extends Div implements BeforeEnterObserver {
+/**
+ * A view frame that establishes app design guidelines. It consists of three parts:
+ * <ul>
+ *     <li>Topmost {@link #setHeader(Component) header}</li>
+ *     <li>Center {@link #setContent(Component) content}</li>
+ *     <li>Bottom {@link #setFooter(Component) footer}</li>
+ * </ul>
+ */
+public class ViewFrame extends Div {
 
     private final String CLASS_NAME = "abstract-view";
 
-    private Div header;
-    private Div content;
-    private Div footer;
+    private final Div header = new Div();
+    private final Div content = new Div();
+    private final Div footer = new Div();
 
-    public AbstractView() {
+    public ViewFrame() {
         setClassName(CLASS_NAME);
 
-        initHeader();
-        initContent();
-        initFooter();
+        header.setClassName(CLASS_NAME + "__header");
+        content.setClassName(CLASS_NAME + "__content");
+        footer.setClassName(CLASS_NAME + "__footer");
 
         add(header, content, footer);
-    }
-
-    protected abstract void initSlots();
-
-    protected void initHeader() {
-        header = new Div();
-        header.setClassName(CLASS_NAME + "__header");
-    }
-
-    protected void initContent() {
-        content = new Div();
-        content.setClassName(CLASS_NAME + "__content");
-    }
-
-    protected void initFooter() {
-        footer = new Div();
-        footer.setClassName(CLASS_NAME + "__footer");
-    }
-
-    public Div getHeader() {
-        return header;
     }
 
     public void setHeader(Component component) {
@@ -49,7 +36,7 @@ public abstract class AbstractView extends Div implements BeforeEnterObserver {
         header.add(component);
     }
 
-    public Div getContent() {
+    public Div getContentComponent() {
         return content;
     }
 
@@ -58,17 +45,8 @@ public abstract class AbstractView extends Div implements BeforeEnterObserver {
         content.add(component);
     }
 
-    public Div getFooter() {
-        return footer;
-    }
-
     public void setFooter(Component component) {
         footer.removeAll();
         footer.add(component);
-    }
-
-    @Override
-    public void beforeEnter(BeforeEnterEvent beforeEnterEvent) {
-        initSlots();
     }
 }

@@ -18,13 +18,13 @@ import com.vaadin.starter.applayout.ui.Root;
 import com.vaadin.starter.applayout.ui.components.ListItem;
 import com.vaadin.starter.applayout.ui.components.navigation.bar.AppBar;
 import com.vaadin.starter.applayout.ui.utils.LumoStyles;
-import com.vaadin.starter.applayout.ui.views.AbstractView;
+import com.vaadin.starter.applayout.ui.views.ViewFrame;
 
 import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
 
 @Route(value = "personnel", layout = Root.class)
 @PageTitle("Personnel")
-public class Personnel extends AbstractView {
+public class Personnel extends ViewFrame {
 
     private AppBar appBar;
 
@@ -71,15 +71,12 @@ public class Personnel extends AbstractView {
         grid.setDataProvider(dataProvider);
 
         filter();
-    }
 
-    @Override
-    protected void initSlots() {
         if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
             setHeader(appBar);
         }
         setContent(grid);
-        getContent().addClassName(GRID_VIEW);
+        getContentComponent().addClassName(GRID_VIEW);
     }
 
     private void filter() {

@@ -8,12 +8,12 @@ import com.vaadin.flow.router.RouterLayout;
 import com.vaadin.starter.applayout.backend.UIConfig;
 import com.vaadin.starter.applayout.ui.Root;
 import com.vaadin.starter.applayout.ui.components.navigation.bar.AppBar;
-import com.vaadin.starter.applayout.ui.views.AbstractView;
+import com.vaadin.starter.applayout.ui.views.ViewFrame;
 
 @Route(value = "transactions", layout = Root.class)
 @ParentLayout(Root.class)
 @PageTitle("Transactions")
-public class Transactions extends AbstractView implements RouterLayout {
+public class Transactions extends ViewFrame implements RouterLayout {
 
     private AppBar appBar;
     private String STATEMENTS = "All Transactions";
@@ -30,10 +30,7 @@ public class Transactions extends AbstractView implements RouterLayout {
         appBar.centerTabs();
 
         updateContent();
-    }
 
-    @Override
-    protected void initSlots() {
         if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
             setHeader(appBar);
         }
@@ -47,14 +44,13 @@ public class Transactions extends AbstractView implements RouterLayout {
 
         } else if (label.equals(BALANCES)) {
             setContent(new BankAccounts());
-
         }
     }
 
     @Override
     public void showRouterLayoutContent(HasElement content) {
         if (content != null) {
-            getContent().getElement().appendChild(content.getElement());
+            getContentComponent().getElement().appendChild(content.getElement());
         }
     }
 }

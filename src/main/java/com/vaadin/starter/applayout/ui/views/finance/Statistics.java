@@ -20,14 +20,14 @@ import com.vaadin.starter.applayout.ui.components.navigation.bar.AppBar;
 import com.vaadin.starter.applayout.ui.utils.CSSProperties;
 import com.vaadin.starter.applayout.ui.utils.LumoStyles;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
-import com.vaadin.starter.applayout.ui.views.AbstractView;
+import com.vaadin.starter.applayout.ui.views.ViewFrame;
 
 import java.util.Arrays;
 import java.util.Collections;
 
 @Route(value = "statistics", layout = Root.class)
 @PageTitle("Statistics")
-public class Statistics extends AbstractView {
+public class Statistics extends ViewFrame {
 
     private static final String REPORTS = "Reports";
     private static final String LOGS = "Logs";
@@ -53,10 +53,7 @@ public class Statistics extends AbstractView {
                         createTabbedList(LOGS)
                 )
         );
-    }
 
-    @Override
-    protected void initSlots() {
         if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
             setHeader(appBar);
         }
