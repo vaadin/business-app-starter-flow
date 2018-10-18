@@ -66,7 +66,7 @@ public class FilterList extends AbstractView {
         );
 
         // Grid
-        grid = new Grid();
+        grid = new Grid<>();
         grid.addColumn(Person::getId)
                 .setHeader("ID")
                 .setFrozen(true)
@@ -134,7 +134,7 @@ public class FilterList extends AbstractView {
 
         Checkbox checkbox = new Checkbox("Checkbox label");
 
-        RadioButtonGroup optionGroup = new RadioButtonGroup();
+        RadioButtonGroup<String> optionGroup = new RadioButtonGroup<>();
         optionGroup.setItems("Option 1", "Option 2", "Option 3");
 
         options = UIUtils.createColumn(Arrays.asList(LumoStyles.Padding.Vertical.M, LumoStyles.Spacing.Bottom.S), title, combo, checkbox, optionGroup);

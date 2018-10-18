@@ -163,7 +163,7 @@ public class Dashboard extends AbstractView {
         conf.getLegend().setEnabled(false);
 
         XAxis xAxis = new XAxis();
-        xAxis.setCategories(new String[]{"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"});
+        xAxis.setCategories("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
         conf.addxAxis(xAxis);
 
         conf.getyAxis().setTitle("");

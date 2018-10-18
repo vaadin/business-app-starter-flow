@@ -39,9 +39,7 @@ import java.util.Random;
 @PageTitle("Report Details")
 public class ReportDetails extends AbstractView implements HasUrlParameter<Long> {
 
-    private String CLASS_NAME = "report-details";
-
-    private Random random;
+    private static final String CLASS_NAME = "report-details";
 
     private AppBar appBar;
     private Div viewport;
@@ -53,7 +51,7 @@ public class ReportDetails extends AbstractView implements HasUrlParameter<Long>
 
     public ReportDetails() {
         formatter = DateTimeFormatter.ofPattern("MMM dd, YYYY");
-        random = new Random();
+        final Random random = new Random();
         Integer randBalance = random.nextInt(5000);
 
         // Header
@@ -172,7 +170,7 @@ public class ReportDetails extends AbstractView implements HasUrlParameter<Long>
         conf.getLegend().setEnabled(true);
 
         XAxis xAxis = new XAxis();
-        xAxis.setCategories(new String[]{"14.9.", "15.9.", "16.9.", "17.9.", "18.9.", "19.9.", "20.9.", "21.9."});
+        xAxis.setCategories("14.9.", "15.9.", "16.9.", "17.9.", "18.9.", "19.9.", "20.9.", "21.9.");
         conf.addxAxis(xAxis);
 
         conf.getyAxis().setTitle("");

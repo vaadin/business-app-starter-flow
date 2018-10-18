@@ -40,7 +40,7 @@ public class Managers extends AbstractView {
         appBar = new AppBar("Managers");
 
         // Grid
-        grid = new Grid();
+        grid = new Grid<>();
         grid.addColumn(Person::getId)
                 .setHeader("ID")
                 .setFrozen(true)

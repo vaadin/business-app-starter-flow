@@ -32,7 +32,7 @@ public class Reports extends AbstractView {
         appBar = new AppBar("Reports");
 
         // Grid
-        grid = new Grid();
+        grid = new Grid<>();
         grid.addColumn(new ComponentRenderer<>(this::createReportInfo))
                 .setHeader("Company")
                 .setFrozen(true)

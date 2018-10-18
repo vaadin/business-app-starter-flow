@@ -24,24 +24,19 @@ import com.vaadin.starter.applayout.ui.views.AbstractView;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Random;
 
 @Route(value = "statistics", layout = Root.class)
 @PageTitle("Statistics")
 public class Statistics extends AbstractView {
 
-    public static final String REPORTS = "Reports";
-    public static final String LOGS = "Logs";
+    private static final String REPORTS = "Reports";
+    private static final String LOGS = "Logs";
     private String CLASS_NAME = "dashboard";
-
-    private Random random;
 
     private AppBar appBar;
     private Div viewport;
 
     public Statistics() {
-        random = new Random();
-
         // Header
         appBar = new AppBar("Statistics");
 
@@ -187,7 +182,7 @@ public class Statistics extends AbstractView {
         conf.getLegend().setEnabled(false);
 
         XAxis xAxis = new XAxis();
-        xAxis.setCategories(new String[]{"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"});
+        xAxis.setCategories("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
         conf.addxAxis(xAxis);
 
         conf.getyAxis().setTitle("");

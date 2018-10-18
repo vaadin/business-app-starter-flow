@@ -13,6 +13,7 @@ import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.upload.Upload;
 import com.vaadin.flow.data.provider.DataProvider;
+import com.vaadin.flow.data.provider.ListDataProvider;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.data.renderer.LocalDateRenderer;
 import com.vaadin.flow.router.PageTitle;
@@ -49,7 +50,7 @@ public class HorizontalSplitView extends AbstractView {
         content.setSizeFull();
 
         // Grid
-        Grid<Person> grid = new Grid();
+        Grid<Person> grid = new Grid<>();
         grid.addColumn(Person::getId)
                 .setHeader("ID")
                 .setFrozen(true)
@@ -81,7 +82,7 @@ public class HorizontalSplitView extends AbstractView {
         grid.setSizeFull();
 
         // Data provider
-        DataProvider dataProvider = DataProvider.ofCollection(DummyData.getPersons());
+        ListDataProvider<Person> dataProvider = DataProvider.ofCollection(DummyData.getPersons());
         grid.setDataProvider(dataProvider);
 
         // Grid wrapper for some nice padding.
@@ -120,7 +121,7 @@ public class HorizontalSplitView extends AbstractView {
         lastName.setWidth("100%");
         form.addFormItem(lastName, "Last Name");
 
-        RadioButtonGroup gender = new RadioButtonGroup();
+        RadioButtonGroup<String> gender = new RadioButtonGroup<>();
         gender.setItems("Male", "Female", "Other");
         FormLayout.FormItem genderItem = form.addFormItem(gender, "Gender");
         setColSpan(genderItem, 2);

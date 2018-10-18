@@ -41,7 +41,7 @@ public class Accountants extends AbstractView {
         appBar = new AppBar("Traders");
 
         // Grid
-        grid = new Grid();
+        grid = new Grid<>();
         grid.addColumn(Person::getId)
                 .setHeader("ID")
                 .setFrozen(true)

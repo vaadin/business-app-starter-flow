@@ -66,7 +66,7 @@ public class Payments extends AbstractView {
         content.setSizeFull();
 
         // Grid
-        grid = new Grid();
+        grid = new Grid<>();
         grid.addColumn(new ComponentRenderer<>(this::createStatus))
                 .setHeader("Status")
                 .setWidth(UIUtils.COLUMN_WIDTH_M)

@@ -41,7 +41,7 @@ public class Personnel extends AbstractView {
         appBar.centerTabs();
 
         // Grid
-        grid = new Grid();
+        grid = new Grid<>();
         grid.addColumn(Person::getId)
                 .setHeader("ID")
                 .setFrozen(true)
