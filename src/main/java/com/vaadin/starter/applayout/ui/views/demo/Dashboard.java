@@ -29,15 +29,14 @@ import java.util.Random;
 @PageTitle("Statistics")
 public class Dashboard extends ViewFrame {
 
-    private String CLASS_NAME = "dashboard";
+    private static final String CLASS_NAME = "dashboard";
 
-    private Random random;
+    private final Random random = new Random();
 
-    private AppBar appBar;
-    private Div viewport;
+    private final AppBar appBar;
+    private final Div viewport;
 
     public Dashboard() {
-        random = new Random();
 
         // Header
         appBar = new AppBar("Statistics");
@@ -192,7 +191,7 @@ public class Dashboard extends ViewFrame {
         return card;
     }
 
-    private class DataSeriesItemWithRadius extends DataSeriesItem {
+    private static class DataSeriesItemWithRadius extends DataSeriesItem {
 
         private String radius;
         private String innerRadius;

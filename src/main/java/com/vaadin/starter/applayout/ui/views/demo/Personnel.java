@@ -26,10 +26,10 @@ import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
 @PageTitle("Personnel")
 public class Personnel extends ViewFrame {
 
-    private AppBar appBar;
+    private final AppBar appBar;
 
-    private Grid<Person> grid;
-    private ListDataProvider<Person> dataProvider;
+    private final Grid<Person> grid;
+    private final ListDataProvider<Person> dataProvider;
 
     public Personnel() {
         // Header

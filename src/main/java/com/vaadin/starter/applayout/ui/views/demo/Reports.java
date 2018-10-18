@@ -24,8 +24,8 @@ import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
 @PageTitle("Reports")
 public class Reports extends ViewFrame {
 
-    private Grid<Report> grid;
-    private AppBar appBar;
+    private final Grid<Report> grid;
+    private final AppBar appBar;
 
     public Reports() {
         // Header

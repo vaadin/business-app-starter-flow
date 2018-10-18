@@ -41,16 +41,18 @@ public class ReportDetails extends ViewFrame implements HasUrlParameter<Long> {
 
     private static final String CLASS_NAME = "report-details";
 
-    private AppBar appBar;
+    private final AppBar appBar;
     private Div viewport;
     private Image image;
     private ListItem balance;
     private ListItem runningDate;
     private ListItem status;
-    private DateTimeFormatter formatter;
+
+    private static DateTimeFormatter createFormatter() {
+        return DateTimeFormatter.ofPattern("MMM dd, YYYY");
+    }
 
     public ReportDetails() {
-        formatter = DateTimeFormatter.ofPattern("MMM dd, YYYY");
         final Random random = new Random();
         Integer randBalance = random.nextInt(5000);
 
@@ -129,7 +131,7 @@ public class ReportDetails extends ViewFrame implements HasUrlParameter<Long> {
         image.setSrc(report.getSource());
 
         balance.setPrimaryText(Double.toString(report.getBalance()) + " " + report.getCurrency());
-        runningDate.setPrimaryText(report.getStartDate().format(formatter) + " - " + report.getEndDate().format(formatter));
+        runningDate.setPrimaryText(report.getStartDate().format(createFormatter()) + " - " + report.getEndDate().format(createFormatter()));
 
         if (report.getStartDate().isAfter(LocalDate.now())) {
             status.setPrimaryText("Coming Soon");

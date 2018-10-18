@@ -40,8 +40,8 @@ import static com.vaadin.starter.applayout.ui.utils.ViewStyles.FILTER_LIST_VIEW;
 @PageTitle("Filter list")
 public class FilterList extends ViewFrame {
 
-    private AppBar appBar;
-    private Grid<Person> grid;
+    private final AppBar appBar;
+    private final Grid<Person> grid;
 
     private Div filterArea;
     private Button toggleButton;

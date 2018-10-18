@@ -37,8 +37,8 @@ import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
 @PageTitle("Horizontal Split View")
 public class HorizontalSplitView extends ViewFrame {
 
-    private AppBar appBar;
-    private FlexLayout content;
+    private final AppBar appBar;
+    private final FlexLayout content;
     private final DetailsDrawer detailsDrawer;
 
     public HorizontalSplitView() {
