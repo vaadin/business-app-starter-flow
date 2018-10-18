@@ -15,7 +15,7 @@ import java.util.Collections;
 
 public class NaviTabItem extends NaviItem {
 
-    private Div link;
+    private final Div link;
 
     public NaviTabItem(VaadinIcon icon, String text, Class<? extends Component> navigationTarget) {
         this(text, navigationTarget);

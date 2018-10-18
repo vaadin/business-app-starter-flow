@@ -13,7 +13,7 @@ import java.nio.charset.Charset;
 
 public class NaviLinkItem extends NaviItem {
 
-    private Component link;
+    private final Component link;
 
     public NaviLinkItem(VaadinIcon icon, String text, Class<? extends Component> navigationTarget) {
         this(text, navigationTarget);
