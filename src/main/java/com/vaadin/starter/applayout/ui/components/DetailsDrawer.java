@@ -8,13 +8,11 @@ import java.util.Collections;
 
 public class DetailsDrawer extends FlexLayout {
 
-    private String CLASS_NAME = "details-drawer";
+    private static final String CLASS_NAME = "details-drawer";
 
-    private Position position;
-
-    private FlexLayout header;
-    private FlexLayout content;
-    private FlexLayout footer;
+    private final FlexLayout header;
+    private final FlexLayout content;
+    private final FlexLayout footer;
 
     public enum Position {
         RIGHT, BOTTOM
@@ -48,7 +46,6 @@ public class DetailsDrawer extends FlexLayout {
     }
 
     public void setPosition(Position position) {
-        this.position = position;
         getElement().setAttribute("position", position.name().toLowerCase());
     }
 

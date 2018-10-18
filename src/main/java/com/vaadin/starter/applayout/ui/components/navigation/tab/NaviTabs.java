@@ -16,7 +16,9 @@ public class NaviTabs extends Tabs {
     private ComponentEventListener<SelectedChangeEvent> listener = (ComponentEventListener<SelectedChangeEvent>) selectedChangeEvent -> navigateToSelectedTab();
 
     public NaviTabs() {
-        init();
+        getElement().setAttribute("overflow", "end");
+        getStyle().set(CSSProperties.Overflow.PROPERTY, CSSProperties.Overflow.HIDDEN);
+        addSelectedChangeListener(listener);
     }
 
     /**
@@ -24,14 +26,8 @@ public class NaviTabs extends Tabs {
      * tab's navigation target (if any). This constructor allows you to add the tabs before the event listener is set.
      */
     public NaviTabs(NaviTab... naviTabs) {
+        this();
         add(naviTabs);
-        init();
-    }
-
-    private void init() {
-        getElement().setAttribute("overflow", "end");
-        getStyle().set(CSSProperties.Overflow.PROPERTY, CSSProperties.Overflow.HIDDEN);
-        addSelectedChangeListener(listener);
     }
 
     /**
