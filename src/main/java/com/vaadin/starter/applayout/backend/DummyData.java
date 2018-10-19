@@ -1,10 +1,7 @@
 package com.vaadin.starter.applayout.backend;
 
 import java.time.LocalDate;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 public class DummyData {
 
@@ -14,6 +11,7 @@ public class DummyData {
     private static final Map<Long, BankAccount> BALANCES = new HashMap<>();
     private static final Map<Long, Payment> PAYMENTS = new HashMap<>();
     private static final Map<Long, Item> ITEMS = new HashMap<>();
+    private static final Map<Long, Order> ORDERS = new HashMap<>();
 
     private static final String IMG_PATH = "frontend/styles/images/";
     private static final Random random = new Random();
@@ -82,7 +80,7 @@ public class DummyData {
         HEALTHCARE.put("Tylenol PM", "Experience relief from aches and pains, while getting a good night's rest, with TYLENOL® PM Extra Strength.");
         HEALTHCARE.put("Osteo Bi-Flex", "Supporting your joint health year after year, Osteo Bi-Flex offers joint supplements made to provide joint comfort, mobility and flexibility.");
 
-        HEALTHCARE.forEach((name, desc) -> ITEMS.put(Long.valueOf(ITEMS.size()), new Item(Item.Category.HEALTHCARE, name, desc, getRandomDouble(40, 500), getCompany(), getRandomInt(200), getRandomInt(50000))));
+        HEALTHCARE.forEach((name, desc) -> ITEMS.put(Long.valueOf(ITEMS.size()), new Item(Item.Category.HEALTHCARE, name, desc, getCompany(), getRandomDouble(40, 500), getRandomInt(0, 200), getRandomInt(0, 50000))));
 
         DENTAL.put("Mirror", "Dental mirrors are used by the dentist or dental auxiliary to view a mirror image of the teeth in locations of the mouth where visibility is difficult or impossible.");
         DENTAL.put("Sickle Probe", "Used in the dental armamentarium. A sharp point at the end of the explorer is used to enhance tactile sensation.");
@@ -103,7 +101,7 @@ public class DummyData {
         DENTAL.put("Burnisher", "For polishing and contouring amalgam fillings and to polish composite fillings.");
         DENTAL.put("Plugger", "Used to achieve a well condensed filling by compressing the filling material into the cavity and applying pressure.");
 
-        DENTAL.forEach((name, desc) -> ITEMS.put(Long.valueOf(ITEMS.size()), new Item(Item.Category.DENTAL, name, desc, getRandomDouble(40, 500), getCompany(), getRandomInt(200), getRandomInt(50000))));
+        DENTAL.forEach((name, desc) -> ITEMS.put(Long.valueOf(ITEMS.size()), new Item(Item.Category.DENTAL, name, desc, getCompany(), getRandomDouble(40, 500), getRandomInt(0, 200), getRandomInt(0, 50000))));
 
         CONSTRUCTION.put("Chapter 8 Barriers", "Ideal for event management and pedestrian control.");
         CONSTRUCTION.put("Manhole Barrier", "This product is compliant with Chapter 8 street works.");
@@ -123,7 +121,11 @@ public class DummyData {
         CONSTRUCTION.put("Work Platform", "Aluminium 'Hop-Up' with unique folding first step to provide extra working level.");
         CONSTRUCTION.put("Scaffold Systems", "All aluminium construction with timber platform 1300 x 460mm.");
 
-        CONSTRUCTION.forEach((name, desc) -> ITEMS.put(Long.valueOf(ITEMS.size()), new Item(Item.Category.CONSTRUCTION, name, desc, getRandomDouble(40, 500), getCompany(), getRandomInt(200), getRandomInt(50000))));
+        CONSTRUCTION.forEach((name, desc) -> ITEMS.put(Long.valueOf(ITEMS.size()), new Item(Item.Category.CONSTRUCTION, name, desc, getCompany(), getRandomDouble(40, 500), getRandomInt(0, 200), getRandomInt(0, 50000))));
+
+        for (i = 0; i < 40; i++) {
+            ORDERS.put(i, new Order(getOrderStatus(), getOrderItems(), getCompany(), getDate()));
+        }
 
     }
 
@@ -220,8 +222,8 @@ public class DummyData {
         return random.nextDouble() * -20000;
     }
 
-    public static int getRandomInt(int bound) {
-        return random.nextInt(bound);
+    public static int getRandomInt(int min, int max) {
+        return random.nextInt(max + 1 - min) + min;
     }
 
     public static Double getRandomDouble(int min, int max) {
@@ -231,8 +233,31 @@ public class DummyData {
 
     /* === ITEM === */
 
+    public static Item getRandomItem() {
+        return ITEMS.get(new ArrayList<>(ITEMS.keySet()).get(random.nextInt(ITEMS.size())));
+    }
+
     public static Collection<Item> getItems() {
         return ITEMS.values();
+    }
+
+    public static Collection<Item> getOrderItems() {
+        ArrayList<Item> items = new ArrayList<>();
+        for (int i = 0; i < getRandomInt(1, 5); i++) {
+            items.add(getRandomItem());
+        }
+        return items;
+    }
+
+
+    /* === ORDER === */
+
+    public static Order.Status getOrderStatus() {
+        return Order.Status.values()[random.nextInt(Order.Status.values().length)];
+    }
+
+    public static Collection<Order> getOrders() {
+        return ORDERS.values();
     }
 
 }

@@ -50,7 +50,7 @@ public class Transactions extends ViewFrame implements RouterLayout {
     @Override
     public void showRouterLayoutContent(HasElement content) {
         if (content != null) {
-            getContentComponent().getElement().appendChild(content.getElement());
+            getContent().getElement().appendChild(content.getElement());
         }
     }
 }

@@ -5,6 +5,7 @@ import com.vaadin.flow.component.charts.Chart;
 import com.vaadin.flow.component.charts.model.*;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
@@ -182,8 +183,8 @@ public class Dashboard extends ViewFrame {
 
         FlexLayout items = UIUtils.createColumn(
                 Collections.singleton(LumoStyles.Margin.Vertical.S),
-                new ListItem(VaadinIcon.CHART, "My Weekly Report", "Last opened May 5, 2018"),
-                new ListItem(VaadinIcon.SITEMAP, "My Workflow", "Last opened May 5, 2018")
+                new ListItem(new Icon(VaadinIcon.CHART), "My Weekly Report", "Last opened May 5, 2018"),
+                new ListItem(new Icon(VaadinIcon.SITEMAP), "My Workflow", "Last opened May 5, 2018")
         );
 
         FlexLayout card = UIUtils.createColumn(Arrays.asList(LumoStyles.BorderRadius.S, LumoStyles.Shadow.S), tabs, items);

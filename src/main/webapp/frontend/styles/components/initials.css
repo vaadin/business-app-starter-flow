@@ -1,0 +1,4 @@
+.initials {
+  border-radius: var(--lumo-border-radius);
+  font-weight: 600;
+}

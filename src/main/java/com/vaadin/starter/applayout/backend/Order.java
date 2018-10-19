@@ -9,6 +9,7 @@ public class Order {
     private Collection<Item> items;
     private String customer;
     private LocalDate date;
+    private Double value;
 
     public enum Status {
         ONGOING("Ongoing"), SENT("Sent"), FAILED("Failed");
@@ -29,6 +30,11 @@ public class Order {
         this.items = items;
         this.customer = customer;
         this.date = date;
+        this.value = 0.0;
+
+        for (Item item : items) {
+            this.value += item.getPrice();
+        }
     }
 
     public Status getStatus() {
@@ -45,5 +51,9 @@ public class Order {
 
     public LocalDate getDate() {
         return date;
+    }
+
+    public Double getValue() {
+        return this.value;
     }
 }

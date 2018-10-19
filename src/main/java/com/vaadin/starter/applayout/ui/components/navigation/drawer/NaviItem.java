@@ -9,13 +9,11 @@ import com.vaadin.flow.dom.Element;
 import com.vaadin.flow.server.VaadinService;
 import com.vaadin.flow.server.startup.FakeBrowser;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
-
 import org.apache.commons.io.Charsets;
 import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -115,7 +113,7 @@ public abstract class NaviItem extends Div {
     }
 
     protected static String readFile(String path) throws IOException {
-        try(InputStream resourceAsStream = VaadinService.getCurrent().getResourceAsStream("frontend://" + path, FakeBrowser.getEs6(), null)) {
+        try (InputStream resourceAsStream = VaadinService.getCurrent().getResourceAsStream("frontend://" + path, FakeBrowser.getEs6(), null)) {
             return IOUtils.toString(resourceAsStream, Charsets.UTF_8);
         }
     }

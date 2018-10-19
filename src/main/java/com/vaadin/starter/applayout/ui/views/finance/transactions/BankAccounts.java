@@ -3,23 +3,19 @@ package com.vaadin.starter.applayout.ui.views.finance.transactions;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.datepicker.DatePicker;
-import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.H4;
 import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
-import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.provider.DataProvider;
 import com.vaadin.flow.data.provider.ListDataProvider;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.data.renderer.LocalDateRenderer;
 import com.vaadin.starter.applayout.backend.BankAccount;
 import com.vaadin.starter.applayout.backend.DummyData;
-import com.vaadin.starter.applayout.backend.Transaction;
 import com.vaadin.starter.applayout.ui.components.DetailsDrawer;
 import com.vaadin.starter.applayout.ui.components.ListItem;
 import com.vaadin.starter.applayout.ui.utils.CSSProperties;
@@ -28,14 +24,10 @@ import com.vaadin.starter.applayout.ui.utils.UIUtils;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Random;
 
 import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
 
 public class BankAccounts extends FlexLayout {
-
-    private Grid<BankAccount> grid;
-    private ListDataProvider<BankAccount> dataProvider;
 
     private DetailsDrawer detailsDrawer;
 
@@ -43,12 +35,12 @@ public class BankAccounts extends FlexLayout {
         setHeight("100%");
 
         // Grid
-        grid = new Grid<>();
+        Grid<BankAccount> grid = new Grid<>();
         grid.addColumn(BankAccount::getId)
                 .setHeader("ID")
                 .setFrozen(true)
                 .setSortable(true)
-                .setWidth(UIUtils.COLUMN_WIDTH_S)
+                .setWidth(UIUtils.COLUMN_WIDTH_XS)
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createBankInfo))
                 .setHeader("Bank Account")
@@ -73,8 +65,7 @@ public class BankAccounts extends FlexLayout {
         grid.setSizeFull();
 
         // Data provider
-        dataProvider = DataProvider.ofCollection(DummyData.getBalances());
-        grid.setDataProvider(dataProvider);
+        grid.setDataProvider(DataProvider.ofCollection(DummyData.getBalances()));
 
         // Grid wrapper for some nice padding
         Div gridWrapper = UIUtils.createDiv(Collections.singleton(GRID_VIEW), grid);
@@ -121,7 +112,7 @@ public class BankAccounts extends FlexLayout {
             // Formatting reasons. We have the "-" icon, we don't need the "-" in the actual value.
             String value = String.valueOf(positive ? amount : amount * -1);
 
-            ListItem item = new ListItem(positive ? VaadinIcon.PLUS_CIRCLE : VaadinIcon.MINUS_CIRCLE, value, DummyData.getCompany());
+            ListItem item = new ListItem(new Icon(positive ? VaadinIcon.PLUS_CIRCLE : VaadinIcon.MINUS_CIRCLE), value, DummyData.getCompany());
             item.addClassName(positive ? LumoStyles.TextColor.SUCCESS : LumoStyles.TextColor.ERROR);
             item.setDividerVisible(true);
 

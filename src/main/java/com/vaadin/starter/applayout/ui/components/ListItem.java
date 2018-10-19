@@ -12,113 +12,124 @@ import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.starter.applayout.ui.utils.LumoStyles;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
 
+import java.util.Collection;
 import java.util.Collections;
+import java.util.StringJoiner;
 
 public class ListItem extends FlexLayout {
 
     private static final String CLASS_NAME = "list-item";
 
-    private Component prefix;
+    private Div prefix;
+    private Div suffix;
 
-    private final Label primaryLabel;
-    private Label secondaryLabel;
+    private final Label primary;
+    private final Label secondary;
 
-    private final Div divider;
-
-
-    public ListItem(String primary) {
-        setAlignItems(FlexComponent.Alignment.CENTER);
-        setClassName(CLASS_NAME);
-
-        primaryLabel = new Label(primary);
-        add(primaryLabel);
-
-        divider = UIUtils.createDiv(Collections.singleton(CLASS_NAME + "__divider"));
-        divider.setVisible(false);
-        add(divider);
-    }
+    private Div divider;
 
     public ListItem(String primary, String secondary) {
-        this(primary);
+        setClassName(CLASS_NAME);
+        setAlignItems(FlexComponent.Alignment.CENTER);
 
-        initSecondaryLabel(secondary);
-        add(UIUtils.createColumn(primaryLabel, secondaryLabel));
+        this.primary = new Label(primary);
+        this.secondary = UIUtils.createLabel(Collections.singleton(LumoStyles.TextColor.SECONDARY), secondary);
+        this.secondary.getElement().setAttribute(LumoStyles.THEME, LumoStyles.FontSize.S);
+
+        add(UIUtils.createColumn(this.primary, this.secondary));
     }
 
-    public ListItem(VaadinIcon icon, String primary, String secondary) {
-        this(primary);
-
-        Icon visual = new Icon(icon);
-        visual.setClassName(CLASS_NAME + "__icon");
-        prefix = visual;
-
-        initSecondaryLabel(secondary);
-        add(prefix, UIUtils.createColumn(primaryLabel, secondaryLabel));
-    }
-
-    public ListItem(String initials, String primary, String secondary) {
-        this(primary);
-
-        FlexLayout visual = UIUtils.createFlexLayout(Collections.singleton(CLASS_NAME + "__initials"), new Text(initials));
-        visual.setAlignItems(FlexComponent.Alignment.CENTER);
-        visual.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
-        visual.getElement().setAttribute(LumoStyles.THEME, LumoStyles.DARK + " " + LumoStyles.FontSize.S);
-        prefix = visual;
-
-        initSecondaryLabel(secondary);
-
-        add(prefix, UIUtils.createColumn(primaryLabel, secondaryLabel));
-    }
-
-    public ListItem(VaadinIcon icon, String primary) {
-        this(primary);
-
-        Icon visual = new Icon(icon);
-        visual.addClassName(CLASS_NAME + "__icon");
-        prefix = visual;
-
-        add(prefix, primaryLabel);
-    }
-
-    public ListItem(Image image, String primary) {
-        this(primary);
-
-        image.addClassName(CLASS_NAME + "__img");
-        prefix = image;
-
-        add(prefix, primaryLabel);
+    public ListItem(String primary) {
+        this(primary, "");
     }
 
 
     /* === PREFIX === */
 
-    public Component getPrefix() {
-        return prefix;
+    public ListItem(Component prefix, String primary, String secondary) {
+        this(primary, secondary);
+        setPrefix(prefix);
+    }
+
+    public ListItem(Component prefix, String primary) {
+        this(prefix, primary, "");
     }
 
 
-    /* === PRIMARY === */
+    /* === SUFFIX === */
 
-    public void setPrimaryText(String text) {
-        primaryLabel.setText(text);
+    public ListItem(String primary, String secondary, Component suffix) {
+        this(primary, secondary);
+        setSuffix(suffix);
     }
 
-    public Label getPrimaryLabel() {
-        return this.primaryLabel;
-    }
-
-
-    /* === SECONDARY LABEL === */
-
-    private void initSecondaryLabel(String text) {
-        secondaryLabel = UIUtils.createLabel(Collections.singleton(LumoStyles.TextColor.SECONDARY), text);
-        secondaryLabel.getElement().setAttribute(LumoStyles.THEME, LumoStyles.FontSize.S);
+    public ListItem(String primary, Component suffix) {
+        this(primary, null, suffix);
     }
 
 
-    /* === DIVIDER === */
+    /* === PREFIX & SUFFIX === */
+
+    public ListItem(Component prefix, String primary, String secondary, Component suffix) {
+        this(primary, secondary);
+        setPrefix(prefix);
+        setSuffix(suffix);
+    }
+
+    public ListItem(Component prefix, String primary, Component suffix) {
+        this(prefix, primary, "", suffix);
+    }
+
+
+    /* === MISC === */
+
+    public void setPrimary(String text) {
+        primary.setText(text);
+    }
+
+    public void addPrimaryClassNames(String... classNames) {
+        primary.addClassNames(classNames);
+    }
+
+    public void setSecondary(String text) {
+        secondary.setText(text);
+    }
+
+    public void addSecondaryClassNames(String... classNames) {
+        secondary.addClassNames(classNames);
+    }
+
+    public void setPrefix(Component... components) {
+        if (prefix == null) {
+            prefix = UIUtils.createDiv(Collections.singleton(CLASS_NAME + "__prefix"));
+            getElement().insertChild(0, prefix.getElement());
+        }
+        prefix.removeAll();
+        prefix.add(components);
+    }
+
+    public void setSuffix(Component... components) {
+        if (suffix == null) {
+            suffix = UIUtils.createDiv(Collections.singleton(CLASS_NAME + "__suffix"));
+            getElement().insertChild(getElement().getChildCount(), suffix.getElement());
+        }
+        suffix.removeAll();
+        suffix.add(components);
+    }
 
     public void setDividerVisible(boolean visible) {
+        if (divider == null) {
+            divider = UIUtils.createDiv(Collections.singleton(CLASS_NAME + "__divider"));
+            add(divider);
+        }
         divider.setVisible(visible);
+    }
+
+    private Component createInitials(String initials) {
+        FlexLayout init = UIUtils.createFlexLayout(Collections.singleton(CLASS_NAME + "__initials"), new Text(initials));
+        init.setAlignItems(FlexComponent.Alignment.CENTER);
+        init.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
+        init.getElement().setAttribute(LumoStyles.THEME, new StringJoiner(" ", LumoStyles.DARK, LumoStyles.FontSize.S).toString());
+        return init;
     }
 }

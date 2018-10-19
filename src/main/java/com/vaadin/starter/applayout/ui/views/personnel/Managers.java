@@ -30,22 +30,24 @@ import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
 @PageTitle("Managers")
 public class Managers extends ViewFrame {
 
-    private AppBar appBar;
-
-    private Grid<Person> grid;
     private ListDataProvider<Person> dataProvider;
 
     public Managers() {
         // Header
-        appBar = new AppBar("Managers");
+        if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
+            setHeader(new AppBar("Managers"));
+        }
 
         // Grid
-        grid = new Grid<>();
+        Grid<Person> grid = new Grid<>();
+        dataProvider = DataProvider.ofCollection(DummyData.getPersons());
+        grid.setDataProvider(dataProvider);
+
         grid.addColumn(Person::getId)
                 .setHeader("ID")
                 .setFrozen(true)
                 .setSortable(true)
-                .setWidth(UIUtils.COLUMN_WIDTH_S)
+                .setWidth(UIUtils.COLUMN_WIDTH_XS)
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createUserInfo))
                 .setHeader("Name")
@@ -53,7 +55,7 @@ public class Managers extends ViewFrame {
                 .setFlexGrow(1);
         grid.addColumn(new ComponentRenderer<>(this::createActive))
                 .setHeader("Active")
-                .setWidth(UIUtils.COLUMN_WIDTH_S)
+                .setWidth(UIUtils.COLUMN_WIDTH_XS)
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createApprovalLimit))
                 .setHeader(UIUtils.createRightAlignedDiv(new Text("Approval Limit (€)")))
@@ -66,16 +68,10 @@ public class Managers extends ViewFrame {
                 .setFlexGrow(0);
         grid.setSizeFull();
 
-        dataProvider = DataProvider.ofCollection(DummyData.getPersons());
-        grid.setDataProvider(dataProvider);
+        setContent(grid);
+        getContent().addClassName(GRID_VIEW);
 
         filter();
-
-        if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-            setHeader(appBar);
-        }
-        setContent(grid);
-        getContentComponent().addClassName(GRID_VIEW);
     }
 
     private void filter() {
@@ -83,7 +79,7 @@ public class Managers extends ViewFrame {
     }
 
     private Component createUserInfo(Person person) {
-        return new ListItem(person.getInitials(), person.getName(), person.getEmail());
+        return new ListItem(UIUtils.createInitials(person.getInitials()), person.getName(), person.getEmail());
     }
 
     private Component createActive(Person person) {

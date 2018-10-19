@@ -63,7 +63,7 @@ public class Reports extends ViewFrame {
             setHeader(appBar);
         }
         setContent(grid);
-        getContentComponent().addClassName(GRID_VIEW);
+        getContent().addClassName(GRID_VIEW);
     }
 
     private Component createReportInfo(Report report) {

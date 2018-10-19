@@ -37,69 +37,59 @@ import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
 @PageTitle("Horizontal Split View")
 public class HorizontalSplitView extends ViewFrame {
 
-    private final AppBar appBar;
-    private final FlexLayout content;
     private final DetailsDrawer detailsDrawer;
 
     public HorizontalSplitView() {
         // Header
-        appBar = new AppBar("Personnel");
-
-        // Main container
-        content = new FlexLayout();
-        content.setSizeFull();
+        if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
+            setHeader(new AppBar("Personnel"));
+        }
 
         // Grid
         Grid<Person> grid = new Grid<>();
+        grid.setDataProvider(DataProvider.ofCollection(DummyData.getPersons()));
+
         grid.addColumn(Person::getId)
                 .setHeader("ID")
                 .setFrozen(true)
                 .setSortable(true)
-                .setWidth("60px")
+                .setWidth(UIUtils.COLUMN_WIDTH_XS)
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createUserInfo))
                 .setHeader("Name")
-                .setWidth("240px")
+                .setWidth(UIUtils.COLUMN_WIDTH_L)
                 .setFlexGrow(1);
         grid.addColumn(new ComponentRenderer<>(this::createTwitter))
                 .setHeader("Twitter")
-                .setWidth("160px")
+                .setWidth(UIUtils.COLUMN_WIDTH_M)
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createForumPosts))
                 .setHeader("Forum Posts")
-                .setWidth("160px")
+                .setWidth(UIUtils.COLUMN_WIDTH_M)
                 .setFlexGrow(0);
         grid.addColumn(new LocalDateRenderer<>(Person::getLastModified, "MMM dd, YYYY"))
                 .setHeader("Last Modified")
                 .setSortable(true)
-                .setWidth("160px")
+                .setWidth(UIUtils.COLUMN_WIDTH_M)
                 .setFlexGrow(0);
+
         grid.addSelectionListener(e -> {
             if (e.getFirstSelectedItem().isPresent()) {
                 showDetails();
             }
         });
+
         grid.setSizeFull();
 
-        // Data provider
-        ListDataProvider<Person> dataProvider = DataProvider.ofCollection(DummyData.getPersons());
-        grid.setDataProvider(dataProvider);
-
-        // Grid wrapper for some nice padding.
+        // Grid wrapper for some nice padding
         Div gridWrapper = UIUtils.createDiv(Collections.singleton(GRID_VIEW), grid);
 
-        // Form
-        FormLayout form = createForm();
+        // Details drawer
+        detailsDrawer = new DetailsDrawer(DetailsDrawer.Position.RIGHT, createForm());
 
-        // Wrapper
-        detailsDrawer = new DetailsDrawer(DetailsDrawer.Position.RIGHT, form);
-
-        // Set the content's content.
-        content.add(gridWrapper, detailsDrawer);
-
-        if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-            setHeader(appBar);
-        }
+        // Set the content
+        FlexLayout content = new FlexLayout(gridWrapper, detailsDrawer);
+        content.setSizeFull();
         setContent(content);
     }
 
@@ -164,7 +154,7 @@ public class HorizontalSplitView extends ViewFrame {
     }
 
     private Component createUserInfo(Person person) {
-        return new ListItem(person.getInitials(), person.getName(), person.getEmail());
+        return new ListItem(UIUtils.createInitials(person.getInitials()), person.getName(), person.getEmail());
     }
 
     private Component createTwitter(Person person) {

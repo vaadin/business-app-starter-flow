@@ -1,6 +1,7 @@
 package com.vaadin.starter.applayout.ui.utils;
 
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H3;
@@ -8,23 +9,29 @@ import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.textfield.TextField;
 
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.StringJoiner;
 
 public class UIUtils {
 
-
-    public static final String COLUMN_WIDTH_S = "80px";
+    public static final String COLUMN_WIDTH_XS = "80px";
+    public static final String COLUMN_WIDTH_S = "120px";
     public static final String COLUMN_WIDTH_M = "160px";
     public static final String COLUMN_WIDTH_L = "240px";
+    public static final String COLUMN_WIDTH_XL = "320px";
 
     /**
      * DecimalFormat is thread-unsafe.
      */
     private static final ThreadLocal<DecimalFormat> formatCache = ThreadLocal.withInitial(() -> new DecimalFormat("###,###,###.00"));
+
 
 
     /* ==== LAYOUTS ==== */
@@ -81,14 +88,14 @@ public class UIUtils {
 
     /* ==== BUTTONS ==== */
 
-    /* Primary buttons */
+    /* Primary */
     public static Button createPrimaryButton(String text) {
         Button button = new Button(text);
         button.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Button.PRIMARY);
         return button;
     }
 
-    /* Tertiary buttons */
+    /* Tertiary */
     public static Button createTertiaryButton(String text) {
         Button button = new Button(text);
         button.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Button.TERTIARY);
@@ -101,29 +108,17 @@ public class UIUtils {
         return button;
     }
 
-    public static Button createTertiaryButton(Collection<String> classNames, VaadinIcon icon, String text) {
-        Button button = createTertiaryButton(icon, text);
-        classNames.forEach(button::addClassName);
-        return button;
-    }
-
-    /* Tertiary icon buttons */
+    /* Tertiary icon */
     public static Button createTertiaryIconButton(VaadinIcon icon) {
         Button button = new Button(new Icon(icon));
         button.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Button.TERTIARY);
         return button;
     }
 
-    /* Small buttons */
+    /* Small */
     public static Button createSmallButton(String text) {
         Button button = new Button(text);
         button.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Button.SMALL);
-        return button;
-    }
-
-    public static Button createSmallButton(Collection<String> classNames, String text) {
-        Button button = createSmallButton(text);
-        classNames.forEach(button::addClassName);
         return button;
     }
 
@@ -139,7 +134,7 @@ public class UIUtils {
         return button;
     }
 
-    /* Small icon buttons */
+    /* Small icon */
     public static Button createSmallIconButton(VaadinIcon icon) {
         return createSmallIconButton(new Icon(icon));
     }
@@ -150,7 +145,14 @@ public class UIUtils {
         return button;
     }
 
-    /* Small tertiary icon buttons */
+    /* Small primary icon */
+    public static Button createSmallPrimaryIconButton(Icon icon) {
+        Button button = new Button(icon);
+        button.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Button.SMALL_PRIMARY_ICON);
+        return button;
+    }
+
+    /* Small tertiary icon */
     public static Button createSmallTertiaryIconButton(VaadinIcon icon) {
         return createSmallTertiaryIconButton(new Icon(icon));
     }
@@ -167,28 +169,10 @@ public class UIUtils {
         return button;
     }
 
-    public static Button createSmallTertiaryIconButton(Collection<String> classNames, Icon icon) {
-        Button button = createSmallTertiaryIconButton(icon);
-        classNames.forEach(button::addClassName);
-        return button;
-    }
-
-    /* Small primary icon buttons */
-    public static Button createSmallPrimaryIconButton(VaadinIcon icon) {
-        return createSmallPrimaryIconButton(new Icon(icon));
-    }
-
-    public static Button createSmallPrimaryIconButton(Icon icon) {
-        Button button = new Button(icon);
-        button.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Button.SMALL_PRIMARY_ICON);
-        return button;
-    }
-
 
 
     /* ==== TEXTFIELDS ==== */
 
-    /* Create small textfield */
     public static TextField createSmallTextField() {
         TextField textField = new TextField();
         textField.getElement().setAttribute(LumoStyles.THEME, LumoStyles.TextField.SMALL);
@@ -206,13 +190,6 @@ public class UIUtils {
         return p;
     }
 
-    /* Headers */
-    public static H3 createH3(Collection<String> classNames, String text) {
-        H3 h3 = new H3(text);
-        classNames.forEach(h3::addClassName);
-        return h3;
-    }
-
     /* Labels */
     public static Label createLabel(Collection<String> classNames, String text) {
         Label label = new Label(text);
@@ -224,7 +201,6 @@ public class UIUtils {
 
     /* ==== ICONS ==== */
 
-    /* Icons */
     public static Icon createSmallIcon(VaadinIcon icon) {
         Icon i = new Icon(icon);
         i.addClassName(LumoStyles.IconSize.S);
@@ -243,20 +219,36 @@ public class UIUtils {
         return i;
     }
 
-    public static Icon createLargeIcon(Collection<String> classNames, VaadinIcon icon) {
-        Icon i = createLargeIcon(icon);
-        classNames.forEach(i::addClassName);
-        return i;
+
+
+    /* === MISC === */
+
+    public static Component createInitials(String initials) {
+        FlexLayout layout = UIUtils.createFlexLayout(Collections.singleton("initials"), new Text(initials));
+
+        layout.setAlignItems(FlexComponent.Alignment.CENTER);
+        layout.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
+
+        layout.getElement().setAttribute(LumoStyles.THEME, new StringJoiner(" ").add(LumoStyles.DARK).add(LumoStyles.FontSize.S).toString());
+        layout.setHeight(LumoStyles.Size.M);
+        layout.setWidth(LumoStyles.Size.M);
+
+        return layout;
     }
 
 
 
     /* === NUMBERS === */
+
     public static String formatAmount(Double amount) {
         return formatCache.get().format(amount);
     }
 
     public static String formatAmount(int amount) {
         return formatCache.get().format(amount);
+    }
+
+    public static String formatUnits(int units) {
+        return NumberFormat.getIntegerInstance().format(units);
     }
 }

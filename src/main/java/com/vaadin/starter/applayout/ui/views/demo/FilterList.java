@@ -40,22 +40,19 @@ import static com.vaadin.starter.applayout.ui.utils.ViewStyles.FILTER_LIST_VIEW;
 @PageTitle("Filter list")
 public class FilterList extends ViewFrame {
 
-    private final AppBar appBar;
-    private final Grid<Person> grid;
-
-    private Div filterArea;
     private Button toggleButton;
     private FlexLayout tokens;
     private FlexLayout options;
     private FlexLayout filterHeader;
-    private FlexLayout content;
 
     public FilterList() {
         // Header
-        appBar = new AppBar("Statistics");
+        if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
+            setHeader(new AppBar("Statistics"));
+        }
 
         // Filters
-        filterArea = UIUtils.createDiv(
+        Div filterArea = UIUtils.createDiv(
                 Arrays.asList("filter-area", LumoStyles.Padding.Responsive.Horizontal.SL),
                 createFilterHeader(),
                 UIUtils.createWrappingFlexLayout(
@@ -66,41 +63,37 @@ public class FilterList extends ViewFrame {
         );
 
         // Grid
-        grid = new Grid<>();
+        Grid<Person> grid = new Grid<>();
         grid.addColumn(Person::getId)
                 .setHeader("ID")
                 .setFrozen(true)
                 .setSortable(true)
-                .setWidth("60px")
+                .setWidth(UIUtils.COLUMN_WIDTH_XS)
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createUserInfo))
                 .setHeader("Name")
-                .setWidth("240px")
+                .setWidth(UIUtils.COLUMN_WIDTH_L)
                 .setFlexGrow(1);
         grid.addColumn(new ComponentRenderer<>(this::createTwitter))
                 .setHeader("Twitter")
-                .setWidth("160px")
+                .setWidth(UIUtils.COLUMN_WIDTH_M)
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createForumPosts))
                 .setHeader("Forum Posts")
-                .setWidth("160px")
+                .setWidth(UIUtils.COLUMN_WIDTH_M)
                 .setFlexGrow(0);
         grid.addColumn(new LocalDateRenderer<>(Person::getLastModified, "MMM dd, YYYY"))
                 .setHeader("Last Modified")
                 .setSortable(true)
-                .setWidth("160px")
+                .setWidth(UIUtils.COLUMN_WIDTH_M)
                 .setFlexGrow(0);
 
         DataProvider dataProvider = DataProvider.ofCollection(DummyData.getPersons());
         grid.setDataProvider(dataProvider);
 
         // Content wrapper
-        content = UIUtils.createColumn(Collections.singleton(FILTER_LIST_VIEW), filterArea, grid);
+        FlexLayout content = UIUtils.createColumn(Collections.singleton(FILTER_LIST_VIEW), filterArea, grid);
         content.setHeight("100%");
-
-        if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-            setHeader(appBar);
-        }
         setContent(content);
     }
 
@@ -156,7 +149,7 @@ public class FilterList extends ViewFrame {
     }
 
     private Component createUserInfo(Person person) {
-        return new ListItem(person.getInitials(), person.getName(), person.getEmail());
+        return new ListItem(UIUtils.createInitials(person.getInitials()), person.getName(), person.getEmail());
     }
 
     private Component createTwitter(Person person) {

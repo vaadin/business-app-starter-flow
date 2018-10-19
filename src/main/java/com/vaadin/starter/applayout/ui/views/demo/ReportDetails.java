@@ -69,13 +69,13 @@ public class ReportDetails extends ViewFrame implements HasUrlParameter<Long> {
         image.setHeight("200px");
         image.setWidth("200px");
 
-        balance = new ListItem(VaadinIcon.MONEY, "", "Current balance");
+        balance = new ListItem(new Icon(VaadinIcon.MONEY), "", "Current balance");
         balance.setDividerVisible(true);
 
-        runningDate = new ListItem(VaadinIcon.CALENDAR, "", "Date Range");
+        runningDate = new ListItem(new Icon(VaadinIcon.CALENDAR), "", "Date Range");
         runningDate.setDividerVisible(true);
 
-        status = new ListItem(VaadinIcon.LOCK, "", "Status");
+        status = new ListItem(new Icon(VaadinIcon.LOCK), "", "Status");
 
         FlexLayout column = UIUtils.createColumn(balance, runningDate, status);
         column.getStyle().set(CSSProperties.Flex.PROPERTY, "1");
@@ -130,22 +130,20 @@ public class ReportDetails extends ViewFrame implements HasUrlParameter<Long> {
         appBar.setTitle(report.getName());
         image.setSrc(report.getSource());
 
-        balance.setPrimaryText(Double.toString(report.getBalance()) + " " + report.getCurrency());
-        runningDate.setPrimaryText(report.getStartDate().format(createFormatter()) + " - " + report.getEndDate().format(createFormatter()));
+        balance.setPrimary(Double.toString(report.getBalance()) + " " + report.getCurrency());
+        runningDate.setPrimary(report.getStartDate().format(createFormatter()) + " - " + report.getEndDate().format(createFormatter()));
 
         if (report.getStartDate().isAfter(LocalDate.now())) {
-            status.setPrimaryText("Coming Soon");
+            status.setPrimary("Coming Soon");
         } else if (report.getEndDate().isBefore(LocalDate.now())) {
-            status.setPrimaryText("Closed");
+            status.setPrimary("Closed");
         } else {
-            status.setPrimaryText("Open");
+            status.setPrimary("Open");
         }
-
-        // TODO: how do we update the page title?
     }
 
     private ListItem createLargeListItem(VaadinIcon icon, String primary, String secondary) {
-        ListItem item = new ListItem(icon, primary, secondary);
+        ListItem item = new ListItem(new Icon(icon), primary, secondary);
         item.addClassName(CLASS_NAME + "__list-item");
 
         if (icon.equals(VaadinIcon.TIMER)) {
@@ -156,7 +154,7 @@ public class ReportDetails extends ViewFrame implements HasUrlParameter<Long> {
             item.addClassName(LumoStyles.TextColor.ERROR);
         }
 
-        item.getPrimaryLabel().addClassName(LumoStyles.FontSize.H2);
+        item.addPrimaryClassNames(LumoStyles.FontSize.H2);
 
         return item;
     }

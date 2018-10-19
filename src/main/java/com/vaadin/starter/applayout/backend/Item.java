@@ -1,7 +1,5 @@
 package com.vaadin.starter.applayout.backend;
 
-import java.time.LocalDate;
-
 public class Item {
 
     private Category category;
@@ -26,7 +24,7 @@ public class Item {
         }
     }
 
-    public Item(Category category, String name, String desc, double price, String vendor, int stock, int sold) {
+    public Item(Category category, String name, String desc, String vendor, double price, int stock, int sold) {
         this.category = category;
         this.name = name;
         this.desc = desc;

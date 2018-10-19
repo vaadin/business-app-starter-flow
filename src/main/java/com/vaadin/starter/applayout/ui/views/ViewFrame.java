@@ -2,15 +2,13 @@ package com.vaadin.starter.applayout.ui.views;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.router.BeforeEnterEvent;
-import com.vaadin.flow.router.BeforeEnterObserver;
 
 /**
  * A view frame that establishes app design guidelines. It consists of three parts:
  * <ul>
- *     <li>Topmost {@link #setHeader(Component) header}</li>
- *     <li>Center {@link #setContent(Component) content}</li>
- *     <li>Bottom {@link #setFooter(Component) footer}</li>
+ * <li>Topmost {@link #setHeader(Component) header}</li>
+ * <li>Center {@link #setContent(Component) content}</li>
+ * <li>Bottom {@link #setFooter(Component) footer}</li>
  * </ul>
  */
 public class ViewFrame extends Div {
@@ -36,7 +34,7 @@ public class ViewFrame extends Div {
         header.add(component);
     }
 
-    public Div getContentComponent() {
+    public Div getContent() {
         return content;
     }
 

@@ -15,7 +15,6 @@ import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.provider.DataProvider;
-import com.vaadin.flow.data.provider.ListDataProvider;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.data.renderer.LocalDateRenderer;
 import com.vaadin.flow.router.PageTitle;
@@ -44,25 +43,19 @@ public class Payments extends ViewFrame {
 
     private Random random = new Random();
 
-    private AppBar appBar;
-
-    private FlexLayout content;
-
-    private Grid<Payment> grid;
-    private ListDataProvider<Payment> dataProvider;
-
     private DetailsDrawer detailsDrawer;
 
     public Payments() {
         // Header
-        appBar = new AppBar("Payments");
-
-        // Main container
-        content = new FlexLayout();
-        content.setSizeFull();
+        if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
+            AppBar appBar = new AppBar("Payments");
+            setHeader(appBar);
+        }
 
         // Grid
-        grid = new Grid<>();
+        Grid<Payment> grid = new Grid<>();
+        grid.setDataProvider(DataProvider.ofCollection(DummyData.getPayments()));
+
         grid.addColumn(new ComponentRenderer<>(this::createStatus))
                 .setHeader("Status")
                 .setWidth(UIUtils.COLUMN_WIDTH_M)
@@ -90,22 +83,15 @@ public class Payments extends ViewFrame {
 
         grid.setSizeFull();
 
-        // Data provider
-        dataProvider = DataProvider.ofCollection(DummyData.getPayments());
-        grid.setDataProvider(dataProvider);
-
         // Grid wrapper for some nice padding
         Div gridWrapper = UIUtils.createDiv(Collections.singleton(GRID_VIEW), grid);
 
         // Details drawer
         initDetailsDrawer();
 
-        // Set the content's content
-        content.add(gridWrapper, detailsDrawer);
-
-        if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-            setHeader(appBar);
-        }
+        // Set the content
+        FlexLayout content = new FlexLayout(gridWrapper, detailsDrawer);
+        content.setSizeFull();
         setContent(content);
     }
 
@@ -117,15 +103,12 @@ public class Payments extends ViewFrame {
             case PENDING:
                 badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.DEFAULT);
                 break;
-
             case OPEN:
                 badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.CONTRAST);
                 break;
-
             case SENT:
                 badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.SUCCESS);
                 break;
-
             default:
                 badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.ERROR);
                 break;
@@ -196,7 +179,7 @@ public class Payments extends ViewFrame {
         date.setValue(payment.getDate());
 
         // Set everything to read-only.
-        for (HasValueAndElement field : new HasValueAndElement[] {from, fromIBAN, to, toIBAN, message, date}) {
+        for (HasValueAndElement field : new HasValueAndElement[]{from, fromIBAN, to, toIBAN, message, date}) {
             field.setReadOnly(true);
         }
 

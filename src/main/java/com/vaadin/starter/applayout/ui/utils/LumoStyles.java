@@ -208,6 +208,14 @@ public class LumoStyles {
         public static final String XL = "shadow-xl";
     }
 
+    public class Size {
+        public static final String XS = "var(--lumo-size-xs)";
+        public static final String S = "var(--lumo-size-s)";
+        public static final String M = "var(--lumo-size-m)";
+        public static final String L = "var(--lumo-size-l)";
+        public static final String XL = "var(--lumo-size-xl)";
+    }
+
     public class Spacing {
         public class All {
             public static final String XS = "spacing-a-xs";

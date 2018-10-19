@@ -9,8 +9,6 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.router.HighlightConditions;
 import com.vaadin.flow.router.RouterLink;
 
-import java.nio.charset.Charset;
-
 public class NaviLinkItem extends NaviItem {
 
     private final Component link;

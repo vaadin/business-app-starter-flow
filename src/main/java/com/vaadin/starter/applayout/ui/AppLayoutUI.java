@@ -15,7 +15,7 @@ import javax.servlet.annotation.WebServlet;
  */
 public class AppLayoutUI extends UI {
     private final NaviDrawer naviDrawer = UIConfig.getNaviMode() == UIConfig.NaviMode.LINKS ?
-        new NaviLinkDrawer() : new NaviTabDrawer();
+            new NaviLinkDrawer() : new NaviTabDrawer();
 
     public static NaviDrawer getNaviDrawer() {
         return ((AppLayoutUI) UI.getCurrent()).naviDrawer;
@@ -23,5 +23,6 @@ public class AppLayoutUI extends UI {
 
     @VaadinServletConfiguration(productionMode = false, ui = AppLayoutUI.class)
     @WebServlet(urlPatterns = {"/*"})
-    public static class AppServlet extends VaadinServlet {}
+    public static class AppServlet extends VaadinServlet {
+    }
 }

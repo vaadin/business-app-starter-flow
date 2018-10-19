@@ -30,22 +30,24 @@ import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
 @PageTitle("Accountants")
 public class Accountants extends ViewFrame {
 
-    private AppBar appBar;
-
-    private Grid<Person> grid;
     private ListDataProvider<Person> dataProvider;
 
     public Accountants() {
         // Header
-        appBar = new AppBar("Traders");
+        if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
+            setHeader(new AppBar("Traders"));
+        }
 
         // Grid
-        grid = new Grid<>();
+        Grid<Person> grid = new Grid<>();
+        dataProvider = DataProvider.ofCollection(DummyData.getPersons());
+        grid.setDataProvider(dataProvider);
+
         grid.addColumn(Person::getId)
                 .setHeader("ID")
                 .setFrozen(true)
                 .setSortable(true)
-                .setWidth(UIUtils.COLUMN_WIDTH_S)
+                .setWidth(UIUtils.COLUMN_WIDTH_XS)
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createUserInfo))
                 .setHeader("Name")
@@ -53,7 +55,7 @@ public class Accountants extends ViewFrame {
                 .setFlexGrow(1);
         grid.addColumn(new ComponentRenderer<>(this::createActive))
                 .setHeader("Active")
-                .setWidth(UIUtils.COLUMN_WIDTH_S)
+                .setWidth(UIUtils.COLUMN_WIDTH_XS)
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createReports))
                 .setHeader(UIUtils.createRightAlignedDiv(new Text("Reports")))
@@ -70,16 +72,10 @@ public class Accountants extends ViewFrame {
                 .setFlexGrow(0);
         grid.setSizeFull();
 
-        dataProvider = DataProvider.ofCollection(DummyData.getPersons());
-        grid.setDataProvider(dataProvider);
+        setContent(grid);
+        getContent().addClassName(GRID_VIEW);
 
         filter();
-
-        if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-            setHeader(appBar);
-        }
-        setContent(grid);
-        getContentComponent().addClassName(GRID_VIEW);
     }
 
     private void filter() {
@@ -87,7 +83,7 @@ public class Accountants extends ViewFrame {
     }
 
     private Component createUserInfo(Person person) {
-        return new ListItem(person.getInitials(), person.getName(), person.getEmail());
+        return new ListItem(UIUtils.createInitials(person.getInitials()), person.getName(), person.getEmail());
     }
 
     private Component createActive(Person person) {
@@ -103,12 +99,10 @@ public class Accountants extends ViewFrame {
     }
 
     private Component createReports() {
-        int reports = DummyData.getRandomInt(5000);
-        String format = new DecimalFormat("###,###,###").format(reports);
-        return UIUtils.createRightAlignedDiv(UIUtils.createLabel(Collections.singleton(LumoStyles.FontSize.H4), format));
+        return UIUtils.createRightAlignedDiv(UIUtils.createLabel(Collections.singleton(LumoStyles.FontSize.H4), UIUtils.formatUnits(DummyData.getRandomInt(0, 5000))));
     }
 
     private Component createCompanies() {
-        return UIUtils.createRightAlignedDiv(UIUtils.createLabel(Collections.singleton(LumoStyles.FontSize.H4), String.valueOf(DummyData.getRandomInt(50))));
+        return UIUtils.createRightAlignedDiv(UIUtils.createLabel(Collections.singleton(LumoStyles.FontSize.H4), String.valueOf(DummyData.getRandomInt(0, 50))));
     }
 }

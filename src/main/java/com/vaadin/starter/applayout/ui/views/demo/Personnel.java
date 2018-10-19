@@ -18,6 +18,7 @@ import com.vaadin.starter.applayout.ui.Root;
 import com.vaadin.starter.applayout.ui.components.ListItem;
 import com.vaadin.starter.applayout.ui.components.navigation.bar.AppBar;
 import com.vaadin.starter.applayout.ui.utils.LumoStyles;
+import com.vaadin.starter.applayout.ui.utils.UIUtils;
 import com.vaadin.starter.applayout.ui.views.ViewFrame;
 
 import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
@@ -76,7 +77,7 @@ public class Personnel extends ViewFrame {
             setHeader(appBar);
         }
         setContent(grid);
-        getContentComponent().addClassName(GRID_VIEW);
+        getContent().addClassName(GRID_VIEW);
     }
 
     private void filter() {
@@ -84,7 +85,7 @@ public class Personnel extends ViewFrame {
     }
 
     private Component createUserInfo(Person person) {
-        return new ListItem(person.getInitials(), person.getName(), person.getEmail());
+        return new ListItem(UIUtils.createInitials(person.getInitials()), person.getName(), person.getEmail());
     }
 
     private Component createActive(Person person) {

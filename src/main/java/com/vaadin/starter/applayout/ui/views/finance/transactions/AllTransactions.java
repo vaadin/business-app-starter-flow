@@ -17,7 +17,6 @@ import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.provider.DataProvider;
-import com.vaadin.flow.data.provider.ListDataProvider;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.data.renderer.LocalDateRenderer;
 import com.vaadin.flow.data.renderer.TextRenderer;
@@ -36,21 +35,20 @@ import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
 
 public class AllTransactions extends FlexLayout {
 
-    private Grid<Transaction> grid;
-    private ListDataProvider<Transaction> dataProvider;
-
     private DetailsDrawer detailsDrawer;
 
     public AllTransactions() {
         setHeight("100%");
 
         // Grid
-        grid = new Grid<>();
+        Grid<Transaction> grid = new Grid<>();
+        grid.setDataProvider(DataProvider.ofCollection(DummyData.getTransactions()));
+
         grid.addColumn(Transaction::getId)
                 .setHeader("ID")
                 .setFrozen(true)
                 .setSortable(true)
-                .setWidth(UIUtils.COLUMN_WIDTH_S)
+                .setWidth(UIUtils.COLUMN_WIDTH_XS)
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createStatus))
                 .setHeader("Status")
@@ -80,10 +78,6 @@ public class AllTransactions extends FlexLayout {
         });
 
         grid.setSizeFull();
-
-        // Data provider
-        dataProvider = DataProvider.ofCollection(DummyData.getTransactions());
-        grid.setDataProvider(dataProvider);
 
         // Grid wrapper for some nice padding
         Div gridWrapper = UIUtils.createDiv(Collections.singleton(GRID_VIEW), grid);

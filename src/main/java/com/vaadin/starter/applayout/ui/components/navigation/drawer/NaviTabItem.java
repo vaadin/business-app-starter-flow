@@ -10,7 +10,6 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.shared.Registration;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
 
-import java.nio.charset.Charset;
 import java.util.Collections;
 
 public class NaviTabItem extends NaviItem {

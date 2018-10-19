@@ -22,14 +22,14 @@ import com.vaadin.starter.applayout.ui.components.navigation.bar.TabBar;
 import com.vaadin.starter.applayout.ui.components.navigation.drawer.NaviDrawer;
 import com.vaadin.starter.applayout.ui.components.navigation.drawer.NaviItem;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
-import com.vaadin.starter.applayout.ui.views.*;
+import com.vaadin.starter.applayout.ui.views.Default;
 import com.vaadin.starter.applayout.ui.views.demo.*;
 import com.vaadin.starter.applayout.ui.views.finance.Payments;
 import com.vaadin.starter.applayout.ui.views.finance.Statistics;
 import com.vaadin.starter.applayout.ui.views.finance.transactions.Transactions;
 import com.vaadin.starter.applayout.ui.views.inventory.*;
-import com.vaadin.starter.applayout.ui.views.personnel.*;
-
+import com.vaadin.starter.applayout.ui.views.personnel.Accountants;
+import com.vaadin.starter.applayout.ui.views.personnel.Managers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
