@@ -27,7 +27,7 @@ import com.vaadin.starter.applayout.ui.utils.BoxShadowBorders;
 import com.vaadin.starter.applayout.ui.utils.CSSProperties;
 import com.vaadin.starter.applayout.ui.utils.LumoStyles;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
-import com.vaadin.starter.applayout.ui.views.AbstractView;
+import com.vaadin.starter.applayout.ui.views.ViewFrame;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -37,23 +37,23 @@ import java.util.Random;
 
 @Route(value = "report-details", layout = Root.class)
 @PageTitle("Report Details")
-public class ReportDetails extends AbstractView implements HasUrlParameter<Long> {
+public class ReportDetails extends ViewFrame implements HasUrlParameter<Long> {
 
-    private String CLASS_NAME = "report-details";
+    private static final String CLASS_NAME = "report-details";
 
-    private Random random;
-
-    private AppBar appBar;
+    private final AppBar appBar;
     private Div viewport;
     private Image image;
     private ListItem balance;
     private ListItem runningDate;
     private ListItem status;
-    private DateTimeFormatter formatter;
+
+    private static DateTimeFormatter createFormatter() {
+        return DateTimeFormatter.ofPattern("MMM dd, YYYY");
+    }
 
     public ReportDetails() {
-        formatter = DateTimeFormatter.ofPattern("MMM dd, YYYY");
-        random = new Random();
+        final Random random = new Random();
         Integer randBalance = random.nextInt(5000);
 
         // Header
@@ -116,10 +116,7 @@ public class ReportDetails extends AbstractView implements HasUrlParameter<Long>
                 transactionsChart
         );
         viewport.getStyle().set(CSSProperties.MaxWidth.PROPERTY, CSSProperties.MaxWidth._800);
-    }
 
-    @Override
-    protected void initSlots() {
         if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
             setHeader(appBar);
         }
@@ -134,7 +131,7 @@ public class ReportDetails extends AbstractView implements HasUrlParameter<Long>
         image.setSrc(report.getSource());
 
         balance.setPrimaryText(Double.toString(report.getBalance()) + " " + report.getCurrency());
-        runningDate.setPrimaryText(report.getStartDate().format(formatter) + " - " + report.getEndDate().format(formatter));
+        runningDate.setPrimaryText(report.getStartDate().format(createFormatter()) + " - " + report.getEndDate().format(createFormatter()));
 
         if (report.getStartDate().isAfter(LocalDate.now())) {
             status.setPrimaryText("Coming Soon");
@@ -172,7 +169,7 @@ public class ReportDetails extends AbstractView implements HasUrlParameter<Long>
         conf.getLegend().setEnabled(true);
 
         XAxis xAxis = new XAxis();
-        xAxis.setCategories(new String[]{"14.9.", "15.9.", "16.9.", "17.9.", "18.9.", "19.9.", "20.9.", "21.9."});
+        xAxis.setCategories("14.9.", "15.9.", "16.9.", "17.9.", "18.9.", "19.9.", "20.9.", "21.9.");
         conf.addxAxis(xAxis);
 
         conf.getyAxis().setTitle("");

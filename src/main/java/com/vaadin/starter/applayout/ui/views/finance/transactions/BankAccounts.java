@@ -34,8 +34,6 @@ import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
 
 public class BankAccounts extends FlexLayout {
 
-    private Random random = new Random();
-
     private Grid<BankAccount> grid;
     private ListDataProvider<BankAccount> dataProvider;
 
@@ -45,7 +43,7 @@ public class BankAccounts extends FlexLayout {
         setHeight("100%");
 
         // Grid
-        grid = new Grid();
+        grid = new Grid<>();
         grid.addColumn(BankAccount::getId)
                 .setHeader("ID")
                 .setFrozen(true)

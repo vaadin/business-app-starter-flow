@@ -17,9 +17,9 @@ import java.util.Collections;
 
 public abstract class NaviDrawer extends Div implements AfterNavigationObserver {
 
-    private final String CLASS_NAME = "navi-drawer";
-    private final String RAIL = "rail";
-    private final String OPEN = "open";
+    private static final String CLASS_NAME = "navi-drawer";
+    private static final String RAIL = "rail";
+    private static final String OPEN = "open";
 
 
     private Div scrim;

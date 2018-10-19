@@ -15,7 +15,7 @@ import java.util.Collections;
 
 public class NaviTabItem extends NaviItem {
 
-    private Div link;
+    private final Div link;
 
     public NaviTabItem(VaadinIcon icon, String text, Class<? extends Component> navigationTarget) {
         this(text, navigationTarget);
@@ -30,10 +30,10 @@ public class NaviTabItem extends NaviItem {
     public NaviTabItem(String svg, String text, Class<? extends Component> navigationTarget) {
         this(text, navigationTarget);
         try {
-            String content = readFile(svg, Charset.defaultCharset());
+            String content = readFile(svg);
             link.getElement().insertChild(0, createSVGContainer(content));
         } catch (Exception e) {
-            System.out.println(e);
+            throw new RuntimeException(e);
         }
     }
 

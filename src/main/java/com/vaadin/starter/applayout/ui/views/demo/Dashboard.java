@@ -19,7 +19,7 @@ import com.vaadin.starter.applayout.ui.components.navigation.bar.AppBar;
 import com.vaadin.starter.applayout.ui.utils.CSSProperties;
 import com.vaadin.starter.applayout.ui.utils.LumoStyles;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
-import com.vaadin.starter.applayout.ui.views.AbstractView;
+import com.vaadin.starter.applayout.ui.views.ViewFrame;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -27,17 +27,16 @@ import java.util.Random;
 
 @Route(value = "dashboard", layout = Root.class)
 @PageTitle("Statistics")
-public class Dashboard extends AbstractView {
+public class Dashboard extends ViewFrame {
 
-    private String CLASS_NAME = "dashboard";
+    private static final String CLASS_NAME = "dashboard";
 
-    private Random random;
+    private final Random random = new Random();
 
-    private AppBar appBar;
-    private Div viewport;
+    private final AppBar appBar;
+    private final Div viewport;
 
     public Dashboard() {
-        random = new Random();
 
         // Header
         appBar = new AppBar("Statistics");
@@ -55,10 +54,7 @@ public class Dashboard extends AbstractView {
                         new Div(createHeader(VaadinIcon.TIME_BACKWARD, "Recent Items"), createTabbedList())
                 )
         );
-    }
 
-    @Override
-    protected void initSlots() {
         if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
             setHeader(appBar);
         }
@@ -163,7 +159,7 @@ public class Dashboard extends AbstractView {
         conf.getLegend().setEnabled(false);
 
         XAxis xAxis = new XAxis();
-        xAxis.setCategories(new String[]{"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"});
+        xAxis.setCategories("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
         conf.addxAxis(xAxis);
 
         conf.getyAxis().setTitle("");
@@ -195,7 +191,7 @@ public class Dashboard extends AbstractView {
         return card;
     }
 
-    private class DataSeriesItemWithRadius extends DataSeriesItem {
+    private static class DataSeriesItemWithRadius extends DataSeriesItem {
 
         private String radius;
         private String innerRadius;

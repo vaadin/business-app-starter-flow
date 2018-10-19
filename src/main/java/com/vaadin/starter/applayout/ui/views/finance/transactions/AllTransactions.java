@@ -45,7 +45,7 @@ public class AllTransactions extends FlexLayout {
         setHeight("100%");
 
         // Grid
-        grid = new Grid();
+        grid = new Grid<>();
         grid.addColumn(Transaction::getId)
                 .setHeader("ID")
                 .setFrozen(true)
@@ -126,7 +126,7 @@ public class AllTransactions extends FlexLayout {
         id.setValue(String.valueOf(transaction.getId()));
         form.add(id);
 
-        RadioButtonGroup<Transaction.Status> status = new RadioButtonGroup();
+        RadioButtonGroup<Transaction.Status> status = new RadioButtonGroup<>();
         status.setItems(Transaction.Status.values());
         status.setRenderer(new TextRenderer<>(Transaction.Status::getName));
         status.setValue(transaction.getStatus());

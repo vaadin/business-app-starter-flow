@@ -7,7 +7,7 @@ import com.vaadin.starter.applayout.ui.utils.UIUtils;
 
 public class ClosableNaviTab extends NaviTab {
 
-    private Button close;
+    private final Button close;
 
     public ClosableNaviTab(String label, Class<? extends Component> navigationTarget) {
         super(label, navigationTarget);

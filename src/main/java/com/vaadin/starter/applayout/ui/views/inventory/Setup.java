@@ -1,15 +1,11 @@
 package com.vaadin.starter.applayout.ui.views.inventory;
 
-import com.vaadin.starter.applayout.ui.views.AbstractView;
+import com.vaadin.starter.applayout.ui.views.ViewFrame;
 
-public class Setup extends AbstractView {
+public class Setup extends ViewFrame {
 
     public Setup() {
 
     }
 
-    @Override
-    protected void initSlots() {
-
-    }
 }
