@@ -17,6 +17,7 @@
 
         <vaadin.version>11.0.1</vaadin.version>
         <jetty.version>9.4.11.v20180605</jetty.version>
+        <junit.jupiter.version>5.3.0</junit.jupiter.version>
     </properties>
 
     <pluginRepositories>
@@ -34,6 +35,10 @@
         <repository>
             <id>vaadin-prereleases</id>
             <url>https://maven.vaadin.com/vaadin-prereleases</url>
+        </repository>
+        <repository>
+            <id>karibu-testing</id>
+            <url>https://dl.bintray.com/mvysny/github</url>
         </repository>
     </repositories>
 
@@ -83,7 +88,26 @@
             <groupId>commons-beanutils</groupId>
             <artifactId>commons-beanutils</artifactId>
             <version>1.9.2</version>
-            <type>jar</type>
+        </dependency>
+
+        <!-- Browserless Testing -->
+        <dependency>
+            <groupId>com.github.kaributesting</groupId>
+            <artifactId>karibu-testing-v10</artifactId>
+            <version>0.5.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>${junit.jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit.jupiter.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -93,6 +117,12 @@
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
                 <version>${jetty.version}</version>
+            </plugin>
+
+            <!-- JUnit 5 requires Surefire version 2.22.0 or higher -->
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.0</version>
             </plugin>
         </plugins>
     </build>

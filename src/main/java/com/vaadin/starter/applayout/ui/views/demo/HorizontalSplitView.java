@@ -13,6 +13,7 @@ import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.upload.Upload;
 import com.vaadin.flow.data.provider.DataProvider;
+import com.vaadin.flow.data.provider.ListDataProvider;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.data.renderer.LocalDateRenderer;
 import com.vaadin.flow.router.PageTitle;
@@ -26,7 +27,7 @@ import com.vaadin.starter.applayout.ui.components.ListItem;
 import com.vaadin.starter.applayout.ui.components.navigation.bar.AppBar;
 import com.vaadin.starter.applayout.ui.utils.LumoStyles;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
-import com.vaadin.starter.applayout.ui.views.AbstractView;
+import com.vaadin.starter.applayout.ui.views.ViewFrame;
 
 import java.util.Collections;
 
@@ -34,10 +35,10 @@ import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
 
 @Route(value = "horizontal-split-view", layout = Root.class)
 @PageTitle("Horizontal Split View")
-public class HorizontalSplitView extends AbstractView {
+public class HorizontalSplitView extends ViewFrame {
 
-    private AppBar appBar;
-    private FlexLayout content;
+    private final AppBar appBar;
+    private final FlexLayout content;
     private final DetailsDrawer detailsDrawer;
 
     public HorizontalSplitView() {
@@ -49,7 +50,7 @@ public class HorizontalSplitView extends AbstractView {
         content.setSizeFull();
 
         // Grid
-        Grid<Person> grid = new Grid();
+        Grid<Person> grid = new Grid<>();
         grid.addColumn(Person::getId)
                 .setHeader("ID")
                 .setFrozen(true)
@@ -81,7 +82,7 @@ public class HorizontalSplitView extends AbstractView {
         grid.setSizeFull();
 
         // Data provider
-        DataProvider dataProvider = DataProvider.ofCollection(DummyData.getPersons());
+        ListDataProvider<Person> dataProvider = DataProvider.ofCollection(DummyData.getPersons());
         grid.setDataProvider(dataProvider);
 
         // Grid wrapper for some nice padding.
@@ -95,10 +96,7 @@ public class HorizontalSplitView extends AbstractView {
 
         // Set the content's content.
         content.add(gridWrapper, detailsDrawer);
-    }
 
-    @Override
-    protected void initSlots() {
         if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
             setHeader(appBar);
         }
@@ -120,7 +118,7 @@ public class HorizontalSplitView extends AbstractView {
         lastName.setWidth("100%");
         form.addFormItem(lastName, "Last Name");
 
-        RadioButtonGroup gender = new RadioButtonGroup();
+        RadioButtonGroup<String> gender = new RadioButtonGroup<>();
         gender.setItems("Male", "Female", "Other");
         FormLayout.FormItem genderItem = form.addFormItem(gender, "Gender");
         setColSpan(genderItem, 2);

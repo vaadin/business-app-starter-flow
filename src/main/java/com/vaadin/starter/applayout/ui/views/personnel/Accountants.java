@@ -3,7 +3,6 @@ package com.vaadin.starter.applayout.ui.views.personnel;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.grid.Grid;
-import com.vaadin.flow.component.html.H4;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.data.provider.DataProvider;
@@ -20,7 +19,7 @@ import com.vaadin.starter.applayout.ui.components.ListItem;
 import com.vaadin.starter.applayout.ui.components.navigation.bar.AppBar;
 import com.vaadin.starter.applayout.ui.utils.LumoStyles;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
-import com.vaadin.starter.applayout.ui.views.AbstractView;
+import com.vaadin.starter.applayout.ui.views.ViewFrame;
 
 import java.text.DecimalFormat;
 import java.util.Collections;
@@ -29,7 +28,7 @@ import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
 
 @Route(value = "accountants", layout = Root.class)
 @PageTitle("Accountants")
-public class Accountants extends AbstractView {
+public class Accountants extends ViewFrame {
 
     private AppBar appBar;
 
@@ -41,7 +40,7 @@ public class Accountants extends AbstractView {
         appBar = new AppBar("Traders");
 
         // Grid
-        grid = new Grid();
+        grid = new Grid<>();
         grid.addColumn(Person::getId)
                 .setHeader("ID")
                 .setFrozen(true)
@@ -75,15 +74,12 @@ public class Accountants extends AbstractView {
         grid.setDataProvider(dataProvider);
 
         filter();
-    }
 
-    @Override
-    protected void initSlots() {
         if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
             setHeader(appBar);
         }
         setContent(grid);
-        getContent().addClassName(GRID_VIEW);
+        getContentComponent().addClassName(GRID_VIEW);
     }
 
     private void filter() {

@@ -7,15 +7,9 @@ import com.vaadin.starter.applayout.ui.Root;
 
 @Route(value = "", layout = Root.class)
 @PageTitle("Welcome")
-public class Default extends AbstractView {
+public class Default extends ViewFrame {
 
     public Default() {
-        add(new Label("Testing!"));
-
-    }
-
-    @Override
-    protected void initSlots() {
-
+        setContent(new Label("Testing!"));
     }
 }

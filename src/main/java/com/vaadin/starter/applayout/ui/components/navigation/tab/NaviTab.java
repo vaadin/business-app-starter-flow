@@ -3,13 +3,15 @@ package com.vaadin.starter.applayout.ui.components.navigation.tab;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.tabs.Tab;
 
+import java.util.Objects;
+
 public class NaviTab extends Tab {
 
     private Class<? extends Component> navigationTarget;
 
     public NaviTab(String label, Class<? extends Component> navigationTarget) {
         super(label);
-        this.navigationTarget = navigationTarget;
+        setNavigationTarget(navigationTarget);
     }
 
 
@@ -18,6 +20,6 @@ public class NaviTab extends Tab {
     }
 
     public void setNavigationTarget(Class<? extends Component> navigationTarget) {
-        this.navigationTarget = navigationTarget;
+        this.navigationTarget = Objects.requireNonNull(navigationTarget);
     }
 }

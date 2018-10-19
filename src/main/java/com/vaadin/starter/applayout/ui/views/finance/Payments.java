@@ -11,7 +11,6 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.html.Span;
-import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
@@ -31,20 +30,17 @@ import com.vaadin.starter.applayout.ui.components.navigation.bar.AppBar;
 import com.vaadin.starter.applayout.ui.utils.CSSProperties;
 import com.vaadin.starter.applayout.ui.utils.LumoStyles;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
-import com.vaadin.starter.applayout.ui.views.AbstractView;
+import com.vaadin.starter.applayout.ui.views.ViewFrame;
 
-import javax.swing.text.NumberFormatter;
-import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Locale;
 import java.util.Random;
 
 import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
 
 @Route(value = "payments", layout = Root.class)
 @PageTitle("Payments")
-public class Payments extends AbstractView {
+public class Payments extends ViewFrame {
 
     private Random random = new Random();
 
@@ -66,7 +62,7 @@ public class Payments extends AbstractView {
         content.setSizeFull();
 
         // Grid
-        grid = new Grid();
+        grid = new Grid<>();
         grid.addColumn(new ComponentRenderer<>(this::createStatus))
                 .setHeader("Status")
                 .setWidth(UIUtils.COLUMN_WIDTH_M)
@@ -106,10 +102,7 @@ public class Payments extends AbstractView {
 
         // Set the content's content
         content.add(gridWrapper, detailsDrawer);
-    }
 
-    @Override
-    protected void initSlots() {
         if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
             setHeader(appBar);
         }

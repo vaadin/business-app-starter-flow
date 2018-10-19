@@ -20,28 +20,23 @@ import com.vaadin.starter.applayout.ui.components.navigation.bar.AppBar;
 import com.vaadin.starter.applayout.ui.utils.CSSProperties;
 import com.vaadin.starter.applayout.ui.utils.LumoStyles;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
-import com.vaadin.starter.applayout.ui.views.AbstractView;
+import com.vaadin.starter.applayout.ui.views.ViewFrame;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Random;
 
 @Route(value = "statistics", layout = Root.class)
 @PageTitle("Statistics")
-public class Statistics extends AbstractView {
+public class Statistics extends ViewFrame {
 
-    public static final String REPORTS = "Reports";
-    public static final String LOGS = "Logs";
+    private static final String REPORTS = "Reports";
+    private static final String LOGS = "Logs";
     private String CLASS_NAME = "dashboard";
-
-    private Random random;
 
     private AppBar appBar;
     private Div viewport;
 
     public Statistics() {
-        random = new Random();
-
         // Header
         appBar = new AppBar("Statistics");
 
@@ -58,10 +53,7 @@ public class Statistics extends AbstractView {
                         createTabbedList(LOGS)
                 )
         );
-    }
 
-    @Override
-    protected void initSlots() {
         if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
             setHeader(appBar);
         }
@@ -187,7 +179,7 @@ public class Statistics extends AbstractView {
         conf.getLegend().setEnabled(false);
 
         XAxis xAxis = new XAxis();
-        xAxis.setCategories(new String[]{"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"});
+        xAxis.setCategories("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
         conf.addxAxis(xAxis);
 
         conf.getyAxis().setTitle("");

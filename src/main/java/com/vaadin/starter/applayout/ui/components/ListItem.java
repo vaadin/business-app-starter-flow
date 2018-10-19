@@ -16,14 +16,14 @@ import java.util.Collections;
 
 public class ListItem extends FlexLayout {
 
-    private final String CLASS_NAME = "list-item";
+    private static final String CLASS_NAME = "list-item";
 
     private Component prefix;
 
-    private Label primaryLabel;
+    private final Label primaryLabel;
     private Label secondaryLabel;
 
-    private Div divider;
+    private final Div divider;
 
 
     public ListItem(String primary) {

@@ -16,7 +16,9 @@ public class NaviTabs extends Tabs {
     private ComponentEventListener<SelectedChangeEvent> listener = (ComponentEventListener<SelectedChangeEvent>) selectedChangeEvent -> navigateToSelectedTab();
 
     public NaviTabs() {
-        init();
+        getElement().setAttribute("overflow", "end");
+        getStyle().set(CSSProperties.Overflow.PROPERTY, CSSProperties.Overflow.HIDDEN);
+        addSelectedChangeListener(listener);
     }
 
     /**
@@ -24,14 +26,8 @@ public class NaviTabs extends Tabs {
      * tab's navigation target (if any). This constructor allows you to add the tabs before the event listener is set.
      */
     public NaviTabs(NaviTab... naviTabs) {
+        this();
         add(naviTabs);
-        init();
-    }
-
-    private void init() {
-        getElement().setAttribute("overflow", "end");
-        getStyle().set(CSSProperties.Overflow.PROPERTY, CSSProperties.Overflow.HIDDEN);
-        addSelectedChangeListener(listener);
     }
 
     /**
@@ -75,6 +71,11 @@ public class NaviTabs extends Tabs {
             try {
                 UI.getCurrent().navigate(((NaviTab) getSelectedTab()).getNavigationTarget());
             } catch (Exception e) {
+                // @todo this is an code flow by exception anti-pattern. Either handle the case without the exception, or
+                // @todo at least document meticulously why this can't be done any other way and what kind of exceptions are we catching
+                // @todo and when they can occur.
+                // @todo this block consumes all exceptions, even backend-originated, and may result in exceptions disappearing mysteriously.
+
                 // If the right-most tab is closed, the Tabs component does not auto-select tabs on the left.
                 if (getTabCount() > 0) {
                     setSelectedIndex(getTabCount() - 1);

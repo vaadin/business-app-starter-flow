@@ -9,6 +9,8 @@ import com.vaadin.flow.dom.Element;
 import com.vaadin.flow.server.VaadinService;
 import com.vaadin.flow.server.startup.FakeBrowser;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
+
+import org.apache.commons.io.Charsets;
 import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
@@ -112,10 +114,10 @@ public abstract class NaviItem extends Div {
         return subItems.size() > 0;
     }
 
-    protected String readFile(String path, Charset encoding) throws IOException {
-        InputStream resourceAsStream = VaadinService.getCurrent().getResourceAsStream("frontend://" + path, FakeBrowser.getEs6(), null);
-        byte[] bytes = IOUtils.toByteArray(resourceAsStream);
-        return new String(bytes, encoding);
+    protected static String readFile(String path) throws IOException {
+        try(InputStream resourceAsStream = VaadinService.getCurrent().getResourceAsStream("frontend://" + path, FakeBrowser.getEs6(), null)) {
+            return IOUtils.toString(resourceAsStream, Charsets.UTF_8);
+        }
     }
 
     protected Element createSVGContainer(String content) {
@@ -124,5 +126,4 @@ public abstract class NaviItem extends Div {
         svg.getElement().setProperty("innerHTML", content);
         return svg.getElement();
     }
-
 }
