@@ -3,7 +3,6 @@ package com.vaadin.starter.applayout.ui.views.personnel;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.grid.Grid;
-import com.vaadin.flow.component.html.H4;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.data.provider.DataProvider;
@@ -107,12 +106,12 @@ public class Accountants extends AbstractView {
     }
 
     private Component createReports() {
-        int reports = DummyData.getRandomNumber(5000);
+        int reports = DummyData.getRandomInt(5000);
         String format = new DecimalFormat("###,###,###").format(reports);
         return UIUtils.createRightAlignedDiv(UIUtils.createLabel(Collections.singleton(LumoStyles.FontSize.H4), format));
     }
 
     private Component createCompanies() {
-        return UIUtils.createRightAlignedDiv(UIUtils.createLabel(Collections.singleton(LumoStyles.FontSize.H4), String.valueOf(DummyData.getRandomNumber(50))));
+        return UIUtils.createRightAlignedDiv(UIUtils.createLabel(Collections.singleton(LumoStyles.FontSize.H4), String.valueOf(DummyData.getRandomInt(50))));
     }
 }

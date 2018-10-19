@@ -13,6 +13,7 @@ public class DummyData {
     private static Map<Long, Transaction> TRANSACTIONS = new HashMap<>();
     private static Map<Long, BankAccount> BALANCES = new HashMap<>();
     private static Map<Long, Payment> PAYMENTS = new HashMap<>();
+    private static Map<Long, Item> ITEMS = new HashMap<>();
 
     private static final String IMG_PATH = "frontend/styles/images/";
     private static Random random = new Random();
@@ -22,6 +23,10 @@ public class DummyData {
     private static String[] BANKS = new String[]{"Aegis Bank", "Kindred Credit Union", "Oculus Bank System", "Aspire Credit Union", "Meridian Bancorp", "Focus Trust", "Cloud Nine Financial Corp.", "Lifespark Banks", "Obelisk Corporation", "Principal Banks"};
     private static String[] FIRST_NAMES = new String[]{"Tereasa", "Latina", "Flo", "Harriett", "Tiffiny", "Darren", "Chau", "Annabell", "Laurena", "Janene", "Arline", "Everett", "Beatris", "Josefina", "Shera", "Traci", "Avery", "Zulma", "Cheryle", "Yuko", "Tish", "Karena", "Junie", "Francene", "Sherice", "Jacob", "Elois", "Lamonica", "Carly", "Sybil", "Adriene", "Arielle", "Patty", "Dori", "Emerald", "Edda", "Bao", "Kathrin", "Ken", "Lael", "Chia", "Larisa", "Raymond", "Judith", "Bridget", "Tana", "Windy", "Fe", "Bernardina", "Cherilyn"};
     private static String[] LAST_NAMES = new String[]{"Smith", "Johnson", "Williams", "Jones", "Brown", "Davis", "Miller", "Wilson", "Moore", "Taylor", "Anderson", "Thomas", "Jackson", "White", "Harris", "Martin", "Thompson", "Garcia", "Martinez", "Robinson", "Clark", "Rodriguez", "Lewis", "Lee", "Walker", "Hall", "Allen", "Young", "Hernandez", "King", "Wright", "Lopez", "Hill", "Scott", "Green", "Adams", "Baker", "Gonzalez", "Nelson", "Carter", "Mitchell", "Perez", "Roberts", "Turner", "Phillips", "Campbell", "Parker", "Evans", "Edwards", "Collins"};
+
+    private static Map<String, String> HEALTHCARE = new HashMap<>();
+    private static Map<String, String> DENTAL = new HashMap<>();
+    private static Map<String, String> CONSTRUCTION = new HashMap<>();
 
     private DummyData() {
     }
@@ -52,7 +57,78 @@ public class DummyData {
         for (i = 0; i < 40; i++) {
             PAYMENTS.put(i, new Payment(getPaymentStatus(), getCompany(), getIBAN(), getBank(), getIBAN(), getPositiveAmount(), getDate()));
         }
+
+        HEALTHCARE.put("Claritin", "Claritin® allergy medicine gives adults and kids non-drowsy relief from indoor and outdoor allergy symptoms.");
+        HEALTHCARE.put("Cepacol", "Cepacol is the brand trusted and recommended by doctors and pharmacists to relieve your sore throat pain.");
+        HEALTHCARE.put("Delsym", "Silence your cough for a full 12 hours with Delsym® cough syrup. Our fast-acting cough syrup products work up to twice as long as other cough liquids.");
+        HEALTHCARE.put("DayQuil", "The non-drowsy, coughing, aching, fever, sore throat, stuffy head, no sick days medicine.");
+        HEALTHCARE.put("NyQuil", "The nighttime, sniffling, sneezing, coughing, aching, fever, best sleep with a cold medicine.");
+
+        HEALTHCARE.put("Mucinex", "Whether you have bothersome chest congestion or chest congestion with a nagging cough, Mucinex® has a range of products with bi-layer tablets that last for 12 hours.");
+        HEALTHCARE.put("Vicks VapoRub", "Vick® Vaporub makes a mother's touch a touch more comforting.");
+        HEALTHCARE.put("Non Medicated Vicks VapoInhaler", "Vicks® VapoInhaler™ is a non-medicated nasal inhaler that provides you with refreshing Vicks Vapors.");
+        HEALTHCARE.put("Systane", "Expect more from your eye drop.");
+        HEALTHCARE.put("OPTI-FREE Puremoist", "OPTI-FREE® Puremoist® is your multipurpose contact lens solution for clean, comfortable contacts all day.");
+
+        HEALTHCARE.put("Similasan Earache Relief", "Fast, effective earache pain relief. Similasan earache drops are naturally safe. Natural alternative to antibiotics. Effective treatment for earache. Soothe ear pain.");
+        HEALTHCARE.put("Breathe Right", "Breathe Right nasal strips provide nasal congestion relief to help you stop snoring and sleep better.");
+        HEALTHCARE.put("Biotène", "The #1 Dry Mouth brand trusted by dentists.");
+        HEALTHCARE.put("Listerine", "The bold mouthwash that kills 99% of bad breath germs.");
+        HEALTHCARE.put("Sensodyne", "The #1 dentist recommended sensitivity toothpaste, can help provide relief and long-lasting protection for sensitive teeth.");
+
+        HEALTHCARE.put("Advil", "Advil® delivers relief that's fast with strength that lasts.");
+        HEALTHCARE.put("Aleve", "Aleve helps you make more from each day, uninterrupted by minor aches and pains such as headaches, backache or minor arthritis pain.");
+        HEALTHCARE.put("Excedrin Migraine", "Excedrin® Migraine is a doctor-recommended safe and effective OTC migraine treatment.");
+        HEALTHCARE.put("Tylenol PM", "Experience relief from aches and pains, while getting a good night's rest, with TYLENOL® PM Extra Strength.");
+        HEALTHCARE.put("Osteo Bi-Flex", "Supporting your joint health year after year, Osteo Bi-Flex offers joint supplements made to provide joint comfort, mobility and flexibility.");
+
+        HEALTHCARE.forEach((name, desc) -> ITEMS.put(Long.valueOf(ITEMS.size()), new Item(Item.Category.HEALTHCARE, name, desc, getRandomDouble(40, 500), getCompany(), getRandomInt(200), getRandomInt(50000))));
+
+        DENTAL.put("Mirror", "Dental mirrors are used by the dentist or dental auxiliary to view a mirror image of the teeth in locations of the mouth where visibility is difficult or impossible.");
+        DENTAL.put("Sickle Probe", "Used in the dental armamentarium. A sharp point at the end of the explorer is used to enhance tactile sensation.");
+        DENTAL.put("Mouth Prop", "A wedge-shaped implement used in dentistry for dentists working with children and other patients who have difficulty keeping their mouths open wide and steady during a procedure, or during procedures where the patient is sedated.");
+        DENTAL.put("Anesthesia", "Used to numb a small specific area of the mouth.");
+        DENTAL.put("Syringe", "A dental syringe is a used by dentists for the injection of an anesthetic.");
+        DENTAL.put("Drill", "Hand-held, mechanical instrument used to perform a variety of common dental procedures, including removing decay, polishing fillings, and altering prostheses.");
+
+        DENTAL.put("Laser", "Designed specifically for use in oral surgery or dentistry.");
+        DENTAL.put("Torque Wrench", "Used to precisely apply a specific torque to a fastener bolt for fixation of an abutment, dentures or prostetics[1] on a dental implant.");
+        DENTAL.put("Spoon Excavator", "Used to remove soft carious decay.");
+        DENTAL.put("Half Hollenbach", "Used to test for overhangs or flash.");
+        DENTAL.put("Hatcher", "Used to widen the entrace of the tooth cavity and slice away the thin carious enamel.");
+
+        DENTAL.put("Chisel (Straight)", "Bevels the cavosurface margin and used in 3, 4 and 5 classifications of cavities on the maxillary.");
+        DENTAL.put("Chisel (Wedelstaedt)", "Only used in the anterior for classes 3, 4 and 5 as well.");
+        DENTAL.put("Chisel (Bin Angle)", "Held in a pen grasp and used for class 2 maxillary only.");
+        DENTAL.put("Burnisher", "For polishing and contouring amalgam fillings and to polish composite fillings.");
+        DENTAL.put("Plugger", "Used to achieve a well condensed filling by compressing the filling material into the cavity and applying pressure.");
+
+        DENTAL.forEach((name, desc) -> ITEMS.put(Long.valueOf(ITEMS.size()), new Item(Item.Category.DENTAL, name, desc, getRandomDouble(40, 500), getCompany(), getRandomInt(200), getRandomInt(50000))));
+
+        CONSTRUCTION.put("Chapter 8 Barriers", "Ideal for event management and pedestrian control.");
+        CONSTRUCTION.put("Manhole Barrier", "This product is compliant with Chapter 8 street works.");
+        CONSTRUCTION.put("Water/Sand Filled Barrier", "Fully stackable for ease of transport and storage. Can be water or sand filled for a more permanent requirement.");
+        CONSTRUCTION.put("Road Plates", "A long lasting and lightweight alternative to steel trench covers.");
+        CONSTRUCTION.put("Folding Workshop Crane", "Quick lifting with a dual action pump.");
+
+        CONSTRUCTION.put("Universal Drum Stacker", "Stacker with choice of drum claw or drum clamp.");
+        CONSTRUCTION.put("Single Gas Cylinder Trolley", "50kg capacity gas cylinder trolley.");
+        CONSTRUCTION.put("5 Channel Cable Protector", "Heavy duty cable protector weighing 23kg.");
+        CONSTRUCTION.put("Hazard Tape", "Non-adhesive polyethylene barrier tape for cordoning of road works, construction sites and other hazard areas.");
+        CONSTRUCTION.put("Safety Helmet", "UV-resistant high density Polyethylene (HDPE) safety helmet.");
+
+        CONSTRUCTION.put("Safety Vest", "100% polyester fabric with Velcro fastening.");
+        CONSTRUCTION.put("Permanent Line Marking Paint", "Permanent road line marking paint. Suitable for use on concrete, tarmac and composites.");
+        CONSTRUCTION.put("Metal Dump Truck", "2mm thick steel sheet with double folded top rim construction.");
+        CONSTRUCTION.put("Work Platform", "Aluminium 'Hop-Up' with unique folding first step to provide extra working level.");
+        CONSTRUCTION.put("Scaffold Systems", "All aluminium construction with timber platform 1300 x 460mm.");
+
+        CONSTRUCTION.forEach((name, desc) -> ITEMS.put(Long.valueOf(ITEMS.size()), new Item(Item.Category.CONSTRUCTION, name, desc, getRandomDouble(40, 500), getCompany(), getRandomInt(200), getRandomInt(50000))));
+
     }
+
+
+    /* === REPORT === */
 
     public static Report getReport(Long id) {
         return REPORTS.get(id);
@@ -62,21 +138,48 @@ public class DummyData {
         return REPORTS.values();
     }
 
+
+    /* === PERSON === */
+
     public static Collection<Person> getPersons() {
         return PERSONS.values();
     }
+
+    private static Person.Role getRole() {
+        return Person.Role.values()[random.nextInt(Person.Role.values().length)];
+    }
+
+
+    /* === TRANSACTION === */
 
     public static Collection<Transaction> getTransactions() {
         return TRANSACTIONS.values();
     }
 
+    private static Transaction.Status getTransactionStatus() {
+        return Transaction.Status.values()[random.nextInt(Transaction.Status.values().length)];
+    }
+
+
+    /* === BANK ACCOUNT === */
+
     public static Collection<BankAccount> getBalances() {
         return BALANCES.values();
     }
 
+
+    /* === PAYMENT === */
+
     public static Collection<Payment> getPayments() {
         return PAYMENTS.values();
     }
+
+    private static Payment.Status getPaymentStatus() {
+        return Payment.Status.values()[random.nextInt(Payment.Status.values().length)];
+    }
+
+
+    /* === MISC === */
 
     private static String getIBAN() {
         return IBANS[random.nextInt(IBANS.length)];
@@ -88,30 +191,6 @@ public class DummyData {
 
     private static String getBank() {
         return BANKS[random.nextInt(BANKS.length)];
-    }
-
-    private static Transaction.Status getTransactionStatus() {
-        return Transaction.Status.values()[random.nextInt(Transaction.Status.values().length)];
-    }
-
-    private static Payment.Status getPaymentStatus() {
-        return Payment.Status.values()[random.nextInt(Payment.Status.values().length)];
-    }
-
-    public static Double getAmount() {
-        return random.nextBoolean() ? getNegativeAmount() : getPositiveAmount();
-    }
-
-    public static Double getPositiveAmount() {
-        return random.nextDouble() * 20000;
-    }
-
-    public static Double getNegativeAmount() {
-        return random.nextDouble() * -20000;
-    }
-
-    public static int getRandomNumber(int bound) {
-        return random.nextInt(bound);
     }
 
     public static LocalDate getDate() {
@@ -126,7 +205,34 @@ public class DummyData {
         return LAST_NAMES[random.nextInt(LAST_NAMES.length)];
     }
 
-    private static Person.Role getRole() {
-        return Person.Role.values()[random.nextInt(Person.Role.values().length)];
+
+    /* === NUMBERS === */
+
+    public static Double getAmount() {
+        return random.nextBoolean() ? getNegativeAmount() : getPositiveAmount();
     }
+
+    public static Double getPositiveAmount() {
+        return random.nextDouble() * 20000;
+    }
+
+    public static Double getNegativeAmount() {
+        return random.nextDouble() * -20000;
+    }
+
+    public static int getRandomInt(int bound) {
+        return random.nextInt(bound);
+    }
+
+    public static Double getRandomDouble(int min, int max) {
+        return min + (max - min) * random.nextDouble();
+    }
+
+
+    /* === ITEM === */
+
+    public static Collection<Item> getItems() {
+        return ITEMS.values();
+    }
+
 }

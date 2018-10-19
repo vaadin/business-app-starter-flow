@@ -25,6 +25,7 @@ import com.vaadin.starter.applayout.ui.views.demo.*;
 import com.vaadin.starter.applayout.ui.views.finance.Payments;
 import com.vaadin.starter.applayout.ui.views.finance.Statistics;
 import com.vaadin.starter.applayout.ui.views.finance.transactions.Transactions;
+import com.vaadin.starter.applayout.ui.views.inventory.*;
 import com.vaadin.starter.applayout.ui.views.personnel.*;
 
 import java.util.Collections;
@@ -104,7 +105,11 @@ public class Root extends FlexLayout
         }
 
         if (showcase.equals(UIConfig.Showcase.INVENTORY)) {
-
+            naviDrawer.addNaviItem(VaadinIcon.LIST, "Orders", Orders.class);
+            naviDrawer.addNaviItem(VaadinIcon.INVOICE, "Invoices", Invoices.class);
+            naviDrawer.addNaviItem(VaadinIcon.CLIPBOARD_PULSE, "Analysis", Analysis.class);
+            naviDrawer.addNaviItem(VaadinIcon.STOCK, "Stock", Stock.class);
+            naviDrawer.addNaviItem(VaadinIcon.COG, "Setup", Setup.class);
         }
     }
 
