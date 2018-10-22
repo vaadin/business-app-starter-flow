@@ -19,11 +19,11 @@ import static com.github.karibu.testing.v10.LocatorJ.*;
 /**
  * @author mavi
  */
-class TradersTest {
+class ManagersTest {
     @BeforeEach
     public void mockVaadin() {
         MockVaadin.setup(new Routes().autoDiscoverViews("com.vaadin.starter.applayout"), AppLayoutUI::new);
-        UI.getCurrent().navigate("traders");
+        UI.getCurrent().navigate("managers");
     }
 
     @AfterEach
@@ -36,12 +36,12 @@ class TradersTest {
      */
     @Test
     public void smokeTest() {
-        _get(Traders.class);
+        _get(Managers.class);
     }
 
     @Test
-    public void testGridShowsTraders() {
+    public void testGridShowsManagers() {
         final Grid<Person> traderGrid = _get(Grid.class);
-        assertEquals(DummyData.getPersons().stream().filter(it -> it.getRole() == Person.Role.TRADER).count(), _size(traderGrid));
+        assertEquals(DummyData.getPersons().stream().filter(it -> it.getRole() == Person.Role.MANAGER).count(), _size(traderGrid));
     }
 }
