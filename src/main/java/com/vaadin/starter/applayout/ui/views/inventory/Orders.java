@@ -21,7 +21,9 @@ import com.vaadin.starter.applayout.ui.utils.LumoStyles;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
 import com.vaadin.starter.applayout.ui.views.ViewFrame;
 
+import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.StringJoiner;
 
 import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
@@ -45,12 +47,12 @@ public class Orders extends ViewFrame {
                 .setHeader("Status")
                 .setWidth(UIUtils.COLUMN_WIDTH_S)
                 .setFlexGrow(0);
-        grid.addColumn(new ComponentRenderer<>(this::createItems))
-                .setHeader("Items")
-                .setWidth(UIUtils.COLUMN_WIDTH_L)
-                .setFlexGrow(1);
         grid.addColumn(Order::getCustomer)
                 .setHeader("Customer");
+        grid.addColumn(new ComponentRenderer<>(this::createItemCount))
+                .setHeader(UIUtils.createRightAlignedDiv(new Text("Item Count")))
+                .setWidth(UIUtils.COLUMN_WIDTH_S)
+                .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createValue))
                 .setHeader(UIUtils.createRightAlignedDiv(new Text("Value (€)")))
                 .setWidth(UIUtils.COLUMN_WIDTH_M)
@@ -73,11 +75,14 @@ public class Orders extends ViewFrame {
         Span badge = new Span(status.getName());
 
         switch (status) {
+            case PENDING:
+                badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.DEFAULT);
+                break;
+            case OPEN:
+                badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.CONTRAST);
+                break;
             case SENT:
                 badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.SUCCESS);
-                break;
-            case ONGOING:
-                badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.DEFAULT);
                 break;
             default:
                 badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.ERROR);
@@ -99,13 +104,25 @@ public class Orders extends ViewFrame {
         return UIUtils.createRightAlignedDiv(label);
     }
 
+    private Component createItemCount(Order order) {
+        int count = order.getItemCount();
+        return UIUtils.createRightAlignedDiv(new Text(UIUtils.formatUnits(count)));
+    }
+
     private Component createDetails(Order order) {
         Div details = new Div();
-        for (Item item : order.getItems()) {
-            ListItem listItem = new ListItem(item.getName(), item.getDesc());
-            listItem.setSuffix(new Text(UIUtils.formatAmount(item.getPrice())));
+
+        Iterator<Item> iterator = order.getItems().iterator();
+        while (iterator.hasNext()) {
+            Item item = iterator.next();
+            ListItem listItem = new ListItem(item.getName(), item.getDesc(), UIUtils.createH4Label(UIUtils.formatAmount(item.getPrice())));
+            if (iterator.hasNext()) {
+                listItem.setDividerVisible(true);
+            }
             details.add(listItem);
+
         }
+
         return details;
     }
 

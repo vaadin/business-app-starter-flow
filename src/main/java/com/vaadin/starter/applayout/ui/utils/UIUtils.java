@@ -3,6 +3,8 @@ package com.vaadin.starter.applayout.ui.utils;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.charts.Chart;
+import com.vaadin.flow.component.charts.model.*;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Label;
@@ -12,6 +14,8 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.starter.applayout.ui.components.DataSeriesItemWithRadius;
+import com.vaadin.starter.applayout.ui.views.finance.Statistics;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -197,6 +201,11 @@ public class UIUtils {
         return label;
     }
 
+    public static Label createH4Label(String text) {
+        Label label = new Label(text);
+        label.addClassNames(LumoStyles.FontSize.H4);
+        return label;
+    }
 
 
     /* ==== ICONS ==== */
@@ -250,5 +259,43 @@ public class UIUtils {
 
     public static String formatUnits(int units) {
         return NumberFormat.getIntegerInstance().format(units);
+    }
+
+
+    /* === CHARTS === */
+    public static Chart createProgressChart(int value) {
+        Chart chart = new Chart();
+        chart.setSizeFull();
+
+        Configuration configuration = chart.getConfiguration();
+        configuration.getChart().setType(ChartType.SOLIDGAUGE);
+        configuration.setTitle("");
+        configuration.getTooltip().setEnabled(false);
+
+        configuration.getyAxis().setMin(0);
+        configuration.getyAxis().setMax(100);
+        configuration.getyAxis().getLabels().setEnabled(false);
+
+        PlotOptionsSolidgauge opt = new PlotOptionsSolidgauge();
+        opt.getDataLabels().setEnabled(false);
+        configuration.setPlotOptions(opt);
+
+        DataSeriesItemWithRadius point = new DataSeriesItemWithRadius();
+        point.setY(value);
+        point.setInnerRadius("100%");
+        point.setRadius("110%");
+        configuration.setSeries(new DataSeries(point));
+
+        Pane pane = configuration.getPane();
+        pane.setStartAngle(0);
+        pane.setEndAngle(360);
+
+        Background background = new Background();
+        background.setShape(BackgroundShape.ARC);
+        background.setInnerRadius("100%");
+        background.setOuterRadius("110%");
+        pane.setBackground(background);
+
+        return chart;
     }
 }

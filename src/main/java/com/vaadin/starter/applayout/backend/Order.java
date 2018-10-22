@@ -12,7 +12,7 @@ public class Order {
     private Double value;
 
     public enum Status {
-        ONGOING("Ongoing"), SENT("Sent"), FAILED("Failed");
+        PENDING("Pending"), OPEN("Open"), SENT("Sent"), FAILED("Failed");
 
         private String name;
 
@@ -43,6 +43,10 @@ public class Order {
 
     public Collection<Item> getItems() {
         return items;
+    }
+
+    public int getItemCount() {
+        return items.size();
     }
 
     public String getCustomer() {

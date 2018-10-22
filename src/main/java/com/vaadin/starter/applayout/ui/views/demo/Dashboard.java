@@ -13,6 +13,7 @@ import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.starter.applayout.backend.DummyData;
 import com.vaadin.starter.applayout.backend.UIConfig;
 import com.vaadin.starter.applayout.ui.Root;
 import com.vaadin.starter.applayout.ui.components.ListItem;
@@ -27,23 +28,17 @@ import java.util.Collections;
 import java.util.Random;
 
 @Route(value = "dashboard", layout = Root.class)
-@PageTitle("Statistics")
+@PageTitle("Dashboard")
 public class Dashboard extends ViewFrame {
 
     private static final String CLASS_NAME = "dashboard";
 
-    private final Random random = new Random();
-
-    private final AppBar appBar;
-    private final Div viewport;
-
     public Dashboard() {
+        if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
+            setHeader(new AppBar("Dashboard"));
+        }
 
-        // Header
-        appBar = new AppBar("Statistics");
-
-        // Content
-        viewport = UIUtils.createDiv(
+        Div viewport = UIUtils.createDiv(
                 Arrays.asList(CLASS_NAME, LumoStyles.Margin.Horizontal.AUTO, LumoStyles.Margin.Responsive.Vertical.ML),
                 createHeader(VaadinIcon.CHECK, "Progress"),
                 createProgressCharts(),
@@ -55,10 +50,6 @@ public class Dashboard extends ViewFrame {
                         new Div(createHeader(VaadinIcon.TIME_BACKWARD, "Recent Items"), createTabbedList())
                 )
         );
-
-        if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-            setHeader(appBar);
-        }
         setContent(viewport);
     }
 
@@ -90,7 +81,7 @@ public class Dashboard extends ViewFrame {
     }
 
     private Component createProgressSection(String title) {
-        int value = random.nextInt(100);
+        int value = DummyData.getRandomInt(50, 100);
 
         FlexLayout textContainer = UIUtils.createFlexLayout(
                 Collections.singleton(LumoStyles.Spacing.Right.XS),
@@ -100,7 +91,7 @@ public class Dashboard extends ViewFrame {
         textContainer.setAlignItems(FlexComponent.Alignment.BASELINE);
         textContainer.getStyle().set(CSSProperties.Position.PROPERTY, CSSProperties.Position.ABSOLUTE);
 
-        FlexLayout chartContainer = new FlexLayout(createProgressChart(value), textContainer);
+        FlexLayout chartContainer = new FlexLayout(UIUtils.createProgressChart(value), textContainer);
         chartContainer.setAlignItems(FlexComponent.Alignment.CENTER);
         chartContainer.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
         chartContainer.getStyle().set(CSSProperties.Position.PROPERTY, CSSProperties.Position.RELATIVE);
@@ -114,42 +105,6 @@ public class Dashboard extends ViewFrame {
         );
         column.setAlignItems(FlexComponent.Alignment.CENTER);
         return column;
-    }
-
-    private Chart createProgressChart(int value) {
-        Chart chart = new Chart();
-        chart.setSizeFull();
-
-        Configuration configuration = chart.getConfiguration();
-        configuration.getChart().setType(ChartType.SOLIDGAUGE);
-        configuration.setTitle("");
-        configuration.getTooltip().setEnabled(false);
-
-        configuration.getyAxis().setMin(0);
-        configuration.getyAxis().setMax(100);
-        configuration.getyAxis().getLabels().setEnabled(false);
-
-        PlotOptionsSolidgauge opt = new PlotOptionsSolidgauge();
-        opt.getDataLabels().setEnabled(false);
-        configuration.setPlotOptions(opt);
-
-        DataSeriesItemWithRadius point = new DataSeriesItemWithRadius();
-        point.setY(value);
-        point.setInnerRadius("100%");
-        point.setRadius("110%");
-        configuration.setSeries(new DataSeries(point));
-
-        Pane pane = configuration.getPane();
-        pane.setStartAngle(0);
-        pane.setEndAngle(360);
-
-        Background background = new Background();
-        background.setShape(BackgroundShape.ARC);
-        background.setInnerRadius("100%");
-        background.setOuterRadius("110%");
-        pane.setBackground(background);
-
-        return chart;
     }
 
     private Component createSalesChart() {
@@ -190,29 +145,5 @@ public class Dashboard extends ViewFrame {
         FlexLayout card = UIUtils.createColumn(Arrays.asList(LumoStyles.BorderRadius.S, LumoStyles.Shadow.S), tabs, items);
         card.getStyle().set(CSSProperties.BackgroundColor.PROPERTY, LumoStyles.Color.BASE_COLOR);
         return card;
-    }
-
-    private static class DataSeriesItemWithRadius extends DataSeriesItem {
-
-        private String radius;
-        private String innerRadius;
-
-        public String getRadius() {
-            return radius;
-        }
-
-        public void setRadius(String radius) {
-            this.radius = radius;
-            makeCustomized();
-        }
-
-        public String getInnerRadius() {
-            return innerRadius;
-        }
-
-        public void setInnerRadius(String innerRadius) {
-            this.innerRadius = innerRadius;
-            makeCustomized();
-        }
     }
 }

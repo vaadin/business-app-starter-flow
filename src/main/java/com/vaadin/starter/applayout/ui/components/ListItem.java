@@ -36,7 +36,7 @@ public class ListItem extends FlexLayout {
         this.secondary = UIUtils.createLabel(Collections.singleton(LumoStyles.TextColor.SECONDARY), secondary);
         this.secondary.getElement().setAttribute(LumoStyles.THEME, LumoStyles.FontSize.S);
 
-        add(UIUtils.createColumn(this.primary, this.secondary));
+        add(UIUtils.createColumn(Collections.singleton(CLASS_NAME + "__content"), this.primary, this.secondary));
     }
 
     public ListItem(String primary) {

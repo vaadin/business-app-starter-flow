@@ -30,15 +30,15 @@ import java.util.Collections;
 @PageTitle("Statistics")
 public class Statistics extends ViewFrame {
 
+    private static final String CLASS_NAME = "dashboard";
     private static final String REPORTS = "Reports";
     private static final String LOGS = "Logs";
-    private String CLASS_NAME = "dashboard";
 
     public Statistics() {
-        // Header
-        AppBar appBar = new AppBar("Statistics");
+        if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
+            setHeader(new AppBar("Statistics"));
+        }
 
-        // Content
         Div viewport = UIUtils.createDiv(
                 Arrays.asList(CLASS_NAME, LumoStyles.Margin.Horizontal.AUTO, LumoStyles.Margin.Responsive.Vertical.ML),
                 createHeader(VaadinIcon.CREDIT_CARD, "Payments"),
@@ -51,10 +51,6 @@ public class Statistics extends ViewFrame {
                         createTabbedList(LOGS)
                 )
         );
-
-        if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-            setHeader(appBar);
-        }
         setContent(viewport);
     }
 
@@ -114,7 +110,7 @@ public class Statistics extends ViewFrame {
         textContainer.setAlignItems(FlexComponent.Alignment.BASELINE);
         textContainer.getStyle().set(CSSProperties.Position.PROPERTY, CSSProperties.Position.ABSOLUTE);
 
-        Chart chart = createProgressChart(value);
+        Chart chart = UIUtils.createProgressChart(value);
         chart.addClassName(status.getName().toLowerCase());
 
         FlexLayout chartContainer = new FlexLayout(chart, textContainer);
@@ -131,42 +127,6 @@ public class Statistics extends ViewFrame {
         );
         column.setAlignItems(FlexComponent.Alignment.CENTER);
         return column;
-    }
-
-    private Chart createProgressChart(int value) {
-        Chart chart = new Chart();
-        chart.setSizeFull();
-
-        Configuration configuration = chart.getConfiguration();
-        configuration.getChart().setType(ChartType.SOLIDGAUGE);
-        configuration.setTitle("");
-        configuration.getTooltip().setEnabled(false);
-
-        configuration.getyAxis().setMin(0);
-        configuration.getyAxis().setMax(100);
-        configuration.getyAxis().getLabels().setEnabled(false);
-
-        PlotOptionsSolidgauge opt = new PlotOptionsSolidgauge();
-        opt.getDataLabels().setEnabled(false);
-        configuration.setPlotOptions(opt);
-
-        DataSeriesItemWithRadius point = new DataSeriesItemWithRadius();
-        point.setY(value);
-        point.setInnerRadius("100%");
-        point.setRadius("110%");
-        configuration.setSeries(new DataSeries(point));
-
-        Pane pane = configuration.getPane();
-        pane.setStartAngle(0);
-        pane.setEndAngle(360);
-
-        Background background = new Background();
-        background.setShape(BackgroundShape.ARC);
-        background.setInnerRadius("100%");
-        background.setOuterRadius("110%");
-        pane.setBackground(background);
-
-        return chart;
     }
 
     private Component createSalesChart() {
@@ -213,29 +173,5 @@ public class Statistics extends ViewFrame {
         card.getStyle().set(CSSProperties.BackgroundColor.PROPERTY, LumoStyles.Color.BASE_COLOR);
 
         return new Div(header, card);
-    }
-
-    private class DataSeriesItemWithRadius extends DataSeriesItem {
-
-        private String radius;
-        private String innerRadius;
-
-        public String getRadius() {
-            return radius;
-        }
-
-        public void setRadius(String radius) {
-            this.radius = radius;
-            makeCustomized();
-        }
-
-        public String getInnerRadius() {
-            return innerRadius;
-        }
-
-        public void setInnerRadius(String innerRadius) {
-            this.innerRadius = innerRadius;
-            makeCustomized();
-        }
     }
 }

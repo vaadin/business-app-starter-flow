@@ -5,6 +5,10 @@
   position: relative;
 }
 
+.list-item__content {
+  flex: 1;
+}
+
 .list-item__prefix,
 .list-item__suffix {
   flex-shrink: 0;
@@ -34,9 +38,13 @@
   background-color: var(--lumo-contrast-20pct);
   bottom: 0;
   height: 1px;
-  left: calc(var(--lumo-space-l) * 3);
+  left: 0;
   position: absolute;
   right: 0;
+}
+
+.list-item__prefix ~ .list-item__divider {
+  left: calc(var(--lumo-space-l) * 3);
 }
 
 .list-item.error-text .list-item__icon,

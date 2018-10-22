@@ -2,15 +2,19 @@
   <template>
     <style include="vaadin-chart-default-theme">
       :host(.pending) .highcharts-color-0 {
-        fill: var(--lumo-primary-text-color);
+        fill: rgb(255, 194, 122);
       }
 
       :host(.sent) .highcharts-color-0 {
         fill: var(--lumo-success-text-color);
       }
 
+      :host(.paid) .highcharts-color-0 {
+        fill: var(--lumo-success-text-color);
+      }
+
       :host(.open) .highcharts-color-0 {
-        fill: var(--lumo-contrast-80pct);
+        fill: var(--lumo-primary-text-color);
       }
 
       :host(.failed) .highcharts-color-0 {
