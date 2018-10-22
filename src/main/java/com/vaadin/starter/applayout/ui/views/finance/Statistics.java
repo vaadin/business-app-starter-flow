@@ -152,11 +152,9 @@ public class Statistics extends ViewFrame {
     }
 
     private Component createTabbedList(String title) {
-        Component header = createHeader(title.equals(REPORTS) ? VaadinIcon.RECORDS : VaadinIcon.BULLETS, title);
+        Component header = createHeader(title.equals(REPORTS) ? VaadinIcon.RECORDS : VaadinIcon.EDIT, title);
 
         Tabs tabs = new Tabs();
-        tabs.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Tabs.EQUAL_WIDTH_TABS);
-
         String[] labels = title.equals(REPORTS) ? new String[]{"All", "Archive", "Workflows", "Support"} : new String[]{"All", "Transfer", "Security", "Change"};
 
         for (String label : labels) {

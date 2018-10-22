@@ -31,6 +31,8 @@ import java.util.Random;
 public class Analysis extends ViewFrame {
 
     private static final String CLASS_NAME = "dashboard";
+    private static final String REPORTS = "Reports";
+    private static final String LOGS = "Logs";
 
     public Analysis() {
         if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
@@ -39,14 +41,14 @@ public class Analysis extends ViewFrame {
 
         Div viewport = UIUtils.createDiv(
                 Arrays.asList(CLASS_NAME, LumoStyles.Margin.Horizontal.AUTO, LumoStyles.Margin.Responsive.Vertical.ML),
-                createHeader(VaadinIcon.INVOICE, "Invoices Status"),
+                createHeader(VaadinIcon.INVOICE, "Invoices"),
                 createProgressCharts(),
                 createHeader(VaadinIcon.LIST, "Orders"),
                 createSalesChart(),
                 UIUtils.createFlexLayout(
                         Collections.singleton(CLASS_NAME + "__bookmarks-recent-items"),
-                        new Div(createHeader(VaadinIcon.BOOKMARK, "Bookmark"), createTabbedList()),
-                        new Div(createHeader(VaadinIcon.TIME_BACKWARD, "Recent Items"), createTabbedList())
+                        createTabbedList(REPORTS),
+                        createTabbedList(LOGS)
                 )
         );
         setContent(viewport);
@@ -149,10 +151,13 @@ public class Analysis extends ViewFrame {
         return card;
     }
 
-    private Component createTabbedList() {
-        Tabs tabs = new Tabs();
+    private Component createTabbedList(String title) {
+        Component header = createHeader(title.equals(REPORTS) ? VaadinIcon.RECORDS : VaadinIcon.EDIT, title);
 
-        for (String label : new String[]{"All", "Archive", "Workflows", "Support"}) {
+        Tabs tabs = new Tabs();
+        String[] labels = title.equals(REPORTS) ? new String[]{"All", "Archive", "Quotes", "Expenses"} : new String[]{"All", "Analytics", "System", "User"};
+
+        for (String label : labels) {
             tabs.add(new Tab(label));
         }
 
@@ -164,6 +169,7 @@ public class Analysis extends ViewFrame {
 
         FlexLayout card = UIUtils.createColumn(Arrays.asList(LumoStyles.BorderRadius.S, LumoStyles.Shadow.S), tabs, items);
         card.getStyle().set(CSSProperties.BackgroundColor.PROPERTY, LumoStyles.Color.BASE_COLOR);
-        return card;
+
+        return new Div(header, card);
     }
 }
