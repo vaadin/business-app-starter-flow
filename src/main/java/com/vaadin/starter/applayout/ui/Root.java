@@ -120,7 +120,10 @@ public class Root extends FlexLayout
             naviDrawer.addNaviItem(VaadinIcon.INVOICE, "Invoices", Invoices.class);
             naviDrawer.addNaviItem(VaadinIcon.CLIPBOARD_PULSE, "Analysis", Analysis.class);
             naviDrawer.addNaviItem(VaadinIcon.STOCK, "Stock", Stock.class);
-            naviDrawer.addNaviItem(VaadinIcon.COG, "Setup", Setup.class);
+
+            NaviItem personnel = naviDrawer.addNaviItem(VaadinIcon.USERS, "Personnel", null);
+            naviDrawer.addNaviItem(personnel, "Accountants", Accountants.class);
+            naviDrawer.addNaviItem(personnel, "Managers", Managers.class);
         }
     }
 

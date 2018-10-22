@@ -5,15 +5,16 @@ import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.charts.Chart;
 import com.vaadin.flow.component.charts.model.*;
-import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H3;
+import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.component.html.Label;
-import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.starter.applayout.backend.Invoice;
+import com.vaadin.starter.applayout.backend.Order;
+import com.vaadin.starter.applayout.backend.Payment;
 import com.vaadin.starter.applayout.ui.components.DataSeriesItemWithRadius;
 import com.vaadin.starter.applayout.ui.views.finance.Statistics;
 
@@ -24,6 +25,8 @@ import java.util.Collections;
 import java.util.StringJoiner;
 
 public class UIUtils {
+
+    public static final String IMG_PATH = "frontend/styles/images/";
 
     public static final String COLUMN_WIDTH_XS = "80px";
     public static final String COLUMN_WIDTH_S = "120px";
@@ -262,7 +265,73 @@ public class UIUtils {
     }
 
 
+
+    /* === BADGES === */
+
+    public static Component createBadge(Invoice invoice) {
+            Invoice.Status status = invoice.getStatus();
+            Span badge = new Span(status.getName());
+            switch (status) {
+                case OUTSTANDING:
+                    badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.CONTRAST);
+                    break;
+                case OPEN:
+                    badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.DEFAULT);
+                    break;
+                case PAID:
+                    badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.SUCCESS);
+                    break;
+                default:
+                    badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.ERROR);
+                    break;
+            }
+            return badge;
+    }
+
+    public static Component createBadge(Order order) {
+        Order.Status status = order.getStatus();
+        Span badge = new Span(status.getName());
+        switch (status) {
+            case PENDING:
+                badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.CONTRAST);
+                break;
+            case OPEN:
+                badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.DEFAULT);
+                break;
+            case SENT:
+                badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.SUCCESS);
+                break;
+            default:
+                badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.ERROR);
+                break;
+        }
+        return badge;
+    }
+
+    public static Component createBadge(Payment payment) {
+        Payment.Status status = payment.getStatus();
+        Span badge = new Span(status.getName());
+        switch (status) {
+            case PENDING:
+                badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.CONTRAST);
+                break;
+            case OPEN:
+                badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.DEFAULT);
+                break;
+            case SENT:
+                badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.SUCCESS);
+                break;
+            default:
+                badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.ERROR);
+                break;
+        }
+        return badge;
+    }
+
+
+
     /* === CHARTS === */
+
     public static Chart createProgressChart(int value) {
         Chart chart = new Chart();
         chart.setSizeFull();

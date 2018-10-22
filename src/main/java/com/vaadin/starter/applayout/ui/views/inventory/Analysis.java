@@ -155,7 +155,7 @@ public class Analysis extends ViewFrame {
         Component header = createHeader(title.equals(REPORTS) ? VaadinIcon.RECORDS : VaadinIcon.EDIT, title);
 
         Tabs tabs = new Tabs();
-        String[] labels = title.equals(REPORTS) ? new String[]{"All", "Archive", "Quotes", "Expenses"} : new String[]{"All", "Analytics", "System", "User"};
+        String[] labels = title.equals(REPORTS) ? new String[]{"All", "Annual", "Progress", "Technical"} : new String[]{"All", "Analytics", "System", "User"};
 
         for (String label : labels) {
             tabs.add(new Tab(label));

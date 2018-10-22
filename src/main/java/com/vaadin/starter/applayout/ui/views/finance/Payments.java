@@ -56,7 +56,7 @@ public class Payments extends ViewFrame {
         Grid<Payment> grid = new Grid<>();
         grid.setDataProvider(DataProvider.ofCollection(DummyData.getPayments()));
 
-        grid.addColumn(new ComponentRenderer<>(this::createStatus))
+        grid.addColumn(new ComponentRenderer<>(UIUtils::createBadge))
                 .setHeader("Status")
                 .setWidth(UIUtils.COLUMN_WIDTH_M)
                 .setFlexGrow(0);
@@ -93,28 +93,6 @@ public class Payments extends ViewFrame {
         FlexLayout content = new FlexLayout(gridWrapper, detailsDrawer);
         content.setSizeFull();
         setContent(content);
-    }
-
-    private Component createStatus(Payment payment) {
-        Payment.Status status = payment.getStatus();
-        Span badge = new Span(status.getName());
-
-        switch (status) {
-            case PENDING:
-                badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.DEFAULT);
-                break;
-            case OPEN:
-                badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.CONTRAST);
-                break;
-            case SENT:
-                badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.SUCCESS);
-                break;
-            default:
-                badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.ERROR);
-                break;
-        }
-
-        return badge;
     }
 
     private Component createFromInfo(Payment payment) {

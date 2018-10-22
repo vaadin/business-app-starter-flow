@@ -35,20 +35,20 @@ public class Orders extends ViewFrame {
     public Orders() {
         // Header
         if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-            AppBar appBar = new AppBar("Orders");
-            setHeader(appBar);
+            setHeader(new AppBar("Orders"));
         }
 
         // Grid
         Grid<Order> grid = new Grid<>();
         grid.setDataProvider(DataProvider.ofCollection(DummyData.getOrders()));
 
-        grid.addColumn(new ComponentRenderer<>(this::createStatus))
+        grid.addColumn(new ComponentRenderer<>(UIUtils::createBadge))
                 .setHeader("Status")
                 .setWidth(UIUtils.COLUMN_WIDTH_S)
                 .setFlexGrow(0);
         grid.addColumn(Order::getCustomer)
-                .setHeader("Customer");
+                .setHeader("Customer")
+                .setWidth(UIUtils.COLUMN_WIDTH_L);
         grid.addColumn(new ComponentRenderer<>(this::createItemCount))
                 .setHeader(UIUtils.createRightAlignedDiv(new Text("Item Count")))
                 .setWidth(UIUtils.COLUMN_WIDTH_S)
@@ -68,28 +68,6 @@ public class Orders extends ViewFrame {
 
         setContent(grid);
         getContent().addClassName(GRID_VIEW);
-    }
-
-    private Component createStatus(Order Order) {
-        Order.Status status = Order.getStatus();
-        Span badge = new Span(status.getName());
-
-        switch (status) {
-            case PENDING:
-                badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.DEFAULT);
-                break;
-            case OPEN:
-                badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.CONTRAST);
-                break;
-            case SENT:
-                badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.SUCCESS);
-                break;
-            default:
-                badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.ERROR);
-                break;
-        }
-
-        return badge;
     }
 
     private Component createItems(Order order) {
