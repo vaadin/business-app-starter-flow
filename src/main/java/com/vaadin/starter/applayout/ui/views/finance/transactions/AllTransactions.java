@@ -21,6 +21,7 @@ import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.data.renderer.LocalDateRenderer;
 import com.vaadin.flow.data.renderer.TextRenderer;
 import com.vaadin.starter.applayout.backend.DummyData;
+import com.vaadin.starter.applayout.backend.Payment;
 import com.vaadin.starter.applayout.backend.Transaction;
 import com.vaadin.starter.applayout.ui.components.DetailsDrawer;
 import com.vaadin.starter.applayout.ui.components.ListItem;
@@ -48,7 +49,7 @@ public class AllTransactions extends FlexLayout {
                 .setHeader("ID")
                 .setFrozen(true)
                 .setSortable(true)
-                .setWidth(UIUtils.COLUMN_WIDTH_XS)
+                .setWidth(UIUtils.COLUMN_WIDTH_S)
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createStatus))
                 .setHeader("Status")
@@ -59,15 +60,15 @@ public class AllTransactions extends FlexLayout {
                 .setSortable(true)
                 .setWidth(UIUtils.COLUMN_WIDTH_L);
         grid.addColumn(new ComponentRenderer<>(this::createAmount))
-                .setHeader(UIUtils.createRightAlignedDiv(new Text("Amount (EUR)")))
+                .setHeader(UIUtils.createRightAlignedDiv("Amount (EUR)"))
                 .setWidth(UIUtils.COLUMN_WIDTH_M)
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createAttachment))
-                .setHeader("Attachment")
+                .setHeader(UIUtils.createRightAlignedDiv("Attachment"))
                 .setWidth(UIUtils.COLUMN_WIDTH_M)
                 .setFlexGrow(0);
-        grid.addColumn(new LocalDateRenderer<>(Transaction::getDate, "MMM dd, YYYY"))
-                .setHeader("Date")
+        grid.addColumn(new ComponentRenderer<>(this::createDate))
+                .setHeader(UIUtils.createRightAlignedDiv("Date"))
                 .setWidth(UIUtils.COLUMN_WIDTH_M)
                 .setFlexGrow(0);
 
@@ -161,14 +162,12 @@ public class AllTransactions extends FlexLayout {
     }
 
     private Component createAmount(Transaction transaction) {
-        Label label = UIUtils.createLabel(Collections.singleton(LumoStyles.FontSize.H4), UIUtils.formatAmount(transaction.getAmount()));
-
+        Label label = UIUtils.createH4Label(UIUtils.formatAmount(transaction.getAmount()));
         if (transaction.getAmount() < 0) {
             label.addClassName(LumoStyles.TextColor.ERROR);
         } else {
             label.addClassName(LumoStyles.TextColor.SUCCESS);
         }
-
         return UIUtils.createRightAlignedDiv(label);
     }
 
@@ -179,6 +178,10 @@ public class AllTransactions extends FlexLayout {
         } else {
             icon.addClassName(LumoStyles.TextColor.DISABLED);
         }
-        return icon;
+        return UIUtils.createRightAlignedDiv(icon);
+    }
+
+    private Component createDate(Transaction transaction) {
+        return UIUtils.createRightAlignedDiv(UIUtils.formatDate(transaction.getDate()));
     }
 }

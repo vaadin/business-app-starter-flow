@@ -12,6 +12,7 @@ import com.vaadin.flow.data.renderer.LocalDateRenderer;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.starter.applayout.backend.DummyData;
+import com.vaadin.starter.applayout.backend.Invoice;
 import com.vaadin.starter.applayout.backend.Person;
 import com.vaadin.starter.applayout.backend.UIConfig;
 import com.vaadin.starter.applayout.ui.Root;
@@ -21,7 +22,6 @@ import com.vaadin.starter.applayout.ui.utils.LumoStyles;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
 import com.vaadin.starter.applayout.ui.views.ViewFrame;
 
-import java.text.DecimalFormat;
 import java.util.Collections;
 
 import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
@@ -35,7 +35,7 @@ public class Accountants extends ViewFrame {
     public Accountants() {
         // Header
         if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-            setHeader(new AppBar("Traders"));
+            setHeader(new AppBar("Accountants"));
         }
 
         // Grid
@@ -47,27 +47,25 @@ public class Accountants extends ViewFrame {
                 .setHeader("ID")
                 .setFrozen(true)
                 .setSortable(true)
-                .setWidth(UIUtils.COLUMN_WIDTH_XS)
+                .setWidth(UIUtils.COLUMN_WIDTH_S)
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createUserInfo))
                 .setHeader("Name")
-                .setWidth(UIUtils.COLUMN_WIDTH_L)
-                .setFlexGrow(1);
+                .setWidth(UIUtils.COLUMN_WIDTH_L);
         grid.addColumn(new ComponentRenderer<>(this::createActive))
-                .setHeader("Active")
-                .setWidth(UIUtils.COLUMN_WIDTH_XS)
+                .setHeader(UIUtils.createRightAlignedDiv("Active"))
+                .setWidth(UIUtils.COLUMN_WIDTH_S)
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createReports))
-                .setHeader(UIUtils.createRightAlignedDiv(new Text("Reports")))
+                .setHeader(UIUtils.createRightAlignedDiv("Reports"))
                 .setWidth(UIUtils.COLUMN_WIDTH_M)
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createCompanies))
-                .setHeader(UIUtils.createRightAlignedDiv(new Text("Companies")))
+                .setHeader(UIUtils.createRightAlignedDiv("Companies"))
                 .setWidth(UIUtils.COLUMN_WIDTH_M)
                 .setFlexGrow(0);
-        grid.addColumn(new LocalDateRenderer<>(Person::getLastModified, "MMM dd, YYYY"))
-                .setHeader("Last Report")
-                .setSortable(true)
+        grid.addColumn(new ComponentRenderer<>(this::createDate))
+                .setHeader(UIUtils.createRightAlignedDiv("Last Report"))
                 .setWidth(UIUtils.COLUMN_WIDTH_M)
                 .setFlexGrow(0);
         grid.setSizeFull();
@@ -87,22 +85,26 @@ public class Accountants extends ViewFrame {
     }
 
     private Component createActive(Person person) {
+        Icon icon;
         if (person.getRandomBoolean()) {
-            Icon icon = new Icon(VaadinIcon.CHECK);
+            icon = new Icon(VaadinIcon.CHECK);
             icon.addClassName(LumoStyles.TextColor.PRIMARY);
-            return icon;
         } else {
-            Icon icon = new Icon(VaadinIcon.CLOSE);
+            icon = new Icon(VaadinIcon.CLOSE);
             icon.addClassName(LumoStyles.TextColor.DISABLED);
-            return icon;
         }
+        return UIUtils.createRightAlignedDiv(icon);
     }
 
     private Component createReports() {
-        return UIUtils.createRightAlignedDiv(UIUtils.createLabel(Collections.singleton(LumoStyles.FontSize.H4), UIUtils.formatUnits(DummyData.getRandomInt(0, 5000))));
+        return UIUtils.createRightAlignedDiv(UIUtils.createH4Label(UIUtils.formatUnits(DummyData.getRandomInt(0, 5000))));
     }
 
     private Component createCompanies() {
-        return UIUtils.createRightAlignedDiv(UIUtils.createLabel(Collections.singleton(LumoStyles.FontSize.H4), String.valueOf(DummyData.getRandomInt(0, 50))));
+        return UIUtils.createRightAlignedDiv(UIUtils.createH4Label(String.valueOf(DummyData.getRandomInt(0, 50))));
+    }
+
+    private Component createDate(Person person) {
+        return UIUtils.createRightAlignedDiv(UIUtils.formatDate(person.getLastModified()));
     }
 }

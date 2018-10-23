@@ -68,7 +68,7 @@ public class FilterList extends ViewFrame {
                 .setHeader("ID")
                 .setFrozen(true)
                 .setSortable(true)
-                .setWidth(UIUtils.COLUMN_WIDTH_XS)
+                .setWidth(UIUtils.COLUMN_WIDTH_S)
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createUserInfo))
                 .setHeader("Name")
@@ -101,7 +101,7 @@ public class FilterList extends ViewFrame {
         toggleButton = UIUtils.createTertiaryIconButton(VaadinIcon.CHEVRON_UP_SMALL);
         toggleButton.addClickListener(event -> toggleFilterArea());
 
-        Label title = UIUtils.createLabel(Collections.singleton(LumoStyles.FontSize.H5), "Filter");
+        Label title = UIUtils.createH5Label("Filter");
 
         Label badge = new Label("4");
         badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.CONTRAST);
@@ -116,7 +116,7 @@ public class FilterList extends ViewFrame {
     }
 
     private FlexLayout createFilterOptions() {
-        Label title = UIUtils.createLabel(Arrays.asList(LumoStyles.FontSize.H6), "Options");
+        Label title = UIUtils.createH6Label("Options");
 
         ComboBox combo = new ComboBox();
         combo.setPlaceholder("Select...");
@@ -132,7 +132,7 @@ public class FilterList extends ViewFrame {
     }
 
     private Component createTokens() {
-        Label title = UIUtils.createLabel(Arrays.asList(LumoStyles.FontSize.H6), "Tokens");
+        Label title = UIUtils.createH6Label("Tokens");
 
         ComboBox combo = new ComboBox();
         combo.setClassName("token-select");

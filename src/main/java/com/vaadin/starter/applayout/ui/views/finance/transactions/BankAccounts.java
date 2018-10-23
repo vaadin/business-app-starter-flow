@@ -11,11 +11,11 @@ import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.data.provider.DataProvider;
-import com.vaadin.flow.data.provider.ListDataProvider;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.data.renderer.LocalDateRenderer;
 import com.vaadin.starter.applayout.backend.BankAccount;
 import com.vaadin.starter.applayout.backend.DummyData;
+import com.vaadin.starter.applayout.backend.Transaction;
 import com.vaadin.starter.applayout.ui.components.DetailsDrawer;
 import com.vaadin.starter.applayout.ui.components.ListItem;
 import com.vaadin.starter.applayout.ui.utils.CSSProperties;
@@ -40,7 +40,7 @@ public class BankAccounts extends FlexLayout {
                 .setHeader("ID")
                 .setFrozen(true)
                 .setSortable(true)
-                .setWidth(UIUtils.COLUMN_WIDTH_XS)
+                .setWidth(UIUtils.COLUMN_WIDTH_S)
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createBankInfo))
                 .setHeader("Bank Account")
@@ -49,11 +49,11 @@ public class BankAccounts extends FlexLayout {
                 .setHeader("Owner")
                 .setWidth(UIUtils.COLUMN_WIDTH_L);
         grid.addColumn(new ComponentRenderer<>(this::createAvailability))
-                .setHeader(UIUtils.createRightAlignedDiv(new Text("Availability (EUR)")))
+                .setHeader(UIUtils.createRightAlignedDiv("Availability (EUR)"))
                 .setWidth(UIUtils.COLUMN_WIDTH_M)
                 .setFlexGrow(0);
-        grid.addColumn(new LocalDateRenderer<>(BankAccount::getUpdated, "MMM dd, YYYY"))
-                .setHeader("Updated")
+        grid.addColumn(new ComponentRenderer<>(this::createDate))
+                .setHeader(UIUtils.createRightAlignedDiv("Updated"))
                 .setWidth(UIUtils.COLUMN_WIDTH_M)
                 .setFlexGrow(0);
 
@@ -129,16 +129,18 @@ public class BankAccounts extends FlexLayout {
 
     private Component createAvailability(BankAccount bankAccount) {
         Double availability = bankAccount.getAvailability();
-
-        Label label = UIUtils.createLabel(Collections.singleton(LumoStyles.FontSize.H4), UIUtils.formatAmount(availability));
+        Label label = UIUtils.createH4Label(UIUtils.formatAmount(availability));
 
         if (availability > 0) {
-            label.setText("+" + label.getText());
             label.addClassName(LumoStyles.TextColor.SUCCESS);
         } else {
             label.addClassName(LumoStyles.TextColor.ERROR);
         }
 
         return UIUtils.createRightAlignedDiv(label);
+    }
+
+    private Component createDate(BankAccount bankAccount) {
+        return UIUtils.createRightAlignedDiv(UIUtils.formatDate(bankAccount.getUpdated()));
     }
 }

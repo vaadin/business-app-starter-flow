@@ -50,7 +50,7 @@ public class Reports extends ViewFrame {
                 .setWidth("160px")
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createBalance))
-                .setHeader(UIUtils.createRightAlignedDiv(new Text("BankAccount (EUR)")))
+                .setHeader(UIUtils.createRightAlignedDiv("BankAccount (EUR)"))
                 .setSortable(true)
                 .setWidth("160px")
                 .setFlexGrow(0);
@@ -71,7 +71,7 @@ public class Reports extends ViewFrame {
     }
 
     private Component createBalance(Report report) {
-        return UIUtils.createRightAlignedDiv(new Text(Double.toString(report.getBalance())));
+        return UIUtils.createRightAlignedDiv(UIUtils.formatAmount(report.getBalance()));
     }
 
     private void viewDetails(Report report) {

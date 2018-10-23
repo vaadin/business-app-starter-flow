@@ -40,7 +40,7 @@ public class Stock extends ViewFrame {
 
         grid.addColumn(new ComponentRenderer<>(this::createCategory))
                 .setHeader("Category")
-                .setWidth(UIUtils.COLUMN_WIDTH_S)
+                .setWidth(UIUtils.COLUMN_WIDTH_M)
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createInfo))
                 .setHeader("Name")
@@ -51,16 +51,16 @@ public class Stock extends ViewFrame {
                 .setWidth(UIUtils.COLUMN_WIDTH_L)
                 .setFlexGrow(1);
         grid.addColumn(new ComponentRenderer<>(this::createPrice))
-                .setHeader(UIUtils.createRightAlignedDiv(new Text("Unit Price (€)")))
+                .setHeader(UIUtils.createRightAlignedDiv("Unit Price (€)"))
                 .setWidth(UIUtils.COLUMN_WIDTH_M)
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createStock))
-                .setHeader(UIUtils.createRightAlignedDiv(new Text("In Stock")))
-                .setWidth(UIUtils.COLUMN_WIDTH_S)
+                .setHeader(UIUtils.createRightAlignedDiv("In Stock"))
+                .setWidth(UIUtils.COLUMN_WIDTH_M)
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createSold))
-                .setHeader(UIUtils.createRightAlignedDiv(new Text("Units Sold")))
-                .setWidth(UIUtils.COLUMN_WIDTH_S)
+                .setHeader(UIUtils.createRightAlignedDiv("Units Sold"))
+                .setWidth(UIUtils.COLUMN_WIDTH_M)
                 .setFlexGrow(0);
 
         grid.setSizeFull();
@@ -94,16 +94,16 @@ public class Stock extends ViewFrame {
 
     private Component createPrice(Item item) {
         Double price = item.getPrice();
-        Label label = UIUtils.createLabel(Collections.singleton(LumoStyles.FontSize.H4), UIUtils.formatAmount(price));
+        Label label = UIUtils.createH4Label(UIUtils.formatAmount(price));
         return UIUtils.createRightAlignedDiv(label);
     }
 
     private Component createStock(Item item) {
-        return UIUtils.createRightAlignedDiv(new Text(UIUtils.formatUnits(item.getStock())));
+        return UIUtils.createRightAlignedDiv(UIUtils.formatUnits(item.getStock()));
     }
 
     private Component createSold(Item item) {
-        return UIUtils.createRightAlignedDiv(new Text(UIUtils.formatUnits(item.getSold())));
+        return UIUtils.createRightAlignedDiv(UIUtils.formatUnits(item.getSold()));
     }
 
 }

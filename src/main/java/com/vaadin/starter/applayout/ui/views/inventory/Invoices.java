@@ -4,7 +4,6 @@ import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Label;
-import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.data.provider.DataProvider;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.data.renderer.LocalDateRenderer;
@@ -37,20 +36,21 @@ public class Invoices extends ViewFrame {
 
         grid.addColumn(Invoice::getId)
                 .setHeader("ID")
-                .setWidth(UIUtils.COLUMN_WIDTH_XS)
+                .setWidth(UIUtils.COLUMN_WIDTH_S)
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(UIUtils::createBadge))
                 .setHeader("Status")
-                .setWidth(UIUtils.COLUMN_WIDTH_S)
+                .setWidth(UIUtils.COLUMN_WIDTH_M)
                 .setFlexGrow(0);
         grid.addColumn(Invoice::getCustomer)
                 .setHeader("Customer")
                 .setWidth(UIUtils.COLUMN_WIDTH_L);
         grid.addColumn(new ComponentRenderer<>(this::createAmount))
-                .setHeader(UIUtils.createRightAlignedDiv(new Text("Amount")))
-                .setWidth(UIUtils.COLUMN_WIDTH_S);
-        grid.addColumn(new LocalDateRenderer<>(Invoice::getDueDate, "MMM dd, YYYY"))
-                .setHeader("Due Date")
+                .setHeader(UIUtils.createRightAlignedDiv("Amount"))
+                .setWidth(UIUtils.COLUMN_WIDTH_M)
+                .setFlexGrow(0);
+        grid.addColumn(new ComponentRenderer<>(this::createDate))
+                .setHeader(UIUtils.createRightAlignedDiv("Due Date"))
                 .setWidth(UIUtils.COLUMN_WIDTH_M)
                 .setFlexGrow(0);
 
@@ -62,8 +62,12 @@ public class Invoices extends ViewFrame {
 
     private Component createAmount(Invoice invoice) {
         Double amount = invoice.getAmount();
-        Label label = UIUtils.createLabel(Collections.singleton(LumoStyles.FontSize.H4), UIUtils.formatAmount(amount));
+        Label label = UIUtils.createH4Label(UIUtils.formatAmount(amount));
         return UIUtils.createRightAlignedDiv(label);
+    }
+
+    private Component createDate(Invoice invoice) {
+        return UIUtils.createRightAlignedDiv(UIUtils.formatDate(invoice.getDueDate()));
     }
 
 }

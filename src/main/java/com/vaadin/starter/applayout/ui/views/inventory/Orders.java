@@ -2,15 +2,12 @@ package com.vaadin.starter.applayout.ui.views.inventory;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Text;
-import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
-import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.data.provider.DataProvider;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.data.renderer.LocalDateRenderer;
-import com.vaadin.flow.data.renderer.TemplateRenderer;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.starter.applayout.backend.*;
@@ -21,7 +18,7 @@ import com.vaadin.starter.applayout.ui.utils.LumoStyles;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
 import com.vaadin.starter.applayout.ui.views.ViewFrame;
 
-import java.util.Collection;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.StringJoiner;
@@ -44,21 +41,21 @@ public class Orders extends ViewFrame {
 
         grid.addColumn(new ComponentRenderer<>(UIUtils::createBadge))
                 .setHeader("Status")
-                .setWidth(UIUtils.COLUMN_WIDTH_S)
+                .setWidth(UIUtils.COLUMN_WIDTH_M)
                 .setFlexGrow(0);
         grid.addColumn(Order::getCustomer)
                 .setHeader("Customer")
                 .setWidth(UIUtils.COLUMN_WIDTH_L);
         grid.addColumn(new ComponentRenderer<>(this::createItemCount))
-                .setHeader(UIUtils.createRightAlignedDiv(new Text("Item Count")))
-                .setWidth(UIUtils.COLUMN_WIDTH_S)
-                .setFlexGrow(0);
-        grid.addColumn(new ComponentRenderer<>(this::createValue))
-                .setHeader(UIUtils.createRightAlignedDiv(new Text("Value (€)")))
+                .setHeader(UIUtils.createRightAlignedDiv("Item Count"))
                 .setWidth(UIUtils.COLUMN_WIDTH_M)
                 .setFlexGrow(0);
-        grid.addColumn(new LocalDateRenderer<>(Order::getDate, "MMM dd, YYYY"))
-                .setHeader("Order Received")
+        grid.addColumn(new ComponentRenderer<>(this::createValue))
+                .setHeader(UIUtils.createRightAlignedDiv("Value (€)"))
+                .setWidth(UIUtils.COLUMN_WIDTH_M)
+                .setFlexGrow(0);
+        grid.addColumn(new ComponentRenderer<>(this::createDate))
+                .setHeader(UIUtils.createRightAlignedDiv("Order Received"))
                 .setWidth(UIUtils.COLUMN_WIDTH_M)
                 .setFlexGrow(0);
 
@@ -70,21 +67,19 @@ public class Orders extends ViewFrame {
         getContent().addClassName(GRID_VIEW);
     }
 
-    private Component createItems(Order order) {
-        StringJoiner joiner = new StringJoiner(", ");
-        order.getItems().forEach(item -> joiner.add(item.getName()));
-        return new Text(joiner.toString());
+    private Component createItemCount(Order order) {
+        int count = order.getItemCount();
+        return UIUtils.createRightAlignedDiv(UIUtils.formatUnits(count));
     }
 
     private Component createValue(Order order) {
         Double value = order.getValue();
-        Label label = UIUtils.createLabel(Collections.singleton(LumoStyles.FontSize.H4), UIUtils.formatAmount(value));
+        Label label = UIUtils.createH4Label(UIUtils.formatAmount(value));
         return UIUtils.createRightAlignedDiv(label);
     }
 
-    private Component createItemCount(Order order) {
-        int count = order.getItemCount();
-        return UIUtils.createRightAlignedDiv(new Text(UIUtils.formatUnits(count)));
+    private Component createDate(Order order) {
+        return UIUtils.createRightAlignedDiv(UIUtils.formatDate(order.getDate()));
     }
 
     private Component createDetails(Order order) {
@@ -98,7 +93,6 @@ public class Orders extends ViewFrame {
                 listItem.setDividerVisible(true);
             }
             details.add(listItem);
-
         }
 
         return details;

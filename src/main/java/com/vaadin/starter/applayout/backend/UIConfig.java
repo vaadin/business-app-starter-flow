@@ -27,7 +27,7 @@ public class UIConfig {
     }
 
     public static Showcase getShowcase() {
-        return Showcase.INVENTORY;
+        return Showcase.FINANCE;
     }
 
 }

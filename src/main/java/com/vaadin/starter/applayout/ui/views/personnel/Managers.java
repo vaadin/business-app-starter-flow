@@ -47,23 +47,21 @@ public class Managers extends ViewFrame {
                 .setHeader("ID")
                 .setFrozen(true)
                 .setSortable(true)
-                .setWidth(UIUtils.COLUMN_WIDTH_XS)
+                .setWidth(UIUtils.COLUMN_WIDTH_S)
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createUserInfo))
                 .setHeader("Name")
-                .setWidth(UIUtils.COLUMN_WIDTH_L)
-                .setFlexGrow(1);
+                .setWidth(UIUtils.COLUMN_WIDTH_L);
         grid.addColumn(new ComponentRenderer<>(this::createActive))
-                .setHeader("Active")
-                .setWidth(UIUtils.COLUMN_WIDTH_XS)
+                .setHeader(UIUtils.createRightAlignedDiv("Active"))
+                .setWidth(UIUtils.COLUMN_WIDTH_S)
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createApprovalLimit))
-                .setHeader(UIUtils.createRightAlignedDiv(new Text("Approval Limit (€)")))
+                .setHeader(UIUtils.createRightAlignedDiv("Approval Limit (€)"))
                 .setWidth(UIUtils.COLUMN_WIDTH_L)
                 .setFlexGrow(0);
-        grid.addColumn(new LocalDateRenderer<>(Person::getLastModified, "MMM dd, YYYY"))
-                .setHeader("Last Modified")
-                .setSortable(true)
+        grid.addColumn(new ComponentRenderer<>(this::createDate))
+                .setHeader(UIUtils.createRightAlignedDiv("Last Report"))
                 .setWidth(UIUtils.COLUMN_WIDTH_M)
                 .setFlexGrow(0);
         grid.setSizeFull();
@@ -83,23 +81,27 @@ public class Managers extends ViewFrame {
     }
 
     private Component createActive(Person person) {
+        Icon icon;
         if (person.getRandomBoolean()) {
-            Icon icon = new Icon(VaadinIcon.CHECK);
+            icon = new Icon(VaadinIcon.CHECK);
             icon.addClassName(LumoStyles.TextColor.PRIMARY);
-            return icon;
         } else {
-            Icon icon = new Icon(VaadinIcon.CLOSE);
+            icon = new Icon(VaadinIcon.CLOSE);
             icon.addClassName(LumoStyles.TextColor.DISABLED);
-            return icon;
         }
+        return UIUtils.createRightAlignedDiv(icon);
     }
 
     private Component createApprovalLimit(Person person) {
         int amount = person.getRandomInteger() > 0 ? person.getRandomInteger() : 0;
 
-        Label label = UIUtils.createLabel(Collections.singleton(LumoStyles.FontSize.H4), UIUtils.formatAmount(amount));
+        Label label = UIUtils.createH4Label(UIUtils.formatAmount(amount));
         label.addClassName(amount > 0 ? LumoStyles.TextColor.SUCCESS : LumoStyles.TextColor.ERROR);
 
         return UIUtils.createRightAlignedDiv(label);
+    }
+
+    private Component createDate(Person person) {
+        return UIUtils.createRightAlignedDiv(UIUtils.formatDate(person.getLastModified()));
     }
 }

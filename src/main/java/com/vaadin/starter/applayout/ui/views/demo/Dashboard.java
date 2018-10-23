@@ -62,7 +62,7 @@ public class Dashboard extends ViewFrame {
                         LumoStyles.Spacing.Right.M
                 ),
                 UIUtils.createSmallIcon(Collections.singleton(LumoStyles.TextColor.TERTIARY), icon),
-                UIUtils.createLabel(Collections.singleton(LumoStyles.FontSize.H3), title)
+                UIUtils.createH3Label(title)
         );
         header.setAlignItems(FlexComponent.Alignment.CENTER);
         return header;
@@ -85,8 +85,8 @@ public class Dashboard extends ViewFrame {
 
         FlexLayout textContainer = UIUtils.createFlexLayout(
                 Collections.singleton(LumoStyles.Spacing.Right.XS),
-                UIUtils.createLabel(Collections.singleton(LumoStyles.FontSize.H2), Integer.toString(value)),
-                UIUtils.createLabel(Collections.singleton(LumoStyles.FontSize.S), "%")
+                UIUtils.createH2Label(Integer.toString(value)),
+                UIUtils.createSmallLabel("%")
         );
         textContainer.setAlignItems(FlexComponent.Alignment.BASELINE);
         textContainer.getStyle().set(CSSProperties.Position.PROPERTY, CSSProperties.Position.ABSOLUTE);

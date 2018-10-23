@@ -107,11 +107,9 @@ public class ReportDetails extends ViewFrame implements HasUrlParameter<Long> {
         viewport = UIUtils.createDiv(
                 Arrays.asList(LumoStyles.Margin.Horizontal.AUTO, LumoStyles.Margin.Responsive.Vertical.ML),
                 row,
-                UIUtils.createLabel(Arrays.asList(LumoStyles.FontSize.H6, LumoStyles.Margin.Bottom.M,
-                        LumoStyles.Margin.Responsive.Horizontal.ML, LumoStyles.Margin.Top.L), "Transactions (EUR)"),
+                UIUtils.createH6Label(Arrays.asList(LumoStyles.Margin.Bottom.M, LumoStyles.Margin.Responsive.Horizontal.ML, LumoStyles.Margin.Top.L), "Transactions (EUR)"),
                 transactions,
-                UIUtils.createLabel(Arrays.asList(LumoStyles.FontSize.H6, LumoStyles.Margin.Bottom.M,
-                        LumoStyles.Margin.Responsive.Horizontal.ML, LumoStyles.Margin.Top.L), "Pending Events"),
+                UIUtils.createH6Label(Arrays.asList(LumoStyles.Margin.Bottom.M, LumoStyles.Margin.Responsive.Horizontal.ML, LumoStyles.Margin.Top.L), "Pending Events"),
                 pending,
                 transactionsChart
         );

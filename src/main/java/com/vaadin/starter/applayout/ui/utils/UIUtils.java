@@ -16,10 +16,12 @@ import com.vaadin.starter.applayout.backend.Invoice;
 import com.vaadin.starter.applayout.backend.Order;
 import com.vaadin.starter.applayout.backend.Payment;
 import com.vaadin.starter.applayout.ui.components.DataSeriesItemWithRadius;
-import com.vaadin.starter.applayout.ui.views.finance.Statistics;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.StringJoiner;
@@ -28,16 +30,15 @@ public class UIUtils {
 
     public static final String IMG_PATH = "frontend/styles/images/";
 
-    public static final String COLUMN_WIDTH_XS = "80px";
-    public static final String COLUMN_WIDTH_S = "120px";
+    public static final String COLUMN_WIDTH_S = "80px";
     public static final String COLUMN_WIDTH_M = "160px";
     public static final String COLUMN_WIDTH_L = "240px";
-    public static final String COLUMN_WIDTH_XL = "320px";
 
     /**
-     * DecimalFormat is thread-unsafe.
+     * Thread-unsafe formatters.
      */
-    private static final ThreadLocal<DecimalFormat> formatCache = ThreadLocal.withInitial(() -> new DecimalFormat("###,###,###.00"));
+    private static final ThreadLocal<DecimalFormat> decimalFormat = ThreadLocal.withInitial(() -> new DecimalFormat("###,###,###.00"));
+    private static final ThreadLocal<DateTimeFormatter> dateFormat = ThreadLocal.withInitial(() -> DateTimeFormatter.ofPattern("MMM dd, YYYY"));
 
 
 
@@ -55,9 +56,9 @@ public class UIUtils {
         return div;
     }
 
-    public static Div createRightAlignedDiv(Collection<String> classNames, Component... components) {
-        Div div = createRightAlignedDiv(components);
-        classNames.forEach(div::addClassName);
+    public static Div createRightAlignedDiv(String text) {
+        Div div = new Div(new Text(text));
+        div.getStyle().set(CSSProperties.TextAlign.PROPERTY, CSSProperties.TextAlign.RIGHT);
         return div;
     }
 
@@ -190,23 +191,51 @@ public class UIUtils {
 
     /* ==== TEXT ==== */
 
-    /* Paragraphs */
-    public static Paragraph createParagraph(Collection<String> classNames, String text) {
-        Paragraph p = new Paragraph(text);
-        classNames.forEach(p::addClassName);
-        return p;
-    }
-
-    /* Labels */
     public static Label createLabel(Collection<String> classNames, String text) {
         Label label = new Label(text);
         classNames.forEach(label::addClassName);
         return label;
     }
 
+    public static Label createSmallLabel(String text) {
+        Label label = new Label(text);
+        label.addClassNames(LumoStyles.FontSize.S);
+        return label;
+    }
+
+    public static Label createH2Label(String text) {
+        Label label = new Label(text);
+        label.addClassNames(LumoStyles.FontSize.H2);
+        return label;
+    }
+
+    public static Label createH3Label(String text) {
+        Label label = new Label(text);
+        label.addClassNames(LumoStyles.FontSize.H3);
+        return label;
+    }
+
     public static Label createH4Label(String text) {
         Label label = new Label(text);
         label.addClassNames(LumoStyles.FontSize.H4);
+        return label;
+    }
+
+    public static Label createH5Label(String text) {
+        Label label = new Label(text);
+        label.addClassNames(LumoStyles.FontSize.H5);
+        return label;
+    }
+
+    public static Label createH6Label(String text) {
+        Label label = new Label(text);
+        label.addClassNames(LumoStyles.FontSize.H4);
+        return label;
+    }
+
+    public static Label createH6Label(Collection<String> classNames, String text) {
+        Label label = createH6Label(text);
+        classNames.forEach(label::addClassName);
         return label;
     }
 
@@ -253,11 +282,11 @@ public class UIUtils {
     /* === NUMBERS === */
 
     public static String formatAmount(Double amount) {
-        return formatCache.get().format(amount);
+        return decimalFormat.get().format(amount);
     }
 
     public static String formatAmount(int amount) {
-        return formatCache.get().format(amount);
+        return decimalFormat.get().format(amount);
     }
 
     public static String formatUnits(int units) {
@@ -328,6 +357,13 @@ public class UIUtils {
         return badge;
     }
 
+
+
+    /* === DATES === */
+
+    public static String formatDate(LocalDate date) {
+        return dateFormat.get().format(date);
+    }
 
 
     /* === CHARTS === */

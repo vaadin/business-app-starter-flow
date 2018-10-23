@@ -10,7 +10,6 @@ import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Label;
-import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
@@ -20,6 +19,7 @@ import com.vaadin.flow.data.renderer.LocalDateRenderer;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.starter.applayout.backend.DummyData;
+import com.vaadin.starter.applayout.backend.Order;
 import com.vaadin.starter.applayout.backend.Payment;
 import com.vaadin.starter.applayout.backend.UIConfig;
 import com.vaadin.starter.applayout.ui.Root;
@@ -67,11 +67,11 @@ public class Payments extends ViewFrame {
                 .setHeader("To")
                 .setWidth(UIUtils.COLUMN_WIDTH_L);
         grid.addColumn(new ComponentRenderer<>(this::createAmount))
-                .setHeader(UIUtils.createRightAlignedDiv(new Text("Amount (EUR)")))
+                .setHeader(UIUtils.createRightAlignedDiv("Amount (EUR)"))
                 .setWidth(UIUtils.COLUMN_WIDTH_M)
                 .setFlexGrow(0);
-        grid.addColumn(new LocalDateRenderer<>(Payment::getDate, "MMM dd, YYYY"))
-                .setHeader("Date")
+        grid.addColumn(new ComponentRenderer<>(this::createDate))
+                .setHeader(UIUtils.createRightAlignedDiv("Date"))
                 .setWidth(UIUtils.COLUMN_WIDTH_M)
                 .setFlexGrow(0);
 
@@ -105,8 +105,12 @@ public class Payments extends ViewFrame {
 
     private Component createAmount(Payment payment) {
         Double amount = payment.getAmount();
-        Label label = UIUtils.createLabel(Collections.singleton(LumoStyles.FontSize.H4), UIUtils.formatAmount(amount));
+        Label label = UIUtils.createH4Label(UIUtils.formatAmount(amount));
         return UIUtils.createRightAlignedDiv(label);
+    }
+
+    private Component createDate(Payment payment) {
+        return UIUtils.createRightAlignedDiv(UIUtils.formatDate(payment.getDate()));
     }
 
     private void initDetailsDrawer() {
@@ -165,4 +169,6 @@ public class Payments extends ViewFrame {
         form.addClassNames(LumoStyles.Padding.Bottom.L, LumoStyles.Padding.Horizontal.L);
         return form;
     }
+
+
 }
