@@ -5,8 +5,9 @@ import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.charts.Chart;
 import com.vaadin.flow.component.charts.model.*;
-import com.vaadin.flow.component.html.*;
+import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
@@ -19,7 +20,6 @@ import com.vaadin.starter.applayout.ui.components.DataSeriesItemWithRadius;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
@@ -298,23 +298,23 @@ public class UIUtils {
     /* === BADGES === */
 
     public static Component createBadge(Invoice invoice) {
-            Invoice.Status status = invoice.getStatus();
-            Span badge = new Span(status.getName());
-            switch (status) {
-                case OUTSTANDING:
-                    badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.CONTRAST);
-                    break;
-                case OPEN:
-                    badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.DEFAULT);
-                    break;
-                case PAID:
-                    badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.SUCCESS);
-                    break;
-                default:
-                    badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.ERROR);
-                    break;
-            }
-            return badge;
+        Invoice.Status status = invoice.getStatus();
+        Span badge = new Span(status.getName());
+        switch (status) {
+            case OUTSTANDING:
+                badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.CONTRAST);
+                break;
+            case OPEN:
+                badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.DEFAULT);
+                break;
+            case PAID:
+                badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.SUCCESS);
+                break;
+            default:
+                badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.ERROR);
+                break;
+        }
+        return badge;
     }
 
     public static Component createBadge(Order order) {

@@ -2,7 +2,10 @@ package com.vaadin.starter.applayout.ui.views.inventory;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.charts.Chart;
-import com.vaadin.flow.component.charts.model.*;
+import com.vaadin.flow.component.charts.model.ChartType;
+import com.vaadin.flow.component.charts.model.Configuration;
+import com.vaadin.flow.component.charts.model.ListSeries;
+import com.vaadin.flow.component.charts.model.XAxis;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.Icon;
@@ -13,7 +16,8 @@ import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import com.vaadin.starter.applayout.backend.*;
+import com.vaadin.starter.applayout.backend.Invoice;
+import com.vaadin.starter.applayout.backend.UIConfig;
 import com.vaadin.starter.applayout.ui.Root;
 import com.vaadin.starter.applayout.ui.components.ListItem;
 import com.vaadin.starter.applayout.ui.components.navigation.bar.AppBar;
@@ -24,7 +28,6 @@ import com.vaadin.starter.applayout.ui.views.ViewFrame;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Random;
 
 @Route(value = "analysis", layout = Root.class)
 @PageTitle("Analysis")

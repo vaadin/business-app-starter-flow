@@ -1,7 +1,6 @@
 package com.vaadin.starter.applayout.backend;
 
 import java.time.LocalDate;
-import java.util.Collection;
 
 public class Invoice {
 

@@ -1,7 +1,6 @@
 package com.vaadin.starter.applayout.ui.views.demo;
 
 import com.vaadin.flow.component.Component;
-import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Image;
