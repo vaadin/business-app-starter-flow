@@ -113,8 +113,6 @@ public class AllTransactions extends FlexLayout {
     }
 
     private Component createDetails(Transaction transaction) {
-        FormLayout form = UIUtils.createFormLayout(Arrays.asList(LumoStyles.Padding.Bottom.L, LumoStyles.Padding.Horizontal.L, LumoStyles.Padding.Top.M));
-
         TextField id = new TextField();
         id.setValue(String.valueOf(transaction.getId()));
         id.setWidth("100%");
@@ -138,13 +136,15 @@ public class AllTransactions extends FlexLayout {
         date.setValue(transaction.getDate());
         date.setWidth("100%");
 
+        // Add it all together
+        FormLayout form = UIUtils.createFormLayout(Arrays.asList(LumoStyles.Padding.Bottom.L, LumoStyles.Padding.Horizontal.L, LumoStyles.Padding.Top.M));
+        form.setResponsiveSteps(new FormLayout.ResponsiveStep("0", 1, FormLayout.ResponsiveStep.LabelsPosition.TOP));
+        
         form.addFormItem(id, "Transaction ID");
         form.addFormItem(status, "Status").getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN);
         form.addFormItem(sender, "Payee / Payer");
         form.addFormItem(amount, transaction.getAmount() > 0 ? "Deposit (€)" : "Withdrawal (€)");
         form.addFormItem(date, "Date");
-
-        form.setResponsiveSteps(new FormLayout.ResponsiveStep("0", 1, FormLayout.ResponsiveStep.LabelsPosition.TOP));
 
         return form;
     }

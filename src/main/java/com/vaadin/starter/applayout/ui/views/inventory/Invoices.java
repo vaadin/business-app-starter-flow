@@ -122,14 +122,17 @@ public class Invoices extends ViewFrame {
     private Component createDetails(Invoice invoice) {
         H3 title = new H3(invoice.getCustomer());
 
-        TextField id = new TextField("Invoice ID");
+        TextField id = new TextField();
         id.setValue(String.valueOf(invoice.getId()));
+        id.setWidth("100%");
 
-        DatePicker invoiceDate = new DatePicker("Invoice Date");
+        DatePicker invoiceDate = new DatePicker();
         invoiceDate.setValue(invoice.getInvoiceDate());
+        invoiceDate.setWidth("100%");
 
-        TextField amount = new TextField("Amount (EUR)");
+        TextField amount = new TextField();
         amount.setValue(UIUtils.formatAmount(invoice.getAmount()));
+        amount.setWidth("100%");
 
         RadioButtonGroup<Invoice.Status> status = new RadioButtonGroup<>();
         status.setItems(Invoice.Status.values());
@@ -138,8 +141,9 @@ public class Invoices extends ViewFrame {
         status.getStyle().set(CSSProperties.Display.PROPERTY, CSSProperties.Display.FLEX);
         status.getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN);
 
-        DatePicker dueDate = new DatePicker("Due Date");
+        DatePicker dueDate = new DatePicker();
         dueDate.setValue(invoice.getDueDate());
+        dueDate.setWidth("100%");
 
         // Read-only fields.
         for (HasValue component : new HasValue[]{id, invoiceDate, amount}) {
@@ -147,9 +151,15 @@ public class Invoices extends ViewFrame {
         }
 
         // Add it all together.
-        FormLayout form = UIUtils.createFormLayout(Arrays.asList(LumoStyles.Padding.Bottom.L, LumoStyles.Padding.Horizontal.L), title, id, invoiceDate, amount);
+        FormLayout form = UIUtils.createFormLayout(Arrays.asList(LumoStyles.Padding.Bottom.L, LumoStyles.Padding.Horizontal.L));
+        form.setResponsiveSteps(new FormLayout.ResponsiveStep("0", 1, FormLayout.ResponsiveStep.LabelsPosition.TOP));
+
+        form.add(title);
+        form.addFormItem(id, "Invoice ID");
+        form.addFormItem(invoiceDate, "Invoice Date");
+        form.addFormItem(amount, "Amount (€)");
         form.addFormItem(status, "Status").getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN);
-        form.add(dueDate);
+        form.addFormItem(dueDate, "Due Date");
 
         return form;
     }
