@@ -5,7 +5,9 @@ import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.charts.Chart;
 import com.vaadin.flow.component.charts.model.*;
+import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
@@ -43,6 +45,12 @@ public class UIUtils {
 
 
     /* ==== LAYOUTS ==== */
+
+    public static FormLayout createFormLayout(Collection<String> classNames, Component... components) {
+        FormLayout form = new FormLayout(components);
+        classNames.forEach(form::addClassName);
+        return form;
+    }
 
     public static Div createDiv(Collection<String> classNames, Component... components) {
         Div div = new Div(components);
@@ -209,6 +217,12 @@ public class UIUtils {
         return label;
     }
 
+    public static H3 createH3(Collection<String> classNames, String text) {
+        H3 header = new H3(text);
+        classNames.forEach(header::addClassName);
+        return header;
+    }
+
     public static Label createH3Label(String text) {
         Label label = new Label(text);
         label.addClassNames(LumoStyles.FontSize.H3);
@@ -298,7 +312,10 @@ public class UIUtils {
     /* === BADGES === */
 
     public static Component createBadge(Invoice invoice) {
-        Invoice.Status status = invoice.getStatus();
+        return createBadge(invoice.getStatus());
+    }
+
+    public static Component createBadge(Invoice.Status status) {
         Span badge = new Span(status.getName());
         switch (status) {
             case OUTSTANDING:

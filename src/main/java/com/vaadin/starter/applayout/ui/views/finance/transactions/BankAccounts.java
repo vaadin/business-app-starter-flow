@@ -78,12 +78,10 @@ public class BankAccounts extends FlexLayout {
         detailsDrawer = new DetailsDrawer(DetailsDrawer.Position.RIGHT);
 
         // Footer
-        Button cancel = UIUtils.createTertiaryButton("Cancel");
-        cancel.addClickListener(e -> detailsDrawer.hide());
+        Button close = UIUtils.createTertiaryButton("Close");
+        close.addClickListener(e -> detailsDrawer.hide());
 
-        Button save = UIUtils.createPrimaryButton("Save");
-
-        FlexLayout footer = UIUtils.createFlexLayout(Arrays.asList(LumoStyles.Padding.Horizontal.L, LumoStyles.Padding.Vertical.S, LumoStyles.Spacing.Right.S), save, cancel);
+        FlexLayout footer = UIUtils.createFlexLayout(Arrays.asList(LumoStyles.Padding.Horizontal.L, LumoStyles.Padding.Vertical.S, LumoStyles.Spacing.Right.S), close);
         footer.getStyle().set(CSSProperties.BackgroundColor.PROPERTY, LumoStyles.Color.CONTRAST_5);
         footer.setWidth("100%");
 

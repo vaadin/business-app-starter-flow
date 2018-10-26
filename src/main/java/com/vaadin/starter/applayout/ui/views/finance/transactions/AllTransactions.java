@@ -111,12 +111,8 @@ public class AllTransactions extends FlexLayout {
     }
 
     private Component createDetails(Transaction transaction) {
-        FormLayout form = new FormLayout();
-        form.addClassName(LumoStyles.Padding.All.L);
-
         TextField id = new TextField("ID");
         id.setValue(String.valueOf(transaction.getId()));
-        form.add(id);
 
         RadioButtonGroup<Transaction.Status> status = new RadioButtonGroup<>();
         status.setItems(Transaction.Status.values());
@@ -125,19 +121,17 @@ public class AllTransactions extends FlexLayout {
         status.getStyle().set(CSSProperties.Display.PROPERTY, CSSProperties.Display.FLEX);
         status.getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN);
 
-        FormLayout.FormItem statusItem = form.addFormItem(status, "Status");
-        statusItem.getStyle().set(CSSProperties.Display.PROPERTY, CSSProperties.Display.FLEX);
-        statusItem.getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN);
-
         TextField sender = new TextField("Payee / Payer");
         sender.setValue(transaction.getCompany());
 
         TextField amount = new TextField("Amount (EUR)");
-        amount.setValue(String.valueOf(transaction.getAmount()));
+        amount.setValue(UIUtils.formatAmount(transaction.getAmount()));
 
         DatePicker date = new DatePicker("Date");
         date.setValue(transaction.getDate());
 
+        FormLayout form = UIUtils.createFormLayout(Collections.singleton(LumoStyles.Padding.All.L), id);
+        form.addFormItem(status, "Status").getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN);
         form.add(sender, amount, date);
 
         return form;

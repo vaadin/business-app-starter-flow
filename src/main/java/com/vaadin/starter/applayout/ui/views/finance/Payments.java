@@ -1,6 +1,7 @@
 package com.vaadin.starter.applayout.ui.views.finance;
 
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.HasStyle;
 import com.vaadin.flow.component.HasValueAndElement;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.datepicker.DatePicker;
@@ -9,6 +10,8 @@ import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
@@ -29,6 +32,7 @@ import com.vaadin.starter.applayout.ui.utils.UIUtils;
 import com.vaadin.starter.applayout.ui.views.ViewFrame;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Random;
 
@@ -117,7 +121,7 @@ public class Payments extends ViewFrame {
         Button close = UIUtils.createTertiaryButton("Close");
         close.addClickListener(e -> detailsDrawer.hide());
 
-        FlexLayout footer = UIUtils.createFlexLayout(Arrays.asList(LumoStyles.Padding.Horizontal.L, LumoStyles.Padding.Vertical.S), close);
+        FlexLayout footer = UIUtils.createFlexLayout(Arrays.asList(LumoStyles.Padding.Horizontal.L, LumoStyles.Padding.Vertical.S, LumoStyles.Spacing.Right.S), close);
         footer.getStyle().set(CSSProperties.BackgroundColor.PROPERTY, LumoStyles.Color.CONTRAST_5);
         footer.setWidth("100%");
 
@@ -130,41 +134,29 @@ public class Payments extends ViewFrame {
     }
 
     private Component createDetails(Payment payment) {
-        /* === FROM === */
         H3 fromHeader = new H3("From");
+        ListItem from = new ListItem(payment.getFrom(), payment.getFromIBAN());
+        from.setPrefix(new Icon(VaadinIcon.UPLOAD_ALT));
 
-        TextField from = new TextField("From");
-        from.setValue(payment.getFrom());
-
-        TextField fromIBAN = new TextField("IBAN");
-        fromIBAN.setValue(payment.getFromIBAN());
-
-        /* === TO === */
         H3 toHeader = new H3("To");
+        ListItem to = new ListItem(payment.getTo(), payment.getToIBAN());
+        to.setPrefix(new Icon(VaadinIcon.DOWNLOAD_ALT));
 
-        TextField to = new TextField("To");
-        to.setValue(payment.getTo());
-
-        TextField toIBAN = new TextField("IBAN");
-        toIBAN.setValue(payment.getToIBAN());
-
-        /* === MISC === */
-        H3 misc = new H3("Misc");
+        H3 misc = new H3( "Misc");
 
         TextArea message = new TextArea("Message");
         message.setValue("Invoice " + random.nextInt(10000));
+        message.setReadOnly(true);
 
         DatePicker date = new DatePicker("Date");
         date.setValue(payment.getDate());
+        date.setReadOnly(true);
 
-        // Set everything to read-only.
-        for (HasValueAndElement field : new HasValueAndElement[]{from, fromIBAN, to, toIBAN, message, date}) {
-            field.setReadOnly(true);
+        for (HasStyle component : new HasStyle[]{fromHeader, toHeader, misc, message, date}) {
+            component.addClassName(LumoStyles.Padding.Horizontal.L);
         }
 
-        FormLayout form = new FormLayout(fromHeader, from, fromIBAN, toHeader, to, toIBAN, misc, message, date);
-        form.addClassNames(LumoStyles.Padding.Bottom.L, LumoStyles.Padding.Horizontal.L);
-        return form;
+        return UIUtils.createColumn(fromHeader, from, toHeader, to, misc, message, date);
     }
 
 

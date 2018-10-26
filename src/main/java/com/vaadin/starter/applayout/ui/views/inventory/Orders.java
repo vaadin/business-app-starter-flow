@@ -1,24 +1,27 @@
 package com.vaadin.starter.applayout.ui.views.inventory;
 
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.data.provider.DataProvider;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
+import com.vaadin.flow.data.renderer.LocalDateRenderer;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import com.vaadin.starter.applayout.backend.DummyData;
-import com.vaadin.starter.applayout.backend.Item;
-import com.vaadin.starter.applayout.backend.Order;
-import com.vaadin.starter.applayout.backend.UIConfig;
+import com.vaadin.starter.applayout.backend.*;
 import com.vaadin.starter.applayout.ui.Root;
 import com.vaadin.starter.applayout.ui.components.ListItem;
 import com.vaadin.starter.applayout.ui.components.navigation.bar.AppBar;
+import com.vaadin.starter.applayout.ui.utils.LumoStyles;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
 import com.vaadin.starter.applayout.ui.views.ViewFrame;
 
+import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.StringJoiner;
 
 import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
 
@@ -80,12 +83,12 @@ public class Orders extends ViewFrame {
     }
 
     private Component createDetails(Order order) {
-        Div details = new Div();
+        Div details = UIUtils.createDiv(Collections.singleton(LumoStyles.Padding.Vertical.XS));
 
         Iterator<Item> iterator = order.getItems().iterator();
         while (iterator.hasNext()) {
             Item item = iterator.next();
-            ListItem listItem = new ListItem(item.getName(), item.getDesc(), UIUtils.createH4Label(UIUtils.formatAmount(item.getPrice())));
+            ListItem listItem = new ListItem(item.getName(), item.getDesc(), UIUtils.createH5Label(UIUtils.formatAmount(item.getPrice())));
             if (iterator.hasNext()) {
                 listItem.setDividerVisible(true);
             }
