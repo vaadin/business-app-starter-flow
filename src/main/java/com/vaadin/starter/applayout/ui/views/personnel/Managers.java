@@ -47,14 +47,14 @@ public class Managers extends ViewFrame {
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createUserInfo))
                 .setHeader("Name")
-                .setWidth(UIUtils.COLUMN_WIDTH_L);
+                .setWidth(UIUtils.COLUMN_WIDTH_XL);
         grid.addColumn(new ComponentRenderer<>(this::createActive))
                 .setHeader(UIUtils.createRightAlignedDiv("Active"))
                 .setWidth(UIUtils.COLUMN_WIDTH_XS)
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createApprovalLimit))
                 .setHeader(UIUtils.createRightAlignedDiv("Approval Limit (€)"))
-                .setWidth(UIUtils.COLUMN_WIDTH_L)
+                .setWidth(UIUtils.COLUMN_WIDTH_XL)
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createDate))
                 .setHeader(UIUtils.createRightAlignedDiv("Last Report"))

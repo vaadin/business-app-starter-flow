@@ -7,6 +7,7 @@ import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
@@ -57,7 +58,7 @@ public class Invoices extends ViewFrame {
                 .setFlexGrow(0);
         grid.addColumn(Invoice::getCustomer)
                 .setHeader("Customer")
-                .setWidth(UIUtils.COLUMN_WIDTH_L);
+                .setWidth(UIUtils.COLUMN_WIDTH_XL);
         grid.addColumn(new ComponentRenderer<>(this::createAmount))
                 .setHeader(UIUtils.createRightAlignedDiv("Amount"))
                 .setWidth(UIUtils.COLUMN_WIDTH_M)
@@ -119,11 +120,10 @@ public class Invoices extends ViewFrame {
     }
 
     private Component createDetails(Invoice invoice) {
+        H3 title = new H3(invoice.getCustomer());
+
         TextField id = new TextField("Invoice ID");
         id.setValue(String.valueOf(invoice.getId()));
-
-        TextField customer = new TextField("Customer");
-        customer.setValue(String.valueOf(invoice.getCustomer()));
 
         DatePicker invoiceDate = new DatePicker("Invoice Date");
         invoiceDate.setValue(invoice.getInvoiceDate());
@@ -142,12 +142,12 @@ public class Invoices extends ViewFrame {
         dueDate.setValue(invoice.getDueDate());
 
         // Read-only fields.
-        for (HasValue component : new HasValue[]{id, customer, invoiceDate, amount}) {
+        for (HasValue component : new HasValue[]{id, invoiceDate, amount}) {
             component.setReadOnly(true);
         }
 
         // Add it all together.
-        FormLayout form = UIUtils.createFormLayout(Collections.singleton(LumoStyles.Padding.All.L), id, customer, invoiceDate, amount);
+        FormLayout form = UIUtils.createFormLayout(Arrays.asList(LumoStyles.Padding.Bottom.L, LumoStyles.Padding.Horizontal.L), title, id, invoiceDate, amount);
         form.addFormItem(status, "Status").getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN);
         form.add(dueDate);
 

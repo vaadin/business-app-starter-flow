@@ -24,10 +24,6 @@
   width: var(--lumo-size-s);
 }
 
-.list-item__prefix iron-icon {
-  color: var(--lumo-tertiary-text-color);
-}
-
 .list-item__suffix {
   margin-left: var(--lumo-space-l);
 }
@@ -43,11 +39,6 @@
 
 .list-item__prefix ~ .list-item__divider {
   left: calc(var(--lumo-space-l) * 3);
-}
-
-.list-item.error-text .list-item__icon,
-.list-item.success-text .list-item__icon {
-  color: inherit;
 }
 
 vaadin-grid .list-item {

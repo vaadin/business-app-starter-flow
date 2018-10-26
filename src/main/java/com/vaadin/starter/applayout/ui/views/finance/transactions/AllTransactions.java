@@ -7,7 +7,6 @@ import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
-import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
@@ -17,7 +16,6 @@ import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.provider.DataProvider;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
-import com.vaadin.flow.data.renderer.TextRenderer;
 import com.vaadin.starter.applayout.backend.DummyData;
 import com.vaadin.starter.applayout.backend.Transaction;
 import com.vaadin.starter.applayout.ui.components.DetailsDrawer;
@@ -48,17 +46,17 @@ public class AllTransactions extends FlexLayout {
                 .setSortable(true)
                 .setWidth(UIUtils.COLUMN_WIDTH_XS)
                 .setFlexGrow(0);
-        grid.addColumn(new ComponentRenderer<>(this::createStatus))
+        grid.addColumn(new ComponentRenderer<>(UIUtils::createBadge))
                 .setHeader("Status")
-                .setWidth(UIUtils.COLUMN_WIDTH_M)
+                .setWidth(UIUtils.COLUMN_WIDTH_S)
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createPayeePayerInfo))
                 .setHeader("Payee / Payer")
                 .setSortable(true)
-                .setWidth(UIUtils.COLUMN_WIDTH_L);
+                .setWidth(UIUtils.COLUMN_WIDTH_XL);
         grid.addColumn(new ComponentRenderer<>(this::createAmount))
-                .setHeader(UIUtils.createRightAlignedDiv("Amount (EUR)"))
-                .setWidth(UIUtils.COLUMN_WIDTH_M)
+                .setHeader(UIUtils.createRightAlignedDiv("Withdrawal / Deposit (€)"))
+                .setWidth(UIUtils.COLUMN_WIDTH_L)
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createAttachment))
                 .setHeader(UIUtils.createRightAlignedDiv("Attachment"))
@@ -110,42 +108,45 @@ public class AllTransactions extends FlexLayout {
         detailsDrawer.show();
     }
 
+    private void hideDetails() {
+        detailsDrawer.hide();
+    }
+
     private Component createDetails(Transaction transaction) {
-        TextField id = new TextField("ID");
+        FormLayout form = UIUtils.createFormLayout(Arrays.asList(LumoStyles.Padding.Bottom.L, LumoStyles.Padding.Horizontal.L, LumoStyles.Padding.Top.M));
+
+        TextField id = new TextField();
         id.setValue(String.valueOf(transaction.getId()));
+        id.setWidth("100%");
 
         RadioButtonGroup<Transaction.Status> status = new RadioButtonGroup<>();
         status.setItems(Transaction.Status.values());
-        status.setRenderer(new TextRenderer<>(Transaction.Status::getName));
+        status.setRenderer(new ComponentRenderer<>(item -> UIUtils.createBadge(item)));
         status.setValue(transaction.getStatus());
         status.getStyle().set(CSSProperties.Display.PROPERTY, CSSProperties.Display.FLEX);
         status.getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN);
 
-        TextField sender = new TextField("Payee / Payer");
+        TextField sender = new TextField();
         sender.setValue(transaction.getCompany());
+        sender.setWidth("100%");
 
-        TextField amount = new TextField("Amount (EUR)");
+        TextField amount = new TextField();
         amount.setValue(UIUtils.formatAmount(transaction.getAmount()));
+        amount.setWidth("100%");
 
-        DatePicker date = new DatePicker("Date");
+        DatePicker date = new DatePicker();
         date.setValue(transaction.getDate());
+        date.setWidth("100%");
 
-        FormLayout form = UIUtils.createFormLayout(Collections.singleton(LumoStyles.Padding.All.L), id);
+        form.addFormItem(id, "Transaction ID");
         form.addFormItem(status, "Status").getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN);
-        form.add(sender, amount, date);
+        form.addFormItem(sender, "Payee / Payer");
+        form.addFormItem(amount, transaction.getAmount() > 0 ? "Deposit (€)" : "Withdrawal (€)");
+        form.addFormItem(date, "Date");
+
+        form.setResponsiveSteps(new FormLayout.ResponsiveStep("0", 1, FormLayout.ResponsiveStep.LabelsPosition.TOP));
 
         return form;
-    }
-
-    private Component createStatus(Transaction transaction) {
-        Transaction.Status status = transaction.getStatus();
-        Span badge = new Span(status.getName());
-        if (status.equals(Transaction.Status.PROCESSED)) {
-            badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.DEFAULT);
-        } else {
-            badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.CONTRAST);
-        }
-        return badge;
     }
 
     private Component createPayeePayerInfo(Transaction transaction) {

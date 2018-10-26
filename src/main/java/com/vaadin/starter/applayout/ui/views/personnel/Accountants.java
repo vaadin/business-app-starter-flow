@@ -46,7 +46,7 @@ public class Accountants extends ViewFrame {
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createUserInfo))
                 .setHeader("Name")
-                .setWidth(UIUtils.COLUMN_WIDTH_L);
+                .setWidth(UIUtils.COLUMN_WIDTH_XL);
         grid.addColumn(new ComponentRenderer<>(this::createActive))
                 .setHeader(UIUtils.createRightAlignedDiv("Active"))
                 .setWidth(UIUtils.COLUMN_WIDTH_XS)

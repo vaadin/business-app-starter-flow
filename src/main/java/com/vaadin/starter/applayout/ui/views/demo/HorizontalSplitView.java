@@ -56,7 +56,7 @@ public class HorizontalSplitView extends ViewFrame {
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createUserInfo))
                 .setHeader("Name")
-                .setWidth(UIUtils.COLUMN_WIDTH_L)
+                .setWidth(UIUtils.COLUMN_WIDTH_XL)
                 .setFlexGrow(1);
         grid.addColumn(new ComponentRenderer<>(this::createTwitter))
                 .setHeader("Twitter")

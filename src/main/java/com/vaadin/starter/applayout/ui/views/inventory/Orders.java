@@ -19,7 +19,7 @@ import com.vaadin.starter.applayout.ui.utils.LumoStyles;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
 import com.vaadin.starter.applayout.ui.views.ViewFrame;
 
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.Iterator;
 
 import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
@@ -44,7 +44,7 @@ public class Orders extends ViewFrame {
                 .setFlexGrow(0);
         grid.addColumn(Order::getCustomer)
                 .setHeader("Customer")
-                .setWidth(UIUtils.COLUMN_WIDTH_L);
+                .setWidth(UIUtils.COLUMN_WIDTH_XL);
         grid.addColumn(new ComponentRenderer<>(this::createItemCount))
                 .setHeader(UIUtils.createRightAlignedDiv("Item Count"))
                 .setWidth(UIUtils.COLUMN_WIDTH_M)
@@ -82,7 +82,7 @@ public class Orders extends ViewFrame {
     }
 
     private Component createDetails(Order order) {
-        Div details = UIUtils.createDiv(Collections.singleton(LumoStyles.Padding.Vertical.XS));
+        Div details = UIUtils.createDiv(Arrays.asList(LumoStyles.Padding.Vertical.XS));
 
         Iterator<Item> iterator = order.getItems().iterator();
         while (iterator.hasNext()) {

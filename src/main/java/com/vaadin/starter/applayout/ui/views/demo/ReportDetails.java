@@ -128,15 +128,15 @@ public class ReportDetails extends ViewFrame implements HasUrlParameter<Long> {
         appBar.setTitle(report.getName());
         image.setSrc(report.getSource());
 
-        balance.setPrimary(Double.toString(report.getBalance()) + " " + report.getCurrency());
-        runningDate.setPrimary(report.getStartDate().format(createFormatter()) + " - " + report.getEndDate().format(createFormatter()));
+        balance.setPrimaryText(Double.toString(report.getBalance()) + " " + report.getCurrency());
+        runningDate.setPrimaryText(report.getStartDate().format(createFormatter()) + " - " + report.getEndDate().format(createFormatter()));
 
         if (report.getStartDate().isAfter(LocalDate.now())) {
-            status.setPrimary("Coming Soon");
+            status.setPrimaryText("Coming Soon");
         } else if (report.getEndDate().isBefore(LocalDate.now())) {
-            status.setPrimary("Closed");
+            status.setPrimaryText("Closed");
         } else {
-            status.setPrimary("Open");
+            status.setPrimaryText("Open");
         }
     }
 

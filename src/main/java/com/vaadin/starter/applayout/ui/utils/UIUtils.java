@@ -18,6 +18,7 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.starter.applayout.backend.Invoice;
 import com.vaadin.starter.applayout.backend.Order;
 import com.vaadin.starter.applayout.backend.Payment;
+import com.vaadin.starter.applayout.backend.Transaction;
 import com.vaadin.starter.applayout.ui.components.DataSeriesItemWithRadius;
 
 import java.text.DecimalFormat;
@@ -26,7 +27,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.StringJoiner;
 
 public class UIUtils {
 
@@ -35,7 +35,8 @@ public class UIUtils {
     public static final String COLUMN_WIDTH_XS = "80px";
     public static final String COLUMN_WIDTH_S = "120px";
     public static final String COLUMN_WIDTH_M = "160px";
-    public static final String COLUMN_WIDTH_L = "240px";
+    public static final String COLUMN_WIDTH_L = "200px";
+    public static final String COLUMN_WIDTH_XL = "240px";
 
     /**
      * Thread-unsafe formatters.
@@ -208,7 +209,19 @@ public class UIUtils {
 
     public static Label createSmallLabel(String text) {
         Label label = new Label(text);
-        label.addClassNames(LumoStyles.FontSize.S);
+        label.getElement().setAttribute(LumoStyles.THEME, LumoStyles.FontSize.S);
+        return label;
+    }
+
+    public static Label createSmallLabel(Collection<String> classNames, String text) {
+        Label label = createSmallLabel(text);
+        classNames.forEach(label::addClassName);
+        return label;
+    }
+
+    public static Label createSmallSecondaryLabel(String text) {
+        Label label = createSmallLabel(text);
+        label.addClassNames(LumoStyles.TextColor.SECONDARY);
         return label;
     }
 
@@ -285,7 +298,7 @@ public class UIUtils {
         layout.setAlignItems(FlexComponent.Alignment.CENTER);
         layout.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
 
-        layout.getElement().setAttribute(LumoStyles.THEME, new StringJoiner(" ").add(LumoStyles.DARK).add(LumoStyles.FontSize.S).toString());
+        layout.getElement().setAttribute(LumoStyles.THEME, String.join(" ", LumoStyles.DARK, LumoStyles.FontSize.S));
         layout.setHeight(LumoStyles.Size.M);
         layout.setWidth(LumoStyles.Size.M);
 
@@ -309,8 +322,20 @@ public class UIUtils {
     }
 
 
-
     /* === BADGES === */
+    public static Component createBadge(Transaction transaction) {
+        return createBadge(transaction.getStatus());
+    }
+
+    public static Component createBadge(Transaction.Status status) {
+        Span badge = new Span(status.getName());
+        if (status.equals(Transaction.Status.PROCESSED)) {
+            badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.DEFAULT);
+        } else {
+            badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.CONTRAST);
+        }
+        return badge;
+    }
 
     public static Component createBadge(Invoice invoice) {
         return createBadge(invoice.getStatus());
@@ -377,11 +402,46 @@ public class UIUtils {
 
 
 
+    /* === ICONS === */
+
+    public static Icon createPrimaryIcon(VaadinIcon icon) {
+        Icon i = new Icon(icon);
+        i.addClassName(LumoStyles.TextColor.PRIMARY);
+        return i;
+    }
+
+    public static Icon createSecondaryIcon(VaadinIcon icon) {
+        Icon i = new Icon(icon);
+        i.addClassName(LumoStyles.TextColor.SECONDARY);
+        return i;
+    }
+
+    public static Icon createTertiaryIcon(VaadinIcon icon) {
+        Icon i = new Icon(icon);
+        i.addClassName(LumoStyles.TextColor.TERTIARY);
+        return i;
+    }
+
+    public static Icon createSuccessIcon(VaadinIcon icon) {
+        Icon i = new Icon(icon);
+        i.addClassName(LumoStyles.TextColor.SUCCESS);
+        return i;
+    }
+
+    public static Icon createErrorIcon(VaadinIcon icon) {
+        Icon i = new Icon(icon);
+        i.addClassName(LumoStyles.TextColor.ERROR);
+        return i;
+    }
+
+
+
     /* === DATES === */
 
     public static String formatDate(LocalDate date) {
         return dateFormat.get().format(date);
     }
+
 
 
     /* === CHARTS === */
@@ -421,4 +481,5 @@ public class UIUtils {
 
         return chart;
     }
+
 }

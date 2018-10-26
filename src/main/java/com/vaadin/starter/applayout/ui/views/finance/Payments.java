@@ -1,17 +1,13 @@
 package com.vaadin.starter.applayout.ui.views.finance;
 
 import com.vaadin.flow.component.Component;
-import com.vaadin.flow.component.HasStyle;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
-import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.data.provider.DataProvider;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.router.PageTitle;
@@ -55,14 +51,14 @@ public class Payments extends ViewFrame {
 
         grid.addColumn(new ComponentRenderer<>(UIUtils::createBadge))
                 .setHeader("Status")
-                .setWidth(UIUtils.COLUMN_WIDTH_M)
+                .setWidth(UIUtils.COLUMN_WIDTH_S)
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createFromInfo))
                 .setHeader("From")
-                .setWidth(UIUtils.COLUMN_WIDTH_L);
+                .setWidth(UIUtils.COLUMN_WIDTH_XL);
         grid.addColumn(new ComponentRenderer<>(this::createToInfo))
                 .setHeader("To")
-                .setWidth(UIUtils.COLUMN_WIDTH_L);
+                .setWidth(UIUtils.COLUMN_WIDTH_XL);
         grid.addColumn(new ComponentRenderer<>(this::createAmount))
                 .setHeader(UIUtils.createRightAlignedDiv("Amount (EUR)"))
                 .setWidth(UIUtils.COLUMN_WIDTH_M)
@@ -130,30 +126,68 @@ public class Payments extends ViewFrame {
     }
 
     private Component createDetails(Payment payment) {
-        H3 fromHeader = new H3("From");
-        ListItem from = new ListItem(payment.getFrom(), payment.getFromIBAN());
-        from.setPrefix(new Icon(VaadinIcon.UPLOAD_ALT));
+        ListItem status = new ListItem(getStatusIcon(payment), payment.getStatus().getName(), "Status");
+        status.addPrimaryClassNames(LumoStyles.Margin.Top.XS);
+        status.setPrimaryAttribute(LumoStyles.THEME, getStatusTheme(payment));
+        status.setPrimaryProperty(CSSProperties.AlignSelf.PROPERTY, CSSProperties.AlignSelf.BASELINE);
 
-        H3 toHeader = new H3("To");
-        ListItem to = new ListItem(payment.getTo(), payment.getToIBAN());
-        to.setPrefix(new Icon(VaadinIcon.DOWNLOAD_ALT));
+        ListItem from = new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.UPLOAD_ALT), payment.getFrom() + "\n" + payment.getFromIBAN(), "Sender");
+        ListItem to = new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.DOWNLOAD_ALT), payment.getTo() + "\n" + payment.getToIBAN(), "Receiver");
+        ListItem amount = new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.EURO), UIUtils.formatAmount(payment.getAmount()), "Amount");
+        ListItem date = new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.CALENDAR), UIUtils.formatDate(payment.getDate()), "Date");
 
-        H3 misc = new H3("Misc");
-
-        TextArea message = new TextArea("Message");
-        message.setValue("Invoice " + random.nextInt(10000));
-        message.setReadOnly(true);
-
-        DatePicker date = new DatePicker("Date");
-        date.setValue(payment.getDate());
-        date.setReadOnly(true);
-
-        for (HasStyle component : new HasStyle[]{fromHeader, toHeader, misc, message, date}) {
-            component.addClassName(LumoStyles.Padding.Horizontal.L);
+        for (ListItem item : new ListItem[]{status, from, to, amount, date}) {
+            item.setReverse(true);
+            item.getStyle().set(CSSProperties.WhiteSpace.PROPERTY, CSSProperties.WhiteSpace.PRE_LINE);
         }
 
-        return UIUtils.createColumn(fromHeader, from, toHeader, to, misc, message, date);
+        return UIUtils.createDiv(
+                Arrays.asList(LumoStyles.Padding.Bottom.S),
+                UIUtils.createH3(Collections.singleton(LumoStyles.Padding.Horizontal.L), "Payment Details"),
+                status,
+                from,
+                to,
+                amount,
+                date
+        );
     }
 
+    private Icon getStatusIcon(Payment payment) {
+        Icon icon;
+        switch (payment.getStatus()) {
+            case PENDING:
+                icon = UIUtils.createTertiaryIcon(VaadinIcon.CLOCK);
+                break;
+            case OPEN:
+                icon = UIUtils.createPrimaryIcon(VaadinIcon.QUESTION_CIRCLE);
+                break;
+            case SENT:
+                icon = UIUtils.createSuccessIcon(VaadinIcon.CHECK);
+                break;
+            default:
+                icon = UIUtils.createErrorIcon(VaadinIcon.WARNING);
+                break;
+        }
+        return icon;
+    }
+
+    private String getStatusTheme(Payment payment) {
+        String theme;
+        switch (payment.getStatus()) {
+            case PENDING:
+                theme = LumoStyles.Badge.CONTRAST;
+                break;
+            case OPEN:
+                theme = LumoStyles.Badge.DEFAULT;
+                break;
+            case SENT:
+                theme = LumoStyles.Badge.SUCCESS;
+                break;
+            default:
+                theme = LumoStyles.Badge.ERROR;
+                break;
+        }
+        return theme;
+    }
 
 }

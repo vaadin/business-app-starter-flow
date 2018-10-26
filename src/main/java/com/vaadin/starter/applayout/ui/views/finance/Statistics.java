@@ -34,8 +34,6 @@ import java.util.Collections;
 public class Statistics extends ViewFrame {
 
     private static final String CLASS_NAME = "dashboard";
-    private static final String REPORTS = "Reports";
-    private static final String LOGS = "Logs";
 
     public Statistics() {
         if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
@@ -50,8 +48,8 @@ public class Statistics extends ViewFrame {
                 createSalesChart(),
                 UIUtils.createFlexLayout(
                         Collections.singleton(CLASS_NAME + "__bookmarks-recent-items"),
-                        createTabbedList(REPORTS),
-                        createTabbedList(LOGS)
+                        createReports(),
+                        createLogs()
                 )
         );
         setContent(viewport);
@@ -154,20 +152,38 @@ public class Statistics extends ViewFrame {
         return card;
     }
 
-    private Component createTabbedList(String title) {
-        Component header = createHeader(title.equals(REPORTS) ? VaadinIcon.RECORDS : VaadinIcon.EDIT, title);
+    private Component createReports() {
+        Component header = createHeader(VaadinIcon.RECORDS, "Reports");
 
         Tabs tabs = new Tabs();
-        String[] labels = title.equals(REPORTS) ? new String[]{"All", "Archive", "Workflows", "Support"} : new String[]{"All", "Transfer", "Security", "Change"};
-
-        for (String label : labels) {
+        for (String label : new String[]{"All", "Archive", "Workflows", "Support"}) {
             tabs.add(new Tab(label));
         }
 
         FlexLayout items = UIUtils.createColumn(
                 Collections.singleton(LumoStyles.Margin.Vertical.S),
-                new ListItem(new Icon(VaadinIcon.CHART), "My Weekly Report", "Last opened May 5, 2018"),
-                new ListItem(new Icon(VaadinIcon.SITEMAP), "My Workflow", "Last opened May 5, 2018")
+                new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.CHART), "Weekly Report", "Generated Oct 5, 2018"),
+                new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.SITEMAP), "Payment Workflows", "Last modified Oct 24, 2018")
+        );
+
+        FlexLayout card = UIUtils.createColumn(Arrays.asList(LumoStyles.BorderRadius.S, LumoStyles.Shadow.S), tabs, items);
+        card.getStyle().set(CSSProperties.BackgroundColor.PROPERTY, LumoStyles.Color.BASE_COLOR);
+
+        return new Div(header, card);
+    }
+
+    private Component createLogs() {
+        Component header = createHeader(VaadinIcon.EDIT, "Logs");
+
+        Tabs tabs = new Tabs();
+        for (String label : new String[]{"All", "Transfer", "Security", "Change"}) {
+            tabs.add(new Tab(label));
+        }
+
+        FlexLayout items = UIUtils.createColumn(
+                Collections.singleton(LumoStyles.Margin.Vertical.S),
+                new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.EXCHANGE), "Transfers (October)", "Generated Oct 31, 2018"),
+                new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.SHIELD), "Security Log", "Updated 16:31 CET")
         );
 
         FlexLayout card = UIUtils.createColumn(Arrays.asList(LumoStyles.BorderRadius.S, LumoStyles.Shadow.S), tabs, items);

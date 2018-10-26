@@ -1,16 +1,15 @@
 package com.vaadin.starter.applayout.ui.components;
 
 import com.vaadin.flow.component.Component;
-import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
+import com.vaadin.starter.applayout.ui.utils.CSSProperties;
 import com.vaadin.starter.applayout.ui.utils.LumoStyles;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
 
 import java.util.Collections;
-import java.util.StringJoiner;
 
 public class ListItem extends FlexLayout {
 
@@ -18,6 +17,8 @@ public class ListItem extends FlexLayout {
 
     private Div prefix;
     private Div suffix;
+
+    private final FlexLayout content;
 
     private final Label primary;
     private final Label secondary;
@@ -29,10 +30,10 @@ public class ListItem extends FlexLayout {
         setAlignItems(FlexComponent.Alignment.CENTER);
 
         this.primary = new Label(primary);
-        this.secondary = UIUtils.createLabel(Collections.singleton(LumoStyles.TextColor.SECONDARY), secondary);
-        this.secondary.getElement().setAttribute(LumoStyles.THEME, LumoStyles.FontSize.S);
+        this.secondary = UIUtils.createSmallLabel(Collections.singleton(LumoStyles.TextColor.SECONDARY), secondary);
 
-        add(UIUtils.createColumn(Collections.singleton(CLASS_NAME + "__content"), this.primary, this.secondary));
+        this.content = UIUtils.createColumn(Collections.singleton(CLASS_NAME + "__content"), this.primary, this.secondary);
+        add(this.content);
     }
 
     public ListItem(String primary) {
@@ -79,7 +80,15 @@ public class ListItem extends FlexLayout {
 
     /* === MISC === */
 
-    public void setPrimary(String text) {
+    public void setReverse(boolean reverse) {
+        if (reverse) {
+            this.content.getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN_REVERSE);
+        } else {
+            this.content.getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN);
+        }
+    }
+
+    public void setPrimaryText(String text) {
         primary.setText(text);
     }
 
@@ -87,12 +96,12 @@ public class ListItem extends FlexLayout {
         primary.addClassNames(classNames);
     }
 
-    public void setSecondary(String text) {
-        secondary.setText(text);
+    public void setPrimaryAttribute(String attribute, String value) {
+        primary.getElement().setAttribute(attribute, value);
     }
 
-    public void addSecondaryClassNames(String... classNames) {
-        secondary.addClassNames(classNames);
+    public void setPrimaryProperty(String property, String value) {
+        primary.getStyle().set(property, value);
     }
 
     public void setPrefix(Component... components) {
@@ -119,13 +128,5 @@ public class ListItem extends FlexLayout {
             add(divider);
         }
         divider.setVisible(visible);
-    }
-
-    private Component createInitials(String initials) {
-        FlexLayout init = UIUtils.createFlexLayout(Collections.singleton(CLASS_NAME + "__initials"), new Text(initials));
-        init.setAlignItems(FlexComponent.Alignment.CENTER);
-        init.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
-        init.getElement().setAttribute(LumoStyles.THEME, new StringJoiner(" ", LumoStyles.DARK, LumoStyles.FontSize.S).toString());
-        return init;
     }
 }

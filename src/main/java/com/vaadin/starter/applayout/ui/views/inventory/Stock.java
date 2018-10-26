@@ -41,11 +41,11 @@ public class Stock extends ViewFrame {
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createInfo))
                 .setHeader("Name")
-                .setWidth(UIUtils.COLUMN_WIDTH_L)
+                .setWidth(UIUtils.COLUMN_WIDTH_XL)
                 .setFlexGrow(1);
         grid.addColumn(Item::getVendor)
                 .setHeader("Vendor")
-                .setWidth(UIUtils.COLUMN_WIDTH_L)
+                .setWidth(UIUtils.COLUMN_WIDTH_XL)
                 .setFlexGrow(1);
         grid.addColumn(new ComponentRenderer<>(this::createPrice))
                 .setHeader(UIUtils.createRightAlignedDiv("Unit Price (€)"))

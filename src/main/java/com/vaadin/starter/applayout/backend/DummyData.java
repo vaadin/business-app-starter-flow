@@ -214,6 +214,10 @@ public class DummyData {
         return IBANS[random.nextInt(IBANS.length)];
     }
 
+    public static String[] getCompanies() {
+        return COMPANIES;
+    }
+
     public static String getCompany() {
         return COMPANIES[random.nextInt(COMPANIES.length)];
     }

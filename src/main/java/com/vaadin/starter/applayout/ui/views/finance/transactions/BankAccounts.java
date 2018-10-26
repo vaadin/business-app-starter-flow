@@ -4,7 +4,6 @@ import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H4;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -33,6 +32,7 @@ public class BankAccounts extends FlexLayout {
 
         // Grid
         Grid<BankAccount> grid = new Grid<>();
+        grid.setDataProvider(DataProvider.ofCollection(DummyData.getBalances()));
         grid.addColumn(BankAccount::getId)
                 .setHeader("ID")
                 .setFrozen(true)
@@ -41,12 +41,12 @@ public class BankAccounts extends FlexLayout {
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createBankInfo))
                 .setHeader("Bank Account")
-                .setWidth(UIUtils.COLUMN_WIDTH_L);
+                .setWidth(UIUtils.COLUMN_WIDTH_XL);
         grid.addColumn(BankAccount::getOwner)
                 .setHeader("Owner")
-                .setWidth(UIUtils.COLUMN_WIDTH_L);
+                .setWidth(UIUtils.COLUMN_WIDTH_XL);
         grid.addColumn(new ComponentRenderer<>(this::createAvailability))
-                .setHeader(UIUtils.createRightAlignedDiv("Availability (EUR)"))
+                .setHeader(UIUtils.createRightAlignedDiv("Availability (€)"))
                 .setWidth(UIUtils.COLUMN_WIDTH_M)
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createDate))
@@ -59,10 +59,8 @@ public class BankAccounts extends FlexLayout {
                 showDetails(e.getFirstSelectedItem().get());
             }
         });
-        grid.setSizeFull();
 
-        // Data provider
-        grid.setDataProvider(DataProvider.ofCollection(DummyData.getBalances()));
+        grid.setSizeFull();
 
         // Grid wrapper for some nice padding
         Div gridWrapper = UIUtils.createDiv(Collections.singleton(GRID_VIEW), grid);
@@ -94,22 +92,31 @@ public class BankAccounts extends FlexLayout {
     }
 
     private Div createDetails(BankAccount bankAccount) {
-        Div div = new Div();
-
-        H4 title = new H4("Transactions");
-        title.addClassName(LumoStyles.Margin.Responsive.Horizontal.ML);
-        div.add(title);
+        Div div = UIUtils.createDiv(
+                Collections.singleton(LumoStyles.Padding.Bottom.S),
+                UIUtils.createH3(
+                        Collections.singleton(LumoStyles.Padding.Horizontal.L),
+                        bankAccount.getOwner()
+                )
+        );
 
         for (int i = 0; i < 10; i++) {
             Double amount = DummyData.getAmount();
-            boolean positive = amount > 0;
 
-            // Formatting reasons. We have the "-" icon, we don't need the "-" in the actual value.
-            String value = String.valueOf(positive ? amount : amount * -1);
+            ListItem item;
+            if (amount > 0) {
+                item = new ListItem(new Icon(VaadinIcon.PLUS), UIUtils.formatAmount(amount), DummyData.getCompany());
+                item.addClassName(LumoStyles.TextColor.SUCCESS);
+            } else {
+                // With the list item's icon, the "-" for negative values becomes superfluous.
+                item = new ListItem(new Icon(VaadinIcon.MINUS), UIUtils.formatAmount(amount * -1), DummyData.getCompany());
+                item.addClassName(LumoStyles.TextColor.ERROR);
+            }
 
-            ListItem item = new ListItem(new Icon(positive ? VaadinIcon.PLUS_CIRCLE : VaadinIcon.MINUS_CIRCLE), value, DummyData.getCompany());
-            item.addClassName(positive ? LumoStyles.TextColor.SUCCESS : LumoStyles.TextColor.ERROR);
-            item.setDividerVisible(true);
+            // Dividers for all but the last item. Last item has some bottom margin.
+            if (i < 9) {
+                item.setDividerVisible(true);
+            }
 
             div.add(item);
         }
@@ -120,7 +127,6 @@ public class BankAccounts extends FlexLayout {
     private Component createBankInfo(BankAccount bankAccount) {
         return new ListItem(bankAccount.getAccount(), bankAccount.getBank());
     }
-
 
     private Component createAvailability(BankAccount bankAccount) {
         Double availability = bankAccount.getAvailability();
