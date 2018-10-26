@@ -2,8 +2,6 @@ package com.vaadin.starter.applayout.ui.views.inventory;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasValue;
-import com.vaadin.flow.component.HasValueAndElement;
-import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.formlayout.FormLayout;
@@ -15,10 +13,11 @@ import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.provider.DataProvider;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
-import com.vaadin.flow.data.renderer.TextRenderer;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import com.vaadin.starter.applayout.backend.*;
+import com.vaadin.starter.applayout.backend.DummyData;
+import com.vaadin.starter.applayout.backend.Invoice;
+import com.vaadin.starter.applayout.backend.UIConfig;
 import com.vaadin.starter.applayout.ui.Root;
 import com.vaadin.starter.applayout.ui.components.DetailsDrawer;
 import com.vaadin.starter.applayout.ui.components.navigation.bar.AppBar;
@@ -50,11 +49,11 @@ public class Invoices extends ViewFrame {
 
         grid.addColumn(Invoice::getId)
                 .setHeader("ID")
-                .setWidth(UIUtils.COLUMN_WIDTH_S)
+                .setWidth(UIUtils.COLUMN_WIDTH_XS)
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(UIUtils::createBadge))
                 .setHeader("Status")
-                .setWidth(UIUtils.COLUMN_WIDTH_M)
+                .setWidth(UIUtils.COLUMN_WIDTH_S)
                 .setFlexGrow(0);
         grid.addColumn(Invoice::getCustomer)
                 .setHeader("Customer")

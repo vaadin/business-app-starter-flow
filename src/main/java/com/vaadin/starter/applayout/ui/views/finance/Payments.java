@@ -2,10 +2,8 @@ package com.vaadin.starter.applayout.ui.views.finance;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasStyle;
-import com.vaadin.flow.component.HasValueAndElement;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.datepicker.DatePicker;
-import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H3;
@@ -14,7 +12,6 @@ import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.textfield.TextArea;
-import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.provider.DataProvider;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.router.PageTitle;
@@ -32,7 +29,6 @@ import com.vaadin.starter.applayout.ui.utils.UIUtils;
 import com.vaadin.starter.applayout.ui.views.ViewFrame;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Random;
 
@@ -142,7 +138,7 @@ public class Payments extends ViewFrame {
         ListItem to = new ListItem(payment.getTo(), payment.getToIBAN());
         to.setPrefix(new Icon(VaadinIcon.DOWNLOAD_ALT));
 
-        H3 misc = new H3( "Misc");
+        H3 misc = new H3("Misc");
 
         TextArea message = new TextArea("Message");
         message.setValue("Invoice " + random.nextInt(10000));

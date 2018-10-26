@@ -68,7 +68,7 @@ public class FilterList extends ViewFrame {
                 .setHeader("ID")
                 .setFrozen(true)
                 .setSortable(true)
-                .setWidth(UIUtils.COLUMN_WIDTH_S)
+                .setWidth(UIUtils.COLUMN_WIDTH_XS)
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createUserInfo))
                 .setHeader("Name")

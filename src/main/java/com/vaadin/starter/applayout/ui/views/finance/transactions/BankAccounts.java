@@ -37,7 +37,7 @@ public class BankAccounts extends FlexLayout {
                 .setHeader("ID")
                 .setFrozen(true)
                 .setSortable(true)
-                .setWidth(UIUtils.COLUMN_WIDTH_S)
+                .setWidth(UIUtils.COLUMN_WIDTH_XS)
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createBankInfo))
                 .setHeader("Bank Account")

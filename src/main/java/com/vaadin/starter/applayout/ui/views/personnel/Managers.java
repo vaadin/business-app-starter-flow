@@ -43,14 +43,14 @@ public class Managers extends ViewFrame {
                 .setHeader("ID")
                 .setFrozen(true)
                 .setSortable(true)
-                .setWidth(UIUtils.COLUMN_WIDTH_S)
+                .setWidth(UIUtils.COLUMN_WIDTH_XS)
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createUserInfo))
                 .setHeader("Name")
                 .setWidth(UIUtils.COLUMN_WIDTH_L);
         grid.addColumn(new ComponentRenderer<>(this::createActive))
                 .setHeader(UIUtils.createRightAlignedDiv("Active"))
-                .setWidth(UIUtils.COLUMN_WIDTH_S)
+                .setWidth(UIUtils.COLUMN_WIDTH_XS)
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createApprovalLimit))
                 .setHeader(UIUtils.createRightAlignedDiv("Approval Limit (€)"))

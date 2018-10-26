@@ -32,7 +32,8 @@ public class UIUtils {
 
     public static final String IMG_PATH = "frontend/styles/images/";
 
-    public static final String COLUMN_WIDTH_S = "80px";
+    public static final String COLUMN_WIDTH_XS = "80px";
+    public static final String COLUMN_WIDTH_S = "120px";
     public static final String COLUMN_WIDTH_M = "160px";
     public static final String COLUMN_WIDTH_L = "240px";
 
