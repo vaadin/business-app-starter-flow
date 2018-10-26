@@ -94,6 +94,15 @@ public class CSSProperties {
         public static final String RIGHT = new String("right");
     }
 
+    public static class WhiteSpace {
+        public static final String PROPERTY = new String("white-space");
+        public static final String NORMAL = new String("normal");
+        public static final String NOWRAP = new String("nowrap");
+        public static final String PRE = new String("pre");
+        public static final String PRE_LINE = new String("pre-line");
+        public static final String PRE_WRAP = new String("pre-wrap");
+    }
+
     public static class Width {
         public static final String PROPERTY = new String("width");
     }
