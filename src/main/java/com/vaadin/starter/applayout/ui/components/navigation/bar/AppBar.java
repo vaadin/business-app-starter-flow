@@ -8,13 +8,14 @@ import com.vaadin.flow.component.html.H4;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.shared.Registration;
 import com.vaadin.starter.applayout.backend.UIConfig;
-import com.vaadin.starter.applayout.ui.AppLayoutUI;
+import com.vaadin.starter.applayout.ui.AppTemplateUI;
 import com.vaadin.starter.applayout.ui.components.navigation.tab.NaviTab;
 import com.vaadin.starter.applayout.ui.components.navigation.tab.NaviTabs;
 import com.vaadin.starter.applayout.ui.utils.LumoStyles;
@@ -54,7 +55,7 @@ public class AppBar extends FlexLayout {
         getElement().setAttribute(LumoStyles.THEME, LumoStyles.DARK);
 
         menuNaviIcon = UIUtils.createSmallTertiaryIconButton(Collections.singleton(CLASS_NAME + "__navi-icon"), VaadinIcon.MENU);
-        menuNaviIcon.addClickListener(e -> AppLayoutUI.getNaviDrawer().toggle());
+        menuNaviIcon.addClickListener(e -> AppTemplateUI.getNaviDrawer().toggle());
 
         contextNaviIcon = UIUtils.createSmallTertiaryIconButton(Arrays.asList(CLASS_NAME + "__navi-icon", CLASS_NAME + "__navi-icon--visible"), VaadinIcon.ARROW_BACKWARD);
         contextNaviIcon.setVisible(false);
@@ -74,10 +75,10 @@ public class AppBar extends FlexLayout {
 
         ContextMenu contextMenu = new ContextMenu(avatar);
         contextMenu.setOpenOnClick(true);
-        contextMenu.addItem("john.smith@gmail.com", e -> System.out.println("Testing..."));
-        contextMenu.addItem("john.smith@yahoo.com", e -> System.out.println("Testing..."));
-        contextMenu.addItem("Settings", e -> System.out.println("Testing..."));
-        contextMenu.addItem("Logout", e -> System.out.println("Testing..."));
+        contextMenu.addItem("john.smith@gmail.com", e -> Notification.show("Not implemented yet.", 3000, Notification.Position.BOTTOM_CENTER));
+        contextMenu.addItem("john.smith@yahoo.com", e -> Notification.show("Not implemented yet.", 3000, Notification.Position.BOTTOM_CENTER));
+        contextMenu.addItem("Settings", e -> Notification.show("Not implemented yet.", 3000, Notification.Position.BOTTOM_CENTER));
+        contextMenu.addItem("Logout", e -> Notification.show("Not implemented yet.", 3000, Notification.Position.BOTTOM_CENTER));
 
         actionItems = UIUtils.createFlexLayout(Collections.singleton(CLASS_NAME + "__action-items"), avatar);
         actionItems.setVisible(false);

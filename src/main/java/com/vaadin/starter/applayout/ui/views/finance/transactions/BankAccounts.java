@@ -64,13 +64,13 @@ public class BankAccounts extends FlexLayout {
 
         grid.setSizeFull();
 
-        // Grid wrapper for some nice padding
+        // Grid wrapper
         Div gridWrapper = UIUtils.createDiv(Collections.singleton(GRID_VIEW), grid);
 
         // Details drawer
         initDetailsDrawer();
 
-        // TBD
+        // Set the content
         add(gridWrapper, detailsDrawer);
     }
 

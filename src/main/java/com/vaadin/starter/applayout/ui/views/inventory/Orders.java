@@ -62,6 +62,7 @@ public class Orders extends ViewFrame {
 
         grid.setSizeFull();
 
+        // Set the content
         setContent(grid);
         getContent().addClassName(GRID_VIEW);
     }

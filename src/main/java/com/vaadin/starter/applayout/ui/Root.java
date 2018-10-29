@@ -80,7 +80,7 @@ public class Root extends FlexLayout
      * Initialise the required components and containers.
      */
     private void initStructure() {
-        naviDrawer = AppLayoutUI.getNaviDrawer();
+        naviDrawer = AppTemplateUI.getNaviDrawer();
 
         initViewContainer();
 

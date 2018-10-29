@@ -20,7 +20,7 @@ public class Default extends ViewFrame {
     public Default() {
         // Header
         if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-            setHeader(new AppBar("App Layout"));
+            setHeader(new AppBar("Responsive App Template"));
         }
 
         // Content
@@ -28,7 +28,7 @@ public class Default extends ViewFrame {
                 Arrays.asList(LumoStyles.Margin.Horizontal.AUTO, LumoStyles.Padding.All.L),
                 new Html(
                         "<span>" +
-                                "A responsive application shell with some dummy data. " +
+                                "A responsive application template with some dummy data. " +
                                 "Loosely based on the <b>responsive layout grid</b> guidelines set by <a href=\"https://material.io/design/layout/responsive-layout-grid.html\">Material Design</a>. " +
                                 "Utilises the <a href=\"https://vaadin.com/themes/lumo\">Lumo</a> theme." +
                                 "</span>"
