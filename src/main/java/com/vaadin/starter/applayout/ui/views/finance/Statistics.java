@@ -2,10 +2,6 @@ package com.vaadin.starter.applayout.ui.views.finance;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.charts.Chart;
-import com.vaadin.flow.component.charts.model.ChartType;
-import com.vaadin.flow.component.charts.model.Configuration;
-import com.vaadin.flow.component.charts.model.ListSeries;
-import com.vaadin.flow.component.charts.model.XAxis;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -44,7 +40,7 @@ public class Statistics extends ViewFrame {
                 createHeader(VaadinIcon.CREDIT_CARD, "Payments"),
                 createProgressCharts(),
                 createHeader(VaadinIcon.MONEY_EXCHANGE, "Transactions"),
-                createSalesChart(),
+                UIUtils.createSalesChart("2018"),
                 UIUtils.createFlexLayout(
                         Collections.singleton(CLASS_NAME + "__bookmarks-recent-items"),
                         createReports(),
@@ -127,28 +123,6 @@ public class Statistics extends ViewFrame {
         );
         column.setAlignItems(FlexComponent.Alignment.CENTER);
         return column;
-    }
-
-    private Component createSalesChart() {
-        Chart chart = new Chart(ChartType.AREASPLINE);
-
-        Configuration conf = chart.getConfiguration();
-        conf.setTitle("2018");
-        conf.getLegend().setEnabled(false);
-
-        XAxis xAxis = new XAxis();
-        xAxis.setCategories("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
-        conf.addxAxis(xAxis);
-
-        conf.getyAxis().setTitle("");
-
-        conf.addSeries(new ListSeries(220, 240, 400, 360, 420, 640, 580, 800, 600, 580, 740, 800));
-
-        FlexLayout card = UIUtils.createWrappingFlexLayout(Arrays.asList(LumoStyles.BorderRadius.S, LumoStyles.Padding.All.M, LumoStyles.Shadow.S), chart);
-        card.getStyle().set(CSSProperties.BackgroundColor.PROPERTY, LumoStyles.Color.BASE_COLOR);
-        card.getStyle().set(CSSProperties.BoxSizing.PROPERTY, CSSProperties.BoxSizing.BORDER_BOX);
-        card.setHeight("400px");
-        return card;
     }
 
     private Component createReports() {

@@ -22,6 +22,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -233,6 +234,12 @@ public class UIUtils {
     public static Label createH3Label(String text) {
         Label label = new Label(text);
         label.addClassNames(LumoStyles.FontSize.H3);
+        return label;
+    }
+
+    public static Label createH3Label(Collection<String> classNames, String text) {
+        Label label = createH3Label(text);
+        classNames.forEach(label::addClassName);
         return label;
     }
 
@@ -493,6 +500,28 @@ public class UIUtils {
         pane.setBackground(background);
 
         return chart;
+    }
+
+    public static Component createSalesChart(String title) {
+        Chart chart = new Chart(ChartType.AREASPLINE);
+
+        Configuration conf = chart.getConfiguration();
+        conf.setTitle(title);
+        conf.getLegend().setEnabled(false);
+
+        XAxis xAxis = new XAxis();
+        xAxis.setCategories("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
+        conf.addxAxis(xAxis);
+
+        conf.getyAxis().setTitle("");
+
+        conf.addSeries(new ListSeries(220, 240, 400, 360, 420, 640, 580, 800, 600, 580, 740, 800));
+
+        FlexLayout card = UIUtils.createWrappingFlexLayout(Arrays.asList(LumoStyles.BorderRadius.S, LumoStyles.Padding.All.M, LumoStyles.Shadow.S), chart);
+        card.getStyle().set(CSSProperties.BackgroundColor.PROPERTY, LumoStyles.Color.BASE_COLOR);
+        card.getStyle().set(CSSProperties.BoxSizing.PROPERTY, CSSProperties.BoxSizing.BORDER_BOX);
+        card.setHeight("400px");
+        return card;
     }
 
 }

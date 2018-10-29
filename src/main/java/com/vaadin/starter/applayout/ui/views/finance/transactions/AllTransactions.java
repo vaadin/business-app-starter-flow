@@ -9,6 +9,7 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
 import com.vaadin.flow.component.tabs.Tab;
@@ -32,6 +33,7 @@ import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
 public class AllTransactions extends FlexLayout {
 
     private DetailsDrawer detailsDrawer;
+    private Label detailsDrawerTitle;
 
     public AllTransactions() {
         setHeight("100%");
@@ -88,14 +90,22 @@ public class AllTransactions extends FlexLayout {
     private void initDetailsDrawer() {
         detailsDrawer = new DetailsDrawer(DetailsDrawer.Position.RIGHT);
 
+        // Header
+        detailsDrawerTitle = UIUtils.createH3Label(Arrays.asList(LumoStyles.Padding.Bottom.M, LumoStyles.Padding.Horizontal.L, LumoStyles.Padding.Top.L), "");
+        detailsDrawerTitle.setWidth("100%");
+
         Tabs tabs = new Tabs(new Tab("Details"), new Tab("Attachments"), new Tab("History"));
         tabs.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Tabs.EQUAL_WIDTH_TABS);
-        detailsDrawer.setHeader(tabs);
+
+        detailsDrawer.setHeader(detailsDrawerTitle, tabs);
+        detailsDrawer.getHeader().getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN);
+
+        // Footer
+        Button save = UIUtils.createPrimaryButton("Save");
+        save.addClickListener(e -> Notification.show("Not implemented yet.", 3000, Notification.Position.BOTTOM_CENTER));
 
         Button cancel = UIUtils.createTertiaryButton("Cancel");
         cancel.addClickListener(e -> detailsDrawer.hide());
-
-        Button save = UIUtils.createPrimaryButton("Save");
 
         FlexLayout footer = UIUtils.createFlexLayout(Arrays.asList(LumoStyles.Padding.Horizontal.L, LumoStyles.Padding.Vertical.S, LumoStyles.Spacing.Right.S), save, cancel);
         footer.getStyle().set(CSSProperties.BackgroundColor.PROPERTY, LumoStyles.Color.CONTRAST_5);
@@ -104,12 +114,9 @@ public class AllTransactions extends FlexLayout {
     }
 
     private void showDetails(Transaction transaction) {
+        detailsDrawerTitle.setText(transaction.getCompany());
         detailsDrawer.setContent(createDetails(transaction));
         detailsDrawer.show();
-    }
-
-    private void hideDetails() {
-        detailsDrawer.hide();
     }
 
     private Component createDetails(Transaction transaction) {

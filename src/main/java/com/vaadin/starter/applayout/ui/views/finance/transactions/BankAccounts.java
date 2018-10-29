@@ -14,6 +14,7 @@ import com.vaadin.starter.applayout.backend.BankAccount;
 import com.vaadin.starter.applayout.backend.DummyData;
 import com.vaadin.starter.applayout.ui.components.DetailsDrawer;
 import com.vaadin.starter.applayout.ui.components.ListItem;
+import com.vaadin.starter.applayout.ui.utils.BoxShadowBorders;
 import com.vaadin.starter.applayout.ui.utils.CSSProperties;
 import com.vaadin.starter.applayout.ui.utils.LumoStyles;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
@@ -26,6 +27,7 @@ import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
 public class BankAccounts extends FlexLayout {
 
     private DetailsDrawer detailsDrawer;
+    private Label detailsDrawerTitle;
 
     public BankAccounts() {
         setHeight("100%");
@@ -75,6 +77,11 @@ public class BankAccounts extends FlexLayout {
     private void initDetailsDrawer() {
         detailsDrawer = new DetailsDrawer(DetailsDrawer.Position.RIGHT);
 
+        // Header
+        detailsDrawerTitle = UIUtils.createH3Label(Arrays.asList(BoxShadowBorders.BOTTOM, LumoStyles.Padding.All.L), "");
+        detailsDrawerTitle.setWidth("100%");
+        detailsDrawer.setHeader(detailsDrawerTitle);
+
         // Footer
         Button close = UIUtils.createTertiaryButton("Close");
         close.addClickListener(e -> detailsDrawer.hide());
@@ -87,18 +94,13 @@ public class BankAccounts extends FlexLayout {
     }
 
     private void showDetails(BankAccount bankAccount) {
-        detailsDrawer.setContent(createDetails(bankAccount));
+        detailsDrawerTitle.setText(bankAccount.getOwner());
+        detailsDrawer.setContent(createDetails());
         detailsDrawer.show();
     }
 
-    private Div createDetails(BankAccount bankAccount) {
-        Div div = UIUtils.createDiv(
-                Collections.singleton(LumoStyles.Padding.Bottom.S),
-                UIUtils.createH3(
-                        Collections.singleton(LumoStyles.Padding.Horizontal.L),
-                        bankAccount.getOwner()
-                )
-        );
+    private Div createDetails() {
+        Div div = UIUtils.createDiv(Collections.singleton(LumoStyles.Padding.Vertical.S));
 
         for (int i = 0; i < 10; i++) {
             Double amount = DummyData.getAmount();

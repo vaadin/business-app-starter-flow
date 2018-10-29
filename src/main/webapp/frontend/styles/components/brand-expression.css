@@ -9,7 +9,20 @@
   padding: var(--lumo-space-m);
 }
 
-.brand-expression img {
+.brand-expression__logo {
   max-height: 100%;
   max-width: 100%;
+}
+
+.brand-expression__rail-logo {
+  max-height: 100%;
+  max-width: 100%;
+}
+
+.navi-drawer[rail] .brand-expression__logo {
+  display: none;
+}
+
+.navi-drawer:not([rail]) .brand-expression__rail-logo {
+  display: none;
 }

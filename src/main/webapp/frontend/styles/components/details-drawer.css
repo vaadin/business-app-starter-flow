@@ -26,7 +26,9 @@
     margin: 0;
     min-height: 100%;
     min-width: 100%;
-    position: absolute;
+    position: fixed;
+    top: 0;
+    z-index: 2;
   }
 
   .details-drawer:not([open])[position="right"] {

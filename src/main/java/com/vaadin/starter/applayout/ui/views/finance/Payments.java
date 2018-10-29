@@ -19,6 +19,7 @@ import com.vaadin.starter.applayout.ui.Root;
 import com.vaadin.starter.applayout.ui.components.DetailsDrawer;
 import com.vaadin.starter.applayout.ui.components.ListItem;
 import com.vaadin.starter.applayout.ui.components.navigation.bar.AppBar;
+import com.vaadin.starter.applayout.ui.utils.BoxShadowBorders;
 import com.vaadin.starter.applayout.ui.utils.CSSProperties;
 import com.vaadin.starter.applayout.ui.utils.LumoStyles;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
@@ -37,6 +38,7 @@ public class Payments extends ViewFrame {
     private Random random = new Random();
 
     private DetailsDrawer detailsDrawer;
+    private Label detailsDrawerTitle;
 
     public Payments() {
         // Header
@@ -109,6 +111,11 @@ public class Payments extends ViewFrame {
     private void initDetailsDrawer() {
         detailsDrawer = new DetailsDrawer(DetailsDrawer.Position.RIGHT);
 
+        // Header
+        detailsDrawerTitle = UIUtils.createH3Label(Arrays.asList(BoxShadowBorders.BOTTOM, LumoStyles.Padding.All.L), "");
+        detailsDrawerTitle.setWidth("100%");
+        detailsDrawer.setHeader(detailsDrawerTitle);
+
         // Footer
         Button close = UIUtils.createTertiaryButton("Close");
         close.addClickListener(e -> detailsDrawer.hide());
@@ -121,6 +128,7 @@ public class Payments extends ViewFrame {
     }
 
     private void showDetails(Payment payment) {
+        detailsDrawerTitle.setText("Payment Details");
         detailsDrawer.setContent(createDetails(payment));
         detailsDrawer.show();
     }
@@ -142,8 +150,7 @@ public class Payments extends ViewFrame {
         }
 
         return UIUtils.createDiv(
-                Arrays.asList(LumoStyles.Padding.Bottom.S),
-                UIUtils.createH3(Collections.singleton(LumoStyles.Padding.Horizontal.L), "Payment Details"),
+                Arrays.asList(LumoStyles.Padding.Vertical.S),
                 status,
                 from,
                 to,
