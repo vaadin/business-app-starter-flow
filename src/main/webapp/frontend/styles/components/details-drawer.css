@@ -5,7 +5,7 @@
   max-height: 100%;
   max-width: 100%;
   transition: all var(--transition-duration-s);
-  z-index: 1;
+  z-index: 0;
 }
 
 .details-drawer__header {
@@ -28,7 +28,7 @@
     min-width: 100%;
     position: fixed;
     top: 0;
-    z-index: 2;
+    z-index: 1;
   }
 
   .details-drawer:not([open])[position="right"] {

@@ -1,13 +1,16 @@
 package com.vaadin.starter.applayout.ui.views.demo;
 
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
 import com.vaadin.flow.component.textfield.TextField;
@@ -24,10 +27,13 @@ import com.vaadin.starter.applayout.ui.Root;
 import com.vaadin.starter.applayout.ui.components.DetailsDrawer;
 import com.vaadin.starter.applayout.ui.components.ListItem;
 import com.vaadin.starter.applayout.ui.components.navigation.bar.AppBar;
+import com.vaadin.starter.applayout.ui.utils.BoxShadowBorders;
+import com.vaadin.starter.applayout.ui.utils.CSSProperties;
 import com.vaadin.starter.applayout.ui.utils.LumoStyles;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
 import com.vaadin.starter.applayout.ui.views.ViewFrame;
 
+import java.util.Arrays;
 import java.util.Collections;
 
 import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
@@ -36,7 +42,8 @@ import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
 @PageTitle("Horizontal Split View")
 public class HorizontalSplitView extends ViewFrame {
 
-    private final DetailsDrawer detailsDrawer;
+    private DetailsDrawer detailsDrawer;
+    private Label detailsDrawerTitle;
 
     public HorizontalSplitView() {
         // Header
@@ -74,17 +81,17 @@ public class HorizontalSplitView extends ViewFrame {
 
         grid.addSelectionListener(e -> {
             if (e.getFirstSelectedItem().isPresent()) {
-                showDetails();
+                showDetails(e.getFirstSelectedItem().get());
             }
         });
 
         grid.setSizeFull();
 
-        // Grid wrapper for some nice padding
+        // Grid wrappe
         Div gridWrapper = UIUtils.createDiv(Collections.singleton(GRID_VIEW), grid);
 
         // Details drawer
-        detailsDrawer = new DetailsDrawer(DetailsDrawer.Position.RIGHT, createForm());
+        initDetailsDrawer();
 
         // Set the content
         FlexLayout content = new FlexLayout(gridWrapper, detailsDrawer);
@@ -92,47 +99,78 @@ public class HorizontalSplitView extends ViewFrame {
         setContent(content);
     }
 
-    private void showDetails() {
+    private void initDetailsDrawer() {
+        detailsDrawer = new DetailsDrawer(DetailsDrawer.Position.RIGHT);
+
+        // Header
+        detailsDrawerTitle = UIUtils.createH3Label(Arrays.asList(BoxShadowBorders.BOTTOM, LumoStyles.Padding.All.L), "");
+        detailsDrawerTitle.setWidth("100%");
+        detailsDrawer.setHeader(detailsDrawerTitle);
+
+        // Footer
+        Button save = UIUtils.createPrimaryButton("Save");
+        save.addClickListener(e -> Notification.show("Not implemented yet.", 3000, Notification.Position.BOTTOM_CENTER));
+
+        Button cancel = UIUtils.createTertiaryButton("Cancel");
+        cancel.addClickListener(e -> detailsDrawer.hide());
+
+        FlexLayout footer = UIUtils.createFlexLayout(Arrays.asList(LumoStyles.Padding.Horizontal.L, LumoStyles.Padding.Vertical.S, LumoStyles.Spacing.Right.S), save, cancel);
+        footer.getStyle().set(CSSProperties.BackgroundColor.PROPERTY, LumoStyles.Color.CONTRAST_5);
+        footer.setWidth("100%");
+        detailsDrawer.setFooter(footer);
+
+    }
+
+    private void showDetails(Person person) {
+        detailsDrawerTitle.setText(person.getName());
+        detailsDrawer.setContent(createDetails());
         detailsDrawer.show();
     }
 
-    private FormLayout createForm() {
-        FormLayout form = new FormLayout();
-
-        TextField firstName = new TextField();
-        firstName.setWidth("100%");
-        form.addFormItem(firstName, "First Name");
-
-        TextField lastName = new TextField();
-        lastName.setWidth("100%");
-        form.addFormItem(lastName, "Last Name");
-
-        RadioButtonGroup<String> gender = new RadioButtonGroup<>();
-        gender.setItems("Male", "Female", "Other");
-        FormLayout.FormItem genderItem = form.addFormItem(gender, "Gender");
-        setColSpan(genderItem, 2);
-
-        FlexLayout phone = createPhoneLayout();
-        FormLayout.FormItem phoneItem = form.addFormItem(phone, "Phone");
-        setColSpan(phoneItem, 2);
-
-        TextField email = new TextField();
-        email.setWidth("100%");
-        FormLayout.FormItem emailItem = form.addFormItem(email, "Email");
-        setColSpan(emailItem, 2);
-
-        ComboBox company = new ComboBox();
-        company.setWidth("100%");
-        FormLayout.FormItem companyItem = form.addFormItem(company, "Company");
-        setColSpan(companyItem, 2);
-
-        FormLayout.FormItem uploadItem = form.addFormItem(new Upload(), "Image");
-        setColSpan(uploadItem, 2);
+    private FormLayout createDetails() {
+        FormLayout form = UIUtils.createFormLayout(
+                Arrays.asList(
+                        LumoStyles.Padding.Bottom.L,
+                        LumoStyles.Padding.Horizontal.L,
+                        LumoStyles.Padding.Top.M
+                )
+        );
 
         form.setResponsiveSteps(
                 new FormLayout.ResponsiveStep("0", 1, FormLayout.ResponsiveStep.LabelsPosition.TOP),
                 new FormLayout.ResponsiveStep("21em", 2, FormLayout.ResponsiveStep.LabelsPosition.TOP)
         );
+
+        TextField firstName = new TextField();
+        firstName.setWidth("100%");
+
+        TextField lastName = new TextField();
+        lastName.setWidth("100%");
+
+        RadioButtonGroup<String> gender = new RadioButtonGroup<>();
+        gender.setItems("Male", "Female", "Other");
+
+        FlexLayout phone = createPhoneLayout();
+
+        TextField email = new TextField();
+        email.setWidth("100%");
+
+        ComboBox company = new ComboBox();
+        company.setWidth("100%");
+
+        form.addFormItem(firstName, "First Name");
+        form.addFormItem(lastName, "Last Name");
+        FormLayout.FormItem genderItem = form.addFormItem(gender, "Gender");
+        FormLayout.FormItem phoneItem = form.addFormItem(phone, "Phone");
+        FormLayout.FormItem emailItem = form.addFormItem(email, "Email");
+        FormLayout.FormItem companyItem = form.addFormItem(company, "Company");
+        FormLayout.FormItem uploadItem = form.addFormItem(new Upload(), "Image");
+
+        setColSpan(genderItem, 2);
+        setColSpan(phoneItem, 2);
+        setColSpan(emailItem, 2);
+        setColSpan(companyItem, 2);
+        setColSpan(uploadItem, 2);
 
         return form;
     }

@@ -257,7 +257,7 @@ public class UIUtils {
 
     public static Label createH6Label(String text) {
         Label label = new Label(text);
-        label.addClassNames(LumoStyles.FontSize.H4);
+        label.addClassNames(LumoStyles.FontSize.H6);
         return label;
     }
 
@@ -279,12 +279,6 @@ public class UIUtils {
     public static Icon createSmallIcon(Collection<String> classNames, VaadinIcon icon) {
         Icon i = createSmallIcon(icon);
         classNames.forEach(i::addClassName);
-        return i;
-    }
-
-    public static Icon createLargeIcon(VaadinIcon icon) {
-        Icon i = new Icon(icon);
-        i.addClassName(LumoStyles.IconSize.L);
         return i;
     }
 
