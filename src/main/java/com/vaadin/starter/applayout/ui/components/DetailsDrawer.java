@@ -35,6 +35,10 @@ public class DetailsDrawer extends FlexLayout {
         this.header.add(components);
     }
 
+    public FlexLayout getHeader() {
+        return this.header;
+    }
+
     public void setContent(Component... components) {
         this.content.removeAll();
         this.content.add(components);

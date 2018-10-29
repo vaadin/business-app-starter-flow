@@ -9,7 +9,7 @@
 }
 
 .details-drawer__header {
-
+  flex-shrink: 0;
 }
 
 .details-drawer__content {
@@ -18,7 +18,7 @@
 }
 
 .details-drawer__footer {
-
+  flex-shrink: 0;
 }
 
 @media(max-width: 719px) {

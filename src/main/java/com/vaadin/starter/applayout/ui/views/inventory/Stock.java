@@ -1,15 +1,12 @@
 package com.vaadin.starter.applayout.ui.views.inventory;
 
 import com.vaadin.flow.component.Component;
-import com.vaadin.flow.component.HasValue;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Label;
-import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
@@ -20,7 +17,6 @@ import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.starter.applayout.backend.DummyData;
-import com.vaadin.starter.applayout.backend.Invoice;
 import com.vaadin.starter.applayout.backend.Item;
 import com.vaadin.starter.applayout.backend.UIConfig;
 import com.vaadin.starter.applayout.ui.Root;
@@ -122,13 +118,14 @@ public class Stock extends ViewFrame {
 
         // Footer
         Button save = UIUtils.createPrimaryButton("Save");
+        save.addClickListener(e -> Notification.show("Not implemented yet.", 3000, Notification.Position.BOTTOM_CENTER));
 
         Button cancel = UIUtils.createTertiaryButton("Cancel");
         cancel.addClickListener(e -> detailsDrawer.hide());
 
         Button delete = UIUtils.createErrorPrimaryButton("Delete");
         delete.addClassName(LumoStyles.Margin.Left.AUTO);
-        delete.addClickListener(e -> Notification.show("Not implemented yet.", 50000, Notification.Position.BOTTOM_CENTER));
+        delete.addClickListener(e -> Notification.show("Not implemented yet.", 3000, Notification.Position.BOTTOM_CENTER));
 
         FlexLayout footer = UIUtils.createFlexLayout(Arrays.asList(LumoStyles.Padding.Horizontal.L, LumoStyles.Padding.Vertical.S, LumoStyles.Spacing.Right.S), save, cancel, delete);
         footer.getStyle().set(CSSProperties.BackgroundColor.PROPERTY, LumoStyles.Color.CONTRAST_5);

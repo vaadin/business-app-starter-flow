@@ -9,8 +9,11 @@ import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
+import com.vaadin.flow.component.tabs.Tab;
+import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.provider.DataProvider;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
@@ -37,6 +40,7 @@ import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
 public class Invoices extends ViewFrame {
 
     private DetailsDrawer detailsDrawer;
+    private H3 detailsDrawerTitle;
 
     public Invoices() {
         // Header
@@ -101,8 +105,19 @@ public class Invoices extends ViewFrame {
     private void initDetailsDrawer() {
         detailsDrawer = new DetailsDrawer(DetailsDrawer.Position.RIGHT);
 
+        // Header
+        detailsDrawerTitle = UIUtils.createH3(Collections.singleton(LumoStyles.Padding.Horizontal.L), "");
+        detailsDrawerTitle.setWidth("100%");
+
+        Tabs tabs = new Tabs(new Tab("Details"), new Tab("Attachments"), new Tab("Activity"));
+        tabs.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Tabs.EQUAL_WIDTH_TABS);
+
+        detailsDrawer.setHeader(detailsDrawerTitle, tabs);
+        detailsDrawer.getHeader().getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN);
+
         // Footer
         Button save = UIUtils.createPrimaryButton("Save");
+        save.addClickListener(e -> Notification.show("Not implemented yet.", 3000, Notification.Position.BOTTOM_CENTER));
 
         Button cancel = UIUtils.createTertiaryButton("Cancel");
         cancel.addClickListener(e -> detailsDrawer.hide());
@@ -120,7 +135,7 @@ public class Invoices extends ViewFrame {
     }
 
     private Component createDetails(Invoice invoice) {
-        H3 title = new H3(invoice.getCustomer());
+        detailsDrawerTitle.setText(invoice.getCustomer());
 
         TextField id = new TextField();
         id.setValue(String.valueOf(invoice.getId()));
@@ -151,10 +166,9 @@ public class Invoices extends ViewFrame {
         }
 
         // Add it all together.
-        FormLayout form = UIUtils.createFormLayout(Arrays.asList(LumoStyles.Padding.Bottom.L, LumoStyles.Padding.Horizontal.L));
+        FormLayout form = UIUtils.createFormLayout(Arrays.asList(LumoStyles.Padding.Bottom.L, LumoStyles.Padding.Horizontal.L, LumoStyles.Padding.Top.M));
         form.setResponsiveSteps(new FormLayout.ResponsiveStep("0", 1, FormLayout.ResponsiveStep.LabelsPosition.TOP));
 
-        form.add(title);
         form.addFormItem(id, "Invoice ID");
         form.addFormItem(invoiceDate, "Invoice Date");
         form.addFormItem(amount, "Amount (€)");
