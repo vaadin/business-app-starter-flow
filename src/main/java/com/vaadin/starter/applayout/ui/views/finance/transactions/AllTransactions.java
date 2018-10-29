@@ -139,7 +139,7 @@ public class AllTransactions extends FlexLayout {
         // Add it all together
         FormLayout form = UIUtils.createFormLayout(Arrays.asList(LumoStyles.Padding.Bottom.L, LumoStyles.Padding.Horizontal.L, LumoStyles.Padding.Top.M));
         form.setResponsiveSteps(new FormLayout.ResponsiveStep("0", 1, FormLayout.ResponsiveStep.LabelsPosition.TOP));
-        
+
         form.addFormItem(id, "Transaction ID");
         form.addFormItem(status, "Status").getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN);
         form.addFormItem(sender, "Payee / Payer");

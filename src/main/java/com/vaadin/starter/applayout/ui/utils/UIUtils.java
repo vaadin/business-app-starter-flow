@@ -15,10 +15,7 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.starter.applayout.backend.Invoice;
-import com.vaadin.starter.applayout.backend.Order;
-import com.vaadin.starter.applayout.backend.Payment;
-import com.vaadin.starter.applayout.backend.Transaction;
+import com.vaadin.starter.applayout.backend.*;
 import com.vaadin.starter.applayout.ui.components.DataSeriesItemWithRadius;
 
 import java.text.DecimalFormat;
@@ -120,20 +117,29 @@ public class UIUtils {
         return button;
     }
 
-    public static Button createTertiaryButton(VaadinIcon icon, String text) {
-        Button button = createTertiaryButton(text);
-        button.setIcon(new Icon(icon));
-        return button;
-    }
-
-    /* Tertiary icon */
     public static Button createTertiaryIconButton(VaadinIcon icon) {
         Button button = new Button(new Icon(icon));
         button.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Button.TERTIARY);
         return button;
     }
 
-    /* Small */
+    public static Button createSmallTertiaryIconButton(VaadinIcon icon) {
+        return createSmallTertiaryIconButton(new Icon(icon));
+    }
+
+    public static Button createSmallTertiaryIconButton(Collection<String> classNames, VaadinIcon icon) {
+        Button button = createSmallTertiaryIconButton(icon);
+        classNames.forEach(button::addClassName);
+        return button;
+    }
+
+    public static Button createSmallTertiaryIconButton(Icon icon) {
+        Button button = new Button(icon);
+        button.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Button.TERTIARY_ICON_SMALL);
+        return button;
+    }
+
+    /* Secondary (normal) */
     public static Button createSmallButton(String text) {
         Button button = new Button(text);
         button.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Button.SMALL);
@@ -152,7 +158,6 @@ public class UIUtils {
         return button;
     }
 
-    /* Small icon */
     public static Button createSmallIconButton(VaadinIcon icon) {
         return createSmallIconButton(new Icon(icon));
     }
@@ -163,30 +168,18 @@ public class UIUtils {
         return button;
     }
 
-    /* Small primary icon */
-    public static Button createSmallPrimaryIconButton(Icon icon) {
-        Button button = new Button(icon);
-        button.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Button.SMALL_PRIMARY_ICON);
+    /* Error */
+    public static Button createErrorButton(String text) {
+        Button button = new Button(text);
+        button.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Button.ERROR);
         return button;
     }
 
-    /* Small tertiary icon */
-    public static Button createSmallTertiaryIconButton(VaadinIcon icon) {
-        return createSmallTertiaryIconButton(new Icon(icon));
-    }
-
-    public static Button createSmallTertiaryIconButton(Collection<String> classNames, VaadinIcon icon) {
-        Button button = createSmallTertiaryIconButton(icon);
-        classNames.forEach(button::addClassName);
+    public static Button createErrorPrimaryButton(String text) {
+        Button button = new Button(text);
+        button.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Button.ERROR_PRIMARY);
         return button;
     }
-
-    public static Button createSmallTertiaryIconButton(Icon icon) {
-        Button button = new Button(icon);
-        button.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Button.SMALL_TERTIARY_ICON);
-        return button;
-    }
-
 
 
     /* ==== TEXTFIELDS ==== */
@@ -395,6 +388,26 @@ public class UIUtils {
                 break;
             default:
                 badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.ERROR);
+                break;
+        }
+        return badge;
+    }
+
+    public static Component createBadge(Item item) {
+        return createBadge(item.getCategory());
+    }
+
+    public static Component createBadge(Item.Category category) {
+        Span badge = new Span(category.getName());
+        switch (category) {
+            case HEALTHCARE:
+                badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.SUCCESS);
+                break;
+            case DENTAL:
+                badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.DEFAULT);
+                break;
+            default:
+                badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.CONTRAST);
                 break;
         }
         return badge;

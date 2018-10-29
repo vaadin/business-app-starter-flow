@@ -22,15 +22,14 @@ public class LumoStyles {
     public class Button {
         public static final String SMALL = "small";
         public static final String SMALL_ICON = "small icon";
-        public static final String SMALL_PRIMARY_ICON = "small primary icon";
-        public static final String SMALL_TERTIARY_ICON = "small tertiary icon";
-
-        public static final String ICON = "icon";
 
         public static final String PRIMARY = "primary";
 
         public static final String TERTIARY = "tertiary";
-        public static final String TERTIARY_ICON = "tertiary icon";
+        public static final String TERTIARY_ICON_SMALL = "tertiary icon small";
+
+        public static final String ERROR = "error";
+        public static final String ERROR_PRIMARY = "error primary";
     }
 
     public class Color {
