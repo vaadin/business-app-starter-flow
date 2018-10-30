@@ -60,7 +60,7 @@ public class Payments extends ViewFrame {
                 .setHeader("To")
                 .setWidth(UIUtils.COLUMN_WIDTH_XL);
         grid.addColumn(new ComponentRenderer<>(this::createAmount))
-                .setHeader(UIUtils.createRightAlignedDiv("Amount (EUR)"))
+                .setHeader(UIUtils.createRightAlignedDiv("Amount ($)"))
                 .setWidth(UIUtils.COLUMN_WIDTH_M)
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createDate))
@@ -135,7 +135,7 @@ public class Payments extends ViewFrame {
 
         ListItem from = new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.UPLOAD_ALT), payment.getFrom() + "\n" + payment.getFromIBAN(), "Sender");
         ListItem to = new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.DOWNLOAD_ALT), payment.getTo() + "\n" + payment.getToIBAN(), "Receiver");
-        ListItem amount = new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.EURO), UIUtils.formatAmount(payment.getAmount()), "Amount");
+        ListItem amount = new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.DOLLAR), UIUtils.formatAmount(payment.getAmount()), "Amount");
         ListItem date = new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.CALENDAR), UIUtils.formatDate(payment.getDate()), "Date");
 
         for (ListItem item : new ListItem[]{status, from, to, amount, date}) {

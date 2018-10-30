@@ -50,7 +50,7 @@ public class Orders extends ViewFrame {
                 .setWidth(UIUtils.COLUMN_WIDTH_M)
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createValue))
-                .setHeader(UIUtils.createRightAlignedDiv("Value (€)"))
+                .setHeader(UIUtils.createRightAlignedDiv("Value ($)"))
                 .setWidth(UIUtils.COLUMN_WIDTH_M)
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createDate))

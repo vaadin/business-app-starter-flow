@@ -33,16 +33,16 @@ import java.util.Collections;
 
 import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
 
-@Route(value = "stock", layout = Root.class)
-@PageTitle("Stock")
-public class Stock extends ViewFrame {
+@Route(value = "catalogue", layout = Root.class)
+@PageTitle("Catalogue")
+public class Catalogue extends ViewFrame {
 
     private DetailsDrawer detailsDrawer;
 
-    public Stock() {
+    public Catalogue() {
         // Header
         if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-            AppBar appBar = new AppBar("Stock");
+            AppBar appBar = new AppBar("Catalogue");
             setHeader(appBar);
         }
 
@@ -63,11 +63,11 @@ public class Stock extends ViewFrame {
                 .setWidth(UIUtils.COLUMN_WIDTH_XL)
                 .setFlexGrow(1);
         grid.addColumn(new ComponentRenderer<>(this::createPrice))
-                .setHeader(UIUtils.createRightAlignedDiv("Unit Price (€)"))
+                .setHeader(UIUtils.createRightAlignedDiv("Unit Price ($)"))
                 .setWidth(UIUtils.COLUMN_WIDTH_M)
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createStock))
-                .setHeader(UIUtils.createRightAlignedDiv("In Stock"))
+                .setHeader(UIUtils.createRightAlignedDiv("In Catalogue"))
                 .setWidth(UIUtils.COLUMN_WIDTH_M)
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createSold))
@@ -182,8 +182,8 @@ public class Stock extends ViewFrame {
         form.addFormItem(name, "Name");
         form.addFormItem(desc, "Description");
         form.addFormItem(vendor, "Vendor");
-        form.addFormItem(price, "Unit Price (€)");
-        form.addFormItem(stock, "In Stock");
+        form.addFormItem(price, "Unit Price ($)");
+        form.addFormItem(stock, "In Catalogue");
         form.addFormItem(sold, "Units Sold");
 
         return form;

@@ -27,10 +27,10 @@ import com.vaadin.starter.applayout.ui.views.demo.*;
 import com.vaadin.starter.applayout.ui.views.finance.Payments;
 import com.vaadin.starter.applayout.ui.views.finance.Statistics;
 import com.vaadin.starter.applayout.ui.views.finance.transactions.Transactions;
-import com.vaadin.starter.applayout.ui.views.inventory.Analysis;
+import com.vaadin.starter.applayout.ui.views.inventory.Overview;
 import com.vaadin.starter.applayout.ui.views.inventory.Invoices;
 import com.vaadin.starter.applayout.ui.views.inventory.Orders;
-import com.vaadin.starter.applayout.ui.views.inventory.Stock;
+import com.vaadin.starter.applayout.ui.views.inventory.Catalogue;
 import com.vaadin.starter.applayout.ui.views.personnel.Accountants;
 import com.vaadin.starter.applayout.ui.views.personnel.Managers;
 import org.slf4j.Logger;
@@ -121,8 +121,8 @@ public class Root extends FlexLayout
         if (showcase.equals(UIConfig.Showcase.INVENTORY)) {
             naviDrawer.addNaviItem(VaadinIcon.LIST, "Orders", Orders.class);
             naviDrawer.addNaviItem(VaadinIcon.INVOICE, "Invoices", Invoices.class);
-            naviDrawer.addNaviItem(VaadinIcon.CLIPBOARD_PULSE, "Analysis", Analysis.class);
-            naviDrawer.addNaviItem(VaadinIcon.STOCK, "Stock", Stock.class);
+            naviDrawer.addNaviItem(VaadinIcon.CLIPBOARD_PULSE, "Overview", Overview.class);
+            naviDrawer.addNaviItem(VaadinIcon.STOCK, "Catalogue", Catalogue.class);
 
             NaviItem personnel = naviDrawer.addNaviItem(VaadinIcon.USERS, "Personnel", null);
             naviDrawer.addNaviItem(personnel, "Accountants", Accountants.class);

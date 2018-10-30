@@ -53,7 +53,7 @@ public class Managers extends ViewFrame {
                 .setWidth(UIUtils.COLUMN_WIDTH_XS)
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createApprovalLimit))
-                .setHeader(UIUtils.createRightAlignedDiv("Approval Limit (€)"))
+                .setHeader(UIUtils.createRightAlignedDiv("Approval Limit ($)"))
                 .setWidth(UIUtils.COLUMN_WIDTH_XL)
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createDate))

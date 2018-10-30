@@ -49,7 +49,7 @@ public class BankAccounts extends FlexLayout {
                 .setHeader("Owner")
                 .setWidth(UIUtils.COLUMN_WIDTH_XL);
         grid.addColumn(new ComponentRenderer<>(this::createAvailability))
-                .setHeader(UIUtils.createRightAlignedDiv("Availability (€)"))
+                .setHeader(UIUtils.createRightAlignedDiv("Availability ($)"))
                 .setWidth(UIUtils.COLUMN_WIDTH_M)
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createDate))

@@ -58,7 +58,7 @@ public class AllTransactions extends FlexLayout {
                 .setSortable(true)
                 .setWidth(UIUtils.COLUMN_WIDTH_XL);
         grid.addColumn(new ComponentRenderer<>(this::createAmount))
-                .setHeader(UIUtils.createRightAlignedDiv("Withdrawal / Deposit (€)"))
+                .setHeader(UIUtils.createRightAlignedDiv("Withdrawal / Deposit ($)"))
                 .setWidth(UIUtils.COLUMN_WIDTH_L)
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createAttachment))
@@ -150,7 +150,7 @@ public class AllTransactions extends FlexLayout {
         form.addFormItem(id, "Transaction ID");
         form.addFormItem(status, "Status").getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN);
         form.addFormItem(sender, "Payee / Payer");
-        form.addFormItem(amount, transaction.getAmount() > 0 ? "Deposit (€)" : "Withdrawal (€)");
+        form.addFormItem(amount, transaction.getAmount() > 0 ? "Deposit ($)" : "Withdrawal ($)");
         form.addFormItem(date, "Date");
 
         return form;

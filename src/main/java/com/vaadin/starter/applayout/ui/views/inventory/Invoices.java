@@ -64,7 +64,7 @@ public class Invoices extends ViewFrame {
                 .setHeader("Customer")
                 .setWidth(UIUtils.COLUMN_WIDTH_XL);
         grid.addColumn(new ComponentRenderer<>(this::createAmount))
-                .setHeader(UIUtils.createRightAlignedDiv("Amount (€)"))
+                .setHeader(UIUtils.createRightAlignedDiv("Amount ($)"))
                 .setWidth(UIUtils.COLUMN_WIDTH_M)
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createDate))
@@ -169,7 +169,7 @@ public class Invoices extends ViewFrame {
 
         form.addFormItem(id, "Invoice ID");
         form.addFormItem(invoiceDate, "Invoice Date");
-        form.addFormItem(amount, "Amount (€)");
+        form.addFormItem(amount, "Amount ($)");
         form.addFormItem(status, "Status").getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN);
         form.addFormItem(dueDate, "Due Date");
 

@@ -24,17 +24,17 @@ import com.vaadin.starter.applayout.ui.views.ViewFrame;
 import java.util.Arrays;
 import java.util.Collections;
 
-@Route(value = "analysis", layout = Root.class)
-@PageTitle("Analysis")
-public class Analysis extends ViewFrame {
+@Route(value = "overview", layout = Root.class)
+@PageTitle("Overview")
+public class Overview extends ViewFrame {
 
     private static final String CLASS_NAME = "dashboard";
     private static final String REPORTS = "Reports";
     private static final String LOGS = "Logs";
 
-    public Analysis() {
+    public Overview() {
         if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-            setHeader(new AppBar("Analysis"));
+            setHeader(new AppBar("Overview"));
         }
 
         Div viewport = UIUtils.createDiv(
