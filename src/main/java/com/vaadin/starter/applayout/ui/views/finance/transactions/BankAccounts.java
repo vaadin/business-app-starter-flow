@@ -4,6 +4,7 @@ import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -78,8 +79,7 @@ public class BankAccounts extends FlexLayout {
         detailsDrawer = new DetailsDrawer(DetailsDrawer.Position.RIGHT);
 
         // Header
-        detailsDrawerTitle = UIUtils.createH3Label(Arrays.asList(BoxShadowBorders.BOTTOM, LumoStyles.Padding.All.L), "");
-        detailsDrawerTitle.setWidth("100%");
+        detailsDrawerTitle = UIUtils.createDetailsDrawerHeader("", true, true);
         detailsDrawer.setHeader(detailsDrawerTitle);
 
         // Footer

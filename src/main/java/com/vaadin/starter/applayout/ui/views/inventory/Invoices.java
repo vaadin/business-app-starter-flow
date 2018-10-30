@@ -40,7 +40,7 @@ import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
 public class Invoices extends ViewFrame {
 
     private DetailsDrawer detailsDrawer;
-    private H3 detailsDrawerTitle;
+    private Label detailsDrawerTitle;
 
     public Invoices() {
         // Header
@@ -64,7 +64,7 @@ public class Invoices extends ViewFrame {
                 .setHeader("Customer")
                 .setWidth(UIUtils.COLUMN_WIDTH_XL);
         grid.addColumn(new ComponentRenderer<>(this::createAmount))
-                .setHeader(UIUtils.createRightAlignedDiv("Amount"))
+                .setHeader(UIUtils.createRightAlignedDiv("Amount (€)"))
                 .setWidth(UIUtils.COLUMN_WIDTH_M)
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createDate))
@@ -106,8 +106,7 @@ public class Invoices extends ViewFrame {
         detailsDrawer = new DetailsDrawer(DetailsDrawer.Position.RIGHT);
 
         // Header
-        detailsDrawerTitle = UIUtils.createH3(Collections.singleton(LumoStyles.Padding.Horizontal.L), "");
-        detailsDrawerTitle.setWidth("100%");
+        detailsDrawerTitle = UIUtils.createDetailsDrawerHeader("", false, true);
 
         Tabs tabs = new Tabs(new Tab("Details"), new Tab("Attachments"), new Tab("Activity"));
         tabs.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Tabs.EQUAL_WIDTH_TABS);
@@ -130,13 +129,12 @@ public class Invoices extends ViewFrame {
     }
 
     private void showDetails(Invoice invoice) {
+        detailsDrawerTitle.setText(invoice.getCustomer());
         detailsDrawer.setContent(createDetails(invoice));
         detailsDrawer.show();
     }
 
     private Component createDetails(Invoice invoice) {
-        detailsDrawerTitle.setText(invoice.getCustomer());
-
         TextField id = new TextField();
         id.setValue(String.valueOf(invoice.getId()));
         id.setWidth("100%");
@@ -166,7 +164,7 @@ public class Invoices extends ViewFrame {
         }
 
         // Add it all together.
-        FormLayout form = UIUtils.createFormLayout(Arrays.asList(LumoStyles.Padding.Bottom.L, LumoStyles.Padding.Horizontal.L, LumoStyles.Padding.Top.M));
+        FormLayout form = UIUtils.createFormLayout(Arrays.asList(LumoStyles.Padding.Bottom.L, LumoStyles.Padding.Horizontal.L, LumoStyles.Padding.Top.S));
         form.setResponsiveSteps(new FormLayout.ResponsiveStep("0", 1, FormLayout.ResponsiveStep.LabelsPosition.TOP));
 
         form.addFormItem(id, "Invoice ID");

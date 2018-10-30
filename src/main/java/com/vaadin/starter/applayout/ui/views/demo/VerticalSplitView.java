@@ -2,9 +2,11 @@ package com.vaadin.starter.applayout.ui.views.demo;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
@@ -13,6 +15,7 @@ import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.component.upload.Upload;
 import com.vaadin.flow.data.provider.DataProvider;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.data.renderer.LocalDateRenderer;
@@ -100,8 +103,7 @@ public class VerticalSplitView extends ViewFrame {
         detailsDrawer = new DetailsDrawer(DetailsDrawer.Position.BOTTOM);
 
         // Header
-        detailsDrawerTitle = UIUtils.createH3Label(Arrays.asList(BoxShadowBorders.BOTTOM, LumoStyles.Padding.All.L), "");
-        detailsDrawerTitle.setWidth("100%");
+        detailsDrawerTitle = UIUtils.createDetailsDrawerHeader("", true, true);
         detailsDrawer.setHeader(detailsDrawerTitle);
 
         // Footer
@@ -119,16 +121,16 @@ public class VerticalSplitView extends ViewFrame {
 
     private void showDetails(Person person) {
         detailsDrawerTitle.setText(person.getName());
-        detailsDrawer.setContent(createDetails());
+        detailsDrawer.setContent(createDetails(person));
         detailsDrawer.show();
     }
 
-    private FormLayout createDetails() {
+    private FormLayout createDetails(Person person) {
         FormLayout form = UIUtils.createFormLayout(
                 Arrays.asList(
                         LumoStyles.Padding.Bottom.L,
                         LumoStyles.Padding.Horizontal.L,
-                        LumoStyles.Padding.Top.M
+                        LumoStyles.Padding.Top.S
                 )
         );
 
@@ -139,29 +141,35 @@ public class VerticalSplitView extends ViewFrame {
         );
 
         TextField firstName = new TextField();
+        firstName.setValue(person.getFirstName());
         firstName.setWidth("100%");
 
         TextField lastName = new TextField();
+        lastName.setValue(person.getLastName());
         lastName.setWidth("100%");
 
+        RadioButtonGroup<String> gender = new RadioButtonGroup<>();
+        gender.setItems("Male", "Female", "Other");
+        gender.setValue("Other");
+
+        FlexLayout phone = createPhoneLayout();
+
         TextField email = new TextField();
+        email.setValue(person.getEmail());
         email.setWidth("100%");
 
-        TextField forumPosts = new TextField();
-        forumPosts.setWidth("100%");
-
-        TextField lastModified = new TextField();
-        lastModified.setWidth("100%");
-
-        RadioButtonGroup<String> radioButtonGroup = new RadioButtonGroup<>();
-        radioButtonGroup.setItems("Male", "Female", "Other");
+        ComboBox company = new ComboBox();
+        company.setItems(DummyData.getCompanies());
+        company.setValue(DummyData.getCompany());
+        company.setWidth("100%");
 
         form.addFormItem(firstName, "First Name");
         form.addFormItem(lastName, "Last Name");
+        form.addFormItem(gender, "Gender");
+        form.addFormItem(phone, "Phone");
         form.addFormItem(email, "Email");
-        form.addFormItem(forumPosts, "Forum Posts");
-        form.addFormItem(lastModified, "Last Modified");
-        form.addFormItem(radioButtonGroup, "Gender");
+        form.addFormItem(company, "Company");
+        form.addFormItem(new Upload(), "Image");
 
         return form;
     }
@@ -188,5 +196,18 @@ public class VerticalSplitView extends ViewFrame {
             badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.ERROR);
         }
         return badge;
+    }
+
+    private FlexLayout createPhoneLayout() {
+        TextField prefix = new TextField();
+        prefix.setValue("+358");
+        prefix.setWidth("80px");
+
+        TextField number = new TextField();
+        number.setValue(DummyData.getPhoneNumber());
+
+        FlexLayout layout = UIUtils.createFlexLayout(Collections.singleton(LumoStyles.Spacing.Right.S), prefix, number);
+        layout.setFlexGrow(1, number);
+        return layout;
     }
 }

@@ -6,6 +6,7 @@ import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
@@ -35,6 +36,7 @@ import com.vaadin.starter.applayout.ui.views.ViewFrame;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Random;
 
 import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
 
@@ -103,8 +105,7 @@ public class HorizontalSplitView extends ViewFrame {
         detailsDrawer = new DetailsDrawer(DetailsDrawer.Position.RIGHT);
 
         // Header
-        detailsDrawerTitle = UIUtils.createH3Label(Arrays.asList(BoxShadowBorders.BOTTOM, LumoStyles.Padding.All.L), "");
-        detailsDrawerTitle.setWidth("100%");
+        detailsDrawerTitle = UIUtils.createDetailsDrawerHeader("", true, true);
         detailsDrawer.setHeader(detailsDrawerTitle);
 
         // Footer
@@ -123,16 +124,16 @@ public class HorizontalSplitView extends ViewFrame {
 
     private void showDetails(Person person) {
         detailsDrawerTitle.setText(person.getName());
-        detailsDrawer.setContent(createDetails());
+        detailsDrawer.setContent(createDetails(person));
         detailsDrawer.show();
     }
 
-    private FormLayout createDetails() {
+    private FormLayout createDetails(Person person) {
         FormLayout form = UIUtils.createFormLayout(
                 Arrays.asList(
                         LumoStyles.Padding.Bottom.L,
                         LumoStyles.Padding.Horizontal.L,
-                        LumoStyles.Padding.Top.M
+                        LumoStyles.Padding.Top.S
                 )
         );
 
@@ -142,20 +143,26 @@ public class HorizontalSplitView extends ViewFrame {
         );
 
         TextField firstName = new TextField();
+        firstName.setValue(person.getFirstName());
         firstName.setWidth("100%");
 
         TextField lastName = new TextField();
+        lastName.setValue(person.getLastName());
         lastName.setWidth("100%");
 
         RadioButtonGroup<String> gender = new RadioButtonGroup<>();
         gender.setItems("Male", "Female", "Other");
+        gender.setValue("Other");
 
         FlexLayout phone = createPhoneLayout();
 
         TextField email = new TextField();
+        email.setValue(person.getEmail());
         email.setWidth("100%");
 
         ComboBox company = new ComboBox();
+        company.setItems(DummyData.getCompanies());
+        company.setValue(DummyData.getCompany());
         company.setWidth("100%");
 
         form.addFormItem(firstName, "First Name");
@@ -177,9 +184,11 @@ public class HorizontalSplitView extends ViewFrame {
 
     private FlexLayout createPhoneLayout() {
         TextField prefix = new TextField();
+        prefix.setValue("+358");
         prefix.setWidth("80px");
 
         TextField number = new TextField();
+        number.setValue(DummyData.getPhoneNumber());
 
         FlexLayout layout = UIUtils.createFlexLayout(Collections.singleton(LumoStyles.Spacing.Right.S), prefix, number);
         layout.setFlexGrow(1, number);

@@ -140,7 +140,7 @@ public class Stock extends ViewFrame {
     }
 
     private Component createDetails(Item item) {
-        H3 title = new H3("Edit Item");
+        Label title = UIUtils.createDetailsDrawerHeader("Edit Item", false, false);
 
         RadioButtonGroup<Item.Category> category = new RadioButtonGroup<>();
         category.setItems(Item.Category.values());

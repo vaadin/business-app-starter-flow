@@ -23,7 +23,7 @@ public class BrandExpression extends Div {
 
         if (UIConfig.getShowcase().equals(UIConfig.Showcase.DEMO)) {
             logo.setSrc(UIUtils.IMG_PATH + "logo.svg");
-            railLogo.setSrc(UIUtils.IMG_PATH + "logo.svg");
+            railLogo.setSrc(UIUtils.IMG_PATH + "logo-only.svg");
         }
         if (UIConfig.getShowcase().equals(UIConfig.Showcase.FINANCE)) {
             logo.setSrc(UIUtils.IMG_PATH + "finance-logo.svg");

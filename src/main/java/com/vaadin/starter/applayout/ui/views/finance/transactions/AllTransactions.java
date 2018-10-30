@@ -6,6 +6,7 @@ import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -91,8 +92,7 @@ public class AllTransactions extends FlexLayout {
         detailsDrawer = new DetailsDrawer(DetailsDrawer.Position.RIGHT);
 
         // Header
-        detailsDrawerTitle = UIUtils.createH3Label(Arrays.asList(LumoStyles.Padding.Bottom.M, LumoStyles.Padding.Horizontal.L, LumoStyles.Padding.Top.L), "");
-        detailsDrawerTitle.setWidth("100%");
+        detailsDrawerTitle = UIUtils.createDetailsDrawerHeader("", false, true);
 
         Tabs tabs = new Tabs(new Tab("Details"), new Tab("Attachments"), new Tab("History"));
         tabs.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Tabs.EQUAL_WIDTH_TABS);
@@ -144,7 +144,7 @@ public class AllTransactions extends FlexLayout {
         date.setWidth("100%");
 
         // Add it all together
-        FormLayout form = UIUtils.createFormLayout(Arrays.asList(LumoStyles.Padding.Bottom.L, LumoStyles.Padding.Horizontal.L, LumoStyles.Padding.Top.M));
+        FormLayout form = UIUtils.createFormLayout(Arrays.asList(LumoStyles.Padding.Bottom.L, LumoStyles.Padding.Horizontal.L, LumoStyles.Padding.Top.S));
         form.setResponsiveSteps(new FormLayout.ResponsiveStep("0", 1, FormLayout.ResponsiveStep.LabelsPosition.TOP));
 
         form.addFormItem(id, "Transaction ID");

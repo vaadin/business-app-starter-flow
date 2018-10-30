@@ -183,6 +183,7 @@ public class UIUtils {
     }
 
 
+
     /* ==== TEXTFIELDS ==== */
 
     public static TextField createSmallTextField() {
@@ -516,6 +517,30 @@ public class UIUtils {
         card.getStyle().set(CSSProperties.BoxSizing.PROPERTY, CSSProperties.BoxSizing.BORDER_BOX);
         card.setHeight("400px");
         return card;
+    }
+
+
+
+    /* === DETAILS DRAWER === */
+
+    public static Label createDetailsDrawerHeader(String title, boolean border, boolean horizontalPadding) {
+        Label header = UIUtils.createH3Label(Collections.singleton(LumoStyles.Padding.Top.L), title);
+
+        // If we have a border, we set a slightly larger bottom padding.
+        if (border) {
+            header.addClassName(BoxShadowBorders.BOTTOM);
+            header.addClassName(LumoStyles.Padding.Bottom.L);
+        } else {
+            header.addClassName(LumoStyles.Padding.Bottom.M);
+        }
+
+        if (horizontalPadding) {
+            header.addClassName(LumoStyles.Padding.Horizontal.L);
+        }
+
+        header.getStyle().set(CSSProperties.BoxSizing.PROPERTY, CSSProperties.BoxSizing.BORDER_BOX);
+        header.setWidth("100%");
+        return header;
     }
 
 }

@@ -43,7 +43,7 @@ public class Dashboard extends ViewFrame {
                 UIUtils.createSalesChart("Product sales for 2018"),
                 UIUtils.createFlexLayout(
                         Collections.singleton(CLASS_NAME + "__bookmarks-recent-items"),
-                        new Div(createHeader(VaadinIcon.BOOKMARK, "Bookmark"), createTabbedList()),
+                        new Div(createHeader(VaadinIcon.BOOKMARK, "Bookmarks"), createTabbedList()),
                         new Div(createHeader(VaadinIcon.TIME_BACKWARD, "Recent Items"), createTabbedList())
                 )
         );

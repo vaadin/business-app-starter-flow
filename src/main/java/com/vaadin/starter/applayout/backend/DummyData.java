@@ -269,6 +269,10 @@ public class DummyData {
         return min + (max - min) * random.nextDouble();
     }
 
+    public static String getPhoneNumber() {
+        return String.format("%09d", random.nextInt(1000000000));
+    }
+
 
     /* === ITEM === */
 
