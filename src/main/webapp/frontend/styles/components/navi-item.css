@@ -57,21 +57,17 @@
 }
 
 .navi-item__link:not([highlight]) iron-icon {
-  color: var(--lumo-secondary-text-color);
+  color: var(--lumo-tertiary-text-color);
 }
 
 /* Link icon */
 .navi-item__link iron-icon,
 .navi-item__link img,
 .navi-item__link svg {
+  height: var(--lumo-icon-size-s);
   flex-shrink: 0;
   margin-right: var(--lumo-space-l);
-}
-
-.navi-item__link img,
-.navi-item__link svg {
-  height: 24px;
-  width: 24px;
+  width: var(--lumo-icon-size-s);
 }
 
 .navi-item__link > div:first-child {

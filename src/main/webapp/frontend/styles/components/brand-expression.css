@@ -6,17 +6,17 @@
   /* Application header height with tabs */
   height: calc(calc(var(--lumo-space-l) + var(--lumo-size-s)) + var(--lumo-size-l));
   justify-content: center;
-  padding: var(--lumo-space-m);
+  padding: var(--lumo-space-l);
 }
 
-.brand-expression__logo {
-  max-height: 100%;
-  max-width: 100%;
-}
-
+.brand-expression__logo,
 .brand-expression__rail-logo {
   max-height: 100%;
   max-width: 100%;
+}
+
+.navi-drawer[rail] .brand-expression {
+  padding: var(--lumo-space-m);
 }
 
 .navi-drawer[rail] .brand-expression__logo {
