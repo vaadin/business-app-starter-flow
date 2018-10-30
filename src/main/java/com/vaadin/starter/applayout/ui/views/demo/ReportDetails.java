@@ -30,10 +30,8 @@ import com.vaadin.starter.applayout.ui.utils.UIUtils;
 import com.vaadin.starter.applayout.ui.views.ViewFrame;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Random;
 
 @Route(value = "report-details", layout = Root.class)
 @PageTitle("Report Details")
@@ -41,26 +39,24 @@ public class ReportDetails extends ViewFrame implements HasUrlParameter<Long> {
 
     private static final String CLASS_NAME = "report-details";
 
-    private final AppBar appBar;
+    private AppBar appBar;
     private Div viewport;
     private Image image;
     private ListItem balance;
     private ListItem runningDate;
     private ListItem status;
 
-    private static DateTimeFormatter createFormatter() {
-        return DateTimeFormatter.ofPattern("MMM dd, YYYY");
-    }
-
     public ReportDetails() {
-        final Random random = new Random();
-        Integer randBalance = random.nextInt(5000);
+        Integer amount = DummyData.getRandomInt(0, 5000);
 
         // Header
-        appBar = new AppBar("Details");
-        appBar.setNaviMode(AppBar.NaviMode.CONTEXTUAL);
-        appBar.setContextNaviIcon(new Icon(VaadinIcon.ARROW_BACKWARD));
-        appBar.getContextNaviIcon().addClickListener(e -> UI.getCurrent().navigate("reports"));
+        if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
+            appBar = new AppBar("Details");
+            appBar.setNaviMode(AppBar.NaviMode.CONTEXTUAL);
+            appBar.setContextNaviIcon(new Icon(VaadinIcon.ARROW_BACKWARD));
+            appBar.getContextNaviIcon().addClickListener(e -> UI.getCurrent().navigate("reports"));
+            setHeader(appBar);
+        }
 
         // Logo section
         image = new Image("", "");
@@ -69,13 +65,13 @@ public class ReportDetails extends ViewFrame implements HasUrlParameter<Long> {
         image.setHeight("200px");
         image.setWidth("200px");
 
-        balance = new ListItem(new Icon(VaadinIcon.MONEY), "", "Current balance");
+        balance = new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.MONEY), "", "Current Balance");
         balance.setDividerVisible(true);
 
-        runningDate = new ListItem(new Icon(VaadinIcon.CALENDAR), "", "Date Range");
+        runningDate = new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.CALENDAR), "", "Date Range");
         runningDate.setDividerVisible(true);
 
-        status = new ListItem(new Icon(VaadinIcon.LOCK), "", "Status");
+        status = new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.LOCK), "", "Status");
 
         FlexLayout column = UIUtils.createColumn(balance, runningDate, status);
         column.getStyle().set(CSSProperties.Flex.PROPERTY, "1");
@@ -87,17 +83,17 @@ public class ReportDetails extends ViewFrame implements HasUrlParameter<Long> {
         // Transactions
         FlexLayout transactions = UIUtils.createWrappingFlexLayout(
                 Arrays.asList(LumoStyles.Padding.Bottom.L, BoxShadowBorders.BOTTOM),
-                createLargeListItem(VaadinIcon.PLUS, Math.round((randBalance * 0.4)) + ".00", "14 deposits"),
-                createLargeListItem(VaadinIcon.MINUS, Math.round((randBalance * 0.6)) + ".00", "9 withdrawals"),
-                createLargeListItem(VaadinIcon.PLUS_MINUS, (randBalance) + ".00", "23 in total")
+                createLargeListItem(VaadinIcon.PLUS, UIUtils.formatAmount(amount * 0.4), "14 deposits"),
+                createLargeListItem(VaadinIcon.MINUS, UIUtils.formatAmount(amount * 0.6), "9 withdrawals"),
+                createLargeListItem(VaadinIcon.PLUS_MINUS, UIUtils.formatAmount(amount), "23 in total")
         );
 
         // Pending events
         FlexLayout pending = UIUtils.createWrappingFlexLayout(
                 Collections.singleton(LumoStyles.Padding.Bottom.XL),
-                createLargeListItem(VaadinIcon.TIMER, Integer.toString(random.nextInt(50)), "Open"),
-                createLargeListItem(VaadinIcon.CHECK, Integer.toString(random.nextInt(100)), "Closed"),
-                createLargeListItem(VaadinIcon.BAN, Integer.toString(random.nextInt(50)), "Failed")
+                createLargeListItem(VaadinIcon.TIMER, UIUtils.formatAmount(DummyData.getRandomInt(0, 50)), "Open"),
+                createLargeListItem(VaadinIcon.CHECK, UIUtils.formatAmount(DummyData.getRandomInt(0, 100)), "Closed"),
+                createLargeListItem(VaadinIcon.BAN, UIUtils.formatAmount(DummyData.getRandomInt(0, 50)), "Failed")
         );
 
         // Transactions chart
@@ -107,7 +103,7 @@ public class ReportDetails extends ViewFrame implements HasUrlParameter<Long> {
         viewport = UIUtils.createDiv(
                 Arrays.asList(LumoStyles.Margin.Horizontal.AUTO, LumoStyles.Margin.Responsive.Vertical.ML),
                 row,
-                UIUtils.createH6Label(Arrays.asList(LumoStyles.Margin.Bottom.M, LumoStyles.Margin.Responsive.Horizontal.ML, LumoStyles.Margin.Top.L), "Transactions (EUR)"),
+                UIUtils.createH6Label(Arrays.asList(LumoStyles.Margin.Bottom.M, LumoStyles.Margin.Responsive.Horizontal.ML, LumoStyles.Margin.Top.L), "Transactions (USD)"),
                 transactions,
                 UIUtils.createH6Label(Arrays.asList(LumoStyles.Margin.Bottom.M, LumoStyles.Margin.Responsive.Horizontal.ML, LumoStyles.Margin.Top.L), "Pending Events"),
                 pending,
@@ -115,9 +111,6 @@ public class ReportDetails extends ViewFrame implements HasUrlParameter<Long> {
         );
         viewport.getStyle().set(CSSProperties.MaxWidth.PROPERTY, CSSProperties.MaxWidth._800);
 
-        if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-            setHeader(appBar);
-        }
         setContent(viewport);
     }
 
@@ -125,11 +118,14 @@ public class ReportDetails extends ViewFrame implements HasUrlParameter<Long> {
     public void setParameter(BeforeEvent beforeEvent, Long id) {
         Report report = DummyData.getReport(id);
 
-        appBar.setTitle(report.getName());
+        if (appBar != null) {
+            appBar.setTitle(report.getName());
+        }
+
         image.setSrc(report.getSource());
 
-        balance.setPrimaryText(Double.toString(report.getBalance()) + " " + report.getCurrency());
-        runningDate.setPrimaryText(report.getStartDate().format(createFormatter()) + " - " + report.getEndDate().format(createFormatter()));
+        balance.setPrimaryText(UIUtils.formatAmount(report.getBalance()));
+        runningDate.setPrimaryText(UIUtils.formatDate(report.getStartDate()) + " - " + UIUtils.formatDate(report.getEndDate()));
 
         if (report.getStartDate().isAfter(LocalDate.now())) {
             status.setPrimaryText("Coming Soon");
@@ -146,8 +142,10 @@ public class ReportDetails extends ViewFrame implements HasUrlParameter<Long> {
 
         if (icon.equals(VaadinIcon.TIMER)) {
             item.addClassName(LumoStyles.TextColor.SECONDARY);
+
         } else if (icon.equals(VaadinIcon.CHECK) || icon.equals(VaadinIcon.FLAG_CHECKERED)) {
             item.addClassName(LumoStyles.TextColor.SUCCESS);
+
         } else if (icon.equals(VaadinIcon.BAN)) {
             item.addClassName(LumoStyles.TextColor.ERROR);
         }
@@ -161,7 +159,7 @@ public class ReportDetails extends ViewFrame implements HasUrlParameter<Long> {
         Chart chart = new Chart(ChartType.COLUMN);
 
         Configuration conf = chart.getConfiguration();
-        conf.setTitle("Recent transactions");
+        conf.setTitle("Recent Transactions");
         conf.getLegend().setEnabled(true);
 
         XAxis xAxis = new XAxis();

@@ -23,34 +23,31 @@ import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
 @PageTitle("Reports")
 public class Reports extends ViewFrame {
 
-    private final Grid<Report> grid;
-    private final AppBar appBar;
-
     public Reports() {
         // Header
-        appBar = new AppBar("Reports");
+        if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
+            setHeader(new AppBar("Reports"));
+        }
 
         // Grid
-        grid = new Grid<>();
+        Grid<Report> grid = new Grid<>();
+        grid.setItems(DummyData.getReports());
+
         grid.addColumn(new ComponentRenderer<>(this::createReportInfo))
                 .setHeader("Company")
                 .setFrozen(true)
-                .setSortable(true)
                 .setWidth("200px")
                 .setFlexGrow(1);
         grid.addColumn(new LocalDateRenderer<>(Report::getStartDate, "MMM dd, YYYY"))
                 .setHeader("Start Date")
-                .setSortable(true)
                 .setWidth("160px")
                 .setFlexGrow(0);
         grid.addColumn(new LocalDateRenderer<>(Report::getEndDate, "MMM dd, YYYY"))
                 .setHeader("End Date")
-                .setSortable(true)
                 .setWidth("160px")
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createBalance))
                 .setHeader(UIUtils.createRightAlignedDiv("Balance ($)"))
-                .setSortable(true)
                 .setWidth("160px")
                 .setFlexGrow(0);
 
@@ -58,9 +55,6 @@ public class Reports extends ViewFrame {
         grid.setItems(DummyData.getReports());
         grid.setSizeFull();
 
-        if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-            setHeader(appBar);
-        }
         setContent(grid);
         getContent().addClassName(GRID_VIEW);
     }

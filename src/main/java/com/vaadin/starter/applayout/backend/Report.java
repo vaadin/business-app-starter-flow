@@ -10,16 +10,14 @@ public class Report {
     private LocalDate startDate;
     private LocalDate endDate;
     private Double balance;
-    private String currency;
 
-    public Report(Long id, String source, String name, LocalDate startDate, LocalDate endDate, Double balance, String currency) {
+    public Report(Long id, String source, String name, LocalDate startDate, LocalDate endDate, Double balance) {
         this.id = id;
         this.source = source;
         this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;
         this.balance = balance;
-        this.currency = currency;
     }
 
     public Long getId() {
@@ -44,10 +42,6 @@ public class Report {
 
     public Double getBalance() {
         return balance;
-    }
-
-    public String getCurrency() {
-        return currency;
     }
 
 }

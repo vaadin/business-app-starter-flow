@@ -19,7 +19,7 @@ public class UIConfig {
     }
 
     public static NaviMode getNaviMode() {
-        return NaviMode.LINKS;
+        return NaviMode.TABS;
     }
 
     public static NaviHeader getNaviHeader() {
@@ -27,7 +27,7 @@ public class UIConfig {
     }
 
     public static Showcase getShowcase() {
-        return Showcase.INVENTORY;
+        return Showcase.DEMO;
     }
 
 }

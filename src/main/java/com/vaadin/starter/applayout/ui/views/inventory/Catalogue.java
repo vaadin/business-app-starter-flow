@@ -55,7 +55,7 @@ public class Catalogue extends ViewFrame {
                 .setWidth(UIUtils.COLUMN_WIDTH_M)
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createInfo))
-                .setHeader("Name")
+                .setHeader("Item")
                 .setWidth(UIUtils.COLUMN_WIDTH_XL)
                 .setFlexGrow(1);
         grid.addColumn(Item::getVendor)
@@ -67,7 +67,7 @@ public class Catalogue extends ViewFrame {
                 .setWidth(UIUtils.COLUMN_WIDTH_M)
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createStock))
-                .setHeader(UIUtils.createRightAlignedDiv("In Catalogue"))
+                .setHeader(UIUtils.createRightAlignedDiv("In Stock"))
                 .setWidth(UIUtils.COLUMN_WIDTH_M)
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createSold))
