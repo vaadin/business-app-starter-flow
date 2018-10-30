@@ -67,6 +67,7 @@
   height: var(--lumo-icon-size-s);
   flex-shrink: 0;
   margin-right: var(--lumo-space-l);
+  transition: margin var(--transition-duration-s);
   width: var(--lumo-icon-size-s);
 }
 
@@ -88,8 +89,8 @@
   white-space: nowrap;
 }
 
-/* Expand/collapse button */
-.navi-item > vaadin-button {
+/* Expand & collapse button */
+.navi-item vaadin-button {
   flex-shrink: 0;
   margin-left: auto;
   margin-right: var(--lumo-space-s);
