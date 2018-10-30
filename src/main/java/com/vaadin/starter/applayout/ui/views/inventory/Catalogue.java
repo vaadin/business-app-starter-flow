@@ -183,7 +183,7 @@ public class Catalogue extends ViewFrame {
         form.addFormItem(desc, "Description");
         form.addFormItem(vendor, "Vendor");
         form.addFormItem(price, "Unit Price ($)");
-        form.addFormItem(stock, "In Catalogue");
+        form.addFormItem(stock, "In Stock");
         form.addFormItem(sold, "Units Sold");
 
         return form;

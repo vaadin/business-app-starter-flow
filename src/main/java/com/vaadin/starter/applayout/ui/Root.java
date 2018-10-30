@@ -119,9 +119,9 @@ public class Root extends FlexLayout
         }
 
         if (showcase.equals(UIConfig.Showcase.INVENTORY)) {
-            naviDrawer.addNaviItem(VaadinIcon.LIST, "Orders", Orders.class);
+            naviDrawer.addNaviItem(VaadinIcon.PACKAGE, "Orders", Orders.class);
             naviDrawer.addNaviItem(VaadinIcon.INVOICE, "Invoices", Invoices.class);
-            naviDrawer.addNaviItem(VaadinIcon.CLIPBOARD_PULSE, "Overview", Overview.class);
+            naviDrawer.addNaviItem(VaadinIcon.PIE_BAR_CHART, "Overview", Overview.class);
             naviDrawer.addNaviItem(VaadinIcon.STOCK, "Catalogue", Catalogue.class);
 
             NaviItem personnel = naviDrawer.addNaviItem(VaadinIcon.USERS, "Personnel", null);

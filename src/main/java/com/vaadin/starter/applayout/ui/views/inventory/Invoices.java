@@ -63,12 +63,12 @@ public class Invoices extends ViewFrame {
         grid.addColumn(Invoice::getCustomer)
                 .setHeader("Customer")
                 .setWidth(UIUtils.COLUMN_WIDTH_XL);
-        grid.addColumn(new ComponentRenderer<>(this::createAmount))
-                .setHeader(UIUtils.createRightAlignedDiv("Amount ($)"))
-                .setWidth(UIUtils.COLUMN_WIDTH_M)
-                .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createDate))
                 .setHeader(UIUtils.createRightAlignedDiv("Due Date"))
+                .setWidth(UIUtils.COLUMN_WIDTH_M)
+                .setFlexGrow(0);
+        grid.addColumn(new ComponentRenderer<>(this::createAmount))
+                .setHeader(UIUtils.createRightAlignedDiv("Amount ($)"))
                 .setWidth(UIUtils.COLUMN_WIDTH_M)
                 .setFlexGrow(0);
 

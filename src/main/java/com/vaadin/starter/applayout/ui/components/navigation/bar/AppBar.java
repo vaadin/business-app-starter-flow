@@ -78,7 +78,7 @@ public class AppBar extends FlexLayout {
         contextMenu.addItem("john.smith@gmail.com", e -> Notification.show("Not implemented yet.", 3000, Notification.Position.BOTTOM_CENTER));
         contextMenu.addItem("john.smith@yahoo.com", e -> Notification.show("Not implemented yet.", 3000, Notification.Position.BOTTOM_CENTER));
         contextMenu.addItem("Settings", e -> Notification.show("Not implemented yet.", 3000, Notification.Position.BOTTOM_CENTER));
-        contextMenu.addItem("Logout", e -> Notification.show("Not implemented yet.", 3000, Notification.Position.BOTTOM_CENTER));
+        contextMenu.addItem("Log Out", e -> Notification.show("Not implemented yet.", 3000, Notification.Position.BOTTOM_CENTER));
 
         actionItems = UIUtils.createFlexLayout(Collections.singleton(CLASS_NAME + "__action-items"), avatar);
         actionItems.setVisible(false);

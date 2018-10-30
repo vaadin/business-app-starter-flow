@@ -151,7 +151,7 @@ public class DummyData {
         /* === INVOICES === */
 
         for (i = 0; i < 40; i++) {
-            INVOICES.put(i, new Invoice(i, getInvoiceStatus(), getCompany(), getPositiveAmount(), getPastDate(30), getFutureDate(30)));
+            INVOICES.put(i, new Invoice(i + getRandomInt(0, 9999), getInvoiceStatus(), getCompany(), getPositiveAmount(), getPastDate(30), getFutureDate(30)));
         }
 
     }

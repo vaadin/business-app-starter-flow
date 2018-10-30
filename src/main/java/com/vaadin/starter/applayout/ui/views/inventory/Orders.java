@@ -45,16 +45,16 @@ public class Orders extends ViewFrame {
         grid.addColumn(Order::getCustomer)
                 .setHeader("Customer")
                 .setWidth(UIUtils.COLUMN_WIDTH_XL);
+        grid.addColumn(new ComponentRenderer<>(this::createDate))
+                .setHeader(UIUtils.createRightAlignedDiv("Order Received"))
+                .setWidth(UIUtils.COLUMN_WIDTH_M)
+                .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createItemCount))
                 .setHeader(UIUtils.createRightAlignedDiv("Item Count"))
                 .setWidth(UIUtils.COLUMN_WIDTH_M)
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createValue))
                 .setHeader(UIUtils.createRightAlignedDiv("Value ($)"))
-                .setWidth(UIUtils.COLUMN_WIDTH_M)
-                .setFlexGrow(0);
-        grid.addColumn(new ComponentRenderer<>(this::createDate))
-                .setHeader(UIUtils.createRightAlignedDiv("Order Received"))
                 .setWidth(UIUtils.COLUMN_WIDTH_M)
                 .setFlexGrow(0);
 
