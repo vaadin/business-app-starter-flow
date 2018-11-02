@@ -24,13 +24,13 @@ import com.vaadin.starter.applayout.ui.components.navigation.drawer.NaviItem;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
 import com.vaadin.starter.applayout.ui.views.Default;
 import com.vaadin.starter.applayout.ui.views.demo.*;
+import com.vaadin.starter.applayout.ui.views.finance.Accounts;
 import com.vaadin.starter.applayout.ui.views.finance.Payments;
 import com.vaadin.starter.applayout.ui.views.finance.Statistics;
-import com.vaadin.starter.applayout.ui.views.finance.transactions.Transactions;
-import com.vaadin.starter.applayout.ui.views.inventory.Overview;
+import com.vaadin.starter.applayout.ui.views.inventory.Catalogue;
 import com.vaadin.starter.applayout.ui.views.inventory.Invoices;
 import com.vaadin.starter.applayout.ui.views.inventory.Orders;
-import com.vaadin.starter.applayout.ui.views.inventory.Catalogue;
+import com.vaadin.starter.applayout.ui.views.inventory.Overview;
 import com.vaadin.starter.applayout.ui.views.personnel.Accountants;
 import com.vaadin.starter.applayout.ui.views.personnel.Managers;
 import org.slf4j.Logger;
@@ -109,7 +109,8 @@ public class Root extends FlexLayout
         }
 
         if (showcase.equals(UIConfig.Showcase.FINANCE)) {
-            naviDrawer.addNaviItem(VaadinIcon.MONEY_EXCHANGE, "Transactions", Transactions.class);
+            naviDrawer.addNaviItem(VaadinIcon.HOME, "Home", Default.class);
+            naviDrawer.addNaviItem(VaadinIcon.INSTITUTION, "Accounts", Accounts.class);
             naviDrawer.addNaviItem(VaadinIcon.CREDIT_CARD, "Payments", Payments.class);
             naviDrawer.addNaviItem(VaadinIcon.CHART, "Statistics", Statistics.class);
 
@@ -119,6 +120,7 @@ public class Root extends FlexLayout
         }
 
         if (showcase.equals(UIConfig.Showcase.INVENTORY)) {
+            naviDrawer.addNaviItem(VaadinIcon.HOME, "Home", Default.class);
             naviDrawer.addNaviItem(VaadinIcon.PACKAGE, "Orders", Orders.class);
             naviDrawer.addNaviItem(VaadinIcon.INVOICE, "Invoices", Invoices.class);
             naviDrawer.addNaviItem(VaadinIcon.PIE_BAR_CHART, "Overview", Overview.class);

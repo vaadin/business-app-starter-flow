@@ -13,7 +13,7 @@ public class ClosableNaviTab extends NaviTab {
         super(label, navigationTarget);
         getElement().setAttribute("closable", true);
 
-        close = UIUtils.createSmallTertiaryIconButton(VaadinIcon.CLOSE);
+        close = UIUtils.createSmallTertiaryButton(VaadinIcon.CLOSE);
         add(close);
     }
 

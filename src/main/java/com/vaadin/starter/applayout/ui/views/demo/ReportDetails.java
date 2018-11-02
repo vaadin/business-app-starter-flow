@@ -66,12 +66,15 @@ public class ReportDetails extends ViewFrame implements HasUrlParameter<Long> {
         image.setWidth("200px");
 
         balance = new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.MONEY), "", "Current Balance");
+        balance.setReverse(true);
         balance.setDividerVisible(true);
 
         runningDate = new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.CALENDAR), "", "Date Range");
+        runningDate.setReverse(true);
         runningDate.setDividerVisible(true);
 
         status = new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.LOCK), "", "Status");
+        status.setReverse(true);
 
         FlexLayout column = UIUtils.createColumn(balance, runningDate, status);
         column.getStyle().set(CSSProperties.Flex.PROPERTY, "1");
@@ -80,7 +83,7 @@ public class ReportDetails extends ViewFrame implements HasUrlParameter<Long> {
         row.setAlignItems(FlexComponent.Alignment.CENTER);
         row.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
 
-        // Transactions
+        // Accounts
         FlexLayout transactions = UIUtils.createWrappingFlexLayout(
                 Arrays.asList(LumoStyles.Padding.Bottom.L, BoxShadowBorders.BOTTOM),
                 createLargeListItem(VaadinIcon.PLUS, UIUtils.formatAmount(amount * 0.4), "14 deposits"),
@@ -96,14 +99,14 @@ public class ReportDetails extends ViewFrame implements HasUrlParameter<Long> {
                 createLargeListItem(VaadinIcon.BAN, UIUtils.formatAmount(DummyData.getRandomInt(0, 50)), "Failed")
         );
 
-        // Transactions chart
+        // Accounts chart
         Component transactionsChart = createTransactionsChart();
 
         // Add it all to the viewport
         viewport = UIUtils.createDiv(
                 Arrays.asList(LumoStyles.Margin.Horizontal.AUTO, LumoStyles.Margin.Responsive.Vertical.ML),
                 row,
-                UIUtils.createH6Label(Arrays.asList(LumoStyles.Margin.Bottom.M, LumoStyles.Margin.Responsive.Horizontal.ML, LumoStyles.Margin.Top.L), "Transactions (USD)"),
+                UIUtils.createH6Label(Arrays.asList(LumoStyles.Margin.Bottom.M, LumoStyles.Margin.Responsive.Horizontal.ML, LumoStyles.Margin.Top.L), "Accounts (USD)"),
                 transactions,
                 UIUtils.createH6Label(Arrays.asList(LumoStyles.Margin.Bottom.M, LumoStyles.Margin.Responsive.Horizontal.ML, LumoStyles.Margin.Top.L), "Pending Events"),
                 pending,
@@ -159,7 +162,7 @@ public class ReportDetails extends ViewFrame implements HasUrlParameter<Long> {
         Chart chart = new Chart(ChartType.COLUMN);
 
         Configuration conf = chart.getConfiguration();
-        conf.setTitle("Recent Transactions");
+        conf.setTitle("Recent Accounts");
         conf.getLegend().setEnabled(true);
 
         XAxis xAxis = new XAxis();

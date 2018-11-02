@@ -2,7 +2,7 @@
   width: 33%;
 }
 
-@media (min-width: 399px) and (max-width: 479px) {
+@media (max-width: 479px) {
   .report-details__list-item {
     width: 100%;
   }

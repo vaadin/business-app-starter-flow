@@ -100,6 +100,10 @@ public class CSSProperties {
         public static final String RIGHT = new String("right");
     }
 
+    public static class Title {
+        public static final String PROPERTY = new String("title");
+    }
+
     public static class WhiteSpace {
         public static final String PROPERTY = new String("white-space");
         public static final String NORMAL = new String("normal");

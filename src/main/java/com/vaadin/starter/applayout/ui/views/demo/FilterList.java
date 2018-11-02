@@ -98,7 +98,7 @@ public class FilterList extends ViewFrame {
     }
 
     private FlexLayout createFilterHeader() {
-        toggleButton = UIUtils.createTertiaryIconButton(VaadinIcon.CHEVRON_UP_SMALL);
+        toggleButton = UIUtils.createTertiaryButton(VaadinIcon.CHEVRON_UP_SMALL);
         toggleButton.addClickListener(event -> toggleFilterArea());
 
         Label title = UIUtils.createH5Label("Filter");
@@ -138,7 +138,7 @@ public class FilterList extends ViewFrame {
         combo.setClassName("token-select");
         combo.setPlaceholder("Add filter...");
 
-        Div token = UIUtils.createDiv(Collections.singleton("token"), new Label("Filter token 1"), UIUtils.createSmallTertiaryIconButton(VaadinIcon.CLOSE_SMALL));
+        Div token = UIUtils.createDiv(Collections.singleton("token"), new Label("Filter token 1"), UIUtils.createSmallTertiaryButton(VaadinIcon.CLOSE_SMALL));
         token.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.DEFAULT);
 
         Div tokenArea = new Div(token);

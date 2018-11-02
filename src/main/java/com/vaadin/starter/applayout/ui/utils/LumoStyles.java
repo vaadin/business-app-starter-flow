@@ -26,6 +26,7 @@ public class LumoStyles {
         public static final String PRIMARY = "primary";
 
         public static final String TERTIARY = "tertiary";
+        public static final String TERTIARY_ICON = "tertiary icon";
         public static final String TERTIARY_ICON_SMALL = "tertiary icon small";
 
         public static final String ERROR = "error";

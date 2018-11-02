@@ -7,11 +7,11 @@ import com.vaadin.flow.component.charts.Chart;
 import com.vaadin.flow.component.charts.model.*;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.textfield.TextField;
@@ -118,23 +118,23 @@ public class UIUtils {
         return button;
     }
 
-    public static Button createTertiaryIconButton(VaadinIcon icon) {
+    public static Button createTertiaryButton(VaadinIcon icon) {
         Button button = new Button(new Icon(icon));
-        button.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Button.TERTIARY);
+        button.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Button.TERTIARY_ICON);
         return button;
     }
 
-    public static Button createSmallTertiaryIconButton(VaadinIcon icon) {
-        return createSmallTertiaryIconButton(new Icon(icon));
+    public static Button createSmallTertiaryButton(VaadinIcon icon) {
+        return createSmallTertiaryButton(new Icon(icon));
     }
 
-    public static Button createSmallTertiaryIconButton(Collection<String> classNames, VaadinIcon icon) {
-        Button button = createSmallTertiaryIconButton(icon);
+    public static Button createSmallTertiaryButton(Collection<String> classNames, VaadinIcon icon) {
+        Button button = createSmallTertiaryButton(icon);
         classNames.forEach(button::addClassName);
         return button;
     }
 
-    public static Button createSmallTertiaryIconButton(Icon icon) {
+    public static Button createSmallTertiaryButton(Icon icon) {
         Button button = new Button(icon);
         button.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Button.TERTIARY_ICON_SMALL);
         return button;
@@ -159,11 +159,11 @@ public class UIUtils {
         return button;
     }
 
-    public static Button createSmallIconButton(VaadinIcon icon) {
-        return createSmallIconButton(new Icon(icon));
+    public static Button createSmallButton(VaadinIcon icon) {
+        return createSmallButton(new Icon(icon));
     }
 
-    public static Button createSmallIconButton(Icon icon) {
+    public static Button createSmallButton(Icon icon) {
         Button button = new Button(icon);
         button.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Button.SMALL_ICON);
         return button;
@@ -214,22 +214,10 @@ public class UIUtils {
         return label;
     }
 
-    public static Label createSmallSecondaryLabel(String text) {
-        Label label = createSmallLabel(text);
-        label.addClassNames(LumoStyles.TextColor.SECONDARY);
-        return label;
-    }
-
     public static Label createH2Label(String text) {
         Label label = new Label(text);
         label.addClassNames(LumoStyles.FontSize.H2);
         return label;
-    }
-
-    public static H3 createH3(Collection<String> classNames, String text) {
-        H3 header = new H3(text);
-        classNames.forEach(header::addClassName);
-        return header;
     }
 
     public static Label createH3Label(String text) {
@@ -378,20 +366,8 @@ public class UIUtils {
     public static Component createBadge(Payment payment) {
         Payment.Status status = payment.getStatus();
         Span badge = new Span(status.getName());
-        switch (status) {
-            case PENDING:
-                badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.CONTRAST);
-                break;
-            case OPEN:
-                badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.DEFAULT);
-                break;
-            case SENT:
-                badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.SUCCESS);
-                break;
-            default:
-                badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.ERROR);
-                break;
-        }
+        badge.getElement().setAttribute(LumoStyles.THEME, status.getTheme());
+        badge.getElement().setProperty(CSSProperties.Title.PROPERTY, status.getDesc());
         return badge;
     }
 
@@ -497,7 +473,7 @@ public class UIUtils {
         return chart;
     }
 
-    public static Component createSalesChart(String title) {
+    public static Component createSalesChart(String title, String yAxis) {
         Chart chart = new Chart(ChartType.AREASPLINE);
 
         Configuration conf = chart.getConfiguration();
@@ -508,7 +484,7 @@ public class UIUtils {
         xAxis.setCategories("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
         conf.addxAxis(xAxis);
 
-        conf.getyAxis().setTitle("");
+        conf.getyAxis().setTitle(yAxis);
 
         conf.addSeries(new ListSeries(220, 240, 400, 360, 420, 640, 580, 800, 600, 580, 740, 800));
 
@@ -541,6 +517,13 @@ public class UIUtils {
         header.getStyle().set(CSSProperties.BoxSizing.PROPERTY, CSSProperties.BoxSizing.BORDER_BOX);
         header.setWidth("100%");
         return header;
+    }
+
+
+    /* === NOTIFICATIONS === */
+
+    public static void showNotification(String text) {
+        Notification.show(text, 3000, Notification.Position.BOTTOM_CENTER);
     }
 
 }

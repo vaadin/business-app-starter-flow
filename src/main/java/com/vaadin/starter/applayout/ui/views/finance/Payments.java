@@ -4,13 +4,13 @@ import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Label;
-import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.data.provider.DataProvider;
+import com.vaadin.flow.data.provider.ListDataProvider;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
+import com.vaadin.flow.data.renderer.TemplateRenderer;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.starter.applayout.backend.DummyData;
@@ -20,7 +20,6 @@ import com.vaadin.starter.applayout.ui.Root;
 import com.vaadin.starter.applayout.ui.components.DetailsDrawer;
 import com.vaadin.starter.applayout.ui.components.ListItem;
 import com.vaadin.starter.applayout.ui.components.navigation.bar.AppBar;
-import com.vaadin.starter.applayout.ui.utils.BoxShadowBorders;
 import com.vaadin.starter.applayout.ui.utils.CSSProperties;
 import com.vaadin.starter.applayout.ui.utils.LumoStyles;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
@@ -28,7 +27,6 @@ import com.vaadin.starter.applayout.ui.views.ViewFrame;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Random;
 
 import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
 
@@ -36,18 +34,30 @@ import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
 @PageTitle("Payments")
 public class Payments extends ViewFrame {
 
+    private AppBar appBar;
+    private final ListDataProvider<Payment> dataProvider;
     private DetailsDrawer detailsDrawer;
+
 
     public Payments() {
         // Header
         if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-            AppBar appBar = new AppBar("Payments");
+            appBar = new AppBar("Payments");
+            for (Payment.Status status : Payment.Status.values()) {
+                appBar.addTab(status.getName());
+            }
+            appBar.addTabSelectionListener(e -> {
+                hideDetails();
+                filter();
+            });
+            appBar.centerTabs();
             setHeader(appBar);
         }
 
         // Grid
         Grid<Payment> grid = new Grid<>();
-        grid.setDataProvider(DataProvider.ofCollection(DummyData.getPayments()));
+        dataProvider = DataProvider.ofCollection(DummyData.getPayments());
+        grid.setDataProvider(dataProvider);
 
         grid.addColumn(new ComponentRenderer<>(UIUtils::createBadge))
                 .setHeader("Status")
@@ -63,8 +73,11 @@ public class Payments extends ViewFrame {
                 .setHeader(UIUtils.createRightAlignedDiv("Amount ($)"))
                 .setWidth(UIUtils.COLUMN_WIDTH_M)
                 .setFlexGrow(0);
-        grid.addColumn(new ComponentRenderer<>(this::createDate))
-                .setHeader(UIUtils.createRightAlignedDiv("Date"))
+        grid.addColumn(TemplateRenderer.<Payment>of(
+                "[[item.date]]")
+                .withProperty("date", payment -> UIUtils.formatDate(payment.getDate())))
+                .setHeader("Due Date")
+                .setComparator(Payment::getDate)
                 .setWidth(UIUtils.COLUMN_WIDTH_M)
                 .setFlexGrow(0);
 
@@ -86,6 +99,13 @@ public class Payments extends ViewFrame {
         FlexLayout content = new FlexLayout(gridWrapper, detailsDrawer);
         content.setSizeFull();
         setContent(content);
+
+        // Do the initial filtering
+        filter();
+    }
+
+    private void filter() {
+        dataProvider.setFilterByValue(Payment::getStatus, Payment.Status.valueOf(appBar.getSelectedTab().getLabel().toUpperCase()));
     }
 
     private Component createFromInfo(Payment payment) {
@@ -100,10 +120,6 @@ public class Payments extends ViewFrame {
         Double amount = payment.getAmount();
         Label label = UIUtils.createH4Label(UIUtils.formatAmount(amount));
         return UIUtils.createRightAlignedDiv(label);
-    }
-
-    private Component createDate(Payment payment) {
-        return UIUtils.createRightAlignedDiv(UIUtils.formatDate(payment.getDate()));
     }
 
     private void initDetailsDrawer() {
@@ -125,13 +141,18 @@ public class Payments extends ViewFrame {
         detailsDrawer.show();
     }
 
+    private void hideDetails() {
+        detailsDrawer.hide();
+    }
+
     private Component createDetails(Payment payment) {
         Label title = UIUtils.createDetailsDrawerHeader("Payment Details", false, true);
 
-        ListItem status = new ListItem(getStatusIcon(payment), payment.getStatus().getName(), "Status");
+        ListItem status = new ListItem(payment.getStatus().getIcon(), payment.getStatus().getName(), "Status");
         status.addPrimaryClassNames(LumoStyles.Margin.Top.XS);
-        status.setPrimaryAttribute(LumoStyles.THEME, getStatusTheme(payment));
-        status.setPrimaryProperty(CSSProperties.AlignSelf.PROPERTY, CSSProperties.AlignSelf.BASELINE);
+        status.setPrimaryElementAttribute(LumoStyles.THEME, payment.getStatus().getTheme());
+        status.setPrimaryStyleProperty(CSSProperties.AlignSelf.PROPERTY, CSSProperties.AlignSelf.BASELINE);
+        status.getElement().setProperty(CSSProperties.Title.PROPERTY, payment.getStatus().getDesc());
 
         ListItem from = new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.UPLOAD_ALT), payment.getFrom() + "\n" + payment.getFromIBAN(), "Sender");
         ListItem to = new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.DOWNLOAD_ALT), payment.getTo() + "\n" + payment.getToIBAN(), "Receiver");
@@ -152,44 +173,6 @@ public class Payments extends ViewFrame {
                 amount,
                 date
         );
-    }
-
-    private Icon getStatusIcon(Payment payment) {
-        Icon icon;
-        switch (payment.getStatus()) {
-            case PENDING:
-                icon = UIUtils.createTertiaryIcon(VaadinIcon.CLOCK);
-                break;
-            case OPEN:
-                icon = UIUtils.createPrimaryIcon(VaadinIcon.QUESTION_CIRCLE);
-                break;
-            case SENT:
-                icon = UIUtils.createSuccessIcon(VaadinIcon.CHECK);
-                break;
-            default:
-                icon = UIUtils.createErrorIcon(VaadinIcon.WARNING);
-                break;
-        }
-        return icon;
-    }
-
-    private String getStatusTheme(Payment payment) {
-        String theme;
-        switch (payment.getStatus()) {
-            case PENDING:
-                theme = LumoStyles.Badge.CONTRAST;
-                break;
-            case OPEN:
-                theme = LumoStyles.Badge.DEFAULT;
-                break;
-            case SENT:
-                theme = LumoStyles.Badge.SUCCESS;
-                break;
-            default:
-                theme = LumoStyles.Badge.ERROR;
-                break;
-        }
-        return theme;
     }
 
 }

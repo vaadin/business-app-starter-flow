@@ -96,12 +96,16 @@ public class ListItem extends FlexLayout {
         primary.addClassNames(classNames);
     }
 
-    public void setPrimaryAttribute(String attribute, String value) {
+    public void setPrimaryElementAttribute(String attribute, String value) {
         primary.getElement().setAttribute(attribute, value);
     }
 
-    public void setPrimaryProperty(String property, String value) {
+    public void setPrimaryStyleProperty(String property, String value) {
         primary.getStyle().set(property, value);
+    }
+
+    public void setSecondaryText(String text) {
+        secondary.setText(text);
     }
 
     public void setPrefix(Component... components) {

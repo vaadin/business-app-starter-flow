@@ -27,22 +27,26 @@ import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
 @PageTitle("Personnel")
 public class Personnel extends ViewFrame {
 
-    private final AppBar appBar;
-
-    private final Grid<Person> grid;
+    private AppBar appBar;
     private final ListDataProvider<Person> dataProvider;
 
     public Personnel() {
         // Header
-        appBar = new AppBar("Personnel");
-        for (Person.Role role : Person.Role.values()) {
-            appBar.addTab(role.name().substring(0, 1).toUpperCase() + role.name().substring(1).toLowerCase());
+        if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
+            appBar = new AppBar("Personnel");
+            for (Person.Role role : Person.Role.values()) {
+                appBar.addTab(role.name().substring(0, 1).toUpperCase() + role.name().substring(1).toLowerCase());
+            }
+            appBar.addTabSelectionListener(e -> filter());
+            appBar.centerTabs();
+            setHeader(appBar);
         }
-        appBar.addTabSelectionListener(e -> filter());
-        appBar.centerTabs();
 
         // Grid
-        grid = new Grid<>();
+        Grid<Person> grid = new Grid<>();
+        dataProvider = DataProvider.ofCollection(DummyData.getPersons());
+        grid.setDataProvider(dataProvider);
+
         grid.addColumn(Person::getId)
                 .setHeader("ID")
                 .setFrozen(true)
@@ -66,22 +70,21 @@ public class Personnel extends ViewFrame {
                 .setSortable(true)
                 .setWidth("160px")
                 .setFlexGrow(0);
+
         grid.setSizeFull();
 
-        dataProvider = DataProvider.ofCollection(DummyData.getPersons());
-        grid.setDataProvider(dataProvider);
-
-        filter();
-
-        if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-            setHeader(appBar);
-        }
+        // Set the content
         setContent(grid);
         getContent().addClassName(GRID_VIEW);
+
+        // Do the initial filtering
+        filter();
     }
 
     private void filter() {
-        dataProvider.setFilterByValue(Person::getRole, Person.Role.valueOf(appBar.getSelectedTab().getLabel().toUpperCase()));
+        if (appBar != null) {
+            dataProvider.setFilterByValue(Person::getRole, Person.Role.valueOf(appBar.getSelectedTab().getLabel().toUpperCase()));
+        }
     }
 
     private Component createUserInfo(Person person) {

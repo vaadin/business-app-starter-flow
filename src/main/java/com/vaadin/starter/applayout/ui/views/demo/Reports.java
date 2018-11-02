@@ -4,6 +4,7 @@ import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Image;
+import com.vaadin.flow.data.provider.DataProvider;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.data.renderer.LocalDateRenderer;
 import com.vaadin.flow.router.PageTitle;
@@ -31,7 +32,7 @@ public class Reports extends ViewFrame {
 
         // Grid
         Grid<Report> grid = new Grid<>();
-        grid.setItems(DummyData.getReports());
+        grid.setDataProvider(DataProvider.ofCollection(DummyData.getReports()));
 
         grid.addColumn(new ComponentRenderer<>(this::createReportInfo))
                 .setHeader("Company")
@@ -52,7 +53,7 @@ public class Reports extends ViewFrame {
                 .setFlexGrow(0);
 
         grid.addSelectionListener(event -> event.getFirstSelectedItem().ifPresent(this::viewDetails));
-        grid.setItems(DummyData.getReports());
+
         grid.setSizeFull();
 
         setContent(grid);

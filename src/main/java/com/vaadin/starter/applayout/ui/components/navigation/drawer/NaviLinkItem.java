@@ -39,7 +39,7 @@ public class NaviLinkItem extends NaviItem {
         if (navigationTarget != null) {
             RouterLink routerLink = new RouterLink(null, navigationTarget);
             routerLink.add(new Label(text));
-            routerLink.setHighlightCondition(HighlightConditions.locationPrefix());
+            routerLink.setHighlightCondition(HighlightConditions.sameLocation());
             routerLink.setClassName(CLASS_NAME + "__link");
             this.link = routerLink;
         } else {

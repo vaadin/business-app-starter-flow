@@ -14,6 +14,7 @@ public class BrandExpression extends Div {
 
     public BrandExpression() {
         setClassName(CLASS_NAME);
+        // addClickListener(e -> UI.getCurrent().navigate(""));
 
         logo = new Image();
         logo.addClassName(CLASS_NAME + "__logo");

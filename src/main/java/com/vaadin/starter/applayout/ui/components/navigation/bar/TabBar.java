@@ -36,7 +36,7 @@ public class TabBar extends FlexLayout {
         setClassName(CLASS_NAME);
         getElement().setAttribute(LumoStyles.THEME, LumoStyles.DARK);
 
-        menuNaviIcon = UIUtils.createSmallTertiaryIconButton(Collections.singleton(CLASS_NAME + "__navi-icon"), VaadinIcon.MENU);
+        menuNaviIcon = UIUtils.createSmallTertiaryButton(Collections.singleton(CLASS_NAME + "__navi-icon"), VaadinIcon.MENU);
         menuNaviIcon.addClickListener(e -> AppTemplateUI.getNaviDrawer().toggle());
 
         avatar = new Image();
@@ -54,7 +54,7 @@ public class TabBar extends FlexLayout {
         actionItems = UIUtils.createFlexLayout(Collections.singleton(CLASS_NAME + "__action-items"), avatar);
         actionItems.setVisible(false);
 
-        addTab = UIUtils.createSmallIconButton(VaadinIcon.PLUS);
+        addTab = UIUtils.createSmallButton(VaadinIcon.PLUS);
         addTab.addClickListener(e -> tabs.setSelectedTab(addClosableNaviTab("New Tab", Default.class)));
         addTab.setClassName(CLASS_NAME + "__add-tab");
 
@@ -144,7 +144,7 @@ public class TabBar extends FlexLayout {
     }
 
     public Button addActionItem(Icon icon) {
-        Button button = UIUtils.createSmallTertiaryIconButton(icon);
+        Button button = UIUtils.createSmallTertiaryButton(icon);
         addActionItem(button);
         return button;
     }

@@ -46,7 +46,7 @@ public class AccountSwitcher extends Div {
         email.setClassName(CLASS_NAME + "__email");
         email.getElement().setAttribute(LumoStyles.THEME, LumoStyles.FontSize.S);
 
-        dropdown = UIUtils.createSmallTertiaryIconButton(VaadinIcon.ANGLE_DOWN);
+        dropdown = UIUtils.createSmallTertiaryButton(VaadinIcon.ANGLE_DOWN);
         email.add(dropdown);
 
         menu = new ContextMenu(dropdown);

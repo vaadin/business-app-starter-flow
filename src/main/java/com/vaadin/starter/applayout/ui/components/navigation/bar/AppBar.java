@@ -54,10 +54,10 @@ public class AppBar extends FlexLayout {
         setClassName(CLASS_NAME);
         getElement().setAttribute(LumoStyles.THEME, LumoStyles.DARK);
 
-        menuNaviIcon = UIUtils.createSmallTertiaryIconButton(Collections.singleton(CLASS_NAME + "__navi-icon"), VaadinIcon.MENU);
+        menuNaviIcon = UIUtils.createSmallTertiaryButton(Collections.singleton(CLASS_NAME + "__navi-icon"), VaadinIcon.MENU);
         menuNaviIcon.addClickListener(e -> AppTemplateUI.getNaviDrawer().toggle());
 
-        contextNaviIcon = UIUtils.createSmallTertiaryIconButton(Arrays.asList(CLASS_NAME + "__navi-icon", CLASS_NAME + "__navi-icon--visible"), VaadinIcon.ARROW_BACKWARD);
+        contextNaviIcon = UIUtils.createSmallTertiaryButton(Arrays.asList(CLASS_NAME + "__navi-icon", CLASS_NAME + "__navi-icon--visible"), VaadinIcon.ARROW_BACKWARD);
         contextNaviIcon.setVisible(false);
 
         this.title = new H4(title);
@@ -88,7 +88,7 @@ public class AppBar extends FlexLayout {
         container.setFlexGrow(1, search);
         add(container);
 
-        addTab = UIUtils.createSmallIconButton(VaadinIcon.PLUS);
+        addTab = UIUtils.createSmallButton(VaadinIcon.PLUS);
         addTab.addClickListener(e -> naviTabs.setSelectedTab(addClosableNaviTab("New Tab", Default.class)));
         addTab.setVisible(false);
 
@@ -157,7 +157,7 @@ public class AppBar extends FlexLayout {
     }
 
     public Button addActionItem(Icon icon) {
-        Button button = UIUtils.createSmallTertiaryIconButton(icon);
+        Button button = UIUtils.createSmallTertiaryButton(icon);
         addActionItem(button);
         return button;
     }

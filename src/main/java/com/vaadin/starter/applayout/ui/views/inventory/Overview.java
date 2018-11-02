@@ -1,10 +1,12 @@
 package com.vaadin.starter.applayout.ui.views.inventory;
 
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.charts.Chart;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.tabs.Tab;
@@ -41,8 +43,8 @@ public class Overview extends ViewFrame {
                 Arrays.asList(CLASS_NAME, LumoStyles.Margin.Horizontal.AUTO, LumoStyles.Margin.Responsive.Vertical.ML),
                 createHeader(VaadinIcon.INVOICE, "Invoices"),
                 createProgressCharts(),
-                createHeader(VaadinIcon.LIST, "Orders"),
-                UIUtils.createSalesChart("2018"),
+                createHeader(VaadinIcon.PACKAGE, "Orders"),
+                UIUtils.createSalesChart("2018", "Incoming Orders"),
                 UIUtils.createFlexLayout(
                         Collections.singleton(CLASS_NAME + "__bookmarks-recent-items"),
                         createTabbedList(REPORTS),
@@ -139,13 +141,19 @@ public class Overview extends ViewFrame {
 
         FlexLayout items = UIUtils.createColumn(
                 Collections.singleton(LumoStyles.Margin.Vertical.S),
-                new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.CHART), "My Weekly Report", "Last opened May 5, 2018"),
-                new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.SITEMAP), "My Workflow", "Last opened May 5, 2018")
+                new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.CHART), "My Weekly Report", "Last opened May 5, 2018", createInfoButton()),
+                new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.SITEMAP), "My Workflow", "Last opened May 5, 2018", createInfoButton())
         );
 
         FlexLayout card = UIUtils.createColumn(Arrays.asList(LumoStyles.BorderRadius.S, LumoStyles.Shadow.S), tabs, items);
         card.getStyle().set(CSSProperties.BackgroundColor.PROPERTY, LumoStyles.Color.BASE_COLOR);
 
         return new Div(header, card);
+    }
+
+    private Button createInfoButton() {
+        Button infoButton = UIUtils.createSmallButton(VaadinIcon.INFO);
+        infoButton.addClickListener(e -> Notification.show("Not implemented yet.", 3000, Notification.Position.BOTTOM_CENTER));
+        return infoButton;
     }
 }

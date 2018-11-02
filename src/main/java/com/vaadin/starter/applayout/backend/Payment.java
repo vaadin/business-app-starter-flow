@@ -1,5 +1,10 @@
 package com.vaadin.starter.applayout.backend;
 
+import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.starter.applayout.ui.utils.LumoStyles;
+import com.vaadin.starter.applayout.ui.utils.UIUtils;
+
 import java.time.LocalDate;
 
 public class Payment {
@@ -13,16 +18,37 @@ public class Payment {
     private LocalDate date;
 
     public enum Status {
-        PENDING("Pending"), OPEN("Open"), SENT("Sent"), FAILED("Failed");
+        PENDING(UIUtils.createSecondaryIcon(VaadinIcon.CLOCK), "Pending", "Payment created, not yet submitted.", LumoStyles.Badge.CONTRAST),
+        SUBMITTED(UIUtils.createPrimaryIcon(VaadinIcon.QUESTION_CIRCLE), "Submitted", "Payment submitted for processing.", LumoStyles.Badge.DEFAULT),
+        CONFIRMED(UIUtils.createSuccessIcon(VaadinIcon.CHECK), "Confirmed", "Payment sent successfully.", LumoStyles.Badge.SUCCESS),
+        FAILED(UIUtils.createErrorIcon(VaadinIcon.WARNING), "Failed", "Payment failed.", LumoStyles.Badge.ERROR);
 
+        private Icon icon;
         private String name;
+        private String desc;
+        private String theme;
 
-        Status(String name) {
+        Status(Icon icon, String name, String desc, String theme) {
+            this.icon = icon;
             this.name = name;
+            this.desc = desc;
+            this.theme = theme;
+        }
+
+        public Icon getIcon() {
+            return icon;
         }
 
         public String getName() {
             return name;
+        }
+
+        public String getDesc() {
+            return desc;
+        }
+
+        public String getTheme() {
+            return theme;
         }
     }
 

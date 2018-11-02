@@ -1,10 +1,12 @@
 package com.vaadin.starter.applayout.ui.views.finance;
 
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.charts.Chart;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.tabs.Tab;
@@ -40,7 +42,7 @@ public class Statistics extends ViewFrame {
                 createHeader(VaadinIcon.CREDIT_CARD, "Payments"),
                 createProgressCharts(),
                 createHeader(VaadinIcon.MONEY_EXCHANGE, "Transactions"),
-                UIUtils.createSalesChart("2018"),
+                UIUtils.createSalesChart("2018", "Number of Processed Transactions"),
                 UIUtils.createFlexLayout(
                         Collections.singleton(CLASS_NAME + "__bookmarks-recent-items"),
                         createReports(),
@@ -85,11 +87,11 @@ public class Statistics extends ViewFrame {
                 value = 24;
                 break;
 
-            case OPEN:
+            case SUBMITTED:
                 value = 40;
                 break;
 
-            case SENT:
+            case CONFIRMED:
                 value = 32;
                 break;
 
@@ -135,8 +137,8 @@ public class Statistics extends ViewFrame {
 
         FlexLayout items = UIUtils.createColumn(
                 Collections.singleton(LumoStyles.Margin.Vertical.S),
-                new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.CHART), "Weekly Report", "Generated Oct 5, 2018"),
-                new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.SITEMAP), "Payment Workflows", "Last modified Oct 24, 2018")
+                new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.CHART), "Weekly Report", "Generated Oct 5, 2018", createInfoButton()),
+                new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.SITEMAP), "Payment Workflows", "Last modified Oct 24, 2018", createInfoButton())
         );
 
         FlexLayout card = UIUtils.createColumn(Arrays.asList(LumoStyles.BorderRadius.S, LumoStyles.Shadow.S), tabs, items);
@@ -155,13 +157,19 @@ public class Statistics extends ViewFrame {
 
         FlexLayout items = UIUtils.createColumn(
                 Collections.singleton(LumoStyles.Margin.Vertical.S),
-                new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.EXCHANGE), "Transfers (October)", "Generated Oct 31, 2018"),
-                new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.SHIELD), "Security Log", "Updated 16:31 CET")
+                new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.EXCHANGE), "Transfers (October)", "Generated Oct 31, 2018", createInfoButton()),
+                new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.SHIELD), "Security Log", "Updated 16:31 CET", createInfoButton())
         );
 
         FlexLayout card = UIUtils.createColumn(Arrays.asList(LumoStyles.BorderRadius.S, LumoStyles.Shadow.S), tabs, items);
         card.getStyle().set(CSSProperties.BackgroundColor.PROPERTY, LumoStyles.Color.BASE_COLOR);
 
         return new Div(header, card);
+    }
+
+    private Button createInfoButton() {
+        Button infoButton = UIUtils.createSmallButton(VaadinIcon.INFO);
+        infoButton.addClickListener(e -> Notification.show("Not implemented yet.", 3000, Notification.Position.BOTTOM_CENTER));
+        return infoButton;
     }
 }

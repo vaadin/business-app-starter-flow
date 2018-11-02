@@ -1,5 +1,6 @@
 package com.vaadin.starter.applayout.backend;
 
+import com.vaadin.flow.component.html.Image;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
 
 import java.time.LocalDate;
@@ -10,7 +11,7 @@ public class DummyData {
     private static final Map<Long, Report> REPORTS = new HashMap<>();
     private static final Map<Long, Person> PERSONS = new HashMap<>();
     private static final Map<Long, Transaction> TRANSACTIONS = new HashMap<>();
-    private static final Map<Long, BankAccount> BALANCES = new HashMap<>();
+    private static final Map<Long, BankAccount> BANK_ACCOUNTS = new HashMap<>();
     private static final Map<Long, Payment> PAYMENTS = new HashMap<>();
     private static final Map<Long, Item> ITEMS = new HashMap<>();
     private static final Map<Long, Order> ORDERS = new HashMap<>();
@@ -38,7 +39,7 @@ public class DummyData {
         /* === REPORTS === */
 
         for (i = 0; i < 40; i++) {
-            REPORTS.put(i, new Report(i, UIUtils.IMG_PATH + "sample-logo1.jpg", getCompany(), getPastDate(30), getFutureDate(30), getPositiveAmount()));
+            REPORTS.put(i, new Report(i, getImageSource(), getCompany(), getPastDate(30), getFutureDate(30), getPositiveAmount()));
         }
 
 
@@ -54,14 +55,15 @@ public class DummyData {
         /* === TRANSACTIONS ==== */
 
         for (i = 0; i < 40; i++) {
-            TRANSACTIONS.put(i, new Transaction(i + getRandomInt(0, 9999), getTransactionStatus(), getCompany(), getIBAN(), getAmount(), random.nextBoolean(), getDate()));
+            TRANSACTIONS.put(i, new Transaction(i + getRandomInt(0, 9999), getTransactionStatus(), getCompany(), getIBAN(), getAmount(), random.nextBoolean(), getPastDate(90)));
         }
 
 
-        /* === BALANCES ==== */
+        /* === BANK ACCOUNTS ==== */
 
+        int startingPoint = getRandomInt(0, 9999);
         for (i = 0; i < 40; i++) {
-            BALANCES.put(i, new BankAccount(i + getRandomInt(0, 9999), getBank(), getIBAN(), getCompany(), getAmount(), getDate()));
+            BANK_ACCOUNTS.put(i + startingPoint, new BankAccount(i + startingPoint, getBank(), getIBAN(), getCompany(), getRandomDouble(5000, 100000), getDate()));
         }
 
 
@@ -193,8 +195,12 @@ public class DummyData {
 
     /* === BANK ACCOUNT === */
 
-    public static Collection<BankAccount> getBalances() {
-        return BALANCES.values();
+    public static Collection<BankAccount> getBankAccounts() {
+        return BANK_ACCOUNTS.values();
+    }
+
+    public static BankAccount getBankAccount(Long id) {
+        return BANK_ACCOUNTS.get(id);
     }
 
 
@@ -245,6 +251,14 @@ public class DummyData {
 
     public static String getLastName() {
         return LAST_NAMES[random.nextInt(LAST_NAMES.length)];
+    }
+
+    public static Image getLogo() {
+        return new Image(UIUtils.IMG_PATH + "sample-logo1.jpg", "");
+    }
+
+    public static String getImageSource() {
+        return UIUtils.IMG_PATH + "sample-logo1.jpg";
     }
 
 

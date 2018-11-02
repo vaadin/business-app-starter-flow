@@ -40,7 +40,7 @@ public abstract class NaviItem extends Div {
         this.text = text;
         this.navigationTarget = navigationTarget;
 
-        expandCollapse = UIUtils.createSmallTertiaryIconButton(up);
+        expandCollapse = UIUtils.createSmallTertiaryButton(up);
         expandCollapse.setVisible(false);
         expandCollapse.addClickListener(event -> {
             setSubItemsVisible(!subItemsVisible);
