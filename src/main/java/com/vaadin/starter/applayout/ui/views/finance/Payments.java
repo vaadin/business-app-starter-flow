@@ -7,6 +7,8 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
+import com.vaadin.flow.component.tabs.Tab;
+import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.data.provider.DataProvider;
 import com.vaadin.flow.data.provider.ListDataProvider;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
@@ -125,6 +127,15 @@ public class Payments extends ViewFrame {
     private void initDetailsDrawer() {
         detailsDrawer = new DetailsDrawer(DetailsDrawer.Position.RIGHT);
 
+        // Header
+        Label detailsDrawerTitle = UIUtils.createDetailsDrawerHeader("Payment Details", false, true);
+
+        Tabs tabs = new Tabs(new Tab("Details"), new Tab("Attachments"), new Tab("History"));
+        tabs.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Tabs.EQUAL_WIDTH_TABS);
+
+        detailsDrawer.setHeader(detailsDrawerTitle, tabs);
+        detailsDrawer.getHeader().getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN);
+
         // Footer
         Button close = UIUtils.createTertiaryButton("Close");
         close.addClickListener(e -> detailsDrawer.hide());
@@ -146,8 +157,6 @@ public class Payments extends ViewFrame {
     }
 
     private Component createDetails(Payment payment) {
-        Label title = UIUtils.createDetailsDrawerHeader("Payment Details", false, true);
-
         ListItem status = new ListItem(payment.getStatus().getIcon(), payment.getStatus().getName(), "Status");
         status.addPrimaryClassNames(LumoStyles.Margin.Top.XS);
         status.setPrimaryElementAttribute(LumoStyles.THEME, payment.getStatus().getTheme());
@@ -165,8 +174,7 @@ public class Payments extends ViewFrame {
         }
 
         return UIUtils.createDiv(
-                Collections.singleton(LumoStyles.Padding.Bottom.S),
-                title,
+                Collections.singleton(LumoStyles.Padding.Vertical.S),
                 status,
                 from,
                 to,
