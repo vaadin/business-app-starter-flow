@@ -290,6 +290,29 @@ public class UIUtils {
 
 
 
+    /* === FORMLAYOUT === */
+
+    public static void setFormLayoutColSpan(int span, Component... components) {
+        for (Component component : components) {
+            component.getElement().setAttribute("colspan", Integer.toString(span));
+        }
+    }
+
+    public static FlexLayout createPhoneLayout() {
+        TextField prefix = new TextField();
+        prefix.setValue("+358");
+        prefix.setWidth("80px");
+
+        TextField number = new TextField();
+        number.setValue(DummyData.getPhoneNumber());
+
+        FlexLayout layout = UIUtils.createFlexLayout(Collections.singleton(LumoStyles.Spacing.Right.S), prefix, number);
+        layout.setFlexGrow(1, number);
+        return layout;
+    }
+
+
+
     /* === NUMBERS === */
 
     public static String formatAmount(Double amount) {
@@ -410,6 +433,12 @@ public class UIUtils {
     public static Icon createTertiaryIcon(VaadinIcon icon) {
         Icon i = new Icon(icon);
         i.addClassName(LumoStyles.TextColor.TERTIARY);
+        return i;
+    }
+
+    public static Icon createDisabledIcon(VaadinIcon icon) {
+        Icon i = new Icon(icon);
+        i.addClassName(LumoStyles.TextColor.DISABLED);
         return i;
     }
 

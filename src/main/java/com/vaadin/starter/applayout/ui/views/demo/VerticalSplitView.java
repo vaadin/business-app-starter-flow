@@ -77,6 +77,7 @@ public class VerticalSplitView extends ViewFrame {
                 .setSortable(true)
                 .setWidth(UIUtils.COLUMN_WIDTH_M)
                 .setFlexGrow(0);
+
         grid.addSelectionListener(e -> {
             if (e.getFirstSelectedItem().isPresent()) {
                 showDetails(e.getFirstSelectedItem().get());
@@ -150,7 +151,7 @@ public class VerticalSplitView extends ViewFrame {
         gender.setItems("Male", "Female", "Other");
         gender.setValue("Other");
 
-        FlexLayout phone = createPhoneLayout();
+        FlexLayout phone = UIUtils.createPhoneLayout();
 
         TextField email = new TextField();
         email.setValue(person.getEmail());
@@ -194,18 +195,5 @@ public class VerticalSplitView extends ViewFrame {
             badge.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.ERROR);
         }
         return badge;
-    }
-
-    private FlexLayout createPhoneLayout() {
-        TextField prefix = new TextField();
-        prefix.setValue("+358");
-        prefix.setWidth("80px");
-
-        TextField number = new TextField();
-        number.setValue(DummyData.getPhoneNumber());
-
-        FlexLayout layout = UIUtils.createFlexLayout(Collections.singleton(LumoStyles.Spacing.Right.S), prefix, number);
-        layout.setFlexGrow(1, number);
-        return layout;
     }
 }

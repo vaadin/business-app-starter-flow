@@ -86,7 +86,7 @@ public class HorizontalSplitView extends ViewFrame {
 
         grid.setSizeFull();
 
-        // Grid wrappe
+        // Grid wrapper
         Div gridWrapper = UIUtils.createDiv(Collections.singleton(GRID_VIEW), grid);
 
         // Details drawer
@@ -170,11 +170,7 @@ public class HorizontalSplitView extends ViewFrame {
         FormLayout.FormItem companyItem = form.addFormItem(company, "Company");
         FormLayout.FormItem uploadItem = form.addFormItem(new Upload(), "Image");
 
-        setColSpan(genderItem, 2);
-        setColSpan(phoneItem, 2);
-        setColSpan(emailItem, 2);
-        setColSpan(companyItem, 2);
-        setColSpan(uploadItem, 2);
+        UIUtils.setFormLayoutColSpan(2, genderItem, phoneItem, emailItem, companyItem, uploadItem);
 
         return form;
     }
@@ -190,10 +186,6 @@ public class HorizontalSplitView extends ViewFrame {
         FlexLayout layout = UIUtils.createFlexLayout(Collections.singleton(LumoStyles.Spacing.Right.S), prefix, number);
         layout.setFlexGrow(1, number);
         return layout;
-    }
-
-    private void setColSpan(Component component, int span) {
-        component.getElement().setAttribute("colspan", Integer.toString(span));
     }
 
     private Component createUserInfo(Person person) {

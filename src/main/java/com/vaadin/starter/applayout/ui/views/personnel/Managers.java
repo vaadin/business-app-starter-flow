@@ -1,10 +1,19 @@
 package com.vaadin.starter.applayout.ui.views.personnel;
 
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.combobox.ComboBox;
+import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.orderedlayout.FlexLayout;
+import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
+import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.component.upload.Upload;
 import com.vaadin.flow.data.provider.DataProvider;
 import com.vaadin.flow.data.provider.ListDataProvider;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
@@ -14,11 +23,16 @@ import com.vaadin.starter.applayout.backend.DummyData;
 import com.vaadin.starter.applayout.backend.Person;
 import com.vaadin.starter.applayout.backend.UIConfig;
 import com.vaadin.starter.applayout.ui.Root;
+import com.vaadin.starter.applayout.ui.components.DetailsDrawer;
 import com.vaadin.starter.applayout.ui.components.ListItem;
 import com.vaadin.starter.applayout.ui.components.navigation.bar.AppBar;
+import com.vaadin.starter.applayout.ui.utils.CSSProperties;
 import com.vaadin.starter.applayout.ui.utils.LumoStyles;
 import com.vaadin.starter.applayout.ui.utils.UIUtils;
 import com.vaadin.starter.applayout.ui.views.ViewFrame;
+
+import java.util.Arrays;
+import java.util.Collections;
 
 import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
 
@@ -27,6 +41,9 @@ import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
 public class Managers extends ViewFrame {
 
     private ListDataProvider<Person> dataProvider;
+
+    private DetailsDrawer detailsDrawer;
+    private Label detailsDrawerTitle;
 
     public Managers() {
         // Header
@@ -60,11 +77,27 @@ public class Managers extends ViewFrame {
                 .setHeader(UIUtils.createRightAlignedDiv("Last Report"))
                 .setWidth(UIUtils.COLUMN_WIDTH_M)
                 .setFlexGrow(0);
+
+        grid.addSelectionListener(e -> {
+            if (e.getFirstSelectedItem().isPresent()) {
+                showDetails(e.getFirstSelectedItem().get());
+            }
+        });
+
         grid.setSizeFull();
 
-        setContent(grid);
-        getContent().addClassName(GRID_VIEW);
+        // Grid wrapper
+        Div gridWrapper = UIUtils.createDiv(Collections.singleton(GRID_VIEW), grid);
 
+        // Details drawer
+        initDetailsDrawer();
+
+        // Set the content
+        FlexLayout content = UIUtils.createColumn(gridWrapper, detailsDrawer);
+        content.setSizeFull();
+        setContent(content);
+
+        // Initial filtering
         filter();
     }
 
@@ -79,11 +112,9 @@ public class Managers extends ViewFrame {
     private Component createActive(Person person) {
         Icon icon;
         if (person.getRandomBoolean()) {
-            icon = new Icon(VaadinIcon.CHECK);
-            icon.addClassName(LumoStyles.TextColor.PRIMARY);
+            icon = UIUtils.createPrimaryIcon(VaadinIcon.CHECK);
         } else {
-            icon = new Icon(VaadinIcon.CLOSE);
-            icon.addClassName(LumoStyles.TextColor.DISABLED);
+            icon = UIUtils.createDisabledIcon(VaadinIcon.CLOSE);
         }
         return UIUtils.createRightAlignedDiv(icon);
     }
@@ -100,4 +131,80 @@ public class Managers extends ViewFrame {
     private Component createDate(Person person) {
         return UIUtils.createRightAlignedDiv(UIUtils.formatDate(person.getLastModified()));
     }
+
+    private void initDetailsDrawer() {
+        detailsDrawer = new DetailsDrawer(DetailsDrawer.Position.BOTTOM);
+
+        // Header
+        detailsDrawerTitle = UIUtils.createDetailsDrawerHeader("", true, true);
+        detailsDrawer.setHeader(detailsDrawerTitle);
+
+        // Footer
+        Button save = UIUtils.createPrimaryButton("Save");
+        save.addClickListener(e -> Notification.show("Not implemented yet.", 3000, Notification.Position.BOTTOM_CENTER));
+
+        Button cancel = UIUtils.createTertiaryButton("Cancel");
+        cancel.addClickListener(e -> detailsDrawer.hide());
+
+        FlexLayout footer = UIUtils.createFlexLayout(Arrays.asList(LumoStyles.Padding.Horizontal.L, LumoStyles.Padding.Vertical.S, LumoStyles.Spacing.Right.S), save, cancel);
+        footer.getStyle().set(CSSProperties.BackgroundColor.PROPERTY, LumoStyles.Color.CONTRAST_5);
+        footer.setWidth("100%");
+        detailsDrawer.setFooter(footer);
+    }
+
+    private void showDetails(Person person) {
+        detailsDrawerTitle.setText(person.getName());
+        detailsDrawer.setContent(createDetails(person));
+        detailsDrawer.show();
+    }
+
+    private FormLayout createDetails(Person person) {
+        FormLayout form = UIUtils.createFormLayout(
+                Arrays.asList(
+                        LumoStyles.Padding.Bottom.L,
+                        LumoStyles.Padding.Horizontal.L,
+                        LumoStyles.Padding.Top.S
+                )
+        );
+
+        form.setResponsiveSteps(
+                new FormLayout.ResponsiveStep("0", 1, FormLayout.ResponsiveStep.LabelsPosition.TOP),
+                new FormLayout.ResponsiveStep("600px", 2, FormLayout.ResponsiveStep.LabelsPosition.TOP),
+                new FormLayout.ResponsiveStep("1024px", 3, FormLayout.ResponsiveStep.LabelsPosition.TOP)
+        );
+
+        TextField firstName = new TextField();
+        firstName.setValue(person.getFirstName());
+        firstName.setWidth("100%");
+
+        TextField lastName = new TextField();
+        lastName.setValue(person.getLastName());
+        lastName.setWidth("100%");
+
+        RadioButtonGroup<String> gender = new RadioButtonGroup<>();
+        gender.setItems("Active", "Inactive");
+        gender.setValue(person.getRandomBoolean() ? "Active" : "Inactive");
+
+        FlexLayout phone = UIUtils.createPhoneLayout();
+
+        TextField email = new TextField();
+        email.setValue(person.getEmail());
+        email.setWidth("100%");
+
+        ComboBox company = new ComboBox();
+        company.setItems(DummyData.getCompanies());
+        company.setValue(DummyData.getCompany());
+        company.setWidth("100%");
+
+        form.addFormItem(firstName, "First Name");
+        form.addFormItem(lastName, "Last Name");
+        form.addFormItem(gender, "Gender");
+        form.addFormItem(phone, "Phone");
+        form.addFormItem(email, "Email");
+        form.addFormItem(company, "Company");
+        form.addFormItem(new Upload(), "Image");
+
+        return form;
+    }
+
 }

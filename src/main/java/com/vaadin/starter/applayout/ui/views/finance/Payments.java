@@ -102,7 +102,7 @@ public class Payments extends ViewFrame {
         content.setSizeFull();
         setContent(content);
 
-        // Do the initial filtering
+        // Initial filtering
         filter();
     }
 
