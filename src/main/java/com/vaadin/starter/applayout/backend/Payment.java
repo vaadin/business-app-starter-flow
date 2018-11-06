@@ -12,8 +12,8 @@ public class Payment {
     private Status status;
     private String from;
     private String fromIBAN;
-    private final String to;
-    private final String toIBAN;
+    private String to;
+    private String toIBAN;
     private Double amount;
     private LocalDate date;
 
