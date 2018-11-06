@@ -41,7 +41,6 @@ import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
 public class Accountants extends ViewFrame {
 
     private ListDataProvider<Person> dataProvider;
-
     private DetailsDrawer detailsDrawer;
     private Label detailsDrawerTitle;
 

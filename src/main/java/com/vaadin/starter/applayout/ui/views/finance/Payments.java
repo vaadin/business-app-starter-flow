@@ -37,9 +37,8 @@ import static com.vaadin.starter.applayout.ui.utils.ViewStyles.GRID_VIEW;
 public class Payments extends ViewFrame {
 
     private AppBar appBar;
-    private final ListDataProvider<Payment> dataProvider;
+    private ListDataProvider<Payment> dataProvider;
     private DetailsDrawer detailsDrawer;
-
 
     public Payments() {
         // Header
