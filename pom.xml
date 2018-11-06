@@ -5,7 +5,7 @@
     <groupId>com.example.test</groupId>
     <artifactId>responsive-app-template</artifactId>
     <name>Responsive App Template</name>
-    <version>1.0</version>
+    <version>finance</version>
     <packaging>war</packaging>
 
     <properties>
