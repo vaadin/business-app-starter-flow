@@ -13,7 +13,7 @@ import java.util.Collections;
 
 public class ListItem extends FlexLayout {
 
-    private static final String CLASS_NAME = "list-item";
+    private final String CLASS_NAME = "list-item";
 
     private Div prefix;
     private Div suffix;

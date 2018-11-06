@@ -18,17 +18,17 @@ public class Payment {
     private LocalDate date;
 
     public enum Status {
-        PENDING(UIUtils.createSecondaryIcon(VaadinIcon.CLOCK), "Pending", "Payment created, not yet submitted.", LumoStyles.Badge.CONTRAST),
-        SUBMITTED(UIUtils.createPrimaryIcon(VaadinIcon.QUESTION_CIRCLE), "Submitted", "Payment submitted for processing.", LumoStyles.Badge.DEFAULT),
-        CONFIRMED(UIUtils.createSuccessIcon(VaadinIcon.CHECK), "Confirmed", "Payment sent successfully.", LumoStyles.Badge.SUCCESS),
-        FAILED(UIUtils.createErrorIcon(VaadinIcon.WARNING), "Failed", "Payment failed.", LumoStyles.Badge.ERROR);
+        PENDING(VaadinIcon.CLOCK, "Pending", "Payment created, not yet submitted.", LumoStyles.Badge.CONTRAST),
+        SUBMITTED(VaadinIcon.QUESTION_CIRCLE, "Submitted", "Payment submitted for processing.", LumoStyles.Badge.DEFAULT),
+        CONFIRMED(VaadinIcon.CHECK, "Confirmed", "Payment sent successfully.", LumoStyles.Badge.SUCCESS),
+        FAILED(VaadinIcon.WARNING, "Failed", "Payment failed.", LumoStyles.Badge.ERROR);
 
-        private Icon icon;
+        private VaadinIcon icon;
         private String name;
         private String desc;
         private String theme;
 
-        Status(Icon icon, String name, String desc, String theme) {
+        Status(VaadinIcon icon, String name, String desc, String theme) {
             this.icon = icon;
             this.name = name;
             this.desc = desc;
@@ -36,6 +36,21 @@ public class Payment {
         }
 
         public Icon getIcon() {
+            Icon icon;
+            switch (this) {
+                case PENDING:
+                    icon = UIUtils.createSecondaryIcon(this.icon);
+                    break;
+                case SUBMITTED:
+                    icon = UIUtils.createPrimaryIcon(this.icon);
+                    break;
+                case CONFIRMED:
+                    icon = UIUtils.createSuccessIcon(this.icon);
+                    break;
+                default:
+                    icon = UIUtils.createErrorIcon(this.icon);
+                    break;
+            }
             return icon;
         }
 
