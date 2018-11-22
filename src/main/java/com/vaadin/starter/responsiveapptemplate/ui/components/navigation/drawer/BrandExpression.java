@@ -7,35 +7,35 @@ import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
 
 public class BrandExpression extends Div {
 
-    private String CLASS_NAME = "brand-expression";
+	private String CLASS_NAME = "brand-expression";
 
-    private Image logo;
-    private Image railLogo;
+	private Image logo;
+	private Image railLogo;
 
-    public BrandExpression() {
-        setClassName(CLASS_NAME);
-        // addClickListener(e -> UI.getCurrent().navigate(""));
+	public BrandExpression() {
+		setClassName(CLASS_NAME);
+		// addClickListener(e -> UI.getCurrent().navigate(""));
 
-        logo = new Image();
-        logo.addClassName(CLASS_NAME + "__logo");
+		logo = new Image();
+		logo.addClassName(CLASS_NAME + "__logo");
 
-        railLogo = new Image();
-        railLogo.addClassName(CLASS_NAME + "__rail-logo");
+		railLogo = new Image();
+		railLogo.addClassName(CLASS_NAME + "__rail-logo");
 
-        if (UIConfig.getShowcase().equals(UIConfig.Showcase.DEMO)) {
-            logo.setSrc(UIUtils.IMG_PATH + "logo.svg");
-            railLogo.setSrc(UIUtils.IMG_PATH + "logo-only.svg");
-        }
-        if (UIConfig.getShowcase().equals(UIConfig.Showcase.FINANCE)) {
-            logo.setSrc(UIUtils.IMG_PATH + "finance-logo.svg");
-            railLogo.setSrc(UIUtils.IMG_PATH + "finance-logo-only.svg");
-        }
-        if (UIConfig.getShowcase().equals(UIConfig.Showcase.INVENTORY)) {
-            logo.setSrc(UIUtils.IMG_PATH + "inventory-logo.svg");
-            railLogo.setSrc(UIUtils.IMG_PATH + "inventory-logo-only.svg");
-        }
+		if (UIConfig.getShowcase().equals(UIConfig.Showcase.DEMO)) {
+			logo.setSrc(UIUtils.IMG_PATH + "logo.svg");
+			railLogo.setSrc(UIUtils.IMG_PATH + "logo-only.svg");
+		}
+		if (UIConfig.getShowcase().equals(UIConfig.Showcase.FINANCE)) {
+			logo.setSrc(UIUtils.IMG_PATH + "finance-logo.svg");
+			railLogo.setSrc(UIUtils.IMG_PATH + "finance-logo-only.svg");
+		}
+		if (UIConfig.getShowcase().equals(UIConfig.Showcase.INVENTORY)) {
+			logo.setSrc(UIUtils.IMG_PATH + "inventory-logo.svg");
+			railLogo.setSrc(UIUtils.IMG_PATH + "inventory-logo-only.svg");
+		}
 
-        add(logo, railLogo);
-    }
+		add(logo, railLogo);
+	}
 
 }

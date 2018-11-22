@@ -6,131 +6,132 @@ import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.CSSProperties;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
+import com.vaadin.starter.responsiveapptemplate.ui.utils.FontSize;
+import com.vaadin.starter.responsiveapptemplate.ui.utils.TextColor;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
 
 import java.util.Collections;
 
 public class ListItem extends FlexLayout {
 
-    private final String CLASS_NAME = "list-item";
+	private final String CLASS_NAME = "list-item";
 
-    private Div prefix;
-    private Div suffix;
+	private Div prefix;
+	private Div suffix;
 
-    private final FlexLayout content;
+	private final FlexLayout content;
 
-    private final Label primary;
-    private final Label secondary;
+	private final Label primary;
+	private final Label secondary;
 
-    private Div divider;
+	private Div divider;
 
-    public ListItem(String primary, String secondary) {
-        setClassName(CLASS_NAME);
-        setAlignItems(FlexComponent.Alignment.CENTER);
+	public ListItem(String primary, String secondary) {
+		setClassName(CLASS_NAME);
+		setAlignItems(FlexComponent.Alignment.CENTER);
 
-        this.primary = new Label(primary);
-        this.secondary = UIUtils.createSmallLabel(Collections.singleton(LumoStyles.TextColor.SECONDARY), secondary);
+		this.primary = new Label(primary);
+		this.secondary = UIUtils.createLabel(FontSize.S, TextColor.SECONDARY, secondary);
 
-        this.content = UIUtils.createColumn(Collections.singleton(CLASS_NAME + "__content"), this.primary, this.secondary);
-        add(this.content);
-    }
+		this.content = UIUtils.createColumn(Collections.singleton(CLASS_NAME + "__content"), this.primary, this.secondary);
+		add(this.content);
+	}
 
-    public ListItem(String primary) {
-        this(primary, "");
-    }
-
-
-    /* === PREFIX === */
-
-    public ListItem(Component prefix, String primary, String secondary) {
-        this(primary, secondary);
-        setPrefix(prefix);
-    }
-
-    public ListItem(Component prefix, String primary) {
-        this(prefix, primary, "");
-    }
+	public ListItem(String primary) {
+		this(primary, "");
+	}
 
 
-    /* === SUFFIX === */
+	/* === PREFIX === */
 
-    public ListItem(String primary, String secondary, Component suffix) {
-        this(primary, secondary);
-        setSuffix(suffix);
-    }
+	public ListItem(Component prefix, String primary, String secondary) {
+		this(primary, secondary);
+		setPrefix(prefix);
+	}
 
-    public ListItem(String primary, Component suffix) {
-        this(primary, null, suffix);
-    }
-
-
-    /* === PREFIX & SUFFIX === */
-
-    public ListItem(Component prefix, String primary, String secondary, Component suffix) {
-        this(primary, secondary);
-        setPrefix(prefix);
-        setSuffix(suffix);
-    }
-
-    public ListItem(Component prefix, String primary, Component suffix) {
-        this(prefix, primary, "", suffix);
-    }
+	public ListItem(Component prefix, String primary) {
+		this(prefix, primary, "");
+	}
 
 
-    /* === MISC === */
+	/* === SUFFIX === */
 
-    public void setReverse(boolean reverse) {
-        if (reverse) {
-            this.content.getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN_REVERSE);
-        } else {
-            this.content.getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN);
-        }
-    }
+	public ListItem(String primary, String secondary, Component suffix) {
+		this(primary, secondary);
+		setSuffix(suffix);
+	}
 
-    public void setPrimaryText(String text) {
-        primary.setText(text);
-    }
+	public ListItem(String primary, Component suffix) {
+		this(primary, null, suffix);
+	}
 
-    public void addPrimaryClassNames(String... classNames) {
-        primary.addClassNames(classNames);
-    }
 
-    public void setPrimaryElementAttribute(String attribute, String value) {
-        primary.getElement().setAttribute(attribute, value);
-    }
+	/* === PREFIX & SUFFIX === */
 
-    public void setPrimaryStyleProperty(String property, String value) {
-        primary.getStyle().set(property, value);
-    }
+	public ListItem(Component prefix, String primary, String secondary, Component suffix) {
+		this(primary, secondary);
+		setPrefix(prefix);
+		setSuffix(suffix);
+	}
 
-    public void setSecondaryText(String text) {
-        secondary.setText(text);
-    }
+	public ListItem(Component prefix, String primary, Component suffix) {
+		this(prefix, primary, "", suffix);
+	}
 
-    public void setPrefix(Component... components) {
-        if (prefix == null) {
-            prefix = UIUtils.createDiv(Collections.singleton(CLASS_NAME + "__prefix"));
-            getElement().insertChild(0, prefix.getElement());
-        }
-        prefix.removeAll();
-        prefix.add(components);
-    }
 
-    public void setSuffix(Component... components) {
-        if (suffix == null) {
-            suffix = UIUtils.createDiv(Collections.singleton(CLASS_NAME + "__suffix"));
-            getElement().insertChild(getElement().getChildCount(), suffix.getElement());
-        }
-        suffix.removeAll();
-        suffix.add(components);
-    }
+	/* === MISC === */
 
-    public void setDividerVisible(boolean visible) {
-        if (divider == null) {
-            divider = UIUtils.createDiv(Collections.singleton(CLASS_NAME + "__divider"));
-            add(divider);
-        }
-        divider.setVisible(visible);
-    }
+	public void setReverse(boolean reverse) {
+		if (reverse) {
+			this.content.getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN_REVERSE);
+		} else {
+			this.content.getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN);
+		}
+	}
+
+	public void setPrimaryText(String text) {
+		primary.setText(text);
+	}
+
+	public void addPrimaryClassNames(String... classNames) {
+		primary.addClassNames(classNames);
+	}
+
+	public void setPrimaryElementAttribute(String attribute, String value) {
+		primary.getElement().setAttribute(attribute, value);
+	}
+
+	public void setPrimaryStyleProperty(String property, String value) {
+		primary.getStyle().set(property, value);
+	}
+
+	public void setSecondaryText(String text) {
+		secondary.setText(text);
+	}
+
+	public void setPrefix(Component... components) {
+		if (prefix == null) {
+			prefix = UIUtils.createDiv(Collections.singleton(CLASS_NAME + "__prefix"));
+			getElement().insertChild(0, prefix.getElement());
+		}
+		prefix.removeAll();
+		prefix.add(components);
+	}
+
+	public void setSuffix(Component... components) {
+		if (suffix == null) {
+			suffix = UIUtils.createDiv(Collections.singleton(CLASS_NAME + "__suffix"));
+			getElement().insertChild(getElement().getChildCount(), suffix.getElement());
+		}
+		suffix.removeAll();
+		suffix.add(components);
+	}
+
+	public void setDividerVisible(boolean visible) {
+		if (divider == null) {
+			divider = UIUtils.createDiv(Collections.singleton(CLASS_NAME + "__divider"));
+			add(divider);
+		}
+		divider.setVisible(visible);
+	}
 }

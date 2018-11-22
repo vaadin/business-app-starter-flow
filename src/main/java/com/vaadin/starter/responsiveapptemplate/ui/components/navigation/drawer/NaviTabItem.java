@@ -14,36 +14,36 @@ import java.util.Collections;
 
 public class NaviTabItem extends NaviItem {
 
-    private final Div link;
+	private final Div link;
 
-    public NaviTabItem(VaadinIcon icon, String text, Class<? extends Component> navigationTarget) {
-        this(text, navigationTarget);
-        link.getElement().insertChild(0, new Icon(icon).getElement());
-    }
+	public NaviTabItem(VaadinIcon icon, String text, Class<? extends Component> navigationTarget) {
+		this(text, navigationTarget);
+		link.getElement().insertChild(0, new Icon(icon).getElement());
+	}
 
-    public NaviTabItem(Image image, String text, Class<? extends Component> navigationTarget) {
-        this(text, navigationTarget);
-        link.getElement().insertChild(0, image.getElement());
-    }
+	public NaviTabItem(Image image, String text, Class<? extends Component> navigationTarget) {
+		this(text, navigationTarget);
+		link.getElement().insertChild(0, image.getElement());
+	}
 
-    public NaviTabItem(String svg, String text, Class<? extends Component> navigationTarget) {
-        this(text, navigationTarget);
-        try {
-            String content = readFile(svg);
-            link.getElement().insertChild(0, createSVGContainer(content));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
+	public NaviTabItem(String svg, String text, Class<? extends Component> navigationTarget) {
+		this(text, navigationTarget);
+		try {
+			String content = readFile(svg);
+			link.getElement().insertChild(0, createSVGContainer(content));
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
 
-    public NaviTabItem(String text, Class<? extends Component> navigationTarget) {
-        super(text, navigationTarget);
-        link = UIUtils.createDiv(Collections.singleton(CLASS_NAME + "__link"), new Label(text));
-        getElement().insertChild(0, link.getElement());
-    }
+	public NaviTabItem(String text, Class<? extends Component> navigationTarget) {
+		super(text, navigationTarget);
+		link = UIUtils.createDiv(Collections.singleton(CLASS_NAME + "__link"), new Label(text));
+		getElement().insertChild(0, link.getElement());
+	}
 
-    @Override
-    public Registration addClickListener(ComponentEventListener listener) {
-        return link.addClickListener(listener);
-    }
+	@Override
+	public Registration addClickListener(ComponentEventListener listener) {
+		return link.addClickListener(listener);
+	}
 }

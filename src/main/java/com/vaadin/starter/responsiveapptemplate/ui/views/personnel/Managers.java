@@ -28,6 +28,7 @@ import com.vaadin.starter.responsiveapptemplate.ui.components.ListItem;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.bar.AppBar;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.CSSProperties;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
+import com.vaadin.starter.responsiveapptemplate.ui.utils.TextColor;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
 import com.vaadin.starter.responsiveapptemplate.ui.views.ViewFrame;
 
@@ -40,171 +41,171 @@ import static com.vaadin.starter.responsiveapptemplate.ui.utils.ViewStyles.GRID_
 @PageTitle("Managers")
 public class Managers extends ViewFrame {
 
-    private ListDataProvider<Person> dataProvider;
+	private ListDataProvider<Person> dataProvider;
 
-    private DetailsDrawer detailsDrawer;
-    private Label detailsDrawerTitle;
+	private DetailsDrawer detailsDrawer;
+	private Label detailsDrawerTitle;
 
-    public Managers() {
-        // Header
-        if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-            setHeader(new AppBar("Managers"));
-        }
+	public Managers() {
+		// Header
+		if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
+			setHeader(new AppBar("Managers"));
+		}
 
-        // Grid
-        Grid<Person> grid = new Grid<>();
-        dataProvider = DataProvider.ofCollection(DummyData.getPersons());
-        grid.setDataProvider(dataProvider);
+		// Grid
+		Grid<Person> grid = new Grid<>();
+		dataProvider = DataProvider.ofCollection(DummyData.getPersons());
+		grid.setDataProvider(dataProvider);
 
-        grid.addColumn(Person::getId)
-                .setHeader("ID")
-                .setFrozen(true)
-                .setSortable(true)
-                .setWidth(UIUtils.COLUMN_WIDTH_XS)
-                .setFlexGrow(0);
-        grid.addColumn(new ComponentRenderer<>(this::createUserInfo))
-                .setHeader("Name")
-                .setWidth(UIUtils.COLUMN_WIDTH_XL);
-        grid.addColumn(new ComponentRenderer<>(this::createActive))
-                .setHeader(UIUtils.createRightAlignedDiv("Active"))
-                .setWidth(UIUtils.COLUMN_WIDTH_XS)
-                .setFlexGrow(0);
-        grid.addColumn(new ComponentRenderer<>(this::createApprovalLimit))
-                .setHeader(UIUtils.createRightAlignedDiv("Approval Limit ($)"))
-                .setWidth(UIUtils.COLUMN_WIDTH_XL)
-                .setFlexGrow(0);
-        grid.addColumn(new ComponentRenderer<>(this::createDate))
-                .setHeader(UIUtils.createRightAlignedDiv("Last Report"))
-                .setWidth(UIUtils.COLUMN_WIDTH_M)
-                .setFlexGrow(0);
+		grid.addColumn(Person::getId)
+				.setHeader("ID")
+				.setFrozen(true)
+				.setSortable(true)
+				.setWidth(UIUtils.COLUMN_WIDTH_XS)
+				.setFlexGrow(0);
+		grid.addColumn(new ComponentRenderer<>(this::createUserInfo))
+				.setHeader("Name")
+				.setWidth(UIUtils.COLUMN_WIDTH_XL);
+		grid.addColumn(new ComponentRenderer<>(this::createActive))
+				.setHeader(UIUtils.createRightAlignedDiv("Active"))
+				.setWidth(UIUtils.COLUMN_WIDTH_XS)
+				.setFlexGrow(0);
+		grid.addColumn(new ComponentRenderer<>(this::createApprovalLimit))
+				.setHeader(UIUtils.createRightAlignedDiv("Approval Limit ($)"))
+				.setWidth(UIUtils.COLUMN_WIDTH_XL)
+				.setFlexGrow(0);
+		grid.addColumn(new ComponentRenderer<>(this::createDate))
+				.setHeader(UIUtils.createRightAlignedDiv("Last Report"))
+				.setWidth(UIUtils.COLUMN_WIDTH_M)
+				.setFlexGrow(0);
 
-        grid.addSelectionListener(e -> {
-            if (e.getFirstSelectedItem().isPresent()) {
-                showDetails(e.getFirstSelectedItem().get());
-            }
-        });
+		grid.addSelectionListener(e -> {
+			if (e.getFirstSelectedItem().isPresent()) {
+				showDetails(e.getFirstSelectedItem().get());
+			}
+		});
 
-        grid.setSizeFull();
+		grid.setSizeFull();
 
-        // Grid wrapper
-        Div gridWrapper = UIUtils.createDiv(Collections.singleton(GRID_VIEW), grid);
+		// Grid wrapper
+		Div gridWrapper = UIUtils.createDiv(Collections.singleton(GRID_VIEW), grid);
 
-        // Details drawer
-        initDetailsDrawer();
+		// Details drawer
+		initDetailsDrawer();
 
-        // Set the content
-        FlexLayout content = UIUtils.createColumn(gridWrapper, detailsDrawer);
-        content.setSizeFull();
-        setContent(content);
+		// Set the content
+		FlexLayout content = UIUtils.createColumn(gridWrapper, detailsDrawer);
+		content.setSizeFull();
+		setContent(content);
 
-        // Initial filtering
-        filter();
-    }
+		// Initial filtering
+		filter();
+	}
 
-    private void filter() {
-        dataProvider.setFilterByValue(Person::getRole, Person.Role.MANAGER);
-    }
+	private void filter() {
+		dataProvider.setFilterByValue(Person::getRole, Person.Role.MANAGER);
+	}
 
-    private Component createUserInfo(Person person) {
-        return new ListItem(UIUtils.createInitials(person.getInitials()), person.getName(), person.getEmail());
-    }
+	private Component createUserInfo(Person person) {
+		return new ListItem(UIUtils.createInitials(person.getInitials()), person.getName(), person.getEmail());
+	}
 
-    private Component createActive(Person person) {
-        Icon icon;
-        if (person.getRandomBoolean()) {
-            icon = UIUtils.createPrimaryIcon(VaadinIcon.CHECK);
-        } else {
-            icon = UIUtils.createDisabledIcon(VaadinIcon.CLOSE);
-        }
-        return UIUtils.createRightAlignedDiv(icon);
-    }
+	private Component createActive(Person person) {
+		Icon icon;
+		if (person.getRandomBoolean()) {
+			icon = UIUtils.createPrimaryIcon(VaadinIcon.CHECK);
+		} else {
+			icon = UIUtils.createDisabledIcon(VaadinIcon.CLOSE);
+		}
+		return UIUtils.createRightAlignedDiv(icon);
+	}
 
-    private Component createApprovalLimit(Person person) {
-        int amount = person.getRandomInteger() > 0 ? person.getRandomInteger() : 0;
+	private Component createApprovalLimit(Person person) {
+		int amount = person.getRandomInteger() > 0 ? person.getRandomInteger() : 0;
 
-        Label label = UIUtils.createH4Label(UIUtils.formatAmount(amount));
-        label.addClassName(amount > 0 ? LumoStyles.TextColor.SUCCESS : LumoStyles.TextColor.ERROR);
+		Label label = UIUtils.createH4Label(UIUtils.formatAmount(amount));
+		label.addClassName(amount > 0 ? TextColor.SUCCESS.getStyle() : TextColor.ERROR.getStyle());
 
-        return UIUtils.createRightAlignedDiv(label);
-    }
+		return UIUtils.createRightAlignedDiv(label);
+	}
 
-    private Component createDate(Person person) {
-        return UIUtils.createRightAlignedDiv(UIUtils.formatDate(person.getLastModified()));
-    }
+	private Component createDate(Person person) {
+		return UIUtils.createRightAlignedDiv(UIUtils.formatDate(person.getLastModified()));
+	}
 
-    private void initDetailsDrawer() {
-        detailsDrawer = new DetailsDrawer(DetailsDrawer.Position.BOTTOM);
+	private void initDetailsDrawer() {
+		detailsDrawer = new DetailsDrawer(DetailsDrawer.Position.BOTTOM);
 
-        // Header
-        detailsDrawerTitle = UIUtils.createDetailsDrawerHeader("", true, true);
-        detailsDrawer.setHeader(detailsDrawerTitle);
+		// Header
+		detailsDrawerTitle = UIUtils.createDetailsDrawerHeader("", true, true);
+		detailsDrawer.setHeader(detailsDrawerTitle);
 
-        // Footer
-        Button save = UIUtils.createPrimaryButton("Save");
-        save.addClickListener(e -> Notification.show("Not implemented yet.", 3000, Notification.Position.BOTTOM_CENTER));
+		// Footer
+		Button save = UIUtils.createPrimaryButton("Save");
+		save.addClickListener(e -> Notification.show("Not implemented yet.", 3000, Notification.Position.BOTTOM_CENTER));
 
-        Button cancel = UIUtils.createTertiaryButton("Cancel");
-        cancel.addClickListener(e -> detailsDrawer.hide());
+		Button cancel = UIUtils.createTertiaryButton("Cancel");
+		cancel.addClickListener(e -> detailsDrawer.hide());
 
-        FlexLayout footer = UIUtils.createFlexLayout(Arrays.asList(LumoStyles.Padding.Horizontal.L, LumoStyles.Padding.Vertical.S, LumoStyles.Spacing.Right.S), save, cancel);
-        footer.getStyle().set(CSSProperties.BackgroundColor.PROPERTY, LumoStyles.Color.CONTRAST_5);
-        footer.setWidth("100%");
-        detailsDrawer.setFooter(footer);
-    }
+		FlexLayout footer = UIUtils.createFlexLayout(Arrays.asList(LumoStyles.Padding.Horizontal.L, LumoStyles.Padding.Vertical.S, LumoStyles.Spacing.Right.S), save, cancel);
+		footer.getStyle().set(CSSProperties.BackgroundColor.PROPERTY, LumoStyles.Color.CONTRAST_5);
+		footer.setWidth("100%");
+		detailsDrawer.setFooter(footer);
+	}
 
-    private void showDetails(Person person) {
-        detailsDrawerTitle.setText(person.getName());
-        detailsDrawer.setContent(createDetails(person));
-        detailsDrawer.show();
-    }
+	private void showDetails(Person person) {
+		detailsDrawerTitle.setText(person.getName());
+		detailsDrawer.setContent(createDetails(person));
+		detailsDrawer.show();
+	}
 
-    private FormLayout createDetails(Person person) {
-        FormLayout form = UIUtils.createFormLayout(
-                Arrays.asList(
-                        LumoStyles.Padding.Bottom.L,
-                        LumoStyles.Padding.Horizontal.L,
-                        LumoStyles.Padding.Top.S
-                )
-        );
+	private FormLayout createDetails(Person person) {
+		FormLayout form = UIUtils.createFormLayout(
+				Arrays.asList(
+						LumoStyles.Padding.Bottom.L,
+						LumoStyles.Padding.Horizontal.L,
+						LumoStyles.Padding.Top.S
+				)
+		);
 
-        form.setResponsiveSteps(
-                new FormLayout.ResponsiveStep("0", 1, FormLayout.ResponsiveStep.LabelsPosition.TOP),
-                new FormLayout.ResponsiveStep("600px", 2, FormLayout.ResponsiveStep.LabelsPosition.TOP),
-                new FormLayout.ResponsiveStep("1024px", 3, FormLayout.ResponsiveStep.LabelsPosition.TOP)
-        );
+		form.setResponsiveSteps(
+				new FormLayout.ResponsiveStep("0", 1, FormLayout.ResponsiveStep.LabelsPosition.TOP),
+				new FormLayout.ResponsiveStep("600px", 2, FormLayout.ResponsiveStep.LabelsPosition.TOP),
+				new FormLayout.ResponsiveStep("1024px", 3, FormLayout.ResponsiveStep.LabelsPosition.TOP)
+		);
 
-        TextField firstName = new TextField();
-        firstName.setValue(person.getFirstName());
-        firstName.setWidth("100%");
+		TextField firstName = new TextField();
+		firstName.setValue(person.getFirstName());
+		firstName.setWidth("100%");
 
-        TextField lastName = new TextField();
-        lastName.setValue(person.getLastName());
-        lastName.setWidth("100%");
+		TextField lastName = new TextField();
+		lastName.setValue(person.getLastName());
+		lastName.setWidth("100%");
 
-        RadioButtonGroup<String> gender = new RadioButtonGroup<>();
-        gender.setItems("Active", "Inactive");
-        gender.setValue(person.getRandomBoolean() ? "Active" : "Inactive");
+		RadioButtonGroup<String> gender = new RadioButtonGroup<>();
+		gender.setItems("Active", "Inactive");
+		gender.setValue(person.getRandomBoolean() ? "Active" : "Inactive");
 
-        FlexLayout phone = UIUtils.createPhoneLayout();
+		FlexLayout phone = UIUtils.createPhoneLayout();
 
-        TextField email = new TextField();
-        email.setValue(person.getEmail());
-        email.setWidth("100%");
+		TextField email = new TextField();
+		email.setValue(person.getEmail());
+		email.setWidth("100%");
 
-        ComboBox company = new ComboBox();
-        company.setItems(DummyData.getCompanies());
-        company.setValue(DummyData.getCompany());
-        company.setWidth("100%");
+		ComboBox company = new ComboBox();
+		company.setItems(DummyData.getCompanies());
+		company.setValue(DummyData.getCompany());
+		company.setWidth("100%");
 
-        form.addFormItem(firstName, "First Name");
-        form.addFormItem(lastName, "Last Name");
-        form.addFormItem(gender, "Gender");
-        form.addFormItem(phone, "Phone");
-        form.addFormItem(email, "Email");
-        form.addFormItem(company, "Company");
-        form.addFormItem(new Upload(), "Image");
+		form.addFormItem(firstName, "First Name");
+		form.addFormItem(lastName, "Last Name");
+		form.addFormItem(gender, "Gender");
+		form.addFormItem(phone, "Phone");
+		form.addFormItem(email, "Email");
+		form.addFormItem(company, "Company");
+		form.addFormItem(new Upload(), "Image");
 
-        return form;
-    }
+		return form;
+	}
 
 }

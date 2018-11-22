@@ -13,38 +13,38 @@ import com.vaadin.flow.component.html.Div;
  */
 public class ViewFrame extends Div {
 
-    private final String CLASS_NAME = "abstract-view";
+	private final String CLASS_NAME = "abstract-view";
 
-    private final Div header = new Div();
-    private final Div content = new Div();
-    private final Div footer = new Div();
+	private final Div header = new Div();
+	private final Div content = new Div();
+	private final Div footer = new Div();
 
-    public ViewFrame() {
-        setClassName(CLASS_NAME);
+	public ViewFrame() {
+		setClassName(CLASS_NAME);
 
-        header.setClassName(CLASS_NAME + "__header");
-        content.setClassName(CLASS_NAME + "__content");
-        footer.setClassName(CLASS_NAME + "__footer");
+		header.setClassName(CLASS_NAME + "__header");
+		content.setClassName(CLASS_NAME + "__content");
+		footer.setClassName(CLASS_NAME + "__footer");
 
-        add(header, content, footer);
-    }
+		add(header, content, footer);
+	}
 
-    public void setHeader(Component component) {
-        header.removeAll();
-        header.add(component);
-    }
+	public void setHeader(Component component) {
+		header.removeAll();
+		header.add(component);
+	}
 
-    public Div getContent() {
-        return content;
-    }
+	public Div getContent() {
+		return content;
+	}
 
-    public void setContent(Component component) {
-        content.removeAll();
-        content.add(component);
-    }
+	public void setContent(Component component) {
+		content.removeAll();
+		content.add(component);
+	}
 
-    public void setFooter(Component component) {
-        footer.removeAll();
-        footer.add(component);
-    }
+	public void setFooter(Component component) {
+		footer.removeAll();
+		footer.add(component);
+	}
 }

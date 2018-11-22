@@ -31,7 +31,7 @@
   color: var(--lumo-success-text-color);
 }
 
-/* Sizes */
+/* Headers */
 .h1, .h2, .h3, .h4, .h5, .h6 {
   display: block;
   font-weight: 600;
@@ -62,4 +62,37 @@
   font-size: var(--lumo-font-size-xs);
   text-transform: uppercase;
   letter-spacing: 0.03em;
+}
+
+/* Sizes */
+.font-size-xxxl {
+  font-size: var(--lumo-font-size-xxxl);
+}
+
+.font-size-xxl {
+  font-size: var(--lumo-font-size-xxl);
+}
+
+.font-size-xl {
+  font-size: var(--lumo-font-size-xl);
+}
+
+.font-size-l {
+  font-size: var(--lumo-font-size-l);
+}
+
+.font-size-m {
+  font-size: var(--lumo-font-size-m);
+}
+
+.font-size-s {
+  font-size: var(--lumo-font-size-s);
+}
+
+.font-size-xs {
+  font-size: var(--lumo-font-size-xs);
+}
+
+.font-size-xxs {
+  font-size: var(--lumo-font-size-xxs);
 }

@@ -18,9 +18,7 @@ import com.vaadin.starter.responsiveapptemplate.backend.UIConfig;
 import com.vaadin.starter.responsiveapptemplate.ui.Root;
 import com.vaadin.starter.responsiveapptemplate.ui.components.ListItem;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.bar.AppBar;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.CSSProperties;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
+import com.vaadin.starter.responsiveapptemplate.ui.utils.*;
 import com.vaadin.starter.responsiveapptemplate.ui.views.ViewFrame;
 
 import java.util.Arrays;
@@ -30,130 +28,130 @@ import java.util.Collections;
 @PageTitle("Overview")
 public class Overview extends ViewFrame {
 
-    private static final String CLASS_NAME = "dashboard";
-    private static final String REPORTS = "Reports";
-    private static final String LOGS = "Logs";
+	private static final String CLASS_NAME = "dashboard";
+	private static final String REPORTS = "Reports";
+	private static final String LOGS = "Logs";
 
-    public Overview() {
-        if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-            setHeader(new AppBar("Overview"));
-        }
+	public Overview() {
+		if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
+			setHeader(new AppBar("Overview"));
+		}
 
-        Div viewport = UIUtils.createDiv(
-                Arrays.asList(CLASS_NAME, LumoStyles.Margin.Horizontal.AUTO, LumoStyles.Margin.Responsive.Vertical.ML),
-                createHeader(VaadinIcon.INVOICE, "Invoices"),
-                createProgressCharts(),
-                createHeader(VaadinIcon.PACKAGE, "Orders"),
-                UIUtils.createSalesChart("2018", "Incoming Orders"),
-                UIUtils.createFlexLayout(
-                        Collections.singleton(CLASS_NAME + "__bookmarks-recent-items"),
-                        createTabbedList(REPORTS),
-                        createTabbedList(LOGS)
-                )
-        );
-        setContent(viewport);
-    }
+		Div viewport = UIUtils.createDiv(
+				Arrays.asList(CLASS_NAME, LumoStyles.Margin.Horizontal.AUTO, LumoStyles.Margin.Responsive.Vertical.ML),
+				createHeader(VaadinIcon.INVOICE, "Invoices"),
+				createProgressCharts(),
+				createHeader(VaadinIcon.PACKAGE, "Orders"),
+				UIUtils.createSalesChart("2018", "Incoming Orders"),
+				UIUtils.createFlexLayout(
+						Collections.singleton(CLASS_NAME + "__bookmarks-recent-items"),
+						createTabbedList(REPORTS),
+						createTabbedList(LOGS)
+				)
+		);
+		setContent(viewport);
+	}
 
-    private Component createHeader(VaadinIcon icon, String title) {
-        FlexLayout header = UIUtils.createFlexLayout(
-                Arrays.asList(
-                        LumoStyles.Margin.Bottom.L,
-                        LumoStyles.Margin.Top.XL,
-                        LumoStyles.Margin.Responsive.Horizontal.ML,
-                        LumoStyles.Spacing.Right.M
-                ),
-                UIUtils.createSmallIcon(Collections.singleton(LumoStyles.TextColor.TERTIARY), icon),
-                UIUtils.createH3Label(title)
-        );
-        header.setAlignItems(FlexComponent.Alignment.CENTER);
-        return header;
-    }
+	private Component createHeader(VaadinIcon icon, String title) {
+		FlexLayout header = UIUtils.createFlexLayout(
+				Arrays.asList(
+						LumoStyles.Margin.Bottom.L,
+						LumoStyles.Margin.Top.XL,
+						LumoStyles.Margin.Responsive.Horizontal.ML,
+						LumoStyles.Spacing.Right.M
+				),
+				UIUtils.createIcon(IconSize.SMALL, TextColor.TERTIARY, icon),
+				UIUtils.createH3Label(title)
+		);
+		header.setAlignItems(FlexComponent.Alignment.CENTER);
+		return header;
+	}
 
-    private Component createProgressCharts() {
-        FlexLayout card = UIUtils.createWrappingFlexLayout(Arrays.asList(CLASS_NAME + "__progress", LumoStyles.BorderRadius.S, LumoStyles.Shadow.S));
-        card.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
-        card.getStyle().set(CSSProperties.BackgroundColor.PROPERTY, LumoStyles.Color.BASE_COLOR);
+	private Component createProgressCharts() {
+		FlexLayout card = UIUtils.createWrappingFlexLayout(Arrays.asList(CLASS_NAME + "__progress", LumoStyles.BorderRadius.S, LumoStyles.Shadow.S));
+		card.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
+		card.getStyle().set(CSSProperties.BackgroundColor.PROPERTY, LumoStyles.Color.BASE_COLOR);
 
-        for (Invoice.Status status : Invoice.Status.values()) {
-            card.add(createProgressSection(status));
-        }
+		for (Invoice.Status status : Invoice.Status.values()) {
+			card.add(createProgressSection(status));
+		}
 
-        return card;
-    }
+		return card;
+	}
 
-    private Component createProgressSection(Invoice.Status status) {
-        int value;
+	private Component createProgressSection(Invoice.Status status) {
+		int value;
 
-        switch (status) {
-            case OUTSTANDING:
-                value = 24;
-                break;
+		switch (status) {
+			case OUTSTANDING:
+				value = 24;
+				break;
 
-            case OPEN:
-                value = 40;
-                break;
+			case OPEN:
+				value = 40;
+				break;
 
-            case PAID:
-                value = 32;
-                break;
+			case PAID:
+				value = 32;
+				break;
 
-            default:
-                value = 4;
-                break;
-        }
+			default:
+				value = 4;
+				break;
+		}
 
-        FlexLayout textContainer = UIUtils.createFlexLayout(
-                Collections.singleton(LumoStyles.Spacing.Right.XS),
-                UIUtils.createH2Label(Integer.toString(value)),
-                UIUtils.createSmallLabel("%")
-        );
-        textContainer.setAlignItems(FlexComponent.Alignment.BASELINE);
-        textContainer.getStyle().set(CSSProperties.Position.PROPERTY, CSSProperties.Position.ABSOLUTE);
+		FlexLayout textContainer = UIUtils.createFlexLayout(
+				Collections.singleton(LumoStyles.Spacing.Right.XS),
+				UIUtils.createH2Label(Integer.toString(value)),
+				UIUtils.createSmallLabel("%")
+		);
+		textContainer.setAlignItems(FlexComponent.Alignment.BASELINE);
+		textContainer.getStyle().set(CSSProperties.Position.PROPERTY, CSSProperties.Position.ABSOLUTE);
 
-        Chart chart = UIUtils.createProgressChart(value);
-        chart.addClassName(status.getName().toLowerCase());
+		Chart chart = UIUtils.createProgressChart(value);
+		chart.addClassName(status.getName().toLowerCase());
 
-        FlexLayout chartContainer = new FlexLayout(chart, textContainer);
-        chartContainer.setAlignItems(FlexComponent.Alignment.CENTER);
-        chartContainer.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
-        chartContainer.getStyle().set(CSSProperties.Position.PROPERTY, CSSProperties.Position.RELATIVE);
-        chartContainer.setHeight("120px");
-        chartContainer.setWidth("120px");
+		FlexLayout chartContainer = new FlexLayout(chart, textContainer);
+		chartContainer.setAlignItems(FlexComponent.Alignment.CENTER);
+		chartContainer.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
+		chartContainer.getStyle().set(CSSProperties.Position.PROPERTY, CSSProperties.Position.RELATIVE);
+		chartContainer.setHeight("120px");
+		chartContainer.setWidth("120px");
 
-        FlexLayout column = UIUtils.createColumn(
-                Arrays.asList(LumoStyles.Padding.Bottom.S, LumoStyles.Padding.Top.M),
-                new Label(status.getName()),
-                chartContainer
-        );
-        column.setAlignItems(FlexComponent.Alignment.CENTER);
-        return column;
-    }
+		FlexLayout column = UIUtils.createColumn(
+				Arrays.asList(LumoStyles.Padding.Bottom.S, LumoStyles.Padding.Top.M),
+				new Label(status.getName()),
+				chartContainer
+		);
+		column.setAlignItems(FlexComponent.Alignment.CENTER);
+		return column;
+	}
 
-    private Component createTabbedList(String title) {
-        Component header = createHeader(title.equals(REPORTS) ? VaadinIcon.RECORDS : VaadinIcon.EDIT, title);
+	private Component createTabbedList(String title) {
+		Component header = createHeader(title.equals(REPORTS) ? VaadinIcon.RECORDS : VaadinIcon.EDIT, title);
 
-        Tabs tabs = new Tabs();
-        String[] labels = title.equals(REPORTS) ? new String[]{"All", "Annual", "Progress", "Technical"} : new String[]{"All", "Analytics", "System", "User"};
+		Tabs tabs = new Tabs();
+		String[] labels = title.equals(REPORTS) ? new String[]{"All", "Annual", "Progress", "Technical"} : new String[]{"All", "Analytics", "System", "User"};
 
-        for (String label : labels) {
-            tabs.add(new Tab(label));
-        }
+		for (String label : labels) {
+			tabs.add(new Tab(label));
+		}
 
-        FlexLayout items = UIUtils.createColumn(
-                Collections.singleton(LumoStyles.Margin.Vertical.S),
-                new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.CHART), "My Weekly Report", "Last opened May 5, 2018", createInfoButton()),
-                new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.SITEMAP), "My Workflow", "Last opened May 5, 2018", createInfoButton())
-        );
+		FlexLayout items = UIUtils.createColumn(
+				Collections.singleton(LumoStyles.Margin.Vertical.S),
+				new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.CHART), "My Weekly Report", "Last opened May 5, 2018", createInfoButton()),
+				new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.SITEMAP), "My Workflow", "Last opened May 5, 2018", createInfoButton())
+		);
 
-        FlexLayout card = UIUtils.createColumn(Arrays.asList(LumoStyles.BorderRadius.S, LumoStyles.Shadow.S), tabs, items);
-        card.getStyle().set(CSSProperties.BackgroundColor.PROPERTY, LumoStyles.Color.BASE_COLOR);
+		FlexLayout card = UIUtils.createColumn(Arrays.asList(LumoStyles.BorderRadius.S, LumoStyles.Shadow.S), tabs, items);
+		card.getStyle().set(CSSProperties.BackgroundColor.PROPERTY, LumoStyles.Color.BASE_COLOR);
 
-        return new Div(header, card);
-    }
+		return new Div(header, card);
+	}
 
-    private Button createInfoButton() {
-        Button infoButton = UIUtils.createSmallButton(VaadinIcon.INFO);
-        infoButton.addClickListener(e -> Notification.show("Not implemented yet.", 3000, Notification.Position.BOTTOM_CENTER));
-        return infoButton;
-    }
+	private Button createInfoButton() {
+		Button infoButton = UIUtils.createSmallButton(VaadinIcon.INFO);
+		infoButton.addClickListener(e -> Notification.show("Not implemented yet.", 3000, Notification.Position.BOTTOM_CENTER));
+		return infoButton;
+	}
 }

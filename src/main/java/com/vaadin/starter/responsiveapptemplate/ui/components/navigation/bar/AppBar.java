@@ -18,269 +18,272 @@ import com.vaadin.starter.responsiveapptemplate.backend.UIConfig;
 import com.vaadin.starter.responsiveapptemplate.ui.AppTemplateUI;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.tab.NaviTab;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.tab.NaviTabs;
+import com.vaadin.starter.responsiveapptemplate.ui.utils.ButtonSize;
+import com.vaadin.starter.responsiveapptemplate.ui.utils.ButtonStyle;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
 import com.vaadin.starter.responsiveapptemplate.ui.views.Default;
 
-import java.util.Arrays;
 import java.util.Collections;
 
 public class AppBar extends FlexLayout {
 
-    private String CLASS_NAME = "app-bar";
+	private String CLASS_NAME = "app-bar";
+
+	private FlexLayout container;
 
-    private FlexLayout container;
+	private Button menuNaviIcon;
+	private Button contextNaviIcon;
+
+	private H4 title;
+	private FlexLayout actionItems;
+	private Image avatar;
+
+	private Button addTab;
+	private NaviTabs naviTabs;
 
-    private Button menuNaviIcon;
-    private Button contextNaviIcon;
+	private Registration searchRegistration;
+	private TextField search;
+	private final FlexLayout tabContainer;
 
-    private H4 title;
-    private FlexLayout actionItems;
-    private Image avatar;
+	public enum NaviMode {
+		MENU, CONTEXTUAL
+	}
 
-    private Button addTab;
-    private NaviTabs naviTabs;
+	public AppBar(String title, NaviTab... tabs) {
+		super();
+		setClassName(CLASS_NAME);
+		getElement().setAttribute(LumoStyles.THEME, LumoStyles.DARK);
 
-    private Registration searchRegistration;
-    private TextField search;
-    private final FlexLayout tabContainer;
+		menuNaviIcon = UIUtils.createButton(ButtonSize.SMALL, ButtonStyle.TERTIARY, VaadinIcon.MENU);
+		menuNaviIcon.addClassName(CLASS_NAME + "__navi-icon");
+		menuNaviIcon.addClickListener(e -> AppTemplateUI.getNaviDrawer().toggle());
 
-    public enum NaviMode {
-        MENU, CONTEXTUAL
-    }
+		contextNaviIcon = UIUtils.createButton(ButtonSize.SMALL, ButtonStyle.TERTIARY, VaadinIcon.ARROW_BACKWARD);
+		contextNaviIcon.addClassNames(CLASS_NAME + "__navi-icon", CLASS_NAME + "__navi-icon--visible");
+		contextNaviIcon.setVisible(false);
 
-    public AppBar(String title, NaviTab... tabs) {
-        super();
-        setClassName(CLASS_NAME);
-        getElement().setAttribute(LumoStyles.THEME, LumoStyles.DARK);
+		this.title = new H4(title);
+		this.title.setClassName(CLASS_NAME + "__title");
 
-        menuNaviIcon = UIUtils.createSmallTertiaryButton(Collections.singleton(CLASS_NAME + "__navi-icon"), VaadinIcon.MENU);
-        menuNaviIcon.addClickListener(e -> AppTemplateUI.getNaviDrawer().toggle());
+		search = UIUtils.createSmallTextField();
+		search.setPlaceholder("Search");
+		search.setPrefixComponent(new Icon(VaadinIcon.SEARCH));
+		search.setVisible(false);
 
-        contextNaviIcon = UIUtils.createSmallTertiaryButton(Arrays.asList(CLASS_NAME + "__navi-icon", CLASS_NAME + "__navi-icon--visible"), VaadinIcon.ARROW_BACKWARD);
-        contextNaviIcon.setVisible(false);
+		avatar = new Image();
+		avatar.setClassName(CLASS_NAME + "__avatar");
+		avatar.setSrc("https://pbs.twimg.com/profile_images/2642704545/a77c0524766c6f3b4be4929f2005e627_400x400.png");
+		avatar.setVisible(UIConfig.getNaviHeader().equals(UIConfig.NaviHeader.BRAND_EXPRESSION));
 
-        this.title = new H4(title);
-        this.title.setClassName(CLASS_NAME + "__title");
+		ContextMenu contextMenu = new ContextMenu(avatar);
+		contextMenu.setOpenOnClick(true);
+		contextMenu.addItem("john.smith@gmail.com", e -> Notification.show("Not implemented yet.", 3000, Notification.Position.BOTTOM_CENTER));
+		contextMenu.addItem("john.smith@yahoo.com", e -> Notification.show("Not implemented yet.", 3000, Notification.Position.BOTTOM_CENTER));
+		contextMenu.addItem("Settings", e -> Notification.show("Not implemented yet.", 3000, Notification.Position.BOTTOM_CENTER));
+		contextMenu.addItem("Log Out", e -> Notification.show("Not implemented yet.", 3000, Notification.Position.BOTTOM_CENTER));
 
-        search = UIUtils.createSmallTextField();
-        search.setPlaceholder("Search");
-        search.setPrefixComponent(new Icon(VaadinIcon.SEARCH));
-        search.setVisible(false);
+		actionItems = UIUtils.createFlexLayout(Collections.singleton(CLASS_NAME + "__action-items"), avatar);
+		actionItems.setVisible(false);
 
-        avatar = new Image();
-        avatar.setClassName(CLASS_NAME + "__avatar");
-        avatar.setSrc("https://pbs.twimg.com/profile_images/2642704545/a77c0524766c6f3b4be4929f2005e627_400x400.png");
-        avatar.setVisible(UIConfig.getNaviHeader().equals(UIConfig.NaviHeader.BRAND_EXPRESSION));
+		container = UIUtils.createFlexLayout(Collections.singleton(CLASS_NAME + "__container"), menuNaviIcon, contextNaviIcon, this.title, search, actionItems, avatar);
+		container.setAlignItems(Alignment.CENTER);
+		container.setFlexGrow(1, search);
+		add(container);
 
-        ContextMenu contextMenu = new ContextMenu(avatar);
-        contextMenu.setOpenOnClick(true);
-        contextMenu.addItem("john.smith@gmail.com", e -> Notification.show("Not implemented yet.", 3000, Notification.Position.BOTTOM_CENTER));
-        contextMenu.addItem("john.smith@yahoo.com", e -> Notification.show("Not implemented yet.", 3000, Notification.Position.BOTTOM_CENTER));
-        contextMenu.addItem("Settings", e -> Notification.show("Not implemented yet.", 3000, Notification.Position.BOTTOM_CENTER));
-        contextMenu.addItem("Log Out", e -> Notification.show("Not implemented yet.", 3000, Notification.Position.BOTTOM_CENTER));
+		addTab = UIUtils.createSmallButton(VaadinIcon.PLUS);
+		addTab.addClickListener(e -> naviTabs.setSelectedTab(addClosableNaviTab("New Tab", Default.class)));
+		addTab.setVisible(false);
 
-        actionItems = UIUtils.createFlexLayout(Collections.singleton(CLASS_NAME + "__action-items"), avatar);
-        actionItems.setVisible(false);
+		naviTabs = new NaviTabs(tabs);
+		naviTabs.setClassName(CLASS_NAME + "__tabs");
+		naviTabs.setVisible(false);
+		for (NaviTab tab : tabs) {
+			configureTab(tab);
+		}
 
-        container = UIUtils.createFlexLayout(Collections.singleton(CLASS_NAME + "__container"), menuNaviIcon, contextNaviIcon, this.title, search, actionItems, avatar);
-        container.setAlignItems(Alignment.CENTER);
-        container.setFlexGrow(1, search);
-        add(container);
+		tabContainer = UIUtils.createFlexLayout(Collections.singleton(CLASS_NAME + "__tab-container"), naviTabs, addTab);
+		tabContainer.setAlignItems(Alignment.CENTER);
+		add(tabContainer);
+	}
 
-        addTab = UIUtils.createSmallButton(VaadinIcon.PLUS);
-        addTab.addClickListener(e -> naviTabs.setSelectedTab(addClosableNaviTab("New Tab", Default.class)));
-        addTab.setVisible(false);
+	public void setNaviMode(NaviMode mode) {
+		if (mode.equals(NaviMode.MENU)) {
+			menuNaviIcon.setVisible(true);
+			contextNaviIcon.setVisible(false);
+		} else {
+			menuNaviIcon.setVisible(false);
+			contextNaviIcon.setVisible(true);
+		}
+	}
 
-        naviTabs = new NaviTabs(tabs);
-        naviTabs.setClassName(CLASS_NAME + "__tabs");
-        naviTabs.setVisible(false);
-        for (NaviTab tab : tabs) {
-            configureTab(tab);
-        }
 
-        tabContainer = UIUtils.createFlexLayout(Collections.singleton(CLASS_NAME + "__tab-container"), naviTabs, addTab);
-        tabContainer.setAlignItems(Alignment.CENTER);
-        add(tabContainer);
-    }
+	/* === MENU ICON === */
 
-    public void setNaviMode(NaviMode mode) {
-        if (mode.equals(NaviMode.MENU)) {
-            menuNaviIcon.setVisible(true);
-            contextNaviIcon.setVisible(false);
-        } else {
-            menuNaviIcon.setVisible(false);
-            contextNaviIcon.setVisible(true);
-        }
-    }
+	public Button getMenuNaviIcon() {
+		return menuNaviIcon;
+	}
 
+	public void setMenuNaviIconVisible(boolean visible) {
+		menuNaviIcon.setVisible(visible);
+	}
 
-    /* === MENU ICON === */
 
-    public Button getMenuNaviIcon() {
-        return menuNaviIcon;
-    }
+	/* === CONTEXT ICON === */
 
-    public void setMenuNaviIconVisible(boolean visible) {
-        menuNaviIcon.setVisible(visible);
-    }
+	public Button getContextNaviIcon() {
+		return contextNaviIcon;
+	}
 
+	public void setContextNaviIcon(Icon icon) {
+		contextNaviIcon.setIcon(icon);
+	}
 
-    /* === CONTEXT ICON === */
 
-    public Button getContextNaviIcon() {
-        return contextNaviIcon;
-    }
+	/* === TITLE === */
 
-    public void setContextNaviIcon(Icon icon) {
-        contextNaviIcon.setIcon(icon);
-    }
+	public String getTitle() {
+		return this.title.getText();
+	}
 
+	public void setTitle(String title) {
+		this.title.setText(title);
+	}
 
-    /* === TITLE === */
 
-    public String getTitle() {
-        return this.title.getText();
-    }
+	/* === ACTION ITEMS === */
 
-    public void setTitle(String title) {
-        this.title.setText(title);
-    }
+	public Component addActionItem(Component component) {
+		actionItems.add(component);
+		updateActionItemsVisibility();
+		return component;
+	}
 
+	public Button addActionItem(VaadinIcon icon) {
+		Button button = UIUtils.createButton(ButtonSize.SMALL, ButtonStyle.TERTIARY, icon);
+		addActionItem(button);
+		return button;
+	}
 
-    /* === ACTION ITEMS === */
+	public void removeAllActionItems() {
+		actionItems.removeAll();
+		updateActionItemsVisibility();
+	}
 
-    public Component addActionItem(Component component) {
-        actionItems.add(component);
-        updateActionItemsVisibility();
-        return component;
-    }
 
-    public Button addActionItem(Icon icon) {
-        Button button = UIUtils.createSmallTertiaryButton(icon);
-        addActionItem(button);
-        return button;
-    }
+	/* === TABS === */
 
-    public void removeAllActionItems() {
-        actionItems.removeAll();
-        updateActionItemsVisibility();
-    }
+	public void centerTabs() {
+		naviTabs.addClassName(LumoStyles.Margin.Horizontal.AUTO);
+	}
 
+	private void configureTab(Tab tab) {
+		tab.addClassName(CLASS_NAME + "__tab");
+		updateTabsVisibility();
+	}
 
-    /* === TABS === */
+	public Tab addTab(String text) {
+		Tab tab = naviTabs.addTab(text);
+		configureTab(tab);
+		return tab;
+	}
 
-    public void centerTabs() {
-        naviTabs.addClassName(LumoStyles.Margin.Horizontal.AUTO);
-    }
+	public Tab addNaviTab(String text, Class<? extends Component> navigationTarget) {
+		Tab tab = naviTabs.addNaviTab(text, navigationTarget);
+		configureTab(tab);
+		return tab;
+	}
 
-    private void configureTab(Tab tab) {
-        tab.addClassName(CLASS_NAME + "__tab");
-        updateTabsVisibility();
-    }
+	public Tab addClosableNaviTab(String text, Class<? extends Component> navigationTarget) {
+		Tab tab = naviTabs.addClosableNaviTab(text, navigationTarget);
+		configureTab(tab);
+		return tab;
+	}
 
-    public Tab addTab(String text) {
-        Tab tab = naviTabs.addTab(text);
-        configureTab(tab);
-        return tab;
-    }
+	public Tab getSelectedTab() {
+		return naviTabs.getSelectedTab();
+	}
 
-    public Tab addNaviTab(String text, Class<? extends Component> navigationTarget) {
-        Tab tab = naviTabs.addNaviTab(text, navigationTarget);
-        configureTab(tab);
-        return tab;
-    }
+	public void setSelectedTab(Tab selectedTab) {
+		naviTabs.setSelectedTab(selectedTab);
+	}
 
-    public Tab addClosableNaviTab(String text, Class<? extends Component> navigationTarget) {
-        Tab tab = naviTabs.addClosableNaviTab(text, navigationTarget);
-        configureTab(tab);
-        return tab;
-    }
+	public void updateSelectedTab(String text, Class<? extends Component> navigationTarget) {
+		naviTabs.updateSelectedTab(text, navigationTarget);
+	}
 
-    public Tab getSelectedTab() {
-        return naviTabs.getSelectedTab();
-    }
+	public void navigateToSelectedTab() {
+		naviTabs.navigateToSelectedTab();
+	}
 
-    public void setSelectedTab(Tab selectedTab) {
-        naviTabs.setSelectedTab(selectedTab);
-    }
+	public void addTabSelectionListener(ComponentEventListener<Tabs.SelectedChangeEvent> listener) {
+		naviTabs.addSelectedChangeListener(listener);
+	}
 
-    public void updateSelectedTab(String text, Class<? extends Component> navigationTarget) {
-        naviTabs.updateSelectedTab(text, navigationTarget);
-    }
+	public int getTabCount() {
+		return naviTabs.getTabCount();
+	}
 
-    public void navigateToSelectedTab() {
-        naviTabs.navigateToSelectedTab();
-    }
+	public void removeAllTabs() {
+		naviTabs.removeAll();
+		updateTabsVisibility();
+	}
 
-    public void addTabSelectionListener(ComponentEventListener<Tabs.SelectedChangeEvent> listener) {
-        naviTabs.addSelectedChangeListener(listener);
-    }
 
-    public int getTabCount() {
-        return naviTabs.getTabCount();
-    }
+	/* === ADD TAB BUTTON === */
 
-    public void removeAllTabs() {
-        naviTabs.removeAll();
-        updateTabsVisibility();
-    }
+	public void setAddTabVisible(boolean visible) {
+		addTab.setVisible(visible);
+	}
 
 
-    /* === ADD TAB BUTTON === */
+	/* === SEARCH === */
 
-    public void setAddTabVisible(boolean visible) {
-        addTab.setVisible(visible);
-    }
+	public void searchModeOn() {
+		menuNaviIcon.setVisible(false);
+		title.setVisible(false);
+		actionItems.setVisible(false);
+		tabContainer.setVisible(false);
 
+		contextNaviIcon.setIcon(new Icon(VaadinIcon.ARROW_BACKWARD));
+		contextNaviIcon.setVisible(true);
+		searchRegistration = contextNaviIcon.addClickListener(e -> searchModeOff());
 
-    /* === SEARCH === */
+		search.setVisible(true);
+		search.focus();
+	}
 
-    public void searchModeOn() {
-        menuNaviIcon.setVisible(false);
-        title.setVisible(false);
-        actionItems.setVisible(false);
-        tabContainer.setVisible(false);
+	private void searchModeOff() {
+		menuNaviIcon.setVisible(true);
+		title.setVisible(true);
+		tabContainer.setVisible(true);
 
-        contextNaviIcon.setIcon(new Icon(VaadinIcon.ARROW_BACKWARD));
-        contextNaviIcon.setVisible(true);
-        searchRegistration = contextNaviIcon.addClickListener(e -> searchModeOff());
+		updateActionItemsVisibility();
+		updateTabsVisibility();
 
-        search.setVisible(true);
-        search.focus();
-    }
+		contextNaviIcon.setVisible(false);
+		searchRegistration.remove();
 
-    private void searchModeOff() {
-        menuNaviIcon.setVisible(true);
-        title.setVisible(true);
-        tabContainer.setVisible(true);
+		search.setVisible(false);
+	}
 
-        updateActionItemsVisibility();
-        updateTabsVisibility();
 
-        contextNaviIcon.setVisible(false);
-        searchRegistration.remove();
+	/* === RESET === */
 
-        search.setVisible(false);
-    }
+	public void reset() {
+		setNaviMode(AppBar.NaviMode.MENU);
+		removeAllActionItems();
+		removeAllTabs();
+	}
 
 
-    /* === RESET === */
+	/* === UPDATE VISIBILITY === */
 
-    public void reset() {
-        setNaviMode(AppBar.NaviMode.MENU);
-        removeAllActionItems();
-        removeAllTabs();
-    }
+	private void updateActionItemsVisibility() {
+		actionItems.setVisible(actionItems.getComponentCount() > 0);
+	}
 
-
-    /* === UPDATE VISIBILITY === */
-
-    private void updateActionItemsVisibility() {
-        actionItems.setVisible(actionItems.getComponentCount() > 0);
-    }
-
-    private void updateTabsVisibility() {
-        naviTabs.setVisible(naviTabs.getComponentCount() > 0);
-    }
+	private void updateTabsVisibility() {
+		naviTabs.setVisible(naviTabs.getComponentCount() > 0);
+	}
 }

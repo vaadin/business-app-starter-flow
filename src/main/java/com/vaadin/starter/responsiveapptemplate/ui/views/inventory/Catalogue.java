@@ -36,156 +36,156 @@ import static com.vaadin.starter.responsiveapptemplate.ui.utils.ViewStyles.GRID_
 @PageTitle("Catalogue")
 public class Catalogue extends ViewFrame {
 
-    private DetailsDrawer detailsDrawer;
+	private DetailsDrawer detailsDrawer;
 
-    public Catalogue() {
-        // Header
-        if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-            AppBar appBar = new AppBar("Catalogue");
-            setHeader(appBar);
-        }
+	public Catalogue() {
+		// Header
+		if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
+			AppBar appBar = new AppBar("Catalogue");
+			setHeader(appBar);
+		}
 
-        // Grid
-        Grid<Item> grid = new Grid<>();
-        grid.setDataProvider(DataProvider.ofCollection(DummyData.getItems()));
+		// Grid
+		Grid<Item> grid = new Grid<>();
+		grid.setDataProvider(DataProvider.ofCollection(DummyData.getItems()));
 
-        grid.addColumn(new ComponentRenderer<>(UIUtils::createBadge))
-                .setHeader("Category")
-                .setWidth(UIUtils.COLUMN_WIDTH_M)
-                .setFlexGrow(0);
-        grid.addColumn(new ComponentRenderer<>(this::createInfo))
-                .setHeader("Item")
-                .setWidth(UIUtils.COLUMN_WIDTH_XL)
-                .setFlexGrow(1);
-        grid.addColumn(Item::getVendor)
-                .setHeader("Vendor")
-                .setWidth(UIUtils.COLUMN_WIDTH_XL)
-                .setFlexGrow(1);
-        grid.addColumn(new ComponentRenderer<>(this::createPrice))
-                .setHeader(UIUtils.createRightAlignedDiv("Unit Price ($)"))
-                .setWidth(UIUtils.COLUMN_WIDTH_M)
-                .setFlexGrow(0);
-        grid.addColumn(new ComponentRenderer<>(this::createStock))
-                .setHeader(UIUtils.createRightAlignedDiv("In Stock"))
-                .setWidth(UIUtils.COLUMN_WIDTH_M)
-                .setFlexGrow(0);
-        grid.addColumn(new ComponentRenderer<>(this::createSold))
-                .setHeader(UIUtils.createRightAlignedDiv("Units Sold"))
-                .setWidth(UIUtils.COLUMN_WIDTH_M)
-                .setFlexGrow(0);
+		grid.addColumn(new ComponentRenderer<>(UIUtils::createBadge))
+				.setHeader("Category")
+				.setWidth(UIUtils.COLUMN_WIDTH_M)
+				.setFlexGrow(0);
+		grid.addColumn(new ComponentRenderer<>(this::createInfo))
+				.setHeader("Item")
+				.setWidth(UIUtils.COLUMN_WIDTH_XL)
+				.setFlexGrow(1);
+		grid.addColumn(Item::getVendor)
+				.setHeader("Vendor")
+				.setWidth(UIUtils.COLUMN_WIDTH_XL)
+				.setFlexGrow(1);
+		grid.addColumn(new ComponentRenderer<>(this::createPrice))
+				.setHeader(UIUtils.createRightAlignedDiv("Unit Price ($)"))
+				.setWidth(UIUtils.COLUMN_WIDTH_M)
+				.setFlexGrow(0);
+		grid.addColumn(new ComponentRenderer<>(this::createStock))
+				.setHeader(UIUtils.createRightAlignedDiv("In Stock"))
+				.setWidth(UIUtils.COLUMN_WIDTH_M)
+				.setFlexGrow(0);
+		grid.addColumn(new ComponentRenderer<>(this::createSold))
+				.setHeader(UIUtils.createRightAlignedDiv("Units Sold"))
+				.setWidth(UIUtils.COLUMN_WIDTH_M)
+				.setFlexGrow(0);
 
-        grid.addSelectionListener(e -> {
-            if (e.getFirstSelectedItem().isPresent()) {
-                showDetails(e.getFirstSelectedItem().get());
-            }
-        });
+		grid.addSelectionListener(e -> {
+			if (e.getFirstSelectedItem().isPresent()) {
+				showDetails(e.getFirstSelectedItem().get());
+			}
+		});
 
-        grid.setSizeFull();
+		grid.setSizeFull();
 
-        // Grid wrapper
-        Div gridWrapper = UIUtils.createDiv(Collections.singleton(GRID_VIEW), grid);
+		// Grid wrapper
+		Div gridWrapper = UIUtils.createDiv(Collections.singleton(GRID_VIEW), grid);
 
-        // Details drawer
-        initDetailsDrawer();
+		// Details drawer
+		initDetailsDrawer();
 
-        // Set the content
-        FlexLayout content = new FlexLayout(gridWrapper, detailsDrawer);
-        content.setSizeFull();
-        setContent(content);
-    }
+		// Set the content
+		FlexLayout content = new FlexLayout(gridWrapper, detailsDrawer);
+		content.setSizeFull();
+		setContent(content);
+	}
 
-    private Component createInfo(Item item) {
-        return new ListItem(item.getName(), item.getDesc());
-    }
+	private Component createInfo(Item item) {
+		return new ListItem(item.getName(), item.getDesc());
+	}
 
-    private Component createPrice(Item item) {
-        Double price = item.getPrice();
-        Label label = UIUtils.createH4Label(UIUtils.formatAmount(price));
-        return UIUtils.createRightAlignedDiv(label);
-    }
+	private Component createPrice(Item item) {
+		Double price = item.getPrice();
+		Label label = UIUtils.createH4Label(UIUtils.formatAmount(price));
+		return UIUtils.createRightAlignedDiv(label);
+	}
 
-    private Component createStock(Item item) {
-        return UIUtils.createRightAlignedDiv(UIUtils.formatUnits(item.getStock()));
-    }
+	private Component createStock(Item item) {
+		return UIUtils.createRightAlignedDiv(UIUtils.formatUnits(item.getStock()));
+	}
 
-    private Component createSold(Item item) {
-        return UIUtils.createRightAlignedDiv(UIUtils.formatUnits(item.getSold()));
-    }
+	private Component createSold(Item item) {
+		return UIUtils.createRightAlignedDiv(UIUtils.formatUnits(item.getSold()));
+	}
 
-    private void initDetailsDrawer() {
-        detailsDrawer = new DetailsDrawer(DetailsDrawer.Position.RIGHT);
+	private void initDetailsDrawer() {
+		detailsDrawer = new DetailsDrawer(DetailsDrawer.Position.RIGHT);
 
-        // Footer
-        Button save = UIUtils.createPrimaryButton("Save");
-        save.addClickListener(e -> Notification.show("Not implemented yet.", 3000, Notification.Position.BOTTOM_CENTER));
+		// Footer
+		Button save = UIUtils.createPrimaryButton("Save");
+		save.addClickListener(e -> Notification.show("Not implemented yet.", 3000, Notification.Position.BOTTOM_CENTER));
 
-        Button cancel = UIUtils.createTertiaryButton("Cancel");
-        cancel.addClickListener(e -> detailsDrawer.hide());
+		Button cancel = UIUtils.createTertiaryButton("Cancel");
+		cancel.addClickListener(e -> detailsDrawer.hide());
 
-        Button delete = UIUtils.createErrorPrimaryButton("Delete");
-        delete.addClassName(LumoStyles.Margin.Left.AUTO);
-        delete.addClickListener(e -> Notification.show("Not implemented yet.", 3000, Notification.Position.BOTTOM_CENTER));
+		Button delete = UIUtils.createErrorPrimaryButton("Delete");
+		delete.addClassName(LumoStyles.Margin.Left.AUTO);
+		delete.addClickListener(e -> Notification.show("Not implemented yet.", 3000, Notification.Position.BOTTOM_CENTER));
 
-        FlexLayout footer = UIUtils.createFlexLayout(Arrays.asList(LumoStyles.Padding.Horizontal.L, LumoStyles.Padding.Vertical.S, LumoStyles.Spacing.Right.S), save, cancel, delete);
-        footer.getStyle().set(CSSProperties.BackgroundColor.PROPERTY, LumoStyles.Color.CONTRAST_5);
-        footer.setWidth("100%");
+		FlexLayout footer = UIUtils.createFlexLayout(Arrays.asList(LumoStyles.Padding.Horizontal.L, LumoStyles.Padding.Vertical.S, LumoStyles.Spacing.Right.S), save, cancel, delete);
+		footer.getStyle().set(CSSProperties.BackgroundColor.PROPERTY, LumoStyles.Color.CONTRAST_5);
+		footer.setWidth("100%");
 
-        detailsDrawer.setFooter(footer);
-    }
+		detailsDrawer.setFooter(footer);
+	}
 
-    private void showDetails(Item item) {
-        detailsDrawer.setContent(createDetails(item));
-        detailsDrawer.show();
-    }
+	private void showDetails(Item item) {
+		detailsDrawer.setContent(createDetails(item));
+		detailsDrawer.show();
+	}
 
-    private Component createDetails(Item item) {
-        Label title = UIUtils.createDetailsDrawerHeader("Edit Item", false, false);
+	private Component createDetails(Item item) {
+		Label title = UIUtils.createDetailsDrawerHeader("Edit Item", false, false);
 
-        RadioButtonGroup<Item.Category> category = new RadioButtonGroup<>();
-        category.setItems(Item.Category.values());
-        category.setValue(item.getCategory());
-        category.setRenderer(new ComponentRenderer<>(i -> UIUtils.createBadge(i)));
-        category.getStyle().set(CSSProperties.Display.PROPERTY, CSSProperties.Display.FLEX);
-        category.getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN);
+		RadioButtonGroup<Item.Category> category = new RadioButtonGroup<>();
+		category.setItems(Item.Category.values());
+		category.setValue(item.getCategory());
+		category.setRenderer(new ComponentRenderer<>(i -> UIUtils.createBadge(i)));
+		category.getStyle().set(CSSProperties.Display.PROPERTY, CSSProperties.Display.FLEX);
+		category.getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN);
 
-        TextField name = new TextField();
-        name.setValue(item.getName());
-        name.setWidth("100%");
+		TextField name = new TextField();
+		name.setValue(item.getName());
+		name.setWidth("100%");
 
-        TextArea desc = new TextArea();
-        desc.setValue(item.getDesc());
-        desc.setWidth("100%");
+		TextArea desc = new TextArea();
+		desc.setValue(item.getDesc());
+		desc.setWidth("100%");
 
-        TextField vendor = new TextField();
-        vendor.setValue(item.getVendor());
-        vendor.setWidth("100%");
+		TextField vendor = new TextField();
+		vendor.setValue(item.getVendor());
+		vendor.setWidth("100%");
 
-        TextField price = new TextField();
-        price.setValue(UIUtils.formatAmount(item.getPrice()));
-        price.setWidth("100%");
+		TextField price = new TextField();
+		price.setValue(UIUtils.formatAmount(item.getPrice()));
+		price.setWidth("100%");
 
-        TextField stock = new TextField();
-        stock.setValue(UIUtils.formatUnits(item.getStock()));
-        stock.setWidth("100%");
+		TextField stock = new TextField();
+		stock.setValue(UIUtils.formatUnits(item.getStock()));
+		stock.setWidth("100%");
 
-        TextField sold = new TextField();
-        sold.setValue(UIUtils.formatUnits(item.getSold()));
-        sold.setWidth("100%");
+		TextField sold = new TextField();
+		sold.setValue(UIUtils.formatUnits(item.getSold()));
+		sold.setWidth("100%");
 
-        // Add it all together.
-        FormLayout form = UIUtils.createFormLayout(Arrays.asList(LumoStyles.Padding.Bottom.L, LumoStyles.Padding.Horizontal.L));
-        form.setResponsiveSteps(new FormLayout.ResponsiveStep("0", 1, FormLayout.ResponsiveStep.LabelsPosition.TOP));
+		// Add it all together.
+		FormLayout form = UIUtils.createFormLayout(Arrays.asList(LumoStyles.Padding.Bottom.L, LumoStyles.Padding.Horizontal.L));
+		form.setResponsiveSteps(new FormLayout.ResponsiveStep("0", 1, FormLayout.ResponsiveStep.LabelsPosition.TOP));
 
-        form.add(title);
-        form.addFormItem(category, "Category").getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN);
-        form.addFormItem(name, "Name");
-        form.addFormItem(desc, "Description");
-        form.addFormItem(vendor, "Vendor");
-        form.addFormItem(price, "Unit Price ($)");
-        form.addFormItem(stock, "In Stock");
-        form.addFormItem(sold, "Units Sold");
+		form.add(title);
+		form.addFormItem(category, "Category").getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN);
+		form.addFormItem(name, "Name");
+		form.addFormItem(desc, "Description");
+		form.addFormItem(vendor, "Vendor");
+		form.addFormItem(price, "Unit Price ($)");
+		form.addFormItem(stock, "In Stock");
+		form.addFormItem(sold, "Units Sold");
 
-        return form;
-    }
+		return form;
+	}
 
 }

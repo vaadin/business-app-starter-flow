@@ -26,10 +26,7 @@ import com.vaadin.starter.responsiveapptemplate.backend.UIConfig;
 import com.vaadin.starter.responsiveapptemplate.ui.Root;
 import com.vaadin.starter.responsiveapptemplate.ui.components.ListItem;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.bar.AppBar;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.BoxShadowBorders;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.CSSProperties;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
+import com.vaadin.starter.responsiveapptemplate.ui.utils.*;
 import com.vaadin.starter.responsiveapptemplate.ui.views.ViewFrame;
 
 import java.time.LocalDate;
@@ -39,160 +36,163 @@ import java.util.Arrays;
 @PageTitle("Account Details")
 public class AccountDetails extends ViewFrame implements HasUrlParameter<Long> {
 
-    public static final int RECENT_TRANSACTIONS = 4;
-    private AppBar appBar;
-    private final Div viewport;
-    private ListItem availability;
-    private ListItem bankAccount;
-    private ListItem updated;
+	public static final int RECENT_TRANSACTIONS = 4;
+	private AppBar appBar;
+	private final Div viewport;
+	private ListItem availability;
+	private ListItem bankAccount;
+	private ListItem updated;
 
-    public AccountDetails() {
-        // Header
-        if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-            appBar = new AppBar("Details");
-            appBar.setNaviMode(AppBar.NaviMode.CONTEXTUAL);
-            appBar.setContextNaviIcon(new Icon(VaadinIcon.ARROW_BACKWARD));
-            appBar.getContextNaviIcon().addClickListener(e -> UI.getCurrent().navigate("accounts"));
-            setHeader(appBar);
-        }
+	public AccountDetails() {
+		// Header
+		if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
+			appBar = new AppBar("Details");
+			appBar.setNaviMode(AppBar.NaviMode.CONTEXTUAL);
+			appBar.setContextNaviIcon(new Icon(VaadinIcon.ARROW_BACKWARD));
+			appBar.getContextNaviIcon().addClickListener(e -> UI.getCurrent().navigate("accounts"));
+			setHeader(appBar);
+		}
 
-        // Content
-        viewport = UIUtils.createDiv(
-                Arrays.asList(LumoStyles.Margin.Horizontal.AUTO, LumoStyles.Margin.Responsive.Vertical.ML),
-                createLogoSection(),
-                createRecentTransactionsHeader(),
-                createRecentTransactionsList(),
-                UIUtils.createH3Label(Arrays.asList(LumoStyles.Margin.Vertical.L, LumoStyles.Margin.Responsive.Horizontal.ML), "Monthly Overview"),
-                createTransactionsChart()
-        );
-        viewport.getStyle().set(CSSProperties.MaxWidth.PROPERTY, CSSProperties.MaxWidth._800);
-        setContent(viewport);
-    }
+		// Content
+		Label monthlyOverviewHeader = UIUtils.createH3Label("Monthly Overview");
+		monthlyOverviewHeader.addClassNames(LumoStyles.Margin.Vertical.L, LumoStyles.Margin.Responsive.Horizontal.ML);
 
-    @Override
-    public void setParameter(BeforeEvent beforeEvent, Long id) {
-        BankAccount account = DummyData.getBankAccount(id);
+		viewport = UIUtils.createDiv(
+				Arrays.asList(LumoStyles.Margin.Horizontal.AUTO, LumoStyles.Margin.Responsive.Vertical.ML),
+				createLogoSection(),
+				createRecentTransactionsHeader(),
+				createRecentTransactionsList(),
+				monthlyOverviewHeader,
+				createTransactionsChart()
+		);
+		viewport.getStyle().set(CSSProperties.MaxWidth.PROPERTY, CSSProperties.MaxWidth._800);
+		setContent(viewport);
+	}
 
-        if (appBar != null) {
-            appBar.setTitle(account.getOwner());
-        }
+	@Override
+	public void setParameter(BeforeEvent beforeEvent, Long id) {
+		BankAccount account = DummyData.getBankAccount(id);
 
-        UI.getCurrent().getPage().setTitle(account.getOwner());
+		if (appBar != null) {
+			appBar.setTitle(account.getOwner());
+		}
 
-        availability.setPrimaryText(UIUtils.formatAmount(account.getAvailability()));
-        bankAccount.setPrimaryText(account.getAccount());
-        bankAccount.setSecondaryText(account.getBank());
-        updated.setPrimaryText(UIUtils.formatDate(account.getUpdated()));
-    }
+		UI.getCurrent().getPage().setTitle(account.getOwner());
 
-    private Component createLogoSection() {
-        Image image = new Image(UIUtils.IMG_PATH + "sample-logo1.jpg", "");
-        image.getStyle().set(CSSProperties.BorderRadius.PROPERTY, "100%");
-        image.addClassName(LumoStyles.Margin.Horizontal.L);
-        image.setHeight("200px");
-        image.setWidth("200px");
+		availability.setPrimaryText(UIUtils.formatAmount(account.getAvailability()));
+		bankAccount.setPrimaryText(account.getAccount());
+		bankAccount.setSecondaryText(account.getBank());
+		updated.setPrimaryText(UIUtils.formatDate(account.getUpdated()));
+	}
 
-        availability = new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.DOLLAR), "", "Availability");
-        availability.addPrimaryClassNames(LumoStyles.FontSize.H2);
-        availability.setDividerVisible(true);
-        availability.setReverse(true);
+	private Component createLogoSection() {
+		Image image = new Image(UIUtils.IMG_PATH + "sample-logo1.jpg", "");
+		image.getStyle().set(CSSProperties.BorderRadius.PROPERTY, "100%");
+		image.addClassName(LumoStyles.Margin.Horizontal.L);
+		image.setHeight("200px");
+		image.setWidth("200px");
 
-        bankAccount = new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.INSTITUTION), "", "");
-        bankAccount.setDividerVisible(true);
-        bankAccount.setReverse(true);
-        bankAccount.getStyle().set(CSSProperties.WhiteSpace.PROPERTY, CSSProperties.WhiteSpace.PRE_LINE);
+		availability = new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.DOLLAR), "", "Availability");
+		availability.addPrimaryClassNames(LumoStyles.Header.H2);
+		availability.setDividerVisible(true);
+		availability.setReverse(true);
 
-        updated = new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.CALENDAR), "", "Updated");
-        updated.setReverse(true);
+		bankAccount = new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.INSTITUTION), "", "");
+		bankAccount.setDividerVisible(true);
+		bankAccount.setReverse(true);
+		bankAccount.getStyle().set(CSSProperties.WhiteSpace.PROPERTY, CSSProperties.WhiteSpace.PRE_LINE);
 
-        FlexLayout listItems = UIUtils.createColumn(availability, bankAccount, updated);
-        listItems.getStyle().set(CSSProperties.Flex.PROPERTY, "1");
+		updated = new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.CALENDAR), "", "Updated");
+		updated.setReverse(true);
 
-        FlexLayout section = UIUtils.createWrappingFlexLayout(Arrays.asList(LumoStyles.Padding.Bottom.L, BoxShadowBorders.BOTTOM), image, listItems);
-        section.setAlignItems(FlexComponent.Alignment.CENTER);
-        section.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
+		FlexLayout listItems = UIUtils.createColumn(availability, bankAccount, updated);
+		listItems.getStyle().set(CSSProperties.Flex.PROPERTY, "1");
 
-        return section;
-    }
+		FlexLayout section = UIUtils.createWrappingFlexLayout(Arrays.asList(LumoStyles.Padding.Bottom.L, BoxShadowBorders.BOTTOM), image, listItems);
+		section.setAlignItems(FlexComponent.Alignment.CENTER);
+		section.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
 
-    private FlexLayout createRecentTransactionsHeader() {
-        Button viewAll = UIUtils.createSmallButton("View All");
-        viewAll.addClickListener(e -> Notification.show("Not implemented yet.", 3000, Notification.Position.BOTTOM_CENTER));
-        viewAll.getStyle().set(CSSProperties.Margin.PROPERTY, "0 0 0 auto");
+		return section;
+	}
 
-        FlexLayout header = UIUtils.createFlexLayout(
-                Arrays.asList(
-                        LumoStyles.Margin.Bottom.M,
-                        LumoStyles.Margin.Responsive.Horizontal.ML,
-                        LumoStyles.Margin.Top.L
-                ),
-                UIUtils.createH3Label("Recent Transactions"),
-                viewAll
-        );
-        header.setAlignItems(FlexComponent.Alignment.CENTER);
+	private FlexLayout createRecentTransactionsHeader() {
+		Button viewAll = UIUtils.createSmallButton("View All");
+		viewAll.addClickListener(e -> Notification.show("Not implemented yet.", 3000, Notification.Position.BOTTOM_CENTER));
+		viewAll.getStyle().set(CSSProperties.Margin.PROPERTY, "0 0 0 auto");
 
-        return header;
-    }
+		FlexLayout header = UIUtils.createFlexLayout(
+				Arrays.asList(
+						LumoStyles.Margin.Bottom.M,
+						LumoStyles.Margin.Responsive.Horizontal.ML,
+						LumoStyles.Margin.Top.L
+				),
+				UIUtils.createH3Label("Recent Transactions"),
+				viewAll
+		);
+		header.setAlignItems(FlexComponent.Alignment.CENTER);
 
-    private Div createRecentTransactionsList() {
-        Div div = UIUtils.createDiv(Arrays.asList(LumoStyles.Padding.Bottom.L, BoxShadowBorders.BOTTOM));
+		return header;
+	}
 
-        for (int i = 0; i < RECENT_TRANSACTIONS; i++) {
-            Double amount = DummyData.getAmount();
+	private Div createRecentTransactionsList() {
+		Div div = UIUtils.createDiv(Arrays.asList(LumoStyles.Padding.Bottom.L, BoxShadowBorders.BOTTOM));
 
-            Label amountLabel = UIUtils.createH4Label(UIUtils.formatAmount(amount));
-            amountLabel.addClassName(amount > 0 ? LumoStyles.TextColor.SUCCESS : LumoStyles.TextColor.ERROR);
+		for (int i = 0; i < RECENT_TRANSACTIONS; i++) {
+			Double amount = DummyData.getAmount();
 
-            ListItem item = new ListItem(DummyData.getLogo(), DummyData.getCompany(), UIUtils.formatDate(LocalDate.now().minusDays(i)), amountLabel);
+			Label amountLabel = UIUtils.createH4Label(UIUtils.formatAmount(amount));
+			amountLabel.addClassName(amount > 0 ? TextColor.SUCCESS.getStyle() : TextColor.ERROR.getStyle());
 
-            // Dividers for all but the last item. Last item has some bottom margin.
-            if (i < RECENT_TRANSACTIONS - 1) {
-                item.setDividerVisible(true);
-            }
+			ListItem item = new ListItem(DummyData.getLogo(), DummyData.getCompany(), UIUtils.formatDate(LocalDate.now().minusDays(i)), amountLabel);
 
-            div.add(item);
-        }
+			// Dividers for all but the last item. Last item has some bottom margin.
+			if (i < RECENT_TRANSACTIONS - 1) {
+				item.setDividerVisible(true);
+			}
 
-        return div;
-    }
+			div.add(item);
+		}
 
-    private Component createTransactionsChart() {
-        Chart chart = new Chart(ChartType.COLUMN);
+		return div;
+	}
 
-        Configuration conf = chart.getConfiguration();
-        conf.setTitle("");
-        conf.getLegend().setEnabled(true);
+	private Component createTransactionsChart() {
+		Chart chart = new Chart(ChartType.COLUMN);
 
-        XAxis xAxis = new XAxis();
-        xAxis.setCategories("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
-        conf.addxAxis(xAxis);
+		Configuration conf = chart.getConfiguration();
+		conf.setTitle("");
+		conf.getLegend().setEnabled(true);
 
-        conf.getyAxis().setTitle("Amount ($)");
+		XAxis xAxis = new XAxis();
+		xAxis.setCategories("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
+		conf.addxAxis(xAxis);
 
-        // Withdrawals and deposits
-        ListSeries withDrawals = new ListSeries("Withdrawals");
-        ListSeries deposits = new ListSeries("Deposits");
+		conf.getyAxis().setTitle("Amount ($)");
 
-        for (int i = 0; i < 8; i++) {
-            withDrawals.addData(DummyData.getRandomInt(5000, 10000));
-            deposits.addData(DummyData.getRandomInt(5000, 10000));
-        }
+		// Withdrawals and deposits
+		ListSeries withDrawals = new ListSeries("Withdrawals");
+		ListSeries deposits = new ListSeries("Deposits");
 
-        conf.addSeries(withDrawals);
-        conf.addSeries(deposits);
+		for (int i = 0; i < 8; i++) {
+			withDrawals.addData(DummyData.getRandomInt(5000, 10000));
+			deposits.addData(DummyData.getRandomInt(5000, 10000));
+		}
 
-        FlexLayout card = UIUtils.createWrappingFlexLayout(
-                Arrays.asList(
-                        LumoStyles.BorderRadius.S,
-                        LumoStyles.Padding.Horizontal.M,
-                        LumoStyles.Padding.Top.L,
-                        LumoStyles.Shadow.S
-                ),
-                chart
-        );
-        card.getStyle().set(CSSProperties.BackgroundColor.PROPERTY, LumoStyles.Color.BASE_COLOR);
-        card.getStyle().set(CSSProperties.BoxSizing.PROPERTY, CSSProperties.BoxSizing.BORDER_BOX);
-        card.setHeight("400px");
-        return card;
-    }
+		conf.addSeries(withDrawals);
+		conf.addSeries(deposits);
+
+		FlexLayout card = UIUtils.createWrappingFlexLayout(
+				Arrays.asList(
+						LumoStyles.BorderRadius.S,
+						LumoStyles.Padding.Horizontal.M,
+						LumoStyles.Padding.Top.L,
+						LumoStyles.Shadow.S
+				),
+				chart
+		);
+		card.getStyle().set(CSSProperties.BackgroundColor.PROPERTY, LumoStyles.Color.BASE_COLOR);
+		card.getStyle().set(CSSProperties.BoxSizing.PROPERTY, CSSProperties.BoxSizing.BORDER_BOX);
+		card.setHeight("400px");
+		return card;
+	}
 }
