@@ -2,6 +2,7 @@ package com.vaadin.starter.responsiveapptemplate.ui.views.demo;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.grid.Grid;
@@ -25,7 +26,10 @@ import com.vaadin.starter.responsiveapptemplate.backend.UIConfig;
 import com.vaadin.starter.responsiveapptemplate.ui.Root;
 import com.vaadin.starter.responsiveapptemplate.ui.components.ListItem;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.bar.AppBar;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.*;
+import com.vaadin.starter.responsiveapptemplate.ui.utils.BoxShadowBorders;
+import com.vaadin.starter.responsiveapptemplate.ui.utils.CSSProperties;
+import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
+import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
 import com.vaadin.starter.responsiveapptemplate.ui.views.ViewFrame;
 
 import java.util.Arrays;
@@ -135,7 +139,7 @@ public class FilterList extends ViewFrame {
 		combo.setClassName("token-select");
 		combo.setPlaceholder("Add filter...");
 
-		Div token = UIUtils.createDiv(Collections.singleton("token"), new Label("Filter token 1"), UIUtils.createButton(ButtonSize.SMALL, ButtonStyle.TERTIARY, VaadinIcon.CLOSE_SMALL));
+		Div token = UIUtils.createDiv(Collections.singleton("token"), new Label("Filter token 1"), UIUtils.createButton(VaadinIcon.CLOSE_SMALL, ButtonVariant.LUMO_SMALL, ButtonVariant.LUMO_TERTIARY));
 		token.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.DEFAULT);
 
 		Div tokenArea = new Div(token);

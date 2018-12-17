@@ -2,7 +2,9 @@ package com.vaadin.starter.responsiveapptemplate.ui.components.navigation.bar;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentEventListener;
+import com.vaadin.flow.component.HasValue;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.contextmenu.ContextMenu;
 import com.vaadin.flow.component.html.H4;
 import com.vaadin.flow.component.html.Image;
@@ -18,8 +20,6 @@ import com.vaadin.starter.responsiveapptemplate.backend.UIConfig;
 import com.vaadin.starter.responsiveapptemplate.ui.AppTemplateUI;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.tab.NaviTab;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.tab.NaviTabs;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.ButtonSize;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.ButtonStyle;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
 import com.vaadin.starter.responsiveapptemplate.ui.views.Default;
@@ -44,7 +44,7 @@ public class AppBar extends FlexLayout {
 
 	private Registration searchRegistration;
 	private TextField search;
-	private final FlexLayout tabContainer;
+	private FlexLayout tabContainer;
 
 	public enum NaviMode {
 		MENU, CONTEXTUAL
@@ -55,18 +55,18 @@ public class AppBar extends FlexLayout {
 		setClassName(CLASS_NAME);
 		getElement().setAttribute(LumoStyles.THEME, LumoStyles.DARK);
 
-		menuNaviIcon = UIUtils.createButton(ButtonSize.SMALL, ButtonStyle.TERTIARY, VaadinIcon.MENU);
+		menuNaviIcon = UIUtils.createButton(VaadinIcon.MENU, ButtonVariant.LUMO_SMALL, ButtonVariant.LUMO_TERTIARY);
 		menuNaviIcon.addClassName(CLASS_NAME + "__navi-icon");
 		menuNaviIcon.addClickListener(e -> AppTemplateUI.getNaviDrawer().toggle());
 
-		contextNaviIcon = UIUtils.createButton(ButtonSize.SMALL, ButtonStyle.TERTIARY, VaadinIcon.ARROW_BACKWARD);
+		contextNaviIcon = UIUtils.createButton(VaadinIcon.ARROW_BACKWARD, ButtonVariant.LUMO_SMALL, ButtonVariant.LUMO_TERTIARY);
 		contextNaviIcon.addClassNames(CLASS_NAME + "__navi-icon", CLASS_NAME + "__navi-icon--visible");
 		contextNaviIcon.setVisible(false);
 
 		this.title = new H4(title);
 		this.title.setClassName(CLASS_NAME + "__title");
 
-		search = UIUtils.createSmallTextField();
+		search = new TextField();
 		search.setPlaceholder("Search");
 		search.setPrefixComponent(new Icon(VaadinIcon.SEARCH));
 		search.setVisible(false);
@@ -95,7 +95,7 @@ public class AppBar extends FlexLayout {
 		addTab.addClickListener(e -> naviTabs.setSelectedTab(addClosableNaviTab("New Tab", Default.class)));
 		addTab.setVisible(false);
 
-		naviTabs = new NaviTabs(tabs);
+		naviTabs = tabs.length > 0 ? new NaviTabs(tabs) : new NaviTabs();
 		naviTabs.setClassName(CLASS_NAME + "__tabs");
 		naviTabs.setVisible(false);
 		for (NaviTab tab : tabs) {
@@ -118,6 +118,7 @@ public class AppBar extends FlexLayout {
 	}
 
 
+
 	/* === MENU ICON === */
 
 	public Button getMenuNaviIcon() {
@@ -127,6 +128,7 @@ public class AppBar extends FlexLayout {
 	public void setMenuNaviIconVisible(boolean visible) {
 		menuNaviIcon.setVisible(visible);
 	}
+
 
 
 	/* === CONTEXT ICON === */
@@ -140,6 +142,7 @@ public class AppBar extends FlexLayout {
 	}
 
 
+
 	/* === TITLE === */
 
 	public String getTitle() {
@@ -151,6 +154,7 @@ public class AppBar extends FlexLayout {
 	}
 
 
+
 	/* === ACTION ITEMS === */
 
 	public Component addActionItem(Component component) {
@@ -160,7 +164,7 @@ public class AppBar extends FlexLayout {
 	}
 
 	public Button addActionItem(VaadinIcon icon) {
-		Button button = UIUtils.createButton(ButtonSize.SMALL, ButtonStyle.TERTIARY, icon);
+		Button button = UIUtils.createButton(icon, ButtonVariant.LUMO_SMALL, ButtonVariant.LUMO_TERTIARY);
 		addActionItem(button);
 		return button;
 	}
@@ -169,6 +173,7 @@ public class AppBar extends FlexLayout {
 		actionItems.removeAll();
 		updateActionItemsVisibility();
 	}
+
 
 
 	/* === TABS === */
@@ -230,11 +235,13 @@ public class AppBar extends FlexLayout {
 	}
 
 
+
 	/* === ADD TAB BUTTON === */
 
 	public void setAddTabVisible(boolean visible) {
 		addTab.setVisible(visible);
 	}
+
 
 
 	/* === SEARCH === */
@@ -253,6 +260,14 @@ public class AppBar extends FlexLayout {
 		search.focus();
 	}
 
+	public void addSearchListener(HasValue.ValueChangeListener listener) {
+		search.addValueChangeListener(listener);
+	}
+
+	public void setSearchPlaceholder(String placeholder) {
+		search.setPlaceholder(placeholder);
+	}
+
 	private void searchModeOff() {
 		menuNaviIcon.setVisible(true);
 		title.setVisible(true);
@@ -264,8 +279,10 @@ public class AppBar extends FlexLayout {
 		contextNaviIcon.setVisible(false);
 		searchRegistration.remove();
 
+		search.clear();
 		search.setVisible(false);
 	}
+
 
 
 	/* === RESET === */
@@ -275,6 +292,7 @@ public class AppBar extends FlexLayout {
 		removeAllActionItems();
 		removeAllTabs();
 	}
+
 
 
 	/* === UPDATE VISIBILITY === */

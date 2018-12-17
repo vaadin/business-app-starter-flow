@@ -10,7 +10,6 @@ import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
 import com.vaadin.flow.component.textfield.TextField;
@@ -107,7 +106,7 @@ public class HorizontalSplitView extends ViewFrame {
 
 		// Footer
 		Button save = UIUtils.createPrimaryButton("Save");
-		save.addClickListener(e -> Notification.show("Not implemented yet.", 3000, Notification.Position.BOTTOM_CENTER));
+		save.addClickListener(e -> UIUtils.showNotification("Not implemented yet."));
 
 		Button cancel = UIUtils.createTertiaryButton("Cancel");
 		cancel.addClickListener(e -> detailsDrawer.hide());
@@ -151,7 +150,7 @@ public class HorizontalSplitView extends ViewFrame {
 		gender.setItems("Male", "Female", "Other");
 		gender.setValue("Other");
 
-		FlexLayout phone = createPhoneLayout();
+		FlexLayout phone = UIUtils.createPhoneLayout();
 
 		TextField email = new TextField();
 		email.setValue(person.getEmail());
@@ -175,21 +174,10 @@ public class HorizontalSplitView extends ViewFrame {
 		return form;
 	}
 
-	private FlexLayout createPhoneLayout() {
-		TextField prefix = new TextField();
-		prefix.setValue("+358");
-		prefix.setWidth("80px");
-
-		TextField number = new TextField();
-		number.setValue(DummyData.getPhoneNumber());
-
-		FlexLayout layout = UIUtils.createFlexLayout(Collections.singleton(LumoStyles.Spacing.Right.S), prefix, number);
-		layout.setFlexGrow(1, number);
-		return layout;
-	}
-
 	private Component createUserInfo(Person person) {
-		return new ListItem(UIUtils.createInitials(person.getInitials()), person.getName(), person.getEmail());
+		ListItem item = new ListItem(UIUtils.createInitials(person.getInitials()), person.getName(), person.getEmail());
+		item.setHorizontalPadding(false);
+		return item;
 	}
 
 	private Component createTwitter(Person person) {

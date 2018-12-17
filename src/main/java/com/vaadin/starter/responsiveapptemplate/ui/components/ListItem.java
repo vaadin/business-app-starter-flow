@@ -89,6 +89,16 @@ public class ListItem extends FlexLayout {
 		}
 	}
 
+	public void setHorizontalPadding(boolean horizontalPadding) {
+		if (horizontalPadding) {
+			getStyle().remove("padding-left");
+			getStyle().remove("padding-right");
+		} else {
+			getStyle().set("padding-left", "0");
+			getStyle().set("padding-right", "0");
+		}
+	}
+
 	public void setPrimaryText(String text) {
 		primary.setText(text);
 	}
@@ -134,4 +144,5 @@ public class ListItem extends FlexLayout {
 		}
 		divider.setVisible(visible);
 	}
+
 }

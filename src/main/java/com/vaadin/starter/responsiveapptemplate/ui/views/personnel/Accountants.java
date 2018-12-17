@@ -9,7 +9,6 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
 import com.vaadin.flow.component.textfield.TextField;
@@ -56,30 +55,30 @@ public class Accountants extends ViewFrame {
 		grid.setDataProvider(dataProvider);
 
 		grid.addColumn(Person::getId)
-				.setHeader("ID")
+				.setFlexGrow(0)
 				.setFrozen(true)
+				.setHeader("ID")
 				.setSortable(true)
-				.setWidth(UIUtils.COLUMN_WIDTH_XS)
-				.setFlexGrow(0);
+				.setWidth(UIUtils.COLUMN_WIDTH_XS);
 		grid.addColumn(new ComponentRenderer<>(this::createUserInfo))
 				.setHeader("Name")
 				.setWidth(UIUtils.COLUMN_WIDTH_XL);
 		grid.addColumn(new ComponentRenderer<>(this::createActive))
+				.setFlexGrow(0)
 				.setHeader(UIUtils.createRightAlignedDiv("Active"))
-				.setWidth(UIUtils.COLUMN_WIDTH_XS)
-				.setFlexGrow(0);
-		grid.addColumn(new ComponentRenderer<>(this::createReports))
-				.setHeader(UIUtils.createRightAlignedDiv("Reports"))
-				.setWidth(UIUtils.COLUMN_WIDTH_M)
-				.setFlexGrow(0);
+				.setWidth(UIUtils.COLUMN_WIDTH_XS);
+		grid.addColumn(new ComponentRenderer<>(this::createInvoices))
+				.setFlexGrow(0)
+				.setHeader(UIUtils.createRightAlignedDiv("Invoices"))
+				.setWidth(UIUtils.COLUMN_WIDTH_M);
 		grid.addColumn(new ComponentRenderer<>(this::createCompanies))
+				.setFlexGrow(0)
 				.setHeader(UIUtils.createRightAlignedDiv("Companies"))
-				.setWidth(UIUtils.COLUMN_WIDTH_M)
-				.setFlexGrow(0);
+				.setWidth(UIUtils.COLUMN_WIDTH_S);
 		grid.addColumn(new ComponentRenderer<>(this::createDate))
+				.setFlexGrow(0)
 				.setHeader(UIUtils.createRightAlignedDiv("Last Report"))
-				.setWidth(UIUtils.COLUMN_WIDTH_M)
-				.setFlexGrow(0);
+				.setWidth(UIUtils.COLUMN_WIDTH_S);
 
 		grid.addSelectionListener(e -> {
 			if (e.getFirstSelectedItem().isPresent()) {
@@ -109,7 +108,9 @@ public class Accountants extends ViewFrame {
 	}
 
 	private Component createUserInfo(Person person) {
-		return new ListItem(UIUtils.createInitials(person.getInitials()), person.getName(), person.getEmail());
+		ListItem item = new ListItem(UIUtils.createInitials(person.getInitials()), person.getName(), person.getEmail());
+		item.setHorizontalPadding(false);
+		return item;
 	}
 
 	private Component createActive(Person person) {
@@ -122,8 +123,8 @@ public class Accountants extends ViewFrame {
 		return UIUtils.createRightAlignedDiv(icon);
 	}
 
-	private Component createReports() {
-		return UIUtils.createRightAlignedDiv(UIUtils.createH4Label(UIUtils.formatUnits(DummyData.getRandomInt(0, 5000))));
+	private Component createInvoices() {
+		return UIUtils.createRightAlignedDiv(UIUtils.createH4Label(UIUtils.formatAmount(DummyData.getRandomInt(0, 5000))));
 	}
 
 	private Component createCompanies() {
@@ -143,7 +144,7 @@ public class Accountants extends ViewFrame {
 
 		// Footer
 		Button save = UIUtils.createPrimaryButton("Save");
-		save.addClickListener(e -> Notification.show("Not implemented yet.", 3000, Notification.Position.BOTTOM_CENTER));
+		save.addClickListener(e -> UIUtils.showNotification("Not implemented yet."));
 
 		Button cancel = UIUtils.createTertiaryButton("Cancel");
 		cancel.addClickListener(e -> detailsDrawer.hide());
@@ -200,13 +201,13 @@ public class Accountants extends ViewFrame {
 
 		form.addFormItem(firstName, "First Name");
 		form.addFormItem(lastName, "Last Name");
-		FormLayout.FormItem genderItem = form.addFormItem(gender, "Gender");
+		FormLayout.FormItem statusItem = form.addFormItem(gender, "Status");
 		FormLayout.FormItem phoneItem = form.addFormItem(phone, "Phone");
 		FormLayout.FormItem emailItem = form.addFormItem(email, "Email");
 		FormLayout.FormItem companyItem = form.addFormItem(company, "Company");
 		FormLayout.FormItem uploadItem = form.addFormItem(new Upload(), "Image");
 
-		UIUtils.setFormLayoutColSpan(2, genderItem, phoneItem, emailItem, companyItem, uploadItem);
+		UIUtils.setFormLayoutColSpan(2, statusItem, phoneItem, emailItem, companyItem, uploadItem);
 
 		return form;
 	}

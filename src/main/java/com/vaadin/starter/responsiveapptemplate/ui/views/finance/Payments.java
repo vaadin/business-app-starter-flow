@@ -9,6 +9,7 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
+import com.vaadin.flow.component.tabs.TabsVariant;
 import com.vaadin.flow.data.provider.DataProvider;
 import com.vaadin.flow.data.provider.ListDataProvider;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
@@ -130,7 +131,7 @@ public class Payments extends ViewFrame {
 		Label detailsDrawerTitle = UIUtils.createDetailsDrawerHeader("Payment Details", false, true);
 
 		Tabs tabs = new Tabs(new Tab("Details"), new Tab("Attachments"), new Tab("History"));
-		tabs.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Tabs.EQUAL_WIDTH_TABS);
+		tabs.addThemeVariants(TabsVariant.LUMO_EQUAL_WIDTH_TABS);
 
 		detailsDrawer.setHeader(detailsDrawerTitle, tabs);
 		detailsDrawer.getHeader().getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN);

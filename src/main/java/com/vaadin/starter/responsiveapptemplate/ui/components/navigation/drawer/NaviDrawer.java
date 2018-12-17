@@ -10,7 +10,6 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.AfterNavigationEvent;
 import com.vaadin.flow.router.AfterNavigationObserver;
 import com.vaadin.starter.responsiveapptemplate.backend.UIConfig;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.ButtonSize;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
 
 import java.util.ArrayList;
@@ -73,7 +72,7 @@ public abstract class NaviDrawer extends Div implements AfterNavigationObserver 
 		items = new ArrayList<>();
 
 		// "Footer", currently only a collapse/expand button.
-		railButton = UIUtils.createButton(ButtonSize.SMALL, "Collapse", VaadinIcon.CHEVRON_LEFT_SMALL);
+		railButton = UIUtils.createSmallButton("Collapse", VaadinIcon.CHEVRON_LEFT_SMALL);
 		railButton.addClassName(CLASS_NAME + "__footer");
 		railButton.addClickListener(event -> toggleRailMode());
 		content.add(railButton);

@@ -3,6 +3,7 @@ package com.vaadin.starter.responsiveapptemplate.ui.components.navigation.bar;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.contextmenu.ContextMenu;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -12,8 +13,6 @@ import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.starter.responsiveapptemplate.backend.UIConfig;
 import com.vaadin.starter.responsiveapptemplate.ui.AppTemplateUI;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.tab.NaviTabs;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.ButtonSize;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.ButtonStyle;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
 import com.vaadin.starter.responsiveapptemplate.ui.views.Default;
@@ -37,7 +36,7 @@ public class TabBar extends FlexLayout {
 		setClassName(CLASS_NAME);
 		getElement().setAttribute(LumoStyles.THEME, LumoStyles.DARK);
 
-		menuNaviIcon = UIUtils.createButton(ButtonSize.SMALL, ButtonStyle.TERTIARY, VaadinIcon.MENU);
+		menuNaviIcon = UIUtils.createButton(VaadinIcon.MENU, ButtonVariant.LUMO_SMALL, ButtonVariant.LUMO_TERTIARY);
 		menuNaviIcon.addClassNames(CLASS_NAME + "__navi-icon");
 		menuNaviIcon.addClickListener(e -> AppTemplateUI.getNaviDrawer().toggle());
 
@@ -146,7 +145,7 @@ public class TabBar extends FlexLayout {
 	}
 
 	public Button addActionItem(VaadinIcon icon) {
-		Button button = UIUtils.createButton(ButtonSize.SMALL, ButtonStyle.TERTIARY, icon);
+		Button button = UIUtils.createButton(icon, ButtonVariant.LUMO_SMALL, ButtonVariant.LUMO_TERTIARY);
 		addActionItem(button);
 		return button;
 	}

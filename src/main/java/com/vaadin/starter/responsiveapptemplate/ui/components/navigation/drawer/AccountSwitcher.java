@@ -1,14 +1,13 @@
 package com.vaadin.starter.responsiveapptemplate.ui.components.navigation.drawer;
 
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.contextmenu.ContextMenu;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H4;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.ButtonSize;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.ButtonStyle;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.FontSize;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
 
@@ -47,7 +46,7 @@ public class AccountSwitcher extends Div {
 		email = new Label("john.smith@gmail.com");
 		email.addClassNames(CLASS_NAME + "__email", FontSize.S.getStyle());
 
-		dropdown = UIUtils.createButton(ButtonSize.SMALL, ButtonStyle.TERTIARY, VaadinIcon.ANGLE_DOWN);
+		dropdown = UIUtils.createButton(VaadinIcon.ANGLE_DOWN, ButtonVariant.LUMO_SMALL, ButtonVariant.LUMO_TERTIARY);
 		email.add(dropdown);
 
 		menu = new ContextMenu(dropdown);

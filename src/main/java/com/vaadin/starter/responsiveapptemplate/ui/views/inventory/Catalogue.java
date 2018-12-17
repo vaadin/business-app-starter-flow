@@ -1,18 +1,22 @@
 package com.vaadin.starter.responsiveapptemplate.ui.views.inventory;
 
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.HasValue;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.provider.DataProvider;
+import com.vaadin.flow.data.provider.ListDataProvider;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
+import com.vaadin.flow.function.SerializablePredicate;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.starter.responsiveapptemplate.backend.DummyData;
@@ -37,17 +41,22 @@ import static com.vaadin.starter.responsiveapptemplate.ui.utils.ViewStyles.GRID_
 public class Catalogue extends ViewFrame {
 
 	private DetailsDrawer detailsDrawer;
+	private final ListDataProvider<Item> dataProvider;
 
 	public Catalogue() {
 		// Header
 		if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
 			AppBar appBar = new AppBar("Catalogue");
+			appBar.addActionItem(VaadinIcon.SEARCH).addClickListener(e -> appBar.searchModeOn());
+			appBar.addSearchListener(e -> filter(e));
+			appBar.setSearchPlaceholder("Search by item name, description and vendor");
 			setHeader(appBar);
 		}
 
 		// Grid
 		Grid<Item> grid = new Grid<>();
-		grid.setDataProvider(DataProvider.ofCollection(DummyData.getItems()));
+		dataProvider = DataProvider.ofCollection(DummyData.getItems());
+		grid.setDataProvider(dataProvider);
 
 		grid.addColumn(new ComponentRenderer<>(UIUtils::createBadge))
 				.setHeader("Category")
@@ -92,6 +101,17 @@ public class Catalogue extends ViewFrame {
 		FlexLayout content = new FlexLayout(gridWrapper, detailsDrawer);
 		content.setSizeFull();
 		setContent(content);
+	}
+
+	private void filter(HasValue.ValueChangeEvent event) {
+		dataProvider.setFilter((SerializablePredicate<Item>) item -> {
+			// TODO: This is just for demo purposes. Proper filtering should be done on another level.
+			String data = (item.getName() + item.getDesc() + item.getVendor()).toLowerCase();
+			if (data.toLowerCase().contains(event.getValue().toString().toLowerCase())) {
+				return true;
+			}
+			return false;
+		});
 	}
 
 	private Component createInfo(Item item) {

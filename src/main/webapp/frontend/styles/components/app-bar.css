@@ -71,7 +71,7 @@
 @media (max-width: 1023px) {
   .app-bar__container {
     height: var(--app-bar-height-mobile);
-    padding: 0 var(--lumo-space-s);
+    padding: 0 var(--lumo-space-m);
   }
 
   .app-bar__action-items > *:not(:last-child) {
@@ -79,7 +79,7 @@
   }
 
   .app-bar__tab-container {
-    padding: 0 var(--lumo-space-s);
+    padding: 0 var(--lumo-space-m);
   }
 }
 

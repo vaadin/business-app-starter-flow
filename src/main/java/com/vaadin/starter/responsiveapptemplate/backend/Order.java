@@ -1,40 +1,59 @@
 package com.vaadin.starter.responsiveapptemplate.backend;
 
+import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
+
 import java.time.LocalDate;
 import java.util.Collection;
 
 public class Order {
 
-	private Status status;
-	private Collection<Item> items;
-	private String customer;
-	private LocalDate date;
-	private Double value;
+	private final Long id;
+	private final Status status;
+	private final Collection<Item> items;
+	private final String customer;
+	private final LocalDate date;
+	private final Double value;
 
 	public enum Status {
-		PENDING("Pending"), OPEN("Open"), SENT("Sent"), FAILED("Failed");
+		PENDING("Pending", "Order received, payment pending.", LumoStyles.Badge.CONTRAST),
+		OPEN("Open", "Order received, not yet billed.", LumoStyles.Badge.DEFAULT),
+		SENT("Sent", "Order shipped.", LumoStyles.Badge.SUCCESS),
+		FAILED("Failed", "Payment unsuccessful", LumoStyles.Badge.ERROR);
 
 		private String name;
+		private String desc;
+		private String theme;
 
-		Status(String name) {
+		Status(String name, String desc, String theme) {
 			this.name = name;
+			this.desc = desc;
+			this.theme = theme;
 		}
 
 		public String getName() {
 			return name;
 		}
+
+		public String getDesc() {
+			return desc;
+		}
+
+		public String getTheme() {
+			return theme;
+		}
 	}
 
-	public Order(Status status, Collection<Item> items, String customer, LocalDate date) {
+	public Order(Long id, Status status, Collection<Item> items, String customer, LocalDate date) {
+		this.id = id;
 		this.status = status;
 		this.items = items;
 		this.customer = customer;
 		this.date = date;
-		this.value = 0.0;
+		this.value = items.stream().mapToDouble(Item::getPrice).sum();
+	}
 
-		for (Item item : items) {
-			this.value += item.getPrice();
-		}
+	public Long getId() {
+		return id;
 	}
 
 	public Status getStatus() {

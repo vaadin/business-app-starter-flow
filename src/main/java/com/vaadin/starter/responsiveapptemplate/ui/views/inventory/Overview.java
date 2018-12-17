@@ -6,7 +6,6 @@ import com.vaadin.flow.component.charts.Chart;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.tabs.Tab;
@@ -41,8 +40,8 @@ public class Overview extends ViewFrame {
 				Arrays.asList(CLASS_NAME, LumoStyles.Margin.Horizontal.AUTO, LumoStyles.Margin.Responsive.Vertical.ML),
 				createHeader(VaadinIcon.INVOICE, "Invoices"),
 				createProgressCharts(),
-				createHeader(VaadinIcon.PACKAGE, "Orders"),
-				UIUtils.createSalesChart("2018", "Incoming Orders"),
+				createHeader(VaadinIcon.PACKAGE, "Customer Orders"),
+				UIUtils.createSalesChart("2018", "Number of Customer Orders"),
 				UIUtils.createFlexLayout(
 						Collections.singleton(CLASS_NAME + "__bookmarks-recent-items"),
 						createTabbedList(REPORTS),
@@ -151,7 +150,7 @@ public class Overview extends ViewFrame {
 
 	private Button createInfoButton() {
 		Button infoButton = UIUtils.createSmallButton(VaadinIcon.INFO);
-		infoButton.addClickListener(e -> Notification.show("Not implemented yet.", 3000, Notification.Position.BOTTOM_CENTER));
+		infoButton.addClickListener(e -> UIUtils.showNotification("Not implemented yet."));
 		return infoButton;
 	}
 }

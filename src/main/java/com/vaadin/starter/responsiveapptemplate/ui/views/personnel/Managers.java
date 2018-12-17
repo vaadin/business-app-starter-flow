@@ -9,7 +9,6 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
 import com.vaadin.flow.component.textfield.TextField;
@@ -72,7 +71,7 @@ public class Managers extends ViewFrame {
 				.setFlexGrow(0);
 		grid.addColumn(new ComponentRenderer<>(this::createApprovalLimit))
 				.setHeader(UIUtils.createRightAlignedDiv("Approval Limit ($)"))
-				.setWidth(UIUtils.COLUMN_WIDTH_XL)
+				.setWidth(UIUtils.COLUMN_WIDTH_L)
 				.setFlexGrow(0);
 		grid.addColumn(new ComponentRenderer<>(this::createDate))
 				.setHeader(UIUtils.createRightAlignedDiv("Last Report"))
@@ -95,6 +94,7 @@ public class Managers extends ViewFrame {
 
 		// Set the content
 		FlexLayout content = UIUtils.createColumn(gridWrapper, detailsDrawer);
+		content.getStyle().set(CSSProperties.Overflow.PROPERTY, CSSProperties.Overflow.HIDDEN);
 		content.setSizeFull();
 		setContent(content);
 
@@ -107,7 +107,9 @@ public class Managers extends ViewFrame {
 	}
 
 	private Component createUserInfo(Person person) {
-		return new ListItem(UIUtils.createInitials(person.getInitials()), person.getName(), person.getEmail());
+		ListItem item = new ListItem(UIUtils.createInitials(person.getInitials()), person.getName(), person.getEmail());
+		item.setHorizontalPadding(false);
+		return item;
 	}
 
 	private Component createActive(Person person) {
@@ -122,11 +124,7 @@ public class Managers extends ViewFrame {
 
 	private Component createApprovalLimit(Person person) {
 		int amount = person.getRandomInteger() > 0 ? person.getRandomInteger() : 0;
-
-		Label label = UIUtils.createH4Label(UIUtils.formatAmount(amount));
-		label.addClassName(amount > 0 ? TextColor.SUCCESS.getStyle() : TextColor.ERROR.getStyle());
-
-		return UIUtils.createRightAlignedDiv(label);
+		return UIUtils.createRightAlignedDiv(UIUtils.createAmountLabel(amount));
 	}
 
 	private Component createDate(Person person) {
@@ -142,7 +140,7 @@ public class Managers extends ViewFrame {
 
 		// Footer
 		Button save = UIUtils.createPrimaryButton("Save");
-		save.addClickListener(e -> Notification.show("Not implemented yet.", 3000, Notification.Position.BOTTOM_CENTER));
+		save.addClickListener(e -> UIUtils.showNotification("Not implemented yet."));
 
 		Button cancel = UIUtils.createTertiaryButton("Cancel");
 		cancel.addClickListener(e -> detailsDrawer.hide());
@@ -199,7 +197,7 @@ public class Managers extends ViewFrame {
 
 		form.addFormItem(firstName, "First Name");
 		form.addFormItem(lastName, "Last Name");
-		form.addFormItem(gender, "Gender");
+		form.addFormItem(gender, "Status");
 		form.addFormItem(phone, "Phone");
 		form.addFormItem(email, "Email");
 		form.addFormItem(company, "Company");

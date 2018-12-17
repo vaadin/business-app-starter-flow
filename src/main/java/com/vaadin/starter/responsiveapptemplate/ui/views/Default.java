@@ -36,6 +36,6 @@ public class Default extends ViewFrame {
 		);
 		div.getStyle().set(CSSProperties.MaxWidth.PROPERTY, CSSProperties.MaxWidth._800);
 		setContent(div);
-
 	}
+
 }

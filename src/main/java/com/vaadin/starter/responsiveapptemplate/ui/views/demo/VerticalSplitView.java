@@ -10,7 +10,6 @@ import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
 import com.vaadin.flow.component.textfield.TextField;
@@ -107,7 +106,7 @@ public class VerticalSplitView extends ViewFrame {
 
 		// Footer
 		Button save = UIUtils.createPrimaryButton("Save");
-		save.addClickListener(e -> Notification.show("Not implemented yet.", 3000, Notification.Position.BOTTOM_CENTER));
+		save.addClickListener(e -> UIUtils.showNotification("Not implemented yet."));
 
 		Button cancel = UIUtils.createTertiaryButton("Cancel");
 		cancel.addClickListener(e -> detailsDrawer.hide());
@@ -174,7 +173,9 @@ public class VerticalSplitView extends ViewFrame {
 	}
 
 	private Component createUserInfo(Person person) {
-		return new ListItem(UIUtils.createInitials(person.getInitials()), person.getName(), person.getEmail());
+		ListItem item = new ListItem(UIUtils.createInitials(person.getInitials()), person.getName(), person.getEmail());
+		item.setHorizontalPadding(false);
+		return item;
 	}
 
 	private Component createTwitter(Person person) {

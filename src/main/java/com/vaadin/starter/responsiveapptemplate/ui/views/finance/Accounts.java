@@ -6,7 +6,7 @@ import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.data.provider.DataProvider;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
-import com.vaadin.flow.data.renderer.TemplateRenderer;
+import com.vaadin.flow.data.renderer.LocalDateRenderer;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.ParentLayout;
 import com.vaadin.flow.router.Route;
@@ -20,6 +20,8 @@ import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.bar.App
 import com.vaadin.starter.responsiveapptemplate.ui.utils.TextColor;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
 import com.vaadin.starter.responsiveapptemplate.ui.views.ViewFrame;
+
+import java.time.format.DateTimeFormatter;
 
 import static com.vaadin.starter.responsiveapptemplate.ui.utils.ViewStyles.GRID_VIEW;
 
@@ -39,11 +41,11 @@ public class Accounts extends ViewFrame implements RouterLayout {
 		grid.setDataProvider(DataProvider.ofCollection(DummyData.getBankAccounts()));
 
 		grid.addColumn(BankAccount::getId)
-				.setHeader("ID")
+				.setFlexGrow(0)
 				.setFrozen(true)
+				.setHeader("ID")
 				.setSortable(true)
-				.setWidth(UIUtils.COLUMN_WIDTH_XS)
-				.setFlexGrow(0);
+				.setWidth(UIUtils.COLUMN_WIDTH_XS);
 		grid.addColumn(new ComponentRenderer<>(this::createBankInfo))
 				.setHeader("Bank Account")
 				.setWidth(UIUtils.COLUMN_WIDTH_XL);
@@ -51,16 +53,14 @@ public class Accounts extends ViewFrame implements RouterLayout {
 				.setHeader("Owner")
 				.setWidth(UIUtils.COLUMN_WIDTH_XL);
 		grid.addColumn(new ComponentRenderer<>(this::createAvailability))
+				.setFlexGrow(0)
 				.setHeader(UIUtils.createRightAlignedDiv("Availability ($)"))
-				.setWidth(UIUtils.COLUMN_WIDTH_M)
-				.setFlexGrow(0);
-		grid.addColumn(TemplateRenderer.<BankAccount>of(
-				"[[item.date]]")
-				.withProperty("date", account -> UIUtils.formatDate(account.getUpdated())))
-				.setHeader("Updated")
+				.setWidth(UIUtils.COLUMN_WIDTH_M);
+		grid.addColumn(new LocalDateRenderer<>(BankAccount::getUpdated, DateTimeFormatter.ofPattern("MMM dd, YYYY")))
 				.setComparator(BankAccount::getUpdated)
-				.setWidth(UIUtils.COLUMN_WIDTH_M)
-				.setFlexGrow(0);
+				.setFlexGrow(0)
+				.setHeader("Updated")
+				.setWidth(UIUtils.COLUMN_WIDTH_M);
 
 		grid.addSelectionListener(event -> event.getFirstSelectedItem().ifPresent(this::viewDetails));
 

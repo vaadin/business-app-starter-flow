@@ -16,6 +16,8 @@
 <link rel="stylesheet" href="components/brand-expression.css">
 <link rel="import"     href="components/charts.html">
 <link rel="stylesheet" href="components/details-drawer.css">
+<link rel="import"     href="components/floating-action-button.html">
+<link rel="import"     href="components/grid.html">
 <link rel="stylesheet" href="components/initials.css">
 <link rel="stylesheet" href="components/list-item.css">
 <link rel="stylesheet" href="components/navi-drawer.css">
@@ -35,8 +37,8 @@
 <custom-style>
   <style include="lumo-badge">
     :root {
-      --app-bar-height-desktop: 54px;
-      --app-bar-height-mobile: 46px;
+      --app-bar-height-desktop: calc(var(--lumo-size-m) * 1.75);
+      --app-bar-height-mobile: calc(var(--lumo-size-m) * 1.5);
 
       --navi-drawer-rail-width: 64px;
       --navi-drawer-width: calc(var(--lumo-size-m) * 7);
@@ -54,28 +56,12 @@
       width: 100%;
     }
 
-    .root {
-      background-color: var(--lumo-contrast-5pct);
-      flex-direction: column;
-      height: 100%;
-      width: 100%;
-    }
-
-    .root__row {
-      flex-grow: 1;
-    }
-
-    .root__column {
-      flex-grow: 1;
-      overflow: hidden;
-    }
-
-    .root__view-container {
-      flex-grow: 1;
-    }
-
     vaadin-grid-cell-content {
       text-overflow: ellipsis;
+    }
+
+    vaadin-text-field {
+      align-self: auto;
     }
   </style>
 </custom-style>

@@ -9,23 +9,23 @@
         fill: var(--lumo-primary-text-color);
       }
 
-      :host(.pending) .highcharts-color-0 {
+      :host(.pending) .highcharts-color-0,
+      :host(.outstanding) .highcharts-color-0 {
         fill: rgb(255, 194, 122);
       }
 
-      :host(.sent) .highcharts-color-0 {
-        fill: var(--lumo-success-text-color);
-      }
-
+      :host(.confirmed) .highcharts-color-0,
       :host(.paid) .highcharts-color-0 {
         fill: var(--lumo-success-text-color);
       }
 
+      :host(.submitted) .highcharts-color-0,
       :host(.open) .highcharts-color-0 {
         fill: var(--lumo-primary-text-color);
       }
 
-      :host(.failed) .highcharts-color-0 {
+      :host(.failed) .highcharts-color-0,
+      :host(.overdue) .highcharts-color-0 {
         fill: var(--lumo-error-text-color);
       }
 

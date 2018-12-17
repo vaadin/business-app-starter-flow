@@ -43,7 +43,8 @@
 }
 
 vaadin-grid .list-item {
-  padding: var(--lumo-space-s) 0;
+  padding-bottom: var(--lumo-space-s);
+  padding-top: var(--lumo-space-s);
 }
 
 vaadin-grid .list-item__prefix {

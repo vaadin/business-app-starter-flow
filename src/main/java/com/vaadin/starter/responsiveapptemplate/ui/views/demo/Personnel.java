@@ -87,7 +87,9 @@ public class Personnel extends ViewFrame {
 	}
 
 	private Component createUserInfo(Person person) {
-		return new ListItem(UIUtils.createInitials(person.getInitials()), person.getName(), person.getEmail());
+		ListItem item = new ListItem(UIUtils.createInitials(person.getInitials()), person.getName(), person.getEmail());
+		item.setHorizontalPadding(false);
+		return item;
 	}
 
 	private Component createActive(Person person) {

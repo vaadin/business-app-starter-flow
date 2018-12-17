@@ -7,7 +7,7 @@ import com.vaadin.flow.component.html.Div;
  * A view frame that establishes app design guidelines. It consists of three parts:
  * <ul>
  * <li>Topmost {@link #setHeader(Component) header}</li>
- * <li>Center {@link #setContent(Component) content}</li>
+ * <li>Center {@link #setContent(Component...) content}</li>
  * <li>Bottom {@link #setFooter(Component) footer}</li>
  * </ul>
  */
@@ -38,9 +38,9 @@ public class ViewFrame extends Div {
 		return content;
 	}
 
-	public void setContent(Component component) {
+	public void setContent(Component... components) {
 		content.removeAll();
-		content.add(component);
+		content.add(components);
 	}
 
 	public void setFooter(Component component) {

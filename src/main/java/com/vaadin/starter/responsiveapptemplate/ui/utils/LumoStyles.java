@@ -19,23 +19,18 @@ public class LumoStyles {
 		public static final String _100 = "border-radius-100";
 	}
 
-	public class Button {
-		public static final String SMALL = "small";
-		public static final String LARGE = "large";
-
-		public static final String TERTIARY = "tertiary";
-		public static final String TERTIARY_INLINE = "tertiary-inline";
-
-		public static final String PRIMARY = "primary";
-		public static final String SUCCESS = "success";
-		public static final String CONTRAST = "contrast";
-
-		public static final String ICON = "icon";
-	}
-
 	public class Color {
 		public static final String BASE_COLOR = "var(--lumo-base-color)";
 		public static final String CONTRAST_5 = "var(--lumo-contrast-5pct)";
+		public static final String CONTRAST_20 = "var(--lumo-contrast-20pct)";
+	}
+
+	public class FontFamily {
+		public static final String MONOSPACE = "monospace";
+	}
+
+	public class FontWeight {
+		public static final String MEDIUM = "font-weight-medium";
 	}
 
 	public class Header {
@@ -250,11 +245,4 @@ public class LumoStyles {
 		}
 	}
 
-	public class Tabs {
-		public static final String EQUAL_WIDTH_TABS = "equal-width-tabs";
-	}
-
-	public class TextField {
-		public static final String SMALL = "small";
-	}
 }

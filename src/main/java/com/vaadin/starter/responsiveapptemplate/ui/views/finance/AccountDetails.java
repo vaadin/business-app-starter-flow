@@ -13,7 +13,6 @@ import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.router.BeforeEvent;
@@ -117,7 +116,7 @@ public class AccountDetails extends ViewFrame implements HasUrlParameter<Long> {
 
 	private FlexLayout createRecentTransactionsHeader() {
 		Button viewAll = UIUtils.createSmallButton("View All");
-		viewAll.addClickListener(e -> Notification.show("Not implemented yet.", 3000, Notification.Position.BOTTOM_CENTER));
+		viewAll.addClickListener(e -> UIUtils.showNotification("Not implemented yet."));
 		viewAll.getStyle().set(CSSProperties.Margin.PROPERTY, "0 0 0 auto");
 
 		FlexLayout header = UIUtils.createFlexLayout(

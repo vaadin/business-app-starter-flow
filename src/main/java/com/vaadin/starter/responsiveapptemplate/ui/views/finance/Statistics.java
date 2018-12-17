@@ -6,7 +6,6 @@ import com.vaadin.flow.component.charts.Chart;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.tabs.Tab;
@@ -167,7 +166,7 @@ public class Statistics extends ViewFrame {
 
 	private Button createInfoButton() {
 		Button infoButton = UIUtils.createSmallButton(VaadinIcon.INFO);
-		infoButton.addClickListener(e -> Notification.show("Not implemented yet.", 3000, Notification.Position.BOTTOM_CENTER));
+		infoButton.addClickListener(e -> UIUtils.showNotification("Not implemented yet."));
 		return infoButton;
 	}
 }

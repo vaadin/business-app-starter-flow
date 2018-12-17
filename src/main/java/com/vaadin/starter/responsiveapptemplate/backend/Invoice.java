@@ -6,13 +6,15 @@ public class Invoice {
 
 	private final Long id;
 	private final Status status;
-	private final String customer;
-	private final Double amount;
+	private final Order order;
 	private final LocalDate invoiceDate;
 	private final LocalDate dueDate;
 
 	public enum Status {
-		OUTSTANDING("Pending"), OPEN("Open"), PAID("Sent"), OVERDUE("Failed");
+		OUTSTANDING("Outstanding"),
+		OPEN("Open"),
+		PAID("Paid"),
+		OVERDUE("Overdue");
 
 		private String name;
 
@@ -25,11 +27,10 @@ public class Invoice {
 		}
 	}
 
-	public Invoice(Long id, Status status, String customer, Double amount, LocalDate invoiceDate, LocalDate dueDate) {
+	public Invoice(Long id, Status status, Order order, LocalDate invoiceDate, LocalDate dueDate) {
 		this.id = id;
 		this.status = status;
-		this.customer = customer;
-		this.amount = amount;
+		this.order = order;
 		this.invoiceDate = invoiceDate;
 		this.dueDate = dueDate;
 	}
@@ -42,12 +43,8 @@ public class Invoice {
 		return status;
 	}
 
-	public String getCustomer() {
-		return customer;
-	}
-
-	public Double getAmount() {
-		return amount;
+	public Order getOrder() {
+		return order;
 	}
 
 	public LocalDate getInvoiceDate() {

@@ -2,14 +2,13 @@ package com.vaadin.starter.responsiveapptemplate.ui.components.navigation.drawer
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.dom.Element;
 import com.vaadin.flow.server.VaadinService;
 import com.vaadin.flow.server.startup.FakeBrowser;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.ButtonSize;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.ButtonStyle;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
 import org.apache.commons.io.Charsets;
 import org.apache.commons.io.IOUtils;
@@ -42,7 +41,7 @@ public abstract class NaviItem extends Div {
 		this.text = text;
 		this.navigationTarget = navigationTarget;
 
-		expandCollapse = UIUtils.createButton(ButtonSize.SMALL, ButtonStyle.TERTIARY, up);
+		expandCollapse = UIUtils.createButton(up, ButtonVariant.LUMO_SMALL, ButtonVariant.LUMO_TERTIARY);
 		expandCollapse.setVisible(false);
 		expandCollapse.addClickListener(event -> setSubItemsVisible(!subItemsVisible));
 		add(expandCollapse);

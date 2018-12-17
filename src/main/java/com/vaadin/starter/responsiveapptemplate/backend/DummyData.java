@@ -25,6 +25,8 @@ public class DummyData {
 	private static final String[] FIRST_NAMES = new String[]{"James", "Mary", "John", "Patricia", "Robert", "Jennifer", "Michael", "Linda", "William", "Elizabeth", "David", "Barbara", "Richard", "Susan", "Joseph", "Jessica", "Thomas", "Sarah", "Charles", "Margaret", "Christopher", "Karen", "Daniel", "Nancy", "Matthew", "Lisa", "Anthony", "Betty", "Donald", "Dorothy", "Mark", "Sandra", "Paul", "Ashley", "Steven", "Kimberly", "Andrew", "Donna", "Kenneth", "Emily", "George", "Carol", "Joshua", "Michelle", "Kevin", "Amanda", "Brian", "Melissa", "Edward", "Deborah", "Ronald", "Stephanie", "Timothy", "Rebecca", "Jason", "Laura", "Jeffrey", "Helen", "Ryan", "Sharon", "Jacob", "Cynthia", "Gary", "Kathleen", "Nicholas", "Amy", "Eric", "Shirley", "Stephen", "Angela", "Jonathan", "Anna", "Larry", "Ruth", "Justin", "Brenda", "Scott", "Pamela", "Brandon", "Nicole", "Frank", "Katherine", "Benjamin", "Samantha", "Gregory", "Christine", "Raymond", "Catherine", "Samuel", "Virginia", "Patrick", "Debra", "Alexander", "Rachel", "Jack", "Janet", "Dennis", "Emma", "Jerry", "Carolyn", "Tyler", "Maria", "Aaron", "Heather", "Henry", "Diane", "Jose", "Julie", "Douglas", "Joyce", "Peter", "Evelyn", "Adam", "Joan", "Nathan", "Victoria", "Zachary", "Kelly", "Walter", "Christina", "Kyle", "Lauren", "Harold", "Frances", "Carl", "Martha", "Jeremy", "Judith", "Gerald", "Cheryl", "Keith", "Megan", "Roger", "Andrea", "Arthur", "Olivia", "Terry", "Ann", "Lawrence", "Jean", "Sean", "Alice", "Christian", "Jacqueline", "Ethan", "Hannah", "Austin", "Doris", "Joe", "Kathryn", "Albert", "Gloria", "Jesse", "Teresa", "Willie", "Sara", "Billy", "Janice", "Bryan", "Marie", "Bruce", "Julia", "Noah", "Grace", "Jordan", "Judy", "Dylan", "Theresa", "Ralph", "Madison", "Roy", "Beverly", "Alan", "Denise", "Wayne", "Marilyn", "Eugene", "Amber", "Juan", "Danielle", "Gabriel", "Rose", "Louis", "Brittany", "Russell", "Diana", "Randy", "Abigail", "Vincent", "Natalie", "Philip", "Jane", "Logan", "Lori", "Bobby", "Alexis", "Harry", "Tiffany", "Johnny", "Kayla"};
 	private static final String[] LAST_NAMES = new String[]{"Smith", "Johnson", "Williams", "Jones", "Brown", "Davis", "Miller", "Wilson", "Moore", "Taylor", "Anderson", "Thomas", "Jackson", "White", "Harris", "Martin", "Thompson", "Garcia", "Martinez", "Robinson", "Clark", "Rodriguez", "Lewis", "Lee", "Walker", "Hall", "Allen", "Young", "Hernandez", "King", "Wright", "Lopez", "Hill", "Scott", "Green", "Adams", "Baker", "Gonzalez", "Nelson", "Carter", "Mitchell", "Perez", "Roberts", "Turner", "Phillips", "Campbell", "Parker", "Evans", "Edwards", "Collins", "Stewart", "Sanchez", "Morris", "Rogers", "Reed", "Cook", "Morgan", "Bell", "Murphy", "Bailey", "Rivera", "Cooper", "Richardson", "Cox", "Howard", "Ward", "Torres", "Peterson", "Gray", "Ramirez", "James", "Watson", "Brooks", "Kelly", "Sanders", "Price", "Bennett", "Wood", "Barnes", "Ross", "Henderson", "Coleman", "Jenkins", "Perry", "Powell", "Long", "Patterson", "Hughes", "Flores", "Washington", "Butler", "Simmons", "Foster", "Gonzales", "Bryant ", "Alexander", "Russell", "Griffin ", "Diaz", "Hayes"};
 
+	private static final ArrayList<Address> ADDRESSES = new ArrayList<>();
+
 	private static Map<String, String> HEALTHCARE = new HashMap<>();
 	private static Map<String, String> DENTAL = new HashMap<>();
 	private static Map<String, String> CONSTRUCTION = new HashMap<>();
@@ -144,18 +146,69 @@ public class DummyData {
 		CONSTRUCTION.forEach((name, desc) -> ITEMS.put(Long.valueOf(ITEMS.size()), new Item(Item.Category.CONSTRUCTION, name, desc, getCompany(), getRandomDouble(40, 500), getRandomInt(0, 200), getRandomInt(0, 50000))));
 
 
-		/* === ORDERS === */
+		/* === ORDERS & INVOICES === */
 
 		for (i = 0; i < 40; i++) {
-			ORDERS.put(i, new Order(getOrderStatus(), getOrderItems(), getCompany(), getDate()));
+			Order order = new Order(i + getRandomInt(0, 9999), getOrderStatus(), getOrderItems(), getCompany(), getDate());
+			ORDERS.put(i, order);
+
+			Invoice invoice = new Invoice(i + getRandomInt(0, 9999), getInvoiceStatus(), order, getPastDate(30), getFutureDate(30));
+			INVOICES.put(i, invoice);
 		}
 
 
-		/* === INVOICES === */
+		/* === ADDRESSES === */
 
-		for (i = 0; i < 40; i++) {
-			INVOICES.put(i, new Invoice(i + getRandomInt(0, 9999), getInvoiceStatus(), getCompany(), getPositiveAmount(), getPastDate(30), getFutureDate(30)));
-		}
+		ADDRESSES.add(new Address("8970 Birchpond St.", "Asheboro", "NC", "27205"));
+		ADDRESSES.add(new Address("8669 Wild Horse St.", "Mahwah", "NJ", "07430"));
+		ADDRESSES.add(new Address("8580 County Road", "Suitland", "MD", "20746"));
+		ADDRESSES.add(new Address("42 Vermont Road", "Uniontown", "PA", "15401"));
+		ADDRESSES.add(new Address("73 Brickell Drive", "Easton", "PA", "18042"));
+		ADDRESSES.add(new Address("65B Glen Creek St.", "Spartanburg", "SC", "29301"));
+		ADDRESSES.add(new Address("9686 South Shirley Dr.", "Nashua", "NH", "03060"));
+		ADDRESSES.add(new Address("8409 Canal Drive", "Lawrence", "MA", "01841"));
+		ADDRESSES.add(new Address("631 Helen St.", "Westwood", "NJ", "07675"));
+		ADDRESSES.add(new Address("768 Homewood Lane", "Voorhees", "NJ", "08043"));
+		ADDRESSES.add(new Address("7513 Aspen Lane", "Key West", "FL", "33040"));
+		ADDRESSES.add(new Address("33 Pearl Ave.", "Lake Mary", "FL", "32746"));
+		ADDRESSES.add(new Address("711 Durham Drive", "Spring Valley", "NY", "10977"));
+		ADDRESSES.add(new Address("42 Maiden Street", "Irmo", "SC", "29063"));
+		ADDRESSES.add(new Address("9312 Sunnyslope Avenue", "Taunton", "MA", "02780"));
+		ADDRESSES.add(new Address("89 Airport Court", "Saratoga Springs", "NY", "12866"));
+		ADDRESSES.add(new Address("9977 W. Meadow Ave.", "Point Pleasant Beach", "NJ", "08742"));
+		ADDRESSES.add(new Address("403 State Dr.", "Cranford", "NJ", "07016"));
+		ADDRESSES.add(new Address("7739 South Thatcher Ave.", "Lanham", "MD", "20706"));
+		ADDRESSES.add(new Address("569 Queen Ave.", "Stone Mountain", "GA", "30083"));
+		ADDRESSES.add(new Address("138 Gulf St.", "Pewaukee", "WI", "53072"));
+		ADDRESSES.add(new Address("25 Ramblewood Road", "Brandon", "FL", "33510"));
+		ADDRESSES.add(new Address("248 Water Drive", "Greenfield", "IN", "46140"));
+		ADDRESSES.add(new Address("168 Lower River Lane", "Eden Prairie", "MN", "55347"));
+		ADDRESSES.add(new Address("9091 W. Ridge Street", "Streamwood", "IL", "60107"));
+		ADDRESSES.add(new Address("9250 Edgewood Dr.", "Beaver Falls", "PA", "15010"));
+		ADDRESSES.add(new Address("44 Gonzales St.", "Newtown", "PA", "18940"));
+		ADDRESSES.add(new Address("73 Manchester Rd.", "Brockton", "MA", "02301"));
+		ADDRESSES.add(new Address("538 53rd Ave.", "Ocean Springs", "MS", "39564"));
+		ADDRESSES.add(new Address("79 Longfellow Lane", "Fargo", "ND", "58102"));
+		ADDRESSES.add(new Address("9004 SE. Ridge St.", "Potomac", "MD", "20854"));
+		ADDRESSES.add(new Address("12 Eagle Rd.", "Bowling Green", "KY", "42101"));
+		ADDRESSES.add(new Address("737 Windsor St.", "Morganton", "NC", "28655"));
+		ADDRESSES.add(new Address("8140 King Dr.", "Canfield", "OH", "44406"));
+		ADDRESSES.add(new Address("78 North Oklahoma Street", "Vernon Hills", "IL", "60061"));
+		ADDRESSES.add(new Address("8542 Riverside Lane", "West Palm Beach", "FL", "33404"));
+		ADDRESSES.add(new Address("436 Cypress Ave.", "Upper Marlboro", "MD", "20772"));
+		ADDRESSES.add(new Address("546 South Beacon St.", "South Portland", "ME", "04106"));
+		ADDRESSES.add(new Address("17 Fordham Drive", "Englewood", "NJ", "07631"));
+		ADDRESSES.add(new Address("754 South Armstrong Dr.", "Carpentersville", "IL", "60110"));
+		ADDRESSES.add(new Address("400 Virginia Avenue", "Mason City", "IA", "50401"));
+		ADDRESSES.add(new Address("714 Gonzales St.", "Munster", "IN", "46321"));
+		ADDRESSES.add(new Address("9427 Shadow Brook Lane", "Westmont", "IL", "60559"));
+		ADDRESSES.add(new Address("730 N. Henry Smith Dr.", "Wethersfield", "CT", "06109"));
+		ADDRESSES.add(new Address("961 Oakland Lane", "Fairborn", "OH", "45324"));
+		ADDRESSES.add(new Address("817 Arrowhead Rd.", "Green Cove Springs", "FL", "32043"));
+		ADDRESSES.add(new Address("9800 North Belmont Ave.", "Palmetto", "FL", "34221"));
+		ADDRESSES.add(new Address("63 Pine St.", "Snellville", "GA", "30039"));
+		ADDRESSES.add(new Address("9336 West Andover Court", "Macungie", "PA", "18062"));
+		ADDRESSES.add(new Address("8351 Sage Ave.", "Pittsfield", "MA", "01201"));
 
 	}
 
@@ -175,6 +228,10 @@ public class DummyData {
 
 	public static Collection<Person> getPersons() {
 		return PERSONS.values();
+	}
+
+	public static Person getPerson() {
+		return PERSONS.get(new ArrayList<>(PERSONS.keySet()).get(random.nextInt(PERSONS.size())));
 	}
 
 	private static Person.Role getRole() {
@@ -328,5 +385,13 @@ public class DummyData {
 	public static Collection<Invoice> getInvoices() {
 		return INVOICES.values();
 	}
+
+
+	/* === ADDRESS === */
+
+	public static Address getAddress() {
+		return ADDRESSES.get(random.nextInt(ADDRESSES.size()));
+	}
+
 
 }

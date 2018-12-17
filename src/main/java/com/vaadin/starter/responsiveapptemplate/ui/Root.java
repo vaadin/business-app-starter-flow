@@ -21,6 +21,8 @@ import com.vaadin.starter.responsiveapptemplate.backend.UIConfig;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.bar.TabBar;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.drawer.NaviDrawer;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.drawer.NaviItem;
+import com.vaadin.starter.responsiveapptemplate.ui.utils.CSSProperties;
+import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
 import com.vaadin.starter.responsiveapptemplate.ui.views.Default;
 import com.vaadin.starter.responsiveapptemplate.ui.views.demo.*;
@@ -28,8 +30,8 @@ import com.vaadin.starter.responsiveapptemplate.ui.views.finance.Accounts;
 import com.vaadin.starter.responsiveapptemplate.ui.views.finance.Payments;
 import com.vaadin.starter.responsiveapptemplate.ui.views.finance.Statistics;
 import com.vaadin.starter.responsiveapptemplate.ui.views.inventory.Catalogue;
+import com.vaadin.starter.responsiveapptemplate.ui.views.inventory.CustomerOrders;
 import com.vaadin.starter.responsiveapptemplate.ui.views.inventory.Invoices;
-import com.vaadin.starter.responsiveapptemplate.ui.views.inventory.Orders;
 import com.vaadin.starter.responsiveapptemplate.ui.views.inventory.Overview;
 import com.vaadin.starter.responsiveapptemplate.ui.views.personnel.Accountants;
 import com.vaadin.starter.responsiveapptemplate.ui.views.personnel.Managers;
@@ -64,7 +66,10 @@ public class Root extends FlexLayout
 			Notification.show("We are sorry, but an internal error occurred");
 		});
 
-		setClassName(CLASS_NAME);
+		addClassName(CLASS_NAME);
+		getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN);
+		getStyle().set(CSSProperties.BackgroundColor.PROPERTY, LumoStyles.Color.CONTRAST_5);
+		setSizeFull();
 
 		// Initialise the UI building blocks.
 		initStructure();
@@ -85,9 +90,14 @@ public class Root extends FlexLayout
 		initViewContainer();
 
 		column = UIUtils.createColumn(Collections.singleton(CLASS_NAME + "__column"), viewContainer);
+		column.getStyle().set(CSSProperties.Overflow.PROPERTY, CSSProperties.Overflow.HIDDEN);
+		column.setFlexGrow(1, viewContainer);
 
 		row = UIUtils.createFlexLayout(Collections.singleton(CLASS_NAME + "__row"), naviDrawer, column);
+		row.setFlexGrow(1, column);
+
 		add(row);
+		setFlexGrow(1, row);
 	}
 
 	/**
@@ -121,7 +131,7 @@ public class Root extends FlexLayout
 
 		if (showcase.equals(UIConfig.Showcase.INVENTORY)) {
 			naviDrawer.addNaviItem(VaadinIcon.HOME, "Home", Default.class);
-			naviDrawer.addNaviItem(VaadinIcon.PACKAGE, "Orders", Orders.class);
+			naviDrawer.addNaviItem(VaadinIcon.PACKAGE, "Customer Orders", CustomerOrders.class);
 			naviDrawer.addNaviItem(VaadinIcon.INVOICE, "Invoices", Invoices.class);
 			naviDrawer.addNaviItem(VaadinIcon.PIE_BAR_CHART, "Overview", Overview.class);
 			naviDrawer.addNaviItem(VaadinIcon.STOCK, "Catalogue", Catalogue.class);
@@ -216,6 +226,14 @@ public class Root extends FlexLayout
 	public void configurePage(InitialPageSettings settings) {
 		settings.addMetaTag("apple-mobile-web-app-capable", "yes");
 		settings.addMetaTag("apple-mobile-web-app-status-bar-style", "black");
+
+		if (UIConfig.getShowcase().equals(UIConfig.Showcase.INVENTORY)) {
+			settings.addFavIcon("icon", "frontend/styles/favicons/inventory.ico", "256x256");
+		} else if (UIConfig.getShowcase().equals(UIConfig.Showcase.FINANCE)) {
+			settings.addFavIcon("icon", "frontend/styles/favicons/finance.ico", "256x256");
+		} else {
+			settings.addFavIcon("icon", "frontend/styles/favicons/proto-x.ico", "256x256");
+		}
 	}
 
 	@Override
@@ -234,8 +252,8 @@ public class Root extends FlexLayout
 			NaviItem orderEntry = naviDrawer.addNaviItem(ordering, "Order Entry", Default.class);
 			{
 				naviDrawer.addNaviItem(orderEntry, "New Order", Default.class);
-				naviDrawer.addNaviItem(orderEntry, "Remote Orders", Default.class);
-				naviDrawer.addNaviItem(orderEntry, "Incomplete Orders", Default.class);
+				naviDrawer.addNaviItem(orderEntry, "Remote CustomerOrders", Default.class);
+				naviDrawer.addNaviItem(orderEntry, "Incomplete CustomerOrders", Default.class);
 			}
 			NaviItem setup = naviDrawer.addNaviItem(ordering, "Setup", Default.class);
 			{
