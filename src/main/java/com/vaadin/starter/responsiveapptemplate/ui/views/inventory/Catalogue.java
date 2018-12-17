@@ -11,6 +11,7 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
+import com.vaadin.flow.component.radiobutton.RadioGroupVariant;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.provider.DataProvider;
@@ -162,11 +163,10 @@ public class Catalogue extends ViewFrame {
 		Label title = UIUtils.createDetailsDrawerHeader("Edit Item", false, false);
 
 		RadioButtonGroup<Item.Category> category = new RadioButtonGroup<>();
+		category.addThemeVariants(RadioGroupVariant.LUMO_VERTICAL);
 		category.setItems(Item.Category.values());
 		category.setValue(item.getCategory());
 		category.setRenderer(new ComponentRenderer<>(i -> UIUtils.createBadge(i)));
-		category.getStyle().set(CSSProperties.Display.PROPERTY, CSSProperties.Display.FLEX);
-		category.getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN);
 
 		TextField name = new TextField();
 		name.setValue(item.getName());
