@@ -92,9 +92,9 @@
 
         <!-- Browserless Testing -->
         <dependency>
-            <groupId>com.github.kaributesting</groupId>
+            <groupId>com.github.mvysny.kaributesting</groupId>
             <artifactId>karibu-testing-v10</artifactId>
-            <version>0.5.0</version>
+            <version>1.0.3</version>
             <scope>test</scope>
         </dependency>
         <dependency>

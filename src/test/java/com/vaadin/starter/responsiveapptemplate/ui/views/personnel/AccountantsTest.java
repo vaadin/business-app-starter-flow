@@ -1,7 +1,7 @@
 package com.vaadin.starter.responsiveapptemplate.ui.views.personnel;
 
-import com.github.karibu.testing.v10.MockVaadin;
-import com.github.karibu.testing.v10.Routes;
+import com.github.mvysny.kaributesting.v10.MockVaadin;
+import com.github.mvysny.kaributesting.v10.Routes;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.starter.responsiveapptemplate.backend.DummyData;
@@ -12,9 +12,9 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static com.github.karibu.testing.v10.GridKt._size;
-import static com.github.karibu.testing.v10.LocatorJ._get;
-import static org.junit.jupiter.api.Assertions.*;
+import static com.github.mvysny.kaributesting.v10.GridKt._size;
+import static com.github.mvysny.kaributesting.v10.LocatorJ._get;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author mavi
