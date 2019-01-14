@@ -15,6 +15,7 @@
   align-items: center;
   box-shadow: inset 0 -1px var(--lumo-contrast-20pct);
   display: flex;
+  font-size: var(--lumo-font-size-s);
   justify-content: space-between;
   padding: 0 var(--lumo-space-s) var(--lumo-space-m) var(--lumo-space-m);
 }

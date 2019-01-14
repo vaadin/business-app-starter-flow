@@ -4,7 +4,7 @@
 
 /* Scrim */
 .navi-drawer__scrim {
-  animation: 0.2s lumo-overlay-backdrop-enter both;
+  animation: var(--transition-duration-m) lumo-overlay-backdrop-enter both;
   background: var(--lumo-shade-20pct);
   height: 100%;
   opacity: 0;
@@ -105,13 +105,17 @@
 @media (min-width: 1024px) {
   .navi-drawer[rail]:not([open]):not(:hover) .navi-item__link iron-icon,
   .navi-drawer[rail]:not([open]):not(:hover) .navi-item__link img,
-  .navi-drawer[rail]:not([open]):not(:hover) .navi-item__link svg {
-    margin: 0 calc(calc(calc(var(--navi-drawer-rail-width) - var(--lumo-space-m) * 2) - var(--lumo-icon-size-s)) / 2);
+  .navi-drawer[rail]:not([open]):not(:hover) .navi-item__link svg,
+  .navi-drawer[rail]:not([open]):not(:hover) .account-switcher__avatar {
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .navi-drawer[rail]:not([open]):not(:hover) .navi-item__link label,
   .navi-drawer[rail]:not([open]):not(:hover) .navi-item vaadin-button,
-  .navi-drawer[rail]:not([open]):not(:hover) .navi-drawer__footer span {
+  .navi-drawer[rail]:not([open]):not(:hover) .navi-drawer__footer span,
+  .navi-drawer[rail]:not([open]):not(:hover) .account-switcher__title,
+  .navi-drawer[rail]:not([open]):not(:hover) .account-switcher__email {
     display: none;
   }
 }

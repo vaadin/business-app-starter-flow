@@ -8,7 +8,6 @@ import com.vaadin.flow.component.html.H4;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.FontSize;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
 
 public class AccountSwitcher extends Div {
@@ -44,7 +43,7 @@ public class AccountSwitcher extends Div {
 
 	private void initEmail() {
 		email = new Label("john.smith@gmail.com");
-		email.addClassNames(CLASS_NAME + "__email", FontSize.S.getStyle());
+		email.addClassName(CLASS_NAME + "__email");
 
 		dropdown = UIUtils.createButton(VaadinIcon.ANGLE_DOWN, ButtonVariant.LUMO_SMALL, ButtonVariant.LUMO_TERTIARY);
 		email.add(dropdown);
