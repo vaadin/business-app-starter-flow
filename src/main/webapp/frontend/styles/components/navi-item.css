@@ -66,7 +66,7 @@
 .navi-item__link svg {
   height: var(--lumo-icon-size-s);
   flex-shrink: 0;
-  margin-right: var(--lumo-space-l);
+  margin: 0 var(--lumo-space-l) 0 0;
   transition: margin var(--transition-duration-s);
   width: var(--lumo-icon-size-s);
 }

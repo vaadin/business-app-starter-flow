@@ -72,7 +72,9 @@ public class Accounts extends ViewFrame implements RouterLayout {
 	}
 
 	private Component createBankInfo(BankAccount bankAccount) {
-		return new ListItem(bankAccount.getAccount(), bankAccount.getBank());
+		ListItem item = new ListItem(bankAccount.getAccount(), bankAccount.getBank());
+		item.setHorizontalPadding(false);
+		return item;
 	}
 
 	private Component createAvailability(BankAccount bankAccount) {

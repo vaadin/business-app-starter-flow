@@ -118,7 +118,7 @@ public class Root extends FlexLayout
 			naviDrawer.addNaviItem(VaadinIcon.FILTER, "Filter List", FilterList.class);
 		}
 
-		if (showcase.equals(UIConfig.Showcase.FINANCE)) {
+		else if (showcase.equals(UIConfig.Showcase.FINANCE)) {
 			naviDrawer.addNaviItem(VaadinIcon.HOME, "Home", Default.class);
 			naviDrawer.addNaviItem(VaadinIcon.INSTITUTION, "Accounts", Accounts.class);
 			naviDrawer.addNaviItem(VaadinIcon.CREDIT_CARD, "Payments", Payments.class);
@@ -129,7 +129,7 @@ public class Root extends FlexLayout
 			naviDrawer.addNaviItem(personnel, "Managers", Managers.class);
 		}
 
-		if (showcase.equals(UIConfig.Showcase.INVENTORY)) {
+		else if (showcase.equals(UIConfig.Showcase.INVENTORY)) {
 			naviDrawer.addNaviItem(VaadinIcon.HOME, "Home", Default.class);
 			naviDrawer.addNaviItem(VaadinIcon.PACKAGE, "Customer Orders", CustomerOrders.class);
 			naviDrawer.addNaviItem(VaadinIcon.INVOICE, "Invoices", Invoices.class);
