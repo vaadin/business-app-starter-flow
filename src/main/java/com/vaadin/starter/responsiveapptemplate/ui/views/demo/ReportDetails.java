@@ -48,8 +48,6 @@ public class ReportDetails extends ViewFrame implements HasUrlParameter<Long> {
 	private FlexLayout accounts;
 	private FlexLayout pendingEvents;
 
-	private Div viewport;
-
 	public ReportDetails() {
 		// Header
 		if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
@@ -77,11 +75,11 @@ public class ReportDetails extends ViewFrame implements HasUrlParameter<Long> {
 		);
 		initPendingEvents();
 
-		// Accounts chart
+		// Transaction chart
 		Component transactionsChart = createTransactionsChart();
 
 		// Add it all to the viewport
-		viewport = UIUtils.createDiv(
+		Div viewport = UIUtils.createDiv(
 				Arrays.asList(LumoStyles.Margin.Horizontal.AUTO, LumoStyles.Margin.Responsive.Vertical.ML),
 				logoSection,
 				accountsHeader,

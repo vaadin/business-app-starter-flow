@@ -36,6 +36,10 @@ public class Overview extends ViewFrame {
 			setViewHeader(new AppBar("Overview"));
 		}
 
+		setViewContent(createViewport());
+	}
+
+	private Component createViewport() {
 		Div viewport = UIUtils.createDiv(
 				Arrays.asList(
 						CLASS_NAME,
@@ -54,7 +58,7 @@ public class Overview extends ViewFrame {
 				)
 		);
 		viewport.getStyle().set(CSSProperties.MaxWidth.PROPERTY, CSSProperties.MaxWidth._1024);
-		setViewContent(viewport);
+		return viewport;
 	}
 
 	private Component createHeader(VaadinIcon icon, String title) {

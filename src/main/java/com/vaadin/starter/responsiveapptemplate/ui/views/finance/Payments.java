@@ -53,13 +53,12 @@ public class Payments extends ViewFrame {
 		// Grid
 		initGrid();
 
-		// Grid wrapper
-		Div gridWrapper = UIUtils.createDiv(Collections.singleton(GRID_VIEW), grid);
-
 		// Details drawer
 		initDetailsDrawer();
 
 		// Set the content
+		Div gridWrapper = UIUtils.createDiv(Collections.singleton(GRID_VIEW), grid);
+
 		FlexLayout content = new FlexLayout(gridWrapper, detailsDrawer);
 		content.setSizeFull();
 

@@ -41,8 +41,8 @@ public class Personnel extends ViewFrame {
 		initGrid();
 
 		// Set the content
-		setViewContent(grid);
 		getViewContent().addClassName(GRID_VIEW);
+		setViewContent(grid);
 
 		// Do the initial filtering
 		filter();

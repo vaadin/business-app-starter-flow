@@ -54,13 +54,12 @@ public class Managers extends ViewFrame {
 		// Grid
 		initGrid();
 
-		// Grid wrapper
-		Div gridWrapper = UIUtils.createDiv(Collections.singleton(GRID_VIEW), grid);
-
 		// Details drawer
 		initDetailsDrawer();
 
 		// Set the content
+		Div gridWrapper = UIUtils.createDiv(Collections.singleton(GRID_VIEW), grid);
+
 		FlexLayout content = UIUtils.createColumn(gridWrapper, detailsDrawer);
 		content.getStyle().set(CSSProperties.Overflow.PROPERTY, CSSProperties.Overflow.HIDDEN);
 		content.setSizeFull();

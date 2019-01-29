@@ -33,6 +33,10 @@ public class Dashboard extends ViewFrame {
 			setViewHeader(new AppBar("Dashboard"));
 		}
 
+		setViewContent(createViewport());
+	}
+
+	private Component createViewport() {
 		Div viewport = UIUtils.createDiv(
 				Arrays.asList(
 						CLASS_NAME,
@@ -46,12 +50,12 @@ public class Dashboard extends ViewFrame {
 				UIUtils.createSalesChart("Product sales for 2018", "Items Sold"),
 				UIUtils.createFlexLayout(
 						Collections.singleton(CLASS_NAME + "__bookmarks-recent-items"),
-						new Div(createHeader(VaadinIcon.BOOKMARK, "Bookmarks"), createTabbedList()),
-						new Div(createHeader(VaadinIcon.TIME_BACKWARD, "Recent Items"), createTabbedList())
+						createBookmarks(),
+						createRecentItems()
 				)
 		);
 		viewport.getStyle().set(CSSProperties.MaxWidth.PROPERTY, CSSProperties.MaxWidth._1024);
-		setViewContent(viewport);
+		return viewport;
 	}
 
 	private Component createHeader(VaadinIcon icon, String title) {
@@ -106,6 +110,18 @@ public class Dashboard extends ViewFrame {
 		);
 		column.setAlignItems(FlexComponent.Alignment.CENTER);
 		return column;
+	}
+
+	private Component createBookmarks() {
+		Component header = createHeader(VaadinIcon.BOOKMARK, "Bookmarks");
+		Component card = createTabbedList();
+		return new Div(header, card);
+	}
+
+	private Component createRecentItems() {
+		Component header = createHeader(VaadinIcon.TIME_BACKWARD, "Recent Items");
+		Component card = createTabbedList();
+		return new Div(header, card);
 	}
 
 	private Component createTabbedList() {

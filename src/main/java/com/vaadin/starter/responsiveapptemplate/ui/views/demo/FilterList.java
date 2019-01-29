@@ -35,8 +35,6 @@ import com.vaadin.starter.responsiveapptemplate.ui.views.ViewFrame;
 import java.util.Arrays;
 import java.util.Collections;
 
-import static com.vaadin.starter.responsiveapptemplate.ui.utils.ViewStyles.FILTER_LIST_VIEW;
-
 @Route(value = "filter-list", layout = Root.class)
 @PageTitle("Filter list")
 public class FilterList extends ViewFrame {
@@ -62,7 +60,7 @@ public class FilterList extends ViewFrame {
 		initGrid();
 
 		// Content wrapper
-		FlexLayout content = UIUtils.createColumn(Collections.singleton(FILTER_LIST_VIEW), filterArea, grid);
+		FlexLayout content = UIUtils.createColumn(filterArea, grid);
 		content.setHeight("100%");
 
 		setViewContent(content);

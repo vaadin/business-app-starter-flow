@@ -1,7 +1,3 @@
-.dashboard {
-
-}
-
 .dashboard__progress vaadin-chart + div {
   height: var(--lumo-space-xl);
 }

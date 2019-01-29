@@ -54,15 +54,15 @@ public class VerticalSplitView extends ViewFrame {
 		// Grid
 		initGrid();
 
-		// Grid wrapper
-		Div gridWrapper = UIUtils.createDiv(Collections.singleton(GRID_VIEW), grid);
-
 		// Wrapper
 		initDetailsDrawer();
 
 		// Set the content
+		Div gridWrapper = UIUtils.createDiv(Collections.singleton(GRID_VIEW), grid);
+
 		FlexLayout content = UIUtils.createColumn(gridWrapper, detailsDrawer);
 		content.setSizeFull();
+
 		setViewContent(content);
 	}
 
