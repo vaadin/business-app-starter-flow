@@ -38,26 +38,52 @@ import static com.vaadin.starter.responsiveapptemplate.ui.utils.ViewStyles.GRID_
 public class Payments extends ViewFrame {
 
 	private AppBar appBar;
+
+	private Grid<Payment> grid;
 	private ListDataProvider<Payment> dataProvider;
+
 	private DetailsDrawer detailsDrawer;
 
 	public Payments() {
 		// Header
 		if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-			appBar = new AppBar("Payments");
-			for (Payment.Status status : Payment.Status.values()) {
-				appBar.addTab(status.getName());
-			}
-			appBar.addTabSelectionListener(e -> {
-				hideDetails();
-				filter();
-			});
-			appBar.centerTabs();
-			setHeader(appBar);
+			initAppBar();
 		}
 
 		// Grid
-		Grid<Payment> grid = new Grid<>();
+		initGrid();
+
+		// Grid wrapper
+		Div gridWrapper = UIUtils.createDiv(Collections.singleton(GRID_VIEW), grid);
+
+		// Details drawer
+		initDetailsDrawer();
+
+		// Set the content
+		FlexLayout content = new FlexLayout(gridWrapper, detailsDrawer);
+		content.setSizeFull();
+
+		setViewContent(content);
+
+		// Initial filtering
+		filter();
+	}
+
+	private void initAppBar() {
+		appBar = new AppBar("Payments");
+		for (Payment.Status status : Payment.Status.values()) {
+			appBar.addTab(status.getName());
+		}
+		appBar.addTabSelectionListener(e -> {
+			hideDetails();
+			filter();
+		});
+		appBar.centerTabs();
+		setViewHeader(appBar);
+	}
+
+	private void initGrid() {
+		grid = new Grid<>();
 		dataProvider = DataProvider.ofCollection(DummyData.getPayments());
 		grid.setDataProvider(dataProvider);
 
@@ -90,20 +116,6 @@ public class Payments extends ViewFrame {
 		});
 
 		grid.setSizeFull();
-
-		// Grid wrapper
-		Div gridWrapper = UIUtils.createDiv(Collections.singleton(GRID_VIEW), grid);
-
-		// Details drawer
-		initDetailsDrawer();
-
-		// Set the content
-		FlexLayout content = new FlexLayout(gridWrapper, detailsDrawer);
-		content.setSizeFull();
-		setContent(content);
-
-		// Initial filtering
-		filter();
 	}
 
 	private void filter() {
@@ -170,7 +182,7 @@ public class Payments extends ViewFrame {
 
 		for (ListItem item : new ListItem[]{status, from, to, amount, date}) {
 			item.setReverse(true);
-			item.getStyle().set(CSSProperties.WhiteSpace.PROPERTY, CSSProperties.WhiteSpace.PRE_LINE);
+			item.setWhiteSpace(CSSProperties.WhiteSpace.PRE_LINE);
 		}
 
 		return UIUtils.createDiv(

@@ -27,8 +27,7 @@
 }
 
 /* Title */
-.app-bar__title,
-.app-bar h4 {
+.app-bar__title {
   flex-grow: 1;
   margin: 0;
   overflow: hidden;

@@ -33,11 +33,16 @@ public class Overview extends ViewFrame {
 
 	public Overview() {
 		if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-			setHeader(new AppBar("Overview"));
+			setViewHeader(new AppBar("Overview"));
 		}
 
 		Div viewport = UIUtils.createDiv(
-				Arrays.asList(CLASS_NAME, LumoStyles.Margin.Horizontal.AUTO, LumoStyles.Margin.Responsive.Vertical.ML),
+				Arrays.asList(
+						CLASS_NAME,
+						LumoStyles.Margin.Horizontal.AUTO,
+						LumoStyles.Padding.Bottom.L,
+						LumoStyles.Padding.Responsive.Horizontal.ML
+				),
 				createHeader(VaadinIcon.INVOICE, "Invoices"),
 				createProgressCharts(),
 				createHeader(VaadinIcon.PACKAGE, "Customer Orders"),
@@ -48,7 +53,8 @@ public class Overview extends ViewFrame {
 						createTabbedList(LOGS)
 				)
 		);
-		setContent(viewport);
+		viewport.getStyle().set(CSSProperties.MaxWidth.PROPERTY, CSSProperties.MaxWidth._1024);
+		setViewContent(viewport);
 	}
 
 	private Component createHeader(VaadinIcon icon, String title) {

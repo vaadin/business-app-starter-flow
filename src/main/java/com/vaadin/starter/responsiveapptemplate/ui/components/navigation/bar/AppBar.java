@@ -2,6 +2,7 @@ package com.vaadin.starter.responsiveapptemplate.ui.components.navigation.bar;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentEventListener;
+import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.HasValue;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -11,6 +12,7 @@ import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
@@ -26,7 +28,7 @@ import com.vaadin.starter.responsiveapptemplate.ui.views.Default;
 
 import java.util.Collections;
 
-public class AppBar extends FlexLayout {
+public class AppBar extends Composite<FlexLayout> {
 
 	private String CLASS_NAME = "app-bar";
 
@@ -39,38 +41,66 @@ public class AppBar extends FlexLayout {
 	private FlexLayout actionItems;
 	private Image avatar;
 
-	private Button addTab;
-	private NaviTabs naviTabs;
-
-	private Registration searchRegistration;
-	private TextField search;
 	private FlexLayout tabContainer;
+	private NaviTabs naviTabs;
+	private Button addTab;
+
+	private TextField search;
+	private Registration searchRegistration;
 
 	public enum NaviMode {
 		MENU, CONTEXTUAL
 	}
 
 	public AppBar(String title, NaviTab... tabs) {
-		super();
-		setClassName(CLASS_NAME);
+		getContent().setClassName(CLASS_NAME);
 		getElement().setAttribute(LumoStyles.THEME, LumoStyles.DARK);
 
+		initMenuNaviIcon();
+		initContextNaviIcon();
+		initTitle(title);
+		initSearch();
+		initAvatar();
+		initActionItems();
+		initContainer();
+		initTabs(tabs);
+	}
+
+	public void setNaviMode(NaviMode mode) {
+		if (mode.equals(NaviMode.MENU)) {
+			menuNaviIcon.setVisible(true);
+			contextNaviIcon.setVisible(false);
+		} else {
+			menuNaviIcon.setVisible(false);
+			contextNaviIcon.setVisible(true);
+		}
+	}
+
+	private void initMenuNaviIcon() {
 		menuNaviIcon = UIUtils.createButton(VaadinIcon.MENU, ButtonVariant.LUMO_SMALL, ButtonVariant.LUMO_TERTIARY);
 		menuNaviIcon.addClassName(CLASS_NAME + "__navi-icon");
 		menuNaviIcon.addClickListener(e -> AppTemplateUI.getNaviDrawer().toggle());
+	}
 
+	private void initContextNaviIcon() {
 		contextNaviIcon = UIUtils.createButton(VaadinIcon.ARROW_BACKWARD, ButtonVariant.LUMO_SMALL, ButtonVariant.LUMO_TERTIARY);
 		contextNaviIcon.addClassNames(CLASS_NAME + "__navi-icon", CLASS_NAME + "__navi-icon--visible");
 		contextNaviIcon.setVisible(false);
+	}
 
+	private void initTitle(String title) {
 		this.title = new H4(title);
 		this.title.setClassName(CLASS_NAME + "__title");
+	}
 
+	private void initSearch() {
 		search = new TextField();
 		search.setPlaceholder("Search");
 		search.setPrefixComponent(new Icon(VaadinIcon.SEARCH));
 		search.setVisible(false);
+	}
 
+	private void initAvatar() {
 		avatar = new Image();
 		avatar.setClassName(CLASS_NAME + "__avatar");
 		avatar.setSrc("https://pbs.twimg.com/profile_images/2642704545/a77c0524766c6f3b4be4929f2005e627_400x400.png");
@@ -82,15 +112,21 @@ public class AppBar extends FlexLayout {
 		contextMenu.addItem("john.smith@yahoo.com", e -> Notification.show("Not implemented yet.", 3000, Notification.Position.BOTTOM_CENTER));
 		contextMenu.addItem("Settings", e -> Notification.show("Not implemented yet.", 3000, Notification.Position.BOTTOM_CENTER));
 		contextMenu.addItem("Log Out", e -> Notification.show("Not implemented yet.", 3000, Notification.Position.BOTTOM_CENTER));
+	}
 
+	private void initActionItems() {
 		actionItems = UIUtils.createFlexLayout(Collections.singleton(CLASS_NAME + "__action-items"), avatar);
 		actionItems.setVisible(false);
+	}
 
+	private void initContainer() {
 		container = UIUtils.createFlexLayout(Collections.singleton(CLASS_NAME + "__container"), menuNaviIcon, contextNaviIcon, this.title, search, actionItems, avatar);
-		container.setAlignItems(Alignment.CENTER);
+		container.setAlignItems(FlexComponent.Alignment.CENTER);
 		container.setFlexGrow(1, search);
-		add(container);
+		getContent().add(container);
+	}
 
+	private void initTabs(NaviTab... tabs) {
 		addTab = UIUtils.createSmallButton(VaadinIcon.PLUS);
 		addTab.addClickListener(e -> naviTabs.setSelectedTab(addClosableNaviTab("New Tab", Default.class)));
 		addTab.setVisible(false);
@@ -103,18 +139,8 @@ public class AppBar extends FlexLayout {
 		}
 
 		tabContainer = UIUtils.createFlexLayout(Collections.singleton(CLASS_NAME + "__tab-container"), naviTabs, addTab);
-		tabContainer.setAlignItems(Alignment.CENTER);
-		add(tabContainer);
-	}
-
-	public void setNaviMode(NaviMode mode) {
-		if (mode.equals(NaviMode.MENU)) {
-			menuNaviIcon.setVisible(true);
-			contextNaviIcon.setVisible(false);
-		} else {
-			menuNaviIcon.setVisible(false);
-			contextNaviIcon.setVisible(true);
-		}
+		tabContainer.setAlignItems(FlexComponent.Alignment.CENTER);
+		getContent().add(tabContainer);
 	}
 
 

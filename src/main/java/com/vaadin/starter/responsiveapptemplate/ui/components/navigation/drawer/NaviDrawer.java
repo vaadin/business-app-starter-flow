@@ -1,6 +1,7 @@
 package com.vaadin.starter.responsiveapptemplate.ui.components.navigation.drawer;
 
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Image;
@@ -15,73 +16,85 @@ import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public abstract class NaviDrawer extends Div implements AfterNavigationObserver {
+public abstract class NaviDrawer extends Composite<Div> implements AfterNavigationObserver {
 
 	private static final String CLASS_NAME = "navi-drawer";
 	private static final String RAIL = "rail";
 	private static final String OPEN = "open";
 
-
 	private Div scrim;
-	private Div content;
-	private Div scrollArea;
+	private Div mainContent;
+	private TextField search;
+	private Div scrollableArea;
 
-	protected Div list;
+	private Div naviList;
 	private ArrayList<NaviItem> items;
 
 	private Button railButton;
-	private TextField search;
+
 
 	public NaviDrawer() {
-		setClassName(CLASS_NAME);
-		init();
+		getContent().setClassName(CLASS_NAME);
+
+		initScrim();
+		initMainContent();
+		initHeader();
+		initSearch();
+		initScrollableArea();
+		initNaviList();
+		initFooter();
 	}
 
-	private void init() {
-		// Backdrop on small viewports.
+	private void initScrim() {
+		// Backdrop on small viewports
 		scrim = UIUtils.createDiv(Collections.singleton(CLASS_NAME + "__scrim"));
 		scrim.addClickListener(event -> close());
-		add(scrim);
+		getContent().add(scrim);
+	}
 
-		// Main content.
-		content = UIUtils.createDiv(Collections.singleton(CLASS_NAME + "__content"));
-		add(content);
+	private void initMainContent() {
+		mainContent = UIUtils.createDiv(Collections.singleton(CLASS_NAME + "__content"));
+		getContent().add(mainContent);
+	}
 
-		// Header: account switcher or brand logo.
+	private void initHeader() {
 		if (UIConfig.getNaviHeader().equals(UIConfig.NaviHeader.ACCOUNT_SWITCHER)) {
-			content.add(new AccountSwitcher());
+			mainContent.add(new AccountSwitcher());
 		} else {
-			content.add(new BrandExpression());
+			mainContent.add(new BrandExpression());
 		}
+	}
 
-		// Search field.
+	private void initSearch() {
 		search = new TextField();
 		search.setPlaceholder("Filter");
 		search.setPrefixComponent(new Icon(VaadinIcon.FILTER));
 		search.addValueChangeListener(e -> search());
-		content.add(search);
-
-		// Scrollable area.
-		scrollArea = UIUtils.createDiv(Collections.singleton(CLASS_NAME + "__scroll-area"));
-		content.add(scrollArea);
-
-		// Wrapper for navigation items.
-		list = UIUtils.createDiv(Collections.singleton(CLASS_NAME + "__list"));
-		scrollArea.add(list);
-
-		items = new ArrayList<>();
-
-		// "Footer", currently only a collapse/expand button.
-		railButton = UIUtils.createSmallButton("Collapse", VaadinIcon.CHEVRON_LEFT_SMALL);
-		railButton.addClassName(CLASS_NAME + "__footer");
-		railButton.addClickListener(event -> toggleRailMode());
-		content.add(railButton);
+		mainContent.add(search);
 	}
 
 	private void search() {
-		items.forEach(naviItem -> {
-			naviItem.setVisible(naviItem.getText().toLowerCase().contains(search.getValue().toLowerCase()));
-		});
+		items.forEach(naviItem -> naviItem.setVisible(naviItem.getText().toLowerCase().contains(search.getValue().toLowerCase())));
+	}
+
+	private void initScrollableArea() {
+		scrollableArea = UIUtils.createDiv(Collections.singleton(CLASS_NAME + "__scroll-area"));
+		mainContent.add(scrollableArea);
+	}
+
+	private void initNaviList() {
+		// Wrapper for navigation items
+		naviList = UIUtils.createDiv(Collections.singleton(CLASS_NAME + "__list"));
+		scrollableArea.add(naviList);
+
+		items = new ArrayList<>();
+	}
+
+	private void initFooter() {
+		railButton = UIUtils.createSmallButton("Collapse", VaadinIcon.CHEVRON_LEFT_SMALL);
+		railButton.addClassName(CLASS_NAME + "__footer");
+		railButton.addClickListener(event -> toggleRailMode());
+		mainContent.add(railButton);
 	}
 
 	private void toggleRailMode() {
@@ -113,7 +126,7 @@ public abstract class NaviDrawer extends Div implements AfterNavigationObserver 
 	}
 
 	protected void addNaviItem(NaviItem item) {
-		list.add(item);
+		naviList.add(item);
 		items.add(item);
 	}
 

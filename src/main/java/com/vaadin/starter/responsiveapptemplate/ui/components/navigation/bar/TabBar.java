@@ -2,6 +2,7 @@ package com.vaadin.starter.responsiveapptemplate.ui.components.navigation.bar;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentEventListener;
+import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.contextmenu.ContextMenu;
@@ -19,7 +20,7 @@ import com.vaadin.starter.responsiveapptemplate.ui.views.Default;
 
 import java.util.Collections;
 
-public class TabBar extends FlexLayout {
+public class TabBar extends Composite<FlexLayout> {
 
 	private final String CLASS_NAME = "tab-bar";
 
@@ -32,8 +33,7 @@ public class TabBar extends FlexLayout {
 	private NaviTabs tabs;
 
 	public TabBar() {
-		super();
-		setClassName(CLASS_NAME);
+		getContent().setClassName(CLASS_NAME);
 		getElement().setAttribute(LumoStyles.THEME, LumoStyles.DARK);
 
 		menuNaviIcon = UIUtils.createButton(VaadinIcon.MENU, ButtonVariant.LUMO_SMALL, ButtonVariant.LUMO_TERTIARY);
@@ -62,7 +62,7 @@ public class TabBar extends FlexLayout {
 		tabs = new NaviTabs();
 		tabs.setClassName(CLASS_NAME + "__tabs");
 
-		add(menuNaviIcon, tabs, addTab, actionItems);
+		getContent().add(menuNaviIcon, tabs, addTab, actionItems);
 	}
 
 	/* === MENU ICON === */

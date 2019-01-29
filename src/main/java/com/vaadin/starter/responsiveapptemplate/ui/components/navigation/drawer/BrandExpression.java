@@ -1,11 +1,12 @@
 package com.vaadin.starter.responsiveapptemplate.ui.components.navigation.drawer;
 
+import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.starter.responsiveapptemplate.backend.UIConfig;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
 
-public class BrandExpression extends Div {
+public class BrandExpression extends Composite<Div> {
 
 	private String CLASS_NAME = "brand-expression";
 
@@ -13,8 +14,7 @@ public class BrandExpression extends Div {
 	private Image railLogo;
 
 	public BrandExpression() {
-		setClassName(CLASS_NAME);
-		// addClickListener(e -> UI.getCurrent().navigate(""));
+		getContent().setClassName(CLASS_NAME);
 
 		logo = new Image();
 		logo.addClassName(CLASS_NAME + "__logo");
@@ -35,7 +35,7 @@ public class BrandExpression extends Div {
 			railLogo.setSrc(UIUtils.IMG_PATH + "inventory-logo-only.svg");
 		}
 
-		add(logo, railLogo);
+		getContent().add(logo, railLogo);
 	}
 
 }

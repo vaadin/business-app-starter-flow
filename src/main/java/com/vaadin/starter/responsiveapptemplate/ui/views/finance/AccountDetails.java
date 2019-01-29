@@ -35,9 +35,11 @@ import java.util.Arrays;
 @PageTitle("Account Details")
 public class AccountDetails extends ViewFrame implements HasUrlParameter<Long> {
 
-	public static final int RECENT_TRANSACTIONS = 4;
+	public int RECENT_TRANSACTIONS = 4;
+
 	private AppBar appBar;
-	private final Div viewport;
+
+	private Div viewport;
 	private ListItem availability;
 	private ListItem bankAccount;
 	private ListItem updated;
@@ -45,16 +47,15 @@ public class AccountDetails extends ViewFrame implements HasUrlParameter<Long> {
 	public AccountDetails() {
 		// Header
 		if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-			appBar = new AppBar("Details");
-			appBar.setNaviMode(AppBar.NaviMode.CONTEXTUAL);
-			appBar.setContextNaviIcon(new Icon(VaadinIcon.ARROW_BACKWARD));
-			appBar.getContextNaviIcon().addClickListener(e -> UI.getCurrent().navigate("accounts"));
-			setHeader(appBar);
+			initAppBar();
 		}
 
 		// Content
 		Label monthlyOverviewHeader = UIUtils.createH3Label("Monthly Overview");
-		monthlyOverviewHeader.addClassNames(LumoStyles.Margin.Vertical.L, LumoStyles.Margin.Responsive.Horizontal.ML);
+		monthlyOverviewHeader.addClassNames(
+				LumoStyles.Margin.Vertical.L,
+				LumoStyles.Margin.Responsive.Horizontal.ML
+		);
 
 		viewport = UIUtils.createDiv(
 				Arrays.asList(LumoStyles.Margin.Horizontal.AUTO, LumoStyles.Margin.Responsive.Vertical.ML),
@@ -64,8 +65,8 @@ public class AccountDetails extends ViewFrame implements HasUrlParameter<Long> {
 				monthlyOverviewHeader,
 				createTransactionsChart()
 		);
-		viewport.getStyle().set(CSSProperties.MaxWidth.PROPERTY, CSSProperties.MaxWidth._800);
-		setContent(viewport);
+		viewport.getStyle().set(CSSProperties.MaxWidth.PROPERTY, CSSProperties.MaxWidth._840);
+		setViewContent(viewport);
 	}
 
 	@Override
@@ -82,6 +83,14 @@ public class AccountDetails extends ViewFrame implements HasUrlParameter<Long> {
 		bankAccount.setPrimaryText(account.getAccount());
 		bankAccount.setSecondaryText(account.getBank());
 		updated.setPrimaryText(UIUtils.formatDate(account.getUpdated()));
+	}
+
+	private void initAppBar() {
+		appBar = new AppBar("Details");
+		appBar.setNaviMode(AppBar.NaviMode.CONTEXTUAL);
+		appBar.setContextNaviIcon(new Icon(VaadinIcon.ARROW_BACKWARD));
+		appBar.getContextNaviIcon().addClickListener(e -> UI.getCurrent().navigate("accounts"));
+		setViewHeader(appBar);
 	}
 
 	private Component createLogoSection() {

@@ -76,7 +76,13 @@ public class CSSProperties {
 	public static class MaxWidth {
 		public static final String PROPERTY = new String("max-width");
 		public static final String _1024 = new String("1024px");
-		public static final String _800 = new String("800px");
+		public static final String _960 = new String("960px");
+		public static final String _840 = new String("840px");
+		public static final String _720 = new String("720px");
+		public static final String _600 = new String("600px");
+		public static final String _480 = new String("480px");
+		public static final String _400 = new String("400px");
+		public static final String _360 = new String("360px");
 	}
 
 	public static class MinWidth {
@@ -87,6 +93,14 @@ public class CSSProperties {
 		public static final String PROPERTY = new String("overflow");
 		public static final String AUTO = new String("auto");
 		public static final String HIDDEN = new String("hidden");
+	}
+
+	public static class PaddingLeft {
+		public static final String PROPERTY = new String("padding-left");
+	}
+
+	public static class PaddingRight {
+		public static final String PROPERTY = new String("padding-right");
 	}
 
 	public static class Position {

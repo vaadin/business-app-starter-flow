@@ -30,14 +30,24 @@ import static com.vaadin.starter.responsiveapptemplate.ui.utils.ViewStyles.GRID_
 @PageTitle("Accounts")
 public class Accounts extends ViewFrame implements RouterLayout {
 
+	private Grid<BankAccount> grid;
+
 	public Accounts() {
-		// Header
+		// View header
 		if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-			setHeader(new AppBar("Accounts"));
+			setViewHeader(new AppBar("Accounts"));
 		}
 
 		// Grid
-		Grid<BankAccount> grid = new Grid<>();
+		initGrid();
+
+		// Set the content
+		setViewContent(grid);
+		getViewContent().addClassName(GRID_VIEW);
+	}
+
+	private void initGrid() {
+		grid = new Grid<>();
 		grid.setDataProvider(DataProvider.ofCollection(DummyData.getBankAccounts()));
 
 		grid.addColumn(BankAccount::getId)
@@ -65,10 +75,6 @@ public class Accounts extends ViewFrame implements RouterLayout {
 		grid.addSelectionListener(event -> event.getFirstSelectedItem().ifPresent(this::viewDetails));
 
 		grid.setSizeFull();
-
-		// Set the content
-		setContent(grid);
-		getContent().addClassName(GRID_VIEW);
 	}
 
 	private Component createBankInfo(BankAccount bankAccount) {

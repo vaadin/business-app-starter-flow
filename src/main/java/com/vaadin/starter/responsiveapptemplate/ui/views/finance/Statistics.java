@@ -31,11 +31,16 @@ public class Statistics extends ViewFrame {
 
 	public Statistics() {
 		if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-			setHeader(new AppBar("Statistics"));
+			setViewHeader(new AppBar("Statistics"));
 		}
 
 		Div viewport = UIUtils.createDiv(
-				Arrays.asList(CLASS_NAME, LumoStyles.Margin.Horizontal.AUTO, LumoStyles.Margin.Responsive.Vertical.ML),
+				Arrays.asList(
+						CLASS_NAME,
+						LumoStyles.Margin.Horizontal.AUTO,
+						LumoStyles.Padding.Bottom.L,
+						LumoStyles.Padding.Responsive.Horizontal.ML
+				),
 				createHeader(VaadinIcon.CREDIT_CARD, "Payments"),
 				createProgressCharts(),
 				createHeader(VaadinIcon.MONEY_EXCHANGE, "Transactions"),
@@ -46,7 +51,8 @@ public class Statistics extends ViewFrame {
 						createLogs()
 				)
 		);
-		setContent(viewport);
+		viewport.getStyle().set(CSSProperties.MaxWidth.PROPERTY, CSSProperties.MaxWidth._1024);
+		setViewContent(viewport);
 	}
 
 	private Component createHeader(VaadinIcon icon, String title) {

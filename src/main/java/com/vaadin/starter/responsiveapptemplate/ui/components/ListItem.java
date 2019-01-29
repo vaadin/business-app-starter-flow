@@ -1,6 +1,8 @@
 package com.vaadin.starter.responsiveapptemplate.ui.components;
 
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.Composite;
+import com.vaadin.flow.component.HasStyle;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
@@ -12,7 +14,7 @@ import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
 
 import java.util.Collections;
 
-public class ListItem extends FlexLayout {
+public class ListItem extends Composite<FlexLayout> implements HasStyle {
 
 	private final String CLASS_NAME = "list-item";
 
@@ -27,19 +29,24 @@ public class ListItem extends FlexLayout {
 	private Div divider;
 
 	public ListItem(String primary, String secondary) {
-		setClassName(CLASS_NAME);
-		setAlignItems(FlexComponent.Alignment.CENTER);
+		getContent().setClassName(CLASS_NAME);
+		getContent().setAlignItems(FlexComponent.Alignment.CENTER);
 
 		this.primary = new Label(primary);
 		this.secondary = UIUtils.createLabel(FontSize.S, TextColor.SECONDARY, secondary);
 
-		this.content = UIUtils.createColumn(Collections.singleton(CLASS_NAME + "__content"), this.primary, this.secondary);
-		add(this.content);
+		this.content = UIUtils.createColumn(
+				Collections.singleton(CLASS_NAME + "__content"),
+				this.primary,
+				this.secondary
+		);
+		getContent().add(this.content);
 	}
 
 	public ListItem(String primary) {
 		this(primary, "");
 	}
+
 
 
 	/* === PREFIX === */
@@ -54,6 +61,7 @@ public class ListItem extends FlexLayout {
 	}
 
 
+
 	/* === SUFFIX === */
 
 	public ListItem(String primary, String secondary, Component suffix) {
@@ -64,6 +72,7 @@ public class ListItem extends FlexLayout {
 	public ListItem(String primary, Component suffix) {
 		this(primary, null, suffix);
 	}
+
 
 
 	/* === PREFIX & SUFFIX === */
@@ -79,7 +88,16 @@ public class ListItem extends FlexLayout {
 	}
 
 
+
 	/* === MISC === */
+
+	public void setAlignItems(FlexComponent.Alignment alignment) {
+		getContent().setAlignItems(alignment);
+	}
+
+	public void setWhiteSpace(String value) {
+		getElement().getStyle().set(CSSProperties.WhiteSpace.PROPERTY, value);
+	}
 
 	public void setReverse(boolean reverse) {
 		if (reverse) {
@@ -91,11 +109,11 @@ public class ListItem extends FlexLayout {
 
 	public void setHorizontalPadding(boolean horizontalPadding) {
 		if (horizontalPadding) {
-			getStyle().remove("padding-left");
-			getStyle().remove("padding-right");
+			getContent().getStyle().remove(CSSProperties.PaddingLeft.PROPERTY);
+			getContent().getStyle().remove(CSSProperties.PaddingRight.PROPERTY);
 		} else {
-			getStyle().set("padding-left", "0");
-			getStyle().set("padding-right", "0");
+			getContent().getStyle().set(CSSProperties.PaddingLeft.PROPERTY, "0");
+			getContent().getStyle().set(CSSProperties.PaddingRight.PROPERTY, "0");
 		}
 	}
 
@@ -140,7 +158,7 @@ public class ListItem extends FlexLayout {
 	public void setDividerVisible(boolean visible) {
 		if (divider == null) {
 			divider = UIUtils.createDiv(Collections.singleton(CLASS_NAME + "__divider"));
-			add(divider);
+			getContent().add(divider);
 		}
 		divider.setVisible(visible);
 	}

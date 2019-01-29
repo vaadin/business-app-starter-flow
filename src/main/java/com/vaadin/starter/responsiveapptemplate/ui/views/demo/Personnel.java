@@ -27,22 +27,39 @@ import static com.vaadin.starter.responsiveapptemplate.ui.utils.ViewStyles.GRID_
 public class Personnel extends ViewFrame {
 
 	private AppBar appBar;
-	private final ListDataProvider<Person> dataProvider;
+
+	private Grid<Person> grid;
+	private ListDataProvider<Person> dataProvider;
 
 	public Personnel() {
 		// Header
 		if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-			appBar = new AppBar("Personnel");
-			for (Person.Role role : Person.Role.values()) {
-				appBar.addTab(role.name().substring(0, 1).toUpperCase() + role.name().substring(1).toLowerCase());
-			}
-			appBar.addTabSelectionListener(e -> filter());
-			appBar.centerTabs();
-			setHeader(appBar);
+			initAppBar();
 		}
 
 		// Grid
-		Grid<Person> grid = new Grid<>();
+		initGrid();
+
+		// Set the content
+		setViewContent(grid);
+		getViewContent().addClassName(GRID_VIEW);
+
+		// Do the initial filtering
+		filter();
+	}
+
+	private void initAppBar() {
+		appBar = new AppBar("Personnel");
+		for (Person.Role role : Person.Role.values()) {
+			appBar.addTab(role.name().substring(0, 1).toUpperCase() + role.name().substring(1).toLowerCase());
+		}
+		appBar.addTabSelectionListener(e -> filter());
+		appBar.centerTabs();
+		setViewHeader(appBar);
+	}
+
+	private void initGrid() {
+		grid = new Grid<>();
 		dataProvider = DataProvider.ofCollection(DummyData.getPersons());
 		grid.setDataProvider(dataProvider);
 
@@ -71,13 +88,6 @@ public class Personnel extends ViewFrame {
 				.setFlexGrow(0);
 
 		grid.setSizeFull();
-
-		// Set the content
-		setContent(grid);
-		getContent().addClassName(GRID_VIEW);
-
-		// Do the initial filtering
-		filter();
 	}
 
 	private void filter() {

@@ -40,17 +40,35 @@ import static com.vaadin.starter.responsiveapptemplate.ui.utils.ViewStyles.GRID_
 @PageTitle("Horizontal Split View")
 public class HorizontalSplitView extends ViewFrame {
 
+	private Grid<Person> grid;
+
 	private DetailsDrawer detailsDrawer;
 	private Label detailsDrawerTitle;
 
 	public HorizontalSplitView() {
 		// Header
 		if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-			setHeader(new AppBar("Personnel"));
+			setViewHeader(new AppBar("Personnel"));
 		}
 
 		// Grid
-		Grid<Person> grid = new Grid<>();
+		initGrid();
+
+		// Grid wrapper
+		Div gridWrapper = UIUtils.createDiv(Collections.singleton(GRID_VIEW), grid);
+
+		// Details drawer
+		initDetailsDrawer();
+
+		// Set the content
+		FlexLayout content = new FlexLayout(gridWrapper, detailsDrawer);
+		content.setSizeFull();
+
+		setViewContent(content);
+	}
+
+	private void initGrid() {
+		grid = new Grid<>();
 		grid.setDataProvider(DataProvider.ofCollection(DummyData.getPersons()));
 
 		grid.addColumn(Person::getId)
@@ -84,17 +102,6 @@ public class HorizontalSplitView extends ViewFrame {
 		});
 
 		grid.setSizeFull();
-
-		// Grid wrapper
-		Div gridWrapper = UIUtils.createDiv(Collections.singleton(GRID_VIEW), grid);
-
-		// Details drawer
-		initDetailsDrawer();
-
-		// Set the content
-		FlexLayout content = new FlexLayout(gridWrapper, detailsDrawer);
-		content.setSizeFull();
-		setContent(content);
 	}
 
 	private void initDetailsDrawer() {

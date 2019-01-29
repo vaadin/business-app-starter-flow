@@ -43,7 +43,9 @@ import static com.vaadin.starter.responsiveapptemplate.ui.utils.ViewStyles.GRID_
 @PageTitle("Invoices")
 public class Invoices extends ViewFrame {
 
-	private final Grid<Invoice> grid;
+	private AppBar appBar;
+
+	private Grid<Invoice> grid;
 	private ListDataProvider<Invoice> dataProvider;
 
 	private DetailsDrawer detailsDrawer;
@@ -52,14 +54,34 @@ public class Invoices extends ViewFrame {
 	public Invoices() {
 		// Header
 		if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-			AppBar appBar = new AppBar("Invoices");
-			appBar.addActionItem(VaadinIcon.SEARCH).addClickListener(e -> appBar.searchModeOn());
-			appBar.addSearchListener(e -> filter(e));
-			appBar.setSearchPlaceholder("Search by customer");
-			setHeader(appBar);
+			initAppBar();
 		}
 
 		// Grid
+		initGrid();
+
+		// Grid wrapper
+		Div gridWrapper = UIUtils.createDiv(Collections.singleton(GRID_VIEW), grid);
+
+		// Details drawer
+		initDetailsDrawer();
+
+		// Set the content
+		FlexLayout content = new FlexLayout(gridWrapper, detailsDrawer);
+		content.setSizeFull();
+
+		setViewContent(content);
+	}
+
+	private void initAppBar() {
+		appBar = new AppBar("Invoices");
+		appBar.addActionItem(VaadinIcon.SEARCH).addClickListener(e -> appBar.searchModeOn());
+		appBar.addSearchListener(e -> filter(e));
+		appBar.setSearchPlaceholder("Search by customer");
+		setViewHeader(appBar);
+	}
+
+	private void initGrid() {
 		grid = new Grid<>();
 		dataProvider = DataProvider.ofCollection(DummyData.getInvoices());
 		dataProvider.setSortOrder(Invoice::getDueDate, SortDirection.ASCENDING);
@@ -93,17 +115,6 @@ public class Invoices extends ViewFrame {
 		});
 
 		grid.setSizeFull();
-
-		// Grid wrapper
-		Div gridWrapper = UIUtils.createDiv(Collections.singleton(GRID_VIEW), grid);
-
-		// Details drawer
-		initDetailsDrawer();
-
-		// Set the content
-		FlexLayout content = new FlexLayout(gridWrapper, detailsDrawer);
-		content.setSizeFull();
-		setContent(content);
 	}
 
 	private void filter(HasValue.ValueChangeEvent event) {

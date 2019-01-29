@@ -40,17 +40,34 @@ import static com.vaadin.starter.responsiveapptemplate.ui.utils.ViewStyles.GRID_
 @PageTitle("Vertical Split View")
 public class VerticalSplitView extends ViewFrame {
 
+	private Grid<Person> grid;
+
 	private DetailsDrawer detailsDrawer;
 	private Label detailsDrawerTitle;
 
 	public VerticalSplitView() {
 		// Header
 		if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-			setHeader(new AppBar("Personnel"));
+			setViewHeader(new AppBar("Personnel"));
 		}
 
 		// Grid
-		Grid<Person> grid = new Grid<>();
+		initGrid();
+
+		// Grid wrapper
+		Div gridWrapper = UIUtils.createDiv(Collections.singleton(GRID_VIEW), grid);
+
+		// Wrapper
+		initDetailsDrawer();
+
+		// Set the content
+		FlexLayout content = UIUtils.createColumn(gridWrapper, detailsDrawer);
+		content.setSizeFull();
+		setViewContent(content);
+	}
+
+	private void initGrid() {
+		grid = new Grid<>();
 		grid.setDataProvider(DataProvider.ofCollection(DummyData.getPersons()));
 
 		grid.addColumn(Person::getId)
@@ -84,17 +101,6 @@ public class VerticalSplitView extends ViewFrame {
 		});
 
 		grid.setSizeFull();
-
-		// Grid wrapper
-		Div gridWrapper = UIUtils.createDiv(Collections.singleton(GRID_VIEW), grid);
-
-		// Wrapper
-		initDetailsDrawer();
-
-		// Set the content
-		FlexLayout content = UIUtils.createColumn(gridWrapper, detailsDrawer);
-		content.setSizeFull();
-		setContent(content);
 	}
 
 	private void initDetailsDrawer() {

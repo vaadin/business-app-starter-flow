@@ -1,6 +1,5 @@
 .dashboard {
-  max-width: calc(100% - calc(2 * var(--lumo-space-l)));
-  width: 1024px;
+
 }
 
 .dashboard__progress vaadin-chart + div {
@@ -9,10 +8,10 @@
 
 @media (max-width: 399px) {
   .dashboard {
-    max-width: 100%;
+    padding: 0;
   }
   .dashboard__progress > * {
-    width: 100%;
+    width: calc(100% / 1);
   }
   .dashboard__progress > *:not(:last-child) {
     box-shadow: inset 0 -1px var(--lumo-contrast-20pct);
@@ -21,7 +20,7 @@
 
 @media (min-width: 400px) and (max-width: 599px) {
   .dashboard__progress > * {
-    width: 50%;
+    width: calc(100% / 2);
   }
   .dashboard__progress > *:first-child {
     box-shadow: inset 0 -1px var(--lumo-contrast-20pct),
@@ -37,7 +36,7 @@
 
 @media (min-width: 600px) {
   .dashboard__progress > * {
-    width: 25%;
+    width: calc(100% / 4);
   }
   .dashboard__progress > *:not(:last-child) {
     box-shadow: inset -1px 0 var(--lumo-contrast-20pct);

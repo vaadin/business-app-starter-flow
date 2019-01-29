@@ -38,70 +38,44 @@ public class ReportDetails extends ViewFrame implements HasUrlParameter<Long> {
 	private static final String CLASS_NAME = "report-details";
 
 	private AppBar appBar;
-	private Div viewport;
+
+	private FlexLayout logoSection;
 	private Image image;
 	private ListItem balance;
 	private ListItem runningDate;
 	private ListItem status;
 
-	public ReportDetails() {
-		Integer amount = DummyData.getRandomInt(0, 5000);
+	private FlexLayout accounts;
+	private FlexLayout pendingEvents;
 
+	private Div viewport;
+
+	public ReportDetails() {
 		// Header
 		if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-			appBar = new AppBar("Details");
-			appBar.setNaviMode(AppBar.NaviMode.CONTEXTUAL);
-			appBar.setContextNaviIcon(new Icon(VaadinIcon.ARROW_BACKWARD));
-			appBar.getContextNaviIcon().addClickListener(e -> UI.getCurrent().navigate("reports"));
-			setHeader(appBar);
+			initAppBar();
 		}
 
 		// Logo section
-		image = new Image("", "");
-		image.getStyle().set(CSSProperties.BorderRadius.PROPERTY, "100%");
-		image.addClassNames(LumoStyles.Margin.Horizontal.L, LumoStyles.Margin.Bottom.S);
-		image.setHeight("200px");
-		image.setWidth("200px");
-
-		balance = new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.MONEY), "", "Current Balance");
-		balance.setReverse(true);
-		balance.setDividerVisible(true);
-
-		runningDate = new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.CALENDAR), "", "Date Range");
-		runningDate.setReverse(true);
-		runningDate.setDividerVisible(true);
-
-		status = new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.LOCK), "", "Status");
-		status.setReverse(true);
-
-		FlexLayout column = UIUtils.createColumn(balance, runningDate, status);
-		column.getStyle().set(CSSProperties.Flex.PROPERTY, "1");
-
-		FlexLayout row = UIUtils.createWrappingFlexLayout(Arrays.asList(LumoStyles.Padding.Bottom.L, BoxShadowBorders.BOTTOM), image, column);
-		row.setAlignItems(FlexComponent.Alignment.CENTER);
-		row.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
+		initLogoSection();
 
 		// Accounts
 		Label accountsHeader = UIUtils.createH6Label("Accounts (USD)");
-		accountsHeader.addClassNames(LumoStyles.Margin.Bottom.M, LumoStyles.Margin.Responsive.Horizontal.ML, LumoStyles.Margin.Top.L);
-
-		FlexLayout transactions = UIUtils.createWrappingFlexLayout(
-				Arrays.asList(LumoStyles.Padding.Bottom.L, BoxShadowBorders.BOTTOM),
-				createLargeListItem(VaadinIcon.PLUS, UIUtils.formatAmount(amount * 0.4), "14 deposits"),
-				createLargeListItem(VaadinIcon.MINUS, UIUtils.formatAmount(amount * 0.6), "9 withdrawals"),
-				createLargeListItem(VaadinIcon.PLUS_MINUS, UIUtils.formatAmount(amount), "23 in total")
+		accountsHeader.addClassNames(
+				LumoStyles.Margin.Bottom.M,
+				LumoStyles.Margin.Responsive.Horizontal.ML,
+				LumoStyles.Margin.Top.L
 		);
+		initAccounts();
 
 		// Pending events
 		Label pendingEventsHeader = UIUtils.createH6Label("Pending Events");
-		pendingEventsHeader.addClassNames(LumoStyles.Margin.Bottom.M, LumoStyles.Margin.Responsive.Horizontal.ML, LumoStyles.Margin.Top.L);
-
-		FlexLayout pendingEvents = UIUtils.createWrappingFlexLayout(
-				Collections.singleton(LumoStyles.Padding.Bottom.XL),
-				createLargeListItem(VaadinIcon.TIMER, UIUtils.formatAmount(DummyData.getRandomInt(0, 50)), "Open"),
-				createLargeListItem(VaadinIcon.CHECK, UIUtils.formatAmount(DummyData.getRandomInt(0, 100)), "Closed"),
-				createLargeListItem(VaadinIcon.BAN, UIUtils.formatAmount(DummyData.getRandomInt(0, 50)), "Failed")
+		pendingEventsHeader.addClassNames(
+				LumoStyles.Margin.Bottom.M,
+				LumoStyles.Margin.Responsive.Horizontal.ML,
+				LumoStyles.Margin.Top.L
 		);
+		initPendingEvents();
 
 		// Accounts chart
 		Component transactionsChart = createTransactionsChart();
@@ -109,16 +83,16 @@ public class ReportDetails extends ViewFrame implements HasUrlParameter<Long> {
 		// Add it all to the viewport
 		viewport = UIUtils.createDiv(
 				Arrays.asList(LumoStyles.Margin.Horizontal.AUTO, LumoStyles.Margin.Responsive.Vertical.ML),
-				row,
+				logoSection,
 				accountsHeader,
-				transactions,
+				accounts,
 				pendingEventsHeader,
 				pendingEvents,
 				transactionsChart
 		);
-		viewport.getStyle().set(CSSProperties.MaxWidth.PROPERTY, CSSProperties.MaxWidth._800);
+		viewport.getStyle().set(CSSProperties.MaxWidth.PROPERTY, CSSProperties.MaxWidth._840);
 
-		setContent(viewport);
+		setViewContent(viewport);
 	}
 
 	@Override
@@ -141,6 +115,60 @@ public class ReportDetails extends ViewFrame implements HasUrlParameter<Long> {
 		} else {
 			status.setPrimaryText("Open");
 		}
+	}
+
+	private void initAppBar() {
+		appBar = new AppBar("Details");
+		appBar.setNaviMode(AppBar.NaviMode.CONTEXTUAL);
+		appBar.setContextNaviIcon(new Icon(VaadinIcon.ARROW_BACKWARD));
+		appBar.getContextNaviIcon().addClickListener(e -> UI.getCurrent().navigate("reports"));
+		setViewHeader(appBar);
+	}
+
+	private void initLogoSection() {
+		image = new Image("", "");
+		image.getStyle().set(CSSProperties.BorderRadius.PROPERTY, "100%");
+		image.addClassNames(LumoStyles.Margin.Horizontal.L, LumoStyles.Margin.Bottom.S);
+		image.setHeight("200px");
+		image.setWidth("200px");
+
+		balance = new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.MONEY), "", "Current Balance");
+		balance.setReverse(true);
+		balance.setDividerVisible(true);
+
+		runningDate = new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.CALENDAR), "", "Date Range");
+		runningDate.setReverse(true);
+		runningDate.setDividerVisible(true);
+
+		status = new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.LOCK), "", "Status");
+		status.setReverse(true);
+
+		FlexLayout column = UIUtils.createColumn(balance, runningDate, status);
+		column.getStyle().set(CSSProperties.Flex.PROPERTY, "1");
+
+		logoSection = UIUtils.createWrappingFlexLayout(Arrays.asList(LumoStyles.Padding.Bottom.L, BoxShadowBorders.BOTTOM), image, column);
+		logoSection.setAlignItems(FlexComponent.Alignment.CENTER);
+		logoSection.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
+	}
+
+	private void initAccounts() {
+		Integer amount = DummyData.getRandomInt(0, 5000);
+
+		accounts = UIUtils.createWrappingFlexLayout(
+				Arrays.asList(LumoStyles.Padding.Bottom.L, BoxShadowBorders.BOTTOM),
+				createLargeListItem(VaadinIcon.PLUS, UIUtils.formatAmount(amount * 0.4), "14 deposits"),
+				createLargeListItem(VaadinIcon.MINUS, UIUtils.formatAmount(amount * 0.6), "9 withdrawals"),
+				createLargeListItem(VaadinIcon.PLUS_MINUS, UIUtils.formatAmount(amount), "23 in total")
+		);
+	}
+
+	private void initPendingEvents() {
+		pendingEvents = UIUtils.createWrappingFlexLayout(
+				Collections.singleton(LumoStyles.Padding.Bottom.XL),
+				createLargeListItem(VaadinIcon.TIMER, UIUtils.formatAmount(DummyData.getRandomInt(0, 50)), "Open"),
+				createLargeListItem(VaadinIcon.CHECK, UIUtils.formatAmount(DummyData.getRandomInt(0, 100)), "Closed"),
+				createLargeListItem(VaadinIcon.BAN, UIUtils.formatAmount(DummyData.getRandomInt(0, 50)), "Failed")
+		);
 	}
 
 	private ListItem createLargeListItem(VaadinIcon icon, String primary, String secondary) {

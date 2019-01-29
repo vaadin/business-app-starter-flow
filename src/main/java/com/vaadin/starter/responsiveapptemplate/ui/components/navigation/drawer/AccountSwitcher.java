@@ -1,5 +1,6 @@
 package com.vaadin.starter.responsiveapptemplate.ui.components.navigation.drawer;
 
+import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.contextmenu.ContextMenu;
@@ -10,7 +11,7 @@ import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
 
-public class AccountSwitcher extends Div {
+public class AccountSwitcher extends Composite<Div> {
 
 	private String CLASS_NAME = "account-switcher";
 
@@ -21,13 +22,13 @@ public class AccountSwitcher extends Div {
 	private ContextMenu menu;
 
 	public AccountSwitcher() {
-		setClassName(CLASS_NAME);
+		getContent().setClassName(CLASS_NAME);
 
 		initAvatar();
 		initUsername();
 		initEmail();
 
-		add(avatar, username, email);
+		getContent().add(avatar, username, email);
 	}
 
 	private void initAvatar() {

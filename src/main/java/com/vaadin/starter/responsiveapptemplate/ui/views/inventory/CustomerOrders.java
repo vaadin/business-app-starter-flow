@@ -43,20 +43,39 @@ import static com.vaadin.starter.responsiveapptemplate.ui.utils.ViewStyles.GRID_
 @PageTitle("Customer Orders")
 public class CustomerOrders extends ViewFrame {
 
-	private final ListDataProvider<Order> dataProvider;
+	private AppBar appBar;
+
+	private Grid<Order> grid;
+	private ListDataProvider<Order> dataProvider;
 
 	public CustomerOrders() {
 		// Header
 		if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-			AppBar appBar = new AppBar("Customer Orders");
-			appBar.addActionItem(VaadinIcon.SEARCH).addClickListener(e -> appBar.searchModeOn());
-			appBar.addSearchListener(e -> filter(e));
-			appBar.setSearchPlaceholder("Search by customer");
-			setHeader(appBar);
+			initAppBar();
 		}
 
 		// Grid
-		Grid<Order> grid = new Grid<>();
+		initGrid();
+
+		// New order
+		Button newOrder = UIUtils.createFloatingActionButton(VaadinIcon.PLUS);
+		newOrder.addClickListener(e -> showDialog());
+
+		// Set the content
+		setViewContent(grid, newOrder);
+		getViewContent().addClassName(GRID_VIEW);
+	}
+
+	private void initAppBar() {
+		appBar = new AppBar("Customer Orders");
+		appBar.addActionItem(VaadinIcon.SEARCH).addClickListener(e -> appBar.searchModeOn());
+		appBar.addSearchListener(e -> filter(e));
+		appBar.setSearchPlaceholder("Search by customer");
+		setViewHeader(appBar);
+	}
+
+	private void initGrid() {
+		grid = new Grid<>();
 		dataProvider = DataProvider.ofCollection(DummyData.getOrders());
 		dataProvider.setSortOrder(Order::getDate, SortDirection.ASCENDING);
 		grid.setDataProvider(dataProvider);
@@ -85,14 +104,6 @@ public class CustomerOrders extends ViewFrame {
 		grid.setItemDetailsRenderer(new ComponentRenderer<>(this::createDetails));
 
 		grid.setSizeFull();
-
-		// New order
-		Button newOrder = UIUtils.createFloatingActionButton(VaadinIcon.PLUS);
-		newOrder.addClickListener(e -> showDialog());
-
-		// Set the content
-		setContent(grid, newOrder);
-		getContent().addClassName(GRID_VIEW);
 	}
 
 	private void filter(HasValue.ValueChangeEvent event) {
@@ -148,8 +159,8 @@ public class CustomerOrders extends ViewFrame {
 		while (iterator.hasNext()) {
 			Item item = iterator.next();
 			ListItem listItem = new ListItem(item.getName(), item.getDesc(), UIUtils.createAmountLabel(item.getPrice()));
-			listItem.setHorizontalPadding(false);
 			listItem.setAlignItems(FlexComponent.Alignment.BASELINE);
+			listItem.setHorizontalPadding(false);
 			items.add(listItem);
 		}
 

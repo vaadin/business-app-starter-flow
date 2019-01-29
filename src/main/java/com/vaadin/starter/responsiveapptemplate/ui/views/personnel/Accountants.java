@@ -39,18 +39,39 @@ import static com.vaadin.starter.responsiveapptemplate.ui.utils.ViewStyles.GRID_
 @PageTitle("Accountants")
 public class Accountants extends ViewFrame {
 
+	private Grid<Person> grid;
 	private ListDataProvider<Person> dataProvider;
+
 	private DetailsDrawer detailsDrawer;
 	private Label detailsDrawerTitle;
 
 	public Accountants() {
 		// Header
 		if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-			setHeader(new AppBar("Accountants"));
+			setViewHeader(new AppBar("Accountants"));
 		}
 
 		// Grid
-		Grid<Person> grid = new Grid<>();
+		initGrid();
+
+		// Grid wrapper
+		Div gridWrapper = UIUtils.createDiv(Collections.singleton(GRID_VIEW), grid);
+
+		// Details drawer
+		initDetailsDrawer();
+
+		// Set the content
+		FlexLayout content = new FlexLayout(gridWrapper, detailsDrawer);
+		content.setSizeFull();
+
+		setViewContent(content);
+
+		// Initial filtering
+		filter();
+	}
+
+	private void initGrid() {
+		grid = new Grid<>();
 		dataProvider = DataProvider.ofCollection(DummyData.getPersons());
 		grid.setDataProvider(dataProvider);
 
@@ -87,20 +108,6 @@ public class Accountants extends ViewFrame {
 		});
 
 		grid.setSizeFull();
-
-		// Grid wrapper
-		Div gridWrapper = UIUtils.createDiv(Collections.singleton(GRID_VIEW), grid);
-
-		// Details drawer
-		initDetailsDrawer();
-
-		// Set the content
-		FlexLayout content = new FlexLayout(gridWrapper, detailsDrawer);
-		content.setSizeFull();
-		setContent(content);
-
-		// Initial filtering
-		filter();
 	}
 
 	private void filter() {

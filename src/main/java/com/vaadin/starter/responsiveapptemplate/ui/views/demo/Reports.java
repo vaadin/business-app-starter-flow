@@ -24,14 +24,24 @@ import static com.vaadin.starter.responsiveapptemplate.ui.utils.ViewStyles.GRID_
 @PageTitle("Reports")
 public class Reports extends ViewFrame {
 
+	private Grid<Report> grid;
+
 	public Reports() {
 		// Header
 		if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-			setHeader(new AppBar("Reports"));
+			setViewHeader(new AppBar("Reports"));
 		}
 
 		// Grid
-		Grid<Report> grid = new Grid<>();
+		initGrid();
+
+		// Set the content
+		setViewContent(grid);
+		getViewContent().addClassName(GRID_VIEW);
+	}
+
+	private void initGrid() {
+		grid = new Grid<>();
 		grid.setDataProvider(DataProvider.ofCollection(DummyData.getReports()));
 
 		grid.addColumn(new ComponentRenderer<>(this::createReportInfo))
@@ -55,9 +65,6 @@ public class Reports extends ViewFrame {
 		grid.addSelectionListener(event -> event.getFirstSelectedItem().ifPresent(this::viewDetails));
 
 		grid.setSizeFull();
-
-		setContent(grid);
-		getContent().addClassName(GRID_VIEW);
 	}
 
 	private Component createReportInfo(Report report) {

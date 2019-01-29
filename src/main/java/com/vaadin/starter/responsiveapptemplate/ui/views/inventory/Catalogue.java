@@ -41,21 +41,45 @@ import static com.vaadin.starter.responsiveapptemplate.ui.utils.ViewStyles.GRID_
 @PageTitle("Catalogue")
 public class Catalogue extends ViewFrame {
 
+	private AppBar appBar;
+
+	private Grid<Item> grid;
+	private ListDataProvider<Item> dataProvider;
+
 	private DetailsDrawer detailsDrawer;
-	private final ListDataProvider<Item> dataProvider;
 
 	public Catalogue() {
 		// Header
 		if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-			AppBar appBar = new AppBar("Catalogue");
-			appBar.addActionItem(VaadinIcon.SEARCH).addClickListener(e -> appBar.searchModeOn());
-			appBar.addSearchListener(e -> filter(e));
-			appBar.setSearchPlaceholder("Search by item name, description and vendor");
-			setHeader(appBar);
+			initAppBar();
 		}
 
 		// Grid
-		Grid<Item> grid = new Grid<>();
+		initGrid();
+
+		// Grid wrapper
+		Div gridWrapper = UIUtils.createDiv(Collections.singleton(GRID_VIEW), grid);
+
+		// Details drawer
+		initDetailsDrawer();
+
+		// Set the content
+		FlexLayout content = new FlexLayout(gridWrapper, detailsDrawer);
+		content.setSizeFull();
+
+		setViewContent(content);
+	}
+
+	private void initAppBar() {
+		appBar = new AppBar("Catalogue");
+		appBar.addActionItem(VaadinIcon.SEARCH).addClickListener(e -> appBar.searchModeOn());
+		appBar.addSearchListener(e -> filter(e));
+		appBar.setSearchPlaceholder("Search by item name, description and vendor");
+		setViewHeader(appBar);
+	}
+
+	private void initGrid() {
+		grid = new Grid<>();
 		dataProvider = DataProvider.ofCollection(DummyData.getItems());
 		grid.setDataProvider(dataProvider);
 
@@ -91,17 +115,6 @@ public class Catalogue extends ViewFrame {
 		});
 
 		grid.setSizeFull();
-
-		// Grid wrapper
-		Div gridWrapper = UIUtils.createDiv(Collections.singleton(GRID_VIEW), grid);
-
-		// Details drawer
-		initDetailsDrawer();
-
-		// Set the content
-		FlexLayout content = new FlexLayout(gridWrapper, detailsDrawer);
-		content.setSizeFull();
-		setContent(content);
 	}
 
 	private void filter(HasValue.ValueChangeEvent event) {

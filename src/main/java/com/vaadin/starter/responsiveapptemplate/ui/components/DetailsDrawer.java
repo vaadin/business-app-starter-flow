@@ -1,12 +1,13 @@
 package com.vaadin.starter.responsiveapptemplate.ui.components;
 
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
 
 import java.util.Collections;
 
-public class DetailsDrawer extends FlexLayout {
+public class DetailsDrawer extends Composite<FlexLayout> {
 
 	private static final String CLASS_NAME = "details-drawer";
 
@@ -19,15 +20,15 @@ public class DetailsDrawer extends FlexLayout {
 	}
 
 	public DetailsDrawer(Position position, Component... components) {
-		addClassName(CLASS_NAME);
+		getContent().addClassName(CLASS_NAME);
 
 		header = UIUtils.createFlexLayout(Collections.singleton(CLASS_NAME + "__header"));
 		content = UIUtils.createColumn(Collections.singleton(CLASS_NAME + "__content"), components);
 		footer = UIUtils.createFlexLayout(Collections.singleton(CLASS_NAME + "__footer"));
-		add(header, content, footer);
+
+		getContent().add(header, content, footer);
 
 		setPosition(position);
-		hide();
 	}
 
 	public void setHeader(Component... components) {

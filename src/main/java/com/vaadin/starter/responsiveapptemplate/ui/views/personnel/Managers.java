@@ -39,6 +39,7 @@ import static com.vaadin.starter.responsiveapptemplate.ui.utils.ViewStyles.GRID_
 @PageTitle("Managers")
 public class Managers extends ViewFrame {
 
+	private Grid<Person> grid;
 	private ListDataProvider<Person> dataProvider;
 
 	private DetailsDrawer detailsDrawer;
@@ -47,11 +48,31 @@ public class Managers extends ViewFrame {
 	public Managers() {
 		// Header
 		if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-			setHeader(new AppBar("Managers"));
+			setViewHeader(new AppBar("Managers"));
 		}
 
 		// Grid
-		Grid<Person> grid = new Grid<>();
+		initGrid();
+
+		// Grid wrapper
+		Div gridWrapper = UIUtils.createDiv(Collections.singleton(GRID_VIEW), grid);
+
+		// Details drawer
+		initDetailsDrawer();
+
+		// Set the content
+		FlexLayout content = UIUtils.createColumn(gridWrapper, detailsDrawer);
+		content.getStyle().set(CSSProperties.Overflow.PROPERTY, CSSProperties.Overflow.HIDDEN);
+		content.setSizeFull();
+
+		setViewContent(content);
+
+		// Initial filtering
+		filter();
+	}
+
+	private void initGrid() {
+		grid = new Grid<>();
 		dataProvider = DataProvider.ofCollection(DummyData.getPersons());
 		grid.setDataProvider(dataProvider);
 
@@ -84,21 +105,6 @@ public class Managers extends ViewFrame {
 		});
 
 		grid.setSizeFull();
-
-		// Grid wrapper
-		Div gridWrapper = UIUtils.createDiv(Collections.singleton(GRID_VIEW), grid);
-
-		// Details drawer
-		initDetailsDrawer();
-
-		// Set the content
-		FlexLayout content = UIUtils.createColumn(gridWrapper, detailsDrawer);
-		content.getStyle().set(CSSProperties.Overflow.PROPERTY, CSSProperties.Overflow.HIDDEN);
-		content.setSizeFull();
-		setContent(content);
-
-		// Initial filtering
-		filter();
 	}
 
 	private void filter() {
