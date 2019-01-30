@@ -118,7 +118,9 @@ public class Payments extends ViewFrame {
 	}
 
 	private void filter() {
-		dataProvider.setFilterByValue(Payment::getStatus, Payment.Status.valueOf(appBar.getSelectedTab().getLabel().toUpperCase()));
+		if (appBar != null) {
+			dataProvider.setFilterByValue(Payment::getStatus, Payment.Status.valueOf(appBar.getSelectedTab().getLabel().toUpperCase()));
+		}
 	}
 
 	private Component createFromInfo(Payment payment) {
