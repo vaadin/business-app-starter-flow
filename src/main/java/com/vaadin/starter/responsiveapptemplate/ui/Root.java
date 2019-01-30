@@ -6,10 +6,13 @@ import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasElement;
 import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.page.Viewport;
+import com.vaadin.flow.component.tabs.Tab;
+import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.RouterLayout;
@@ -144,7 +147,7 @@ public class Root extends FlexLayout
 	 * Configure the app's inner and outer headers and footers.
 	 */
 	private void initHeadersAndFooters() {
-		// setAppHeaderOuter(new Label("Outer header"));
+		// setAppHeaderOuter(new Label("Inner header"));
 		// setAppHeaderInner(new Label("Inner header"));
 		// setAppFooterOuter(new Label("Outer footer"));
 		// setAppFooterInner(new Label("Inner footer"));

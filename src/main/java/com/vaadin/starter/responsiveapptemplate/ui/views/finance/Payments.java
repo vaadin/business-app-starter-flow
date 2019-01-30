@@ -124,11 +124,15 @@ public class Payments extends ViewFrame {
 	}
 
 	private Component createFromInfo(Payment payment) {
-		return new ListItem(payment.getFrom(), payment.getFromIBAN());
+		ListItem item = new ListItem(payment.getFrom(), payment.getFromIBAN());
+		item.setHorizontalPadding(false);
+		return item;
 	}
 
 	private Component createToInfo(Payment payment) {
-		return new ListItem(payment.getTo(), payment.getToIBAN());
+		ListItem item = new ListItem(payment.getTo(), payment.getToIBAN());
+		item.setHorizontalPadding(false);
+		return item;
 	}
 
 	private Component createAmount(Payment payment) {
