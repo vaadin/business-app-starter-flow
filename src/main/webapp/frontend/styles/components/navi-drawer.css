@@ -10,10 +10,11 @@
 .navi-drawer__scrim {
   animation: var(--transition-duration-m) lumo-overlay-backdrop-enter both;
   background: var(--lumo-shade-20pct);
-  height: 100%;
+  bottom: 0;
   opacity: 0;
   pointer-events: none;
   position: absolute;
+  top: 0;
   width: 100%;
   will-change: opacity;
 }
@@ -93,7 +94,9 @@
 
   /* Fixed positioning on narrow viewports. */
   .navi-drawer__content {
-    position: fixed;
+    bottom: 0;
+    position: absolute;
+    top: 0;
   }
 
   /* Push the drawer out of view */
