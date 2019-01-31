@@ -67,8 +67,8 @@ public abstract class NaviDrawer extends Composite<Div> implements AfterNavigati
 
 	private void initSearch() {
 		search = new TextField();
-		search.setPlaceholder("Filter");
-		search.setPrefixComponent(new Icon(VaadinIcon.FILTER));
+		search.setPlaceholder("Search");
+		search.setPrefixComponent(new Icon(VaadinIcon.SEARCH));
 		search.addValueChangeListener(e -> search());
 		mainContent.add(search);
 	}
