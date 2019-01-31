@@ -2,8 +2,9 @@ package com.vaadin.starter.responsiveapptemplate.ui.utils;
 
 public enum IconSize {
 
-	SMALL("size-s"),
-	LARGE("size-l");
+	S("size-s"),
+	M("size-m"),
+	L("size-l");
 
 	private String style;
 

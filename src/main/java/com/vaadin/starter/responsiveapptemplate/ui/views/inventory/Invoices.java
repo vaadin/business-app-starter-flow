@@ -212,13 +212,13 @@ public class Invoices extends ViewFrame {
 
 	private Component createAttachments() {
 		Label label = UIUtils.createLabel(FontSize.S, TextColor.SECONDARY, "Not implemented yet.");
-		label.addClassName(LumoStyles.Padding.All.L);
+		label.addClassName(LumoStyles.Padding.Uniform.L);
 		return label;
 	}
 
 	private Component createActivity() {
 		Label label = UIUtils.createLabel(FontSize.S, TextColor.SECONDARY, "Not implemented yet.");
-		label.addClassName(LumoStyles.Padding.All.L);
+		label.addClassName(LumoStyles.Padding.Uniform.L);
 		return label;
 	}
 

@@ -69,7 +69,7 @@ public class Overview extends ViewFrame {
 						LumoStyles.Margin.Responsive.Horizontal.ML,
 						LumoStyles.Spacing.Right.M
 				),
-				UIUtils.createIcon(IconSize.SMALL, TextColor.TERTIARY, icon),
+				UIUtils.createIcon(IconSize.S, TextColor.TERTIARY, icon),
 				UIUtils.createH3Label(title)
 		);
 		header.setAlignItems(FlexComponent.Alignment.CENTER);

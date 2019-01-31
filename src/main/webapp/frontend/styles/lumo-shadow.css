@@ -1,3 +1,7 @@
+.shadow-xs {
+  box-shadow: var(--lumo-box-shadow-xs);
+}
+
 .shadow-s {
   box-shadow: var(--lumo-box-shadow-s);
 }

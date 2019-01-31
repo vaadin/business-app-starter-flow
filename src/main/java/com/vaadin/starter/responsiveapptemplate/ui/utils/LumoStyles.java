@@ -16,7 +16,7 @@ public class LumoStyles {
 		public static final String S = "border-radius-s";
 		public static final String M = "border-radius-m";
 		public static final String L = "border-radius-l";
-		public static final String _100 = "border-radius-100";
+		public static final String _50 = "border-radius-50";
 	}
 
 	public class Color {
@@ -43,15 +43,6 @@ public class LumoStyles {
 	}
 
 	public class Margin {
-		public class All {
-			public static final String AUTO = "margin-a-a";
-			public static final String XS = "margin-a-xs";
-			public static final String S = "margin-a-s";
-			public static final String M = "margin-a-m";
-			public static final String L = "margin-a-l";
-			public static final String XL = "margin-a-xl";
-		}
-
 		public class Bottom {
 			public static final String AUTO = "margin-b-a";
 			public static final String XS = "margin-b-xs";
@@ -81,11 +72,12 @@ public class LumoStyles {
 
 		public class Responsive {
 			public class Horizontal {
+				public static final String SM = "margin-r-h-sm";
 				public static final String ML = "margin-r-h-ml";
-				public static final String LXL = "margin-r-h-lxl";
 			}
 
 			public class Vertical {
+				public static final String SM = "margin-r-v-sm";
 				public static final String ML = "margin-r-v-ml";
 			}
 		}
@@ -99,6 +91,14 @@ public class LumoStyles {
 			public static final String XL = "margin-r-xl";
 		}
 
+		public class Tall {
+			public static final String XS = "margin-tall-xs";
+			public static final String S = "margin-tall-s";
+			public static final String M = "margin-tall-m";
+			public static final String L = "margin-tall-l";
+			public static final String XL = "margin-tall-xl";
+		}
+
 		public class Top {
 			public static final String AUTO = "margin-t-a";
 			public static final String XS = "margin-t-xs";
@@ -106,6 +106,15 @@ public class LumoStyles {
 			public static final String M = "margin-t-m";
 			public static final String L = "margin-t-l";
 			public static final String XL = "margin-t-xl";
+		}
+
+		public class Uniform {
+			public static final String AUTO = "margin-a";
+			public static final String XS = "margin-xs";
+			public static final String S = "margin-s";
+			public static final String M = "margin-m";
+			public static final String L = "margin-l";
+			public static final String XL = "margin-xl";
 		}
 
 		public class Vertical {
@@ -116,17 +125,17 @@ public class LumoStyles {
 			public static final String L = "margin-v-l";
 			public static final String XL = "margin-v-xl";
 		}
+
+		public class Wide {
+			public static final String XS = "margin-wide-xs";
+			public static final String S = "margin-wide-s";
+			public static final String M = "margin-wide-m";
+			public static final String L = "margin-wide-l";
+			public static final String XL = "margin-wide-xl";
+		}
 	}
 
 	public class Padding {
-		public class All {
-			public static final String XS = "padding-a-xs";
-			public static final String S = "padding-a-s";
-			public static final String M = "padding-a-m";
-			public static final String L = "padding-a-l";
-			public static final String XL = "padding-a-xl";
-		}
-
 		public class Bottom {
 			public static final String XS = "padding-b-xs";
 			public static final String S = "padding-b-s";
@@ -153,12 +162,12 @@ public class LumoStyles {
 
 		public class Responsive {
 			public class Horizontal {
-				public static final String ML = "padding-r-h-ml";
 				public static final String SM = "padding-r-h-sm";
-				public static final String SL = "padding-r-h-sl";
+				public static final String ML = "padding-r-h-ml";
 			}
 
 			public class Vertical {
+				public static final String SM = "padding-r-v-sm";
 				public static final String ML = "padding-r-v-ml";
 			}
 		}
@@ -171,12 +180,28 @@ public class LumoStyles {
 			public static final String XL = "padding-r-xl";
 		}
 
+		public class Tall {
+			public static final String XS = "padding-tall-xs";
+			public static final String S = "padding-tall-s";
+			public static final String M = "padding-tall-m";
+			public static final String L = "padding-tall-l";
+			public static final String XL = "padding-tall-xl";
+		}
+
 		public class Top {
 			public static final String XS = "padding-t-xs";
 			public static final String S = "padding-t-s";
 			public static final String M = "padding-t-m";
 			public static final String L = "padding-t-l";
 			public static final String XL = "padding-t-xl";
+		}
+
+		public class Uniform {
+			public static final String XS = "padding-xs";
+			public static final String S = "padding-s";
+			public static final String M = "padding-m";
+			public static final String L = "padding-l";
+			public static final String XL = "padding-xl";
 		}
 
 		public class Vertical {
@@ -186,9 +211,18 @@ public class LumoStyles {
 			public static final String L = "padding-v-l";
 			public static final String XL = "padding-v-xl";
 		}
+
+		public class Wide {
+			public static final String XS = "padding-wide-xs";
+			public static final String S = "padding-wide-s";
+			public static final String M = "padding-wide-m";
+			public static final String L = "padding-wide-l";
+			public static final String XL = "padding-wide-xl";
+		}
 	}
 
 	public class Shadow {
+		public static final String XS = "shadow-xs";
 		public static final String S = "shadow-s";
 		public static final String M = "shadow-m";
 		public static final String L = "shadow-l";
@@ -204,20 +238,20 @@ public class LumoStyles {
 	}
 
 	public class Spacing {
-		public class All {
-			public static final String XS = "spacing-a-xs";
-			public static final String S = "spacing-a-s";
-			public static final String M = "spacing-a-m";
-			public static final String L = "spacing-a-l";
-			public static final String XL = "spacing-a-xl";
-		}
-
 		public class Bottom {
 			public static final String XS = "spacing-b-xs";
 			public static final String S = "spacing-b-s";
 			public static final String M = "spacing-b-m";
 			public static final String L = "spacing-b-l";
 			public static final String XL = "spacing-b-xl";
+		}
+
+		public class Horizontal {
+			public static final String XS = "spacing-h-xs";
+			public static final String S = "spacing-h-s";
+			public static final String M = "spacing-h-m";
+			public static final String L = "spacing-h-l";
+			public static final String XL = "spacing-h-xl";
 		}
 
 		public class Left {
@@ -236,12 +270,44 @@ public class LumoStyles {
 			public static final String XL = "spacing-r-xl";
 		}
 
+		public class Tall {
+			public static final String XS = "spacing-tall-xs";
+			public static final String S = "spacing-tall-s";
+			public static final String M = "spacing-tall-m";
+			public static final String L = "spacing-tall-l";
+			public static final String XL = "spacing-tall-xl";
+		}
+
 		public class Top {
 			public static final String XS = "spacing-t-xs";
 			public static final String S = "spacing-t-s";
 			public static final String M = "spacing-t-m";
 			public static final String L = "spacing-t-l";
 			public static final String XL = "spacing-t-xl";
+		}
+
+		public class Uniform {
+			public static final String XS = "spacing-xs";
+			public static final String S = "spacing-s";
+			public static final String M = "spacing-m";
+			public static final String L = "spacing-l";
+			public static final String XL = "spacing-xl";
+		}
+
+		public class Vertical {
+			public static final String XS = "spacing-v-xs";
+			public static final String S = "spacing-v-s";
+			public static final String M = "spacing-v-m";
+			public static final String L = "spacing-v-l";
+			public static final String XL = "spacing-v-xl";
+		}
+
+		public class Wide {
+			public static final String XS = "spacing-wide-xs";
+			public static final String S = "spacing-wide-s";
+			public static final String M = "spacing-wide-m";
+			public static final String L = "spacing-wide-l";
+			public static final String XL = "spacing-wide-xl";
 		}
 	}
 

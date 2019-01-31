@@ -590,13 +590,13 @@ public class UIUtils {
 
 	public static Icon createSmallIcon(VaadinIcon icon) {
 		Icon i = new Icon(icon);
-		i.addClassName(IconSize.SMALL.getStyle());
+		i.addClassName(IconSize.S.getStyle());
 		return i;
 	}
 
 	public static Icon createLargeIcon(VaadinIcon icon) {
 		Icon i = new Icon(icon);
-		i.addClassName(IconSize.LARGE.getStyle());
+		i.addClassName(IconSize.L.getStyle());
 		return i;
 	}
 
@@ -671,7 +671,7 @@ public class UIUtils {
 
 		conf.addSeries(new ListSeries(220, 240, 400, 360, 420, 640, 580, 800, 600, 580, 740, 800));
 
-		FlexLayout card = UIUtils.createWrappingFlexLayout(Arrays.asList(LumoStyles.BorderRadius.S, LumoStyles.Padding.All.M, LumoStyles.Shadow.S), chart);
+		FlexLayout card = UIUtils.createWrappingFlexLayout(Arrays.asList(LumoStyles.BorderRadius.S, LumoStyles.Padding.Uniform.M, LumoStyles.Shadow.S), chart);
 		card.getStyle().set(CSSProperties.BackgroundColor.PROPERTY, LumoStyles.Color.BASE_COLOR);
 		card.getStyle().set(CSSProperties.BoxSizing.PROPERTY, CSSProperties.BoxSizing.BORDER_BOX);
 		card.setHeight("400px");

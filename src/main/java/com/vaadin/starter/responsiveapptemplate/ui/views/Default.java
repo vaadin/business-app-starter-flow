@@ -25,7 +25,7 @@ public class Default extends ViewFrame {
 
 		// Content
 		Div div = UIUtils.createDiv(
-				Arrays.asList(LumoStyles.Margin.Horizontal.AUTO, LumoStyles.Padding.All.L),
+				Arrays.asList(LumoStyles.Margin.Horizontal.AUTO, LumoStyles.Padding.Uniform.L),
 				new Html("<span>A responsive application template with some dummy data. Loosely based on the <b>responsive layout grid</b> guidelines set by <a href=\"https://material.io/design/layout/responsive-layout-grid.html\">Material Design</a>. Utilises the <a href=\"https://vaadin.com/themes/lumo\">Lumo</a> theme.</span>")
 		);
 		div.getStyle().set(CSSProperties.MaxWidth.PROPERTY, CSSProperties.MaxWidth._840);

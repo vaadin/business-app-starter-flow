@@ -35,6 +35,8 @@ import com.vaadin.starter.responsiveapptemplate.ui.views.ViewFrame;
 import java.util.Arrays;
 import java.util.Collections;
 
+import static com.vaadin.starter.responsiveapptemplate.ui.utils.ViewStyles.GRID_VIEW;
+
 @Route(value = "filter-list", layout = Root.class)
 @PageTitle("Filter list")
 public class FilterList extends ViewFrame {
@@ -68,7 +70,9 @@ public class FilterList extends ViewFrame {
 
 	private void initFilterArea() {
 		filterArea = UIUtils.createDiv(
-				Arrays.asList("filter-area", LumoStyles.Padding.Responsive.Horizontal.SL),
+				Arrays.asList(
+						LumoStyles.Padding.Responsive.Horizontal.ML
+				),
 				createFilterHeader(),
 				UIUtils.createWrappingFlexLayout(
 						Collections.singleton(LumoStyles.Spacing.Right.L),
@@ -79,7 +83,7 @@ public class FilterList extends ViewFrame {
 	}
 
 	private FlexLayout createFilterHeader() {
-		toggleButton = UIUtils.createTertiaryButton(VaadinIcon.CHEVRON_UP_SMALL);
+		toggleButton = UIUtils.createButton(VaadinIcon.CHEVRON_UP_SMALL, ButtonVariant.LUMO_SMALL, ButtonVariant.LUMO_TERTIARY);
 		toggleButton.addClickListener(event -> toggleFilterArea());
 
 		Label title = UIUtils.createH5Label("Filter");
@@ -91,8 +95,19 @@ public class FilterList extends ViewFrame {
 		search.setPlaceholder("Quick filter...");
 		search.addClassName(LumoStyles.Margin.Left.AUTO);
 
-		filterHeader = UIUtils.createFlexLayout(Arrays.asList("filter-header", BoxShadowBorders.BOTTOM, LumoStyles.Padding.Vertical.XS, LumoStyles.Spacing.Right.S), toggleButton, title, badge, search);
+		filterHeader = UIUtils.createFlexLayout(
+				Arrays.asList(
+						BoxShadowBorders.BOTTOM,
+						LumoStyles.Padding.Responsive.Vertical.SM,
+						LumoStyles.Spacing.Right.S
+				),
+				toggleButton,
+				title,
+				badge,
+				search
+		);
 		filterHeader.setAlignItems(FlexComponent.Alignment.CENTER);
+
 		return filterHeader;
 	}
 
@@ -107,8 +122,18 @@ public class FilterList extends ViewFrame {
 		RadioButtonGroup<String> optionGroup = new RadioButtonGroup<>();
 		optionGroup.setItems("Option 1", "Option 2", "Option 3");
 
-		options = UIUtils.createColumn(Arrays.asList(LumoStyles.Padding.Vertical.M, LumoStyles.Spacing.Bottom.S), title, combo, checkbox, optionGroup);
+		options = UIUtils.createColumn(
+				Arrays.asList(
+						LumoStyles.Padding.Vertical.M,
+						LumoStyles.Spacing.Bottom.S
+				),
+				title,
+				combo,
+				checkbox,
+				optionGroup
+		);
 		options.getStyle().set(CSSProperties.FlexGrow.PROPERTY, CSSProperties.FlexGrow._1);
+
 		return options;
 	}
 
@@ -124,13 +149,24 @@ public class FilterList extends ViewFrame {
 
 		Div tokenArea = new Div(token);
 
-		tokens = UIUtils.createColumn(Arrays.asList(LumoStyles.Padding.Vertical.M, LumoStyles.Spacing.Bottom.S), title, combo, tokenArea);
+		tokens = UIUtils.createColumn(
+				Arrays.asList(
+						LumoStyles.Padding.Vertical.M,
+						LumoStyles.Spacing.Bottom.S
+				),
+				title,
+				combo,
+				tokenArea
+		);
 		tokens.getStyle().set(CSSProperties.FlexGrow.PROPERTY, CSSProperties.FlexGrow._1);
+
 		return tokens;
 	}
 
 	private void initGrid() {
 		grid = new Grid<>();
+		grid.addClassName(LumoStyles.Margin.Responsive.Horizontal.ML);
+		grid.setHeight("100%");
 
 		grid.addColumn(Person::getId)
 				.setHeader("ID")
@@ -161,7 +197,9 @@ public class FilterList extends ViewFrame {
 	}
 
 	private Component createUserInfo(Person person) {
-		return new ListItem(UIUtils.createInitials(person.getInitials()), person.getName(), person.getEmail());
+		ListItem item = new ListItem(UIUtils.createInitials(person.getInitials()), person.getName(), person.getEmail());
+		item.setHorizontalPadding(false);
+		return item;
 	}
 
 	private Component createTwitter(Person person) {
@@ -190,9 +228,9 @@ public class FilterList extends ViewFrame {
 		toggleButton.setIcon(options.isVisible() ? new Icon(VaadinIcon.CHEVRON_UP_SMALL) : new Icon(VaadinIcon.CHEVRON_DOWN_SMALL));
 
 		if (options.isVisible()) {
-			filterHeader.addClassName(BoxShadowBorders.BOTTOM);
+			filterHeader.addClassNames(BoxShadowBorders.BOTTOM);
 		} else {
-			filterHeader.removeClassName(BoxShadowBorders.BOTTOM);
+			filterHeader.removeClassNames(BoxShadowBorders.BOTTOM);
 		}
 	}
 
