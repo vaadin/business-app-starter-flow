@@ -1,15 +1,15 @@
-.abstract-view {
+.view-frame {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
   overflow: hidden;
 }
 
-.abstract-view__header {
+.view-frame__header {
   z-index: 2;
 }
 
-.abstract-view__content {
+.view-frame__content {
   flex: 1;
   overflow-x: hidden;
   overflow-y: auto;
@@ -17,6 +17,6 @@
   -webkit-overflow-scrolling: touch;
 }
 
-.abstract-view__footer {
+.view-frame__footer {
   z-index: 2;
 }

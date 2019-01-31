@@ -35,11 +35,11 @@ import com.vaadin.starter.responsiveapptemplate.ui.views.ViewFrame;
 import java.util.Arrays;
 import java.util.Collections;
 
-import static com.vaadin.starter.responsiveapptemplate.ui.utils.ViewStyles.GRID_VIEW;
-
 @Route(value = "filter-list", layout = Root.class)
 @PageTitle("Filter list")
 public class FilterList extends ViewFrame {
+
+	private String CLASS_NAME = "filter-list";
 
 	private Div filterArea;
 	private FlexLayout filterHeader;
@@ -50,6 +50,8 @@ public class FilterList extends ViewFrame {
 	private Grid<Person> grid;
 
 	public FilterList() {
+		getContent().addClassName(CLASS_NAME);
+
 		// Header
 		if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
 			setViewHeader(new AppBar("Statistics"));

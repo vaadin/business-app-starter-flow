@@ -14,7 +14,7 @@ import com.vaadin.flow.component.html.Div;
  */
 public class ViewFrame extends Composite<Div> {
 
-	private final String CLASS_NAME = "abstract-view";
+	private final String CLASS_NAME = "view-frame";
 
 	private final Div header = new Div();
 	private final Div content = new Div();
