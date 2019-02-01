@@ -14,7 +14,6 @@ public class NaviTab extends Tab {
 		setNavigationTarget(navigationTarget);
 	}
 
-
 	public Class<? extends Component> getNavigationTarget() {
 		return navigationTarget;
 	}

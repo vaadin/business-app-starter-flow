@@ -68,7 +68,9 @@ public class Reports extends ViewFrame {
 	}
 
 	private Component createReportInfo(Report report) {
-		return new ListItem(new Image(report.getSource(), ""), report.getName());
+		ListItem item = new ListItem(new Image(report.getSource(), ""), report.getName());
+		item.setHorizontalPadding(false);
+		return item;
 	}
 
 	private Component createBalance(Report report) {

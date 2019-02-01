@@ -23,6 +23,7 @@ public abstract class NaviDrawer extends Composite<Div> implements AfterNavigati
 	private static final String OPEN = "open";
 
 	private Div scrim;
+
 	private Div mainContent;
 	private TextField search;
 	private Div scrollableArea;
@@ -32,16 +33,18 @@ public abstract class NaviDrawer extends Composite<Div> implements AfterNavigati
 
 	private Button railButton;
 
-
 	public NaviDrawer() {
 		getContent().setClassName(CLASS_NAME);
 
 		initScrim();
 		initMainContent();
+
 		initHeader();
 		initSearch();
+
 		initScrollableArea();
 		initNaviList();
+
 		initFooter();
 	}
 
