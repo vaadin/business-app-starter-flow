@@ -174,13 +174,13 @@ public class ReportDetails extends ViewFrame implements HasUrlParameter<Long> {
 		item.addClassName(CLASS_NAME + "__list-item");
 
 		if (icon.equals(VaadinIcon.TIMER)) {
-			item.addClassName(TextColor.SECONDARY.getStyle());
+			item.addClassName(TextColor.SECONDARY.getClassName());
 
 		} else if (icon.equals(VaadinIcon.CHECK) || icon.equals(VaadinIcon.FLAG_CHECKERED)) {
-			item.addClassName(TextColor.SUCCESS.getStyle());
+			item.addClassName(TextColor.SUCCESS.getClassName());
 
 		} else if (icon.equals(VaadinIcon.BAN)) {
-			item.addClassName(TextColor.ERROR.getStyle());
+			item.addClassName(TextColor.ERROR.getClassName());
 		}
 
 		item.addPrimaryClassNames(LumoStyles.Header.H2);

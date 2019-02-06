@@ -88,9 +88,9 @@ public class Accounts extends ViewFrame implements RouterLayout {
 		Label label = UIUtils.createH4Label(UIUtils.formatAmount(availability));
 
 		if (availability > 0) {
-			label.addClassName(TextColor.SUCCESS.getStyle());
+			label.addClassName(TextColor.SUCCESS.getClassName());
 		} else {
-			label.addClassName(TextColor.ERROR.getStyle());
+			label.addClassName(TextColor.ERROR.getClassName());
 		}
 
 		return UIUtils.createRightAlignedDiv(label);

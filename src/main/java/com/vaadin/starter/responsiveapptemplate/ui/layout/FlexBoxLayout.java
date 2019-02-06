@@ -14,6 +14,11 @@ public class FlexBoxLayout extends FlexLayout {
 		getStyle().set("background-color", value);
 	}
 
+	public void setBackgroundColor(String value, Theme theme) {
+		getStyle().set("background-color", value);
+		setTheme(theme);
+	}
+
 	public void setBorderRadius(BorderRadius radius) {
 		getStyle().set("border-radius", radius.getValue());
 	}
@@ -69,6 +74,14 @@ public class FlexBoxLayout extends FlexLayout {
 	public void setSpacing(Size... sizes) {
 		for (Size size : sizes) {
 			addClassName(size.getSpacingClassName());
+		}
+	}
+
+	public void setTheme(Theme theme) {
+		if (theme.equals(Theme.DARK)) {
+			getElement().setAttribute("theme", "dark");
+		} else {
+			getElement().removeAttribute("theme");
 		}
 	}
 }

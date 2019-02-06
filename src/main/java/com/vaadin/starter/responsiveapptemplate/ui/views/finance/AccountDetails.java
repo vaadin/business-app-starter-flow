@@ -149,7 +149,7 @@ public class AccountDetails extends ViewFrame implements HasUrlParameter<Long> {
 			Double amount = DummyData.getAmount();
 
 			Label amountLabel = UIUtils.createH4Label(UIUtils.formatAmount(amount));
-			amountLabel.addClassName(amount > 0 ? TextColor.SUCCESS.getStyle() : TextColor.ERROR.getStyle());
+			amountLabel.addClassName(amount > 0 ? TextColor.SUCCESS.getClassName() : TextColor.ERROR.getClassName());
 
 			ListItem item = new ListItem(DummyData.getLogo(), DummyData.getCompany(), UIUtils.formatDate(LocalDate.now().minusDays(i)), amountLabel);
 

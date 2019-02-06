@@ -17,7 +17,7 @@ public enum TextColor {
 		this.style = style;
 	}
 
-	public String getStyle() {
+	public String getClassName() {
 		return style;
 	}
 

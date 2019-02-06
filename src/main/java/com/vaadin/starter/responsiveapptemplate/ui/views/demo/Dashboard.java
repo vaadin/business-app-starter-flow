@@ -72,7 +72,6 @@ public class Dashboard extends ViewFrame {
 		card.addClassName(CLASS_NAME + "__progress");
 		card.setBackgroundColor(LumoStyles.Color.BASE_COLOR);
 		card.setBorderRadius(BorderRadius.S);
-		card.setFlexDirection(FlexDirection.COLUMN);
 		card.setFlexWrap(FlexWrap.WRAP);
 		card.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
 		card.setShadow(Shadow.S);
@@ -107,6 +106,7 @@ public class Dashboard extends ViewFrame {
 				chartContainer
 		);
 		column.setAlignItems(FlexComponent.Alignment.CENTER);
+		column.setFlexDirection(FlexDirection.COLUMN);
 		column.setPadding(Bottom.S, Top.M);
 		return column;
 	}

@@ -282,49 +282,49 @@ public class UIUtils {
 
 	public static Label createLabel(FontSize size, TextColor color, String text) {
 		Label label = new Label(text);
-		label.addClassNames(size.getStyle(), color.getStyle());
+		label.addClassNames(size.getClassName(), color.getClassName());
 		return label;
 	}
 
 	public static Label createXXSmallLabel(String text) {
 		Label label = new Label(text);
-		label.addClassName(FontSize.XXS.getStyle());
+		label.addClassName(FontSize.XXS.getClassName());
 		return label;
 	}
 
 	public static Label createXSmallLabel(String text) {
 		Label label = new Label(text);
-		label.addClassName(FontSize.XS.getStyle());
+		label.addClassName(FontSize.XS.getClassName());
 		return label;
 	}
 
 	public static Label createSmallLabel(String text) {
 		Label label = new Label(text);
-		label.addClassName(FontSize.S.getStyle());
+		label.addClassName(FontSize.S.getClassName());
 		return label;
 	}
 
 	public static Label createLargeLabel(String text) {
 		Label label = new Label(text);
-		label.addClassName(FontSize.L.getStyle());
+		label.addClassName(FontSize.L.getClassName());
 		return label;
 	}
 
 	public static Label createXLargeLabel(String text) {
 		Label label = new Label(text);
-		label.addClassName(FontSize.XL.getStyle());
+		label.addClassName(FontSize.XL.getClassName());
 		return label;
 	}
 
 	public static Label createXXLargeLabel(String text) {
 		Label label = new Label(text);
-		label.addClassName(FontSize.XXL.getStyle());
+		label.addClassName(FontSize.XXL.getClassName());
 		return label;
 	}
 
 	public static Label createXXXLargeLabel(String text) {
 		Label label = new Label(text);
-		label.addClassName(FontSize.XXXL.getStyle());
+		label.addClassName(FontSize.XXXL.getClassName());
 		return label;
 	}
 
@@ -369,7 +369,7 @@ public class UIUtils {
 		layout.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
 
 		layout.getElement().setAttribute(LumoStyles.THEME, LumoStyles.DARK);
-		layout.addClassName(FontSize.S.getStyle());
+		layout.addClassName(FontSize.S.getClassName());
 		layout.setHeight(LumoStyles.Size.M);
 		layout.setWidth(LumoStyles.Size.M);
 
@@ -554,49 +554,49 @@ public class UIUtils {
 
 	public static Icon createPrimaryIcon(VaadinIcon icon) {
 		Icon i = new Icon(icon);
-		i.addClassName(TextColor.PRIMARY.getStyle());
+		i.addClassName(TextColor.PRIMARY.getClassName());
 		return i;
 	}
 
 	public static Icon createSecondaryIcon(VaadinIcon icon) {
 		Icon i = new Icon(icon);
-		i.addClassName(TextColor.SECONDARY.getStyle());
+		i.addClassName(TextColor.SECONDARY.getClassName());
 		return i;
 	}
 
 	public static Icon createTertiaryIcon(VaadinIcon icon) {
 		Icon i = new Icon(icon);
-		i.addClassName(TextColor.TERTIARY.getStyle());
+		i.addClassName(TextColor.TERTIARY.getClassName());
 		return i;
 	}
 
 	public static Icon createDisabledIcon(VaadinIcon icon) {
 		Icon i = new Icon(icon);
-		i.addClassName(TextColor.DISABLED.getStyle());
+		i.addClassName(TextColor.DISABLED.getClassName());
 		return i;
 	}
 
 	public static Icon createSuccessIcon(VaadinIcon icon) {
 		Icon i = new Icon(icon);
-		i.addClassName(TextColor.SUCCESS.getStyle());
+		i.addClassName(TextColor.SUCCESS.getClassName());
 		return i;
 	}
 
 	public static Icon createErrorIcon(VaadinIcon icon) {
 		Icon i = new Icon(icon);
-		i.addClassName(TextColor.ERROR.getStyle());
+		i.addClassName(TextColor.ERROR.getClassName());
 		return i;
 	}
 
 	public static Icon createSmallIcon(VaadinIcon icon) {
 		Icon i = new Icon(icon);
-		i.addClassName(IconSize.S.getStyle());
+		i.addClassName(IconSize.S.getClassName());
 		return i;
 	}
 
 	public static Icon createLargeIcon(VaadinIcon icon) {
 		Icon i = new Icon(icon);
-		i.addClassName(IconSize.L.getStyle());
+		i.addClassName(IconSize.L.getClassName());
 		return i;
 	}
 
@@ -604,7 +604,7 @@ public class UIUtils {
 
 	public static Icon createIcon(IconSize size, TextColor color, VaadinIcon icon) {
 		Icon i = new Icon(icon);
-		i.addClassNames(size.getStyle(), color.getStyle());
+		i.addClassNames(size.getClassName(), color.getClassName());
 		return i;
 	}
 
