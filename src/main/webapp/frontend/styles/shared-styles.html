@@ -47,6 +47,21 @@
       --transition-duration-l: 320ms;
     }
 
+    /* Responsive sizing and spacing */
+    @media (max-width: 1023px) {
+      :root {
+        --lumo-space-r-m: var(--lumo-space-s);
+        --lumo-space-r-l: var(--lumo-space-m);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      :root {
+        --lumo-space-r-m: var(--lumo-space-m);
+        --lumo-space-r-l: var(--lumo-space-l);
+      }
+    }
+
     html,
     body {
       height: 100%;

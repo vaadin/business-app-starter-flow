@@ -16,6 +16,11 @@ import com.vaadin.starter.responsiveapptemplate.backend.UIConfig;
 import com.vaadin.starter.responsiveapptemplate.ui.Root;
 import com.vaadin.starter.responsiveapptemplate.ui.components.ListItem;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.bar.AppBar;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexBoxLayout;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Bottom;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Horizontal;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Right;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Top;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.*;
 import com.vaadin.starter.responsiveapptemplate.ui.views.ViewFrame;
 
@@ -59,17 +64,13 @@ public class Dashboard extends ViewFrame {
 	}
 
 	private Component createHeader(VaadinIcon icon, String title) {
-		FlexLayout header = UIUtils.createFlexLayout(
-				Arrays.asList(
-						LumoStyles.Margin.Bottom.L,
-						LumoStyles.Margin.Top.XL,
-						LumoStyles.Margin.Responsive.Horizontal.ML,
-						LumoStyles.Spacing.Right.M
-				),
+		FlexBoxLayout header = new FlexBoxLayout(
 				UIUtils.createIcon(IconSize.S, TextColor.TERTIARY, icon),
 				UIUtils.createH3Label(title)
 		);
 		header.setAlignItems(FlexComponent.Alignment.CENTER);
+		header.setMargin(Top.XL, Horizontal.RESPONSIVE_L, Bottom.L);
+		header.setSpacing(Right.M);
 		return header;
 	}
 

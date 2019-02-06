@@ -68,7 +68,7 @@ public class Root extends FlexLayout
 
 		addClassName(CLASS_NAME);
 		getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN);
-		getStyle().set(CSSProperties.BackgroundColor.PROPERTY, LumoStyles.Color.CONTRAST_5);
+		getStyle().set(CSSProperties.BackgroundColor.PROPERTY, LumoStyles.Color.Contrast._5);
 		setSizeFull();
 
 		// Initialise the UI building blocks.

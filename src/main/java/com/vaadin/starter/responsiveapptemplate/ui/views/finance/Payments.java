@@ -158,7 +158,7 @@ public class Payments extends ViewFrame {
 		close.addClickListener(e -> detailsDrawer.hide());
 
 		FlexLayout footer = UIUtils.createFlexLayout(Arrays.asList(LumoStyles.Padding.Horizontal.L, LumoStyles.Padding.Vertical.S, LumoStyles.Spacing.Right.S), close);
-		footer.getStyle().set(CSSProperties.BackgroundColor.PROPERTY, LumoStyles.Color.CONTRAST_5);
+		footer.getStyle().set(CSSProperties.BackgroundColor.PROPERTY, LumoStyles.Color.Contrast._5);
 		footer.setWidth("100%");
 
 		detailsDrawer.setFooter(footer);

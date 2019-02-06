@@ -24,7 +24,7 @@ public class Divider extends Composite<FlexLayout> {
 		getContent().setHeight(height);
 
 		divider = new Div();
-		divider.getStyle().set(CSSProperties.BackgroundColor.PROPERTY, LumoStyles.Color.CONTRAST_20);
+		divider.getStyle().set(CSSProperties.BackgroundColor.PROPERTY, LumoStyles.Color.Contrast._20);
 		divider.setHeight("1px");
 		divider.setWidth("100%");
 		getContent().add(divider);

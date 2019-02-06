@@ -166,7 +166,7 @@ public class Invoices extends ViewFrame {
 		cancel.addClickListener(e -> detailsDrawer.hide());
 
 		FlexLayout footer = UIUtils.createFlexLayout(Arrays.asList(LumoStyles.Padding.Horizontal.L, LumoStyles.Padding.Vertical.S, LumoStyles.Spacing.Right.S), save, cancel);
-		footer.getStyle().set(CSSProperties.BackgroundColor.PROPERTY, LumoStyles.Color.CONTRAST_5);
+		footer.getStyle().set(CSSProperties.BackgroundColor.PROPERTY, LumoStyles.Color.Contrast._5);
 		footer.setWidth("100%");
 
 		detailsDrawer.setFooter(footer);

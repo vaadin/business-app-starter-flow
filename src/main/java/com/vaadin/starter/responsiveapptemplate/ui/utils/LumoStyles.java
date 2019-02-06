@@ -21,8 +21,66 @@ public class LumoStyles {
 
 	public class Color {
 		public static final String BASE_COLOR = "var(--lumo-base-color)";
-		public static final String CONTRAST_5 = "var(--lumo-contrast-5pct)";
-		public static final String CONTRAST_20 = "var(--lumo-contrast-20pct)";
+
+		public class Primary {
+			public static final String _10 = "var(--lumo-primary-color-10pct)";
+			public static final String _50 = "var(--lumo-primary-color-50pct)";
+			public static final String _100 = "var(--lumo-primary-color)";
+		}
+
+		public class Error {
+			public static final String _10 = "var(--lumo-error-color-10pct)";
+			public static final String _50 = "var(--lumo-error-color-50pct)";
+			public static final String _100 = "var(--lumo-error-color)";
+		}
+
+		public class Success {
+			public static final String _10 = "var(--lumo-success-color-10pct)";
+			public static final String _50 = "var(--lumo-success-color-50pct)";
+			public static final String _100 = "var(--lumo-success-color)";
+		}
+
+		public class Tint {
+			public static final String _5 = "var(--lumo-tint-5pct)";
+			public static final String _10 = "var(--lumo-tint-10pct)";
+			public static final String _20 = "var(--lumo-tint-20pct)";
+			public static final String _30 = "var(--lumo-tint-30pct)";
+			public static final String _40 = "var(--lumo-tint-40pct)";
+			public static final String _50 = "var(--lumo-tint-50pct)";
+			public static final String _60 = "var(--lumo-tint-60pct)";
+			public static final String _70 = "var(--lumo-tint-70pct)";
+			public static final String _80 = "var(--lumo-tint-80pct)";
+			public static final String _90 = "var(--lumo-tint-90pct)";
+			public static final String _100 = "var(--lumo-tint)";
+		}
+
+		public class Shade {
+			public static final String _5 = "var(--lumo-shade-5pct)";
+			public static final String _10 = "var(--lumo-shade-10pct)";
+			public static final String _20 = "var(--lumo-shade-20pct)";
+			public static final String _30 = "var(--lumo-shade-30pct)";
+			public static final String _40 = "var(--lumo-shade-40pct)";
+			public static final String _50 = "var(--lumo-shade-50pct)";
+			public static final String _60 = "var(--lumo-shade-60pct)";
+			public static final String _70 = "var(--lumo-shade-70pct)";
+			public static final String _80 = "var(--lumo-shade-80pct)";
+			public static final String _90 = "var(--lumo-shade-90pct)";
+			public static final String _100 = "var(--lumo-shade)";
+		}
+
+		public class Contrast {
+			public static final String _5 = "var(--lumo-contrast-5pct)";
+			public static final String _10 = "var(--lumo-contrast-10pct)";
+			public static final String _20 = "var(--lumo-contrast-20pct)";
+			public static final String _30 = "var(--lumo-contrast-30pct)";
+			public static final String _40 = "var(--lumo-contrast-40pct)";
+			public static final String _50 = "var(--lumo-contrast-50pct)";
+			public static final String _60 = "var(--lumo-contrast-60pct)";
+			public static final String _70 = "var(--lumo-contrast-70pct)";
+			public static final String _80 = "var(--lumo-contrast-80pct)";
+			public static final String _90 = "var(--lumo-contrast-90pct)";
+			public static final String _100 = "var(--lumo-contrast)";
+		}
 	}
 
 	public class FontFamily {
@@ -72,13 +130,13 @@ public class LumoStyles {
 
 		public class Responsive {
 			public class Horizontal {
-				public static final String SM = "margin-r-h-sm";
-				public static final String ML = "margin-r-h-ml";
+				public static final String SM = "margin-r-h-m";
+				public static final String ML = "margin-r-h-l";
 			}
 
 			public class Vertical {
-				public static final String SM = "margin-r-v-sm";
-				public static final String ML = "margin-r-v-ml";
+				public static final String SM = "margin-r-v-m";
+				public static final String ML = "margin-r-v-l";
 			}
 		}
 
@@ -162,13 +220,13 @@ public class LumoStyles {
 
 		public class Responsive {
 			public class Horizontal {
-				public static final String SM = "padding-r-h-sm";
-				public static final String ML = "padding-r-h-ml";
+				public static final String SM = "padding-r-h-m";
+				public static final String ML = "padding-r-h-l";
 			}
 
 			public class Vertical {
-				public static final String SM = "padding-r-v-sm";
-				public static final String ML = "padding-r-v-ml";
+				public static final String SM = "padding-r-v-m";
+				public static final String ML = "padding-r-v-l";
 			}
 		}
 
