@@ -21,9 +21,6 @@ import com.vaadin.starter.responsiveapptemplate.ui.layout.size.*;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.*;
 import com.vaadin.starter.responsiveapptemplate.ui.views.ViewFrame;
 
-import java.util.Arrays;
-import java.util.Collections;
-
 @Route(value = "dashboard", layout = Root.class)
 @PageTitle("Dashboard")
 public class Dashboard extends ViewFrame {
@@ -75,10 +72,11 @@ public class Dashboard extends ViewFrame {
 		card.addClassName(CLASS_NAME + "__progress");
 		card.setBackgroundColor(LumoStyles.Color.BASE_COLOR);
 		card.setBorderRadius(BorderRadius.S);
+		card.setFlexDirection(FlexDirection.COLUMN);
 		card.setFlexWrap(FlexWrap.WRAP);
 		card.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
 		card.setShadow(Shadow.S);
-		
+
 		for (String section : new String[]{"Today", "Week", "Month", "Year"}) {
 			card.add(createProgressSection(section));
 		}
