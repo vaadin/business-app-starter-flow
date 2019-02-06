@@ -10,6 +10,14 @@ public class FlexBoxLayout extends FlexLayout {
 		super(components);
 	}
 
+	public void setBackgroundColor(String value) {
+		getStyle().set("background-color", value);
+	}
+
+	public void setBorderRadius(BorderRadius radius) {
+		getStyle().set("border-radius", radius.getValue());
+	}
+
 	public void setFlex(String value, Component component) {
 		component.getElement().getStyle().set("flex", value);
 	}
@@ -24,6 +32,10 @@ public class FlexBoxLayout extends FlexLayout {
 
 	public void setFlexShrink(String value, Component component) {
 		component.getElement().getStyle().set("flex-shrink", value);
+	}
+
+	public void setFlexWrap(FlexWrap wrap) {
+		getStyle().set("flex-wrap", wrap.getValue());
 	}
 
 	public void setMargin(Size... sizes) {
@@ -44,6 +56,14 @@ public class FlexBoxLayout extends FlexLayout {
 				getStyle().set(attribute, size.getVariable());
 			}
 		}
+	}
+
+	public void setPosition(Position position) {
+		getStyle().set("position", position.getValue());
+	}
+
+	public void setShadow(Shadow shadow) {
+		getStyle().set("box-shadow", shadow.getValue());
 	}
 
 	public void setSpacing(Size... sizes) {

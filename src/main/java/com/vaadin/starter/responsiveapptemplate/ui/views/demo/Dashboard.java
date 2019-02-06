@@ -16,12 +16,8 @@ import com.vaadin.starter.responsiveapptemplate.backend.UIConfig;
 import com.vaadin.starter.responsiveapptemplate.ui.Root;
 import com.vaadin.starter.responsiveapptemplate.ui.components.ListItem;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.bar.AppBar;
-import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexBoxLayout;
-import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexDirection;
-import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Bottom;
-import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Horizontal;
-import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Right;
-import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Top;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.*;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.size.*;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.*;
 import com.vaadin.starter.responsiveapptemplate.ui.views.ViewFrame;
 
@@ -75,10 +71,14 @@ public class Dashboard extends ViewFrame {
 	}
 
 	private Component createProgressCharts() {
-		FlexLayout card = UIUtils.createWrappingFlexLayout(Arrays.asList(CLASS_NAME + "__progress", LumoStyles.BorderRadius.S, LumoStyles.Shadow.S));
+		FlexBoxLayout card = new FlexBoxLayout();
+		card.addClassName(CLASS_NAME + "__progress");
+		card.setBackgroundColor(LumoStyles.Color.BASE_COLOR);
+		card.setBorderRadius(BorderRadius.S);
+		card.setFlexWrap(FlexWrap.WRAP);
 		card.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
-		card.getStyle().set(CSSProperties.BackgroundColor.PROPERTY, LumoStyles.Color.BASE_COLOR);
-
+		card.setShadow(Shadow.S);
+		
 		for (String section : new String[]{"Today", "Week", "Month", "Year"}) {
 			card.add(createProgressSection(section));
 		}
@@ -89,27 +89,27 @@ public class Dashboard extends ViewFrame {
 	private Component createProgressSection(String title) {
 		int value = DummyData.getRandomInt(50, 100);
 
-		FlexLayout textContainer = UIUtils.createFlexLayout(
-				Collections.singleton(LumoStyles.Spacing.Right.XS),
+		FlexBoxLayout textContainer = new FlexBoxLayout(
 				UIUtils.createH2Label(Integer.toString(value)),
 				UIUtils.createSmallLabel("%")
 		);
 		textContainer.setAlignItems(FlexComponent.Alignment.BASELINE);
-		textContainer.getStyle().set(CSSProperties.Position.PROPERTY, CSSProperties.Position.ABSOLUTE);
+		textContainer.setPosition(Position.ABSOLUTE);
+		textContainer.setSpacing(Right.XS);
 
-		FlexLayout chartContainer = new FlexLayout(UIUtils.createProgressChart(value), textContainer);
+		FlexBoxLayout chartContainer = new FlexBoxLayout(UIUtils.createProgressChart(value), textContainer);
 		chartContainer.setAlignItems(FlexComponent.Alignment.CENTER);
 		chartContainer.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
-		chartContainer.getStyle().set(CSSProperties.Position.PROPERTY, CSSProperties.Position.RELATIVE);
+		chartContainer.setPosition(Position.RELATIVE);
 		chartContainer.setHeight("120px");
 		chartContainer.setWidth("120px");
 
-		FlexLayout column = UIUtils.createColumn(
-				Arrays.asList(LumoStyles.Padding.Bottom.S, LumoStyles.Padding.Top.M),
+		FlexBoxLayout column = new FlexBoxLayout(
 				new Label(title),
 				chartContainer
 		);
 		column.setAlignItems(FlexComponent.Alignment.CENTER);
+		column.setPadding(Bottom.S, Top.M);
 		return column;
 	}
 
@@ -127,19 +127,22 @@ public class Dashboard extends ViewFrame {
 
 	private Component createTabbedList() {
 		Tabs tabs = new Tabs();
-
 		for (String label : new String[]{"All", "Archive", "Workflows", "Support"}) {
 			tabs.add(new Tab(label));
 		}
 
-		FlexLayout items = UIUtils.createColumn(
-				Collections.singleton(LumoStyles.Margin.Vertical.S),
+		FlexBoxLayout items = new FlexBoxLayout(
 				new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.CHART), "My Weekly Report", "Last opened May 5, 2018", createInfoButton()),
 				new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.SITEMAP), "My Workflow", "Last opened May 5, 2018", createInfoButton())
 		);
+		items.setFlexDirection(FlexDirection.COLUMN);
+		items.setMargin(Vertical.S);
 
-		FlexLayout card = UIUtils.createColumn(Arrays.asList(LumoStyles.BorderRadius.S, LumoStyles.Shadow.S), tabs, items);
-		card.getStyle().set(CSSProperties.BackgroundColor.PROPERTY, LumoStyles.Color.BASE_COLOR);
+		FlexBoxLayout card = new FlexBoxLayout(tabs, items);
+		card.setBackgroundColor(LumoStyles.Color.BASE_COLOR);
+		card.setBorderRadius(BorderRadius.S);
+		card.setFlexDirection(FlexDirection.COLUMN);
+		card.setShadow(Shadow.S);
 		return card;
 	}
 
