@@ -2,6 +2,7 @@ package com.vaadin.starter.responsiveapptemplate.ui.layout.size;
 
 public enum Left implements Size {
 
+	AUTO("auto", null),
 	XS("var(--lumo-space-xs)", "spacing-l-xs"),
 	S("var(--lumo-space-s)", "spacing-l-s"),
 	M("var(--lumo-space-m)", "spacing-l-m"),
@@ -18,12 +19,12 @@ public enum Left implements Size {
 
 	@Override
 	public String[] getMarginAttributes() {
-		return new String[] { "margin-left" };
+		return new String[]{"margin-left"};
 	}
 
 	@Override
 	public String[] getPaddingAttributes() {
-		return new String[] { "padding-left" };
+		return new String[]{"padding-left"};
 	}
 
 	@Override

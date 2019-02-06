@@ -2,6 +2,7 @@ package com.vaadin.starter.responsiveapptemplate.ui.layout.size;
 
 public enum Right implements Size {
 
+	AUTO("auto", null),
 	XS("var(--lumo-space-xs)", "spacing-r-xs"),
 	S("var(--lumo-space-s)", "spacing-r-s"),
 	M("var(--lumo-space-m)", "spacing-r-m"),
@@ -18,12 +19,12 @@ public enum Right implements Size {
 
 	@Override
 	public String[] getMarginAttributes() {
-		return new String[] { "margin-right" };
+		return new String[]{"margin-right"};
 	}
 
 	@Override
 	public String[] getPaddingAttributes() {
-		return new String[] { "padding-right" };
+		return new String[]{"padding-right"};
 	}
 
 	@Override

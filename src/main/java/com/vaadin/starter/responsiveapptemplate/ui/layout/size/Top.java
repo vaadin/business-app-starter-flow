@@ -2,6 +2,7 @@ package com.vaadin.starter.responsiveapptemplate.ui.layout.size;
 
 public enum Top implements Size {
 
+	AUTO("auto", null),
 	XS("var(--lumo-space-xs)", "spacing-t-xs"),
 	S("var(--lumo-space-s)", "spacing-t-s"),
 	M("var(--lumo-space-m)", "spacing-t-m"),
@@ -18,12 +19,12 @@ public enum Top implements Size {
 
 	@Override
 	public String[] getMarginAttributes() {
-		return new String[] { "margin-top" };
+		return new String[]{"margin-top"};
 	}
 
 	@Override
 	public String[] getPaddingAttributes() {
-		return new String[] { "padding-top" };
+		return new String[]{"padding-top"};
 	}
 
 	@Override

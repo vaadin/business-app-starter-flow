@@ -17,6 +17,7 @@ import com.vaadin.starter.responsiveapptemplate.ui.Root;
 import com.vaadin.starter.responsiveapptemplate.ui.components.ListItem;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.bar.AppBar;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexBoxLayout;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexDirection;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Bottom;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Horizontal;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Right;
@@ -42,24 +43,23 @@ public class Dashboard extends ViewFrame {
 	}
 
 	private Component createViewport() {
-		Div viewport = UIUtils.createDiv(
-				Arrays.asList(
-						CLASS_NAME,
-						LumoStyles.Margin.Horizontal.AUTO,
-						LumoStyles.Padding.Bottom.L,
-						LumoStyles.Padding.Responsive.Horizontal.ML
-				),
-				createHeader(VaadinIcon.CHECK, "Progress"),
-				createProgressCharts(),
-				createHeader(VaadinIcon.TRENDING_UP, "Sales"),
-				UIUtils.createSalesChart("Product sales for 2018", "Items Sold"),
-				UIUtils.createFlexLayout(
-						Collections.singleton(CLASS_NAME + "__bookmarks-recent-items"),
-						createBookmarks(),
-						createRecentItems()
-				)
-		);
-		viewport.getStyle().set(CSSProperties.MaxWidth.PROPERTY, CSSProperties.MaxWidth._1024);
+		Component progressHeader = createHeader(VaadinIcon.CHECK, "Progress");
+		Component progressChart = createProgressCharts();
+
+		Component salesHeader = createHeader(VaadinIcon.TRENDING_UP, "Sales");
+		Component salesChart = UIUtils.createSalesChart("Product sales for 2018", "Items Sold");
+
+		Component bookmarks = createBookmarks();
+		Component recentItems = createRecentItems();
+		FlexLayout items = new FlexLayout(bookmarks, recentItems);
+		items.addClassName(CLASS_NAME + "__bookmarks-recent-items");
+
+		FlexBoxLayout viewport = new FlexBoxLayout(progressHeader, progressChart, salesHeader, salesChart, items);
+		viewport.addClassName(CLASS_NAME);
+		viewport.setFlexDirection(FlexDirection.COLUMN);
+		viewport.setMargin(Horizontal.AUTO);
+		viewport.setMaxWidth(CSSProperties.MaxWidth._1024);
+		viewport.setPadding(Bottom.L, Horizontal.RESPONSIVE_L);
 		return viewport;
 	}
 
@@ -69,7 +69,7 @@ public class Dashboard extends ViewFrame {
 				UIUtils.createH3Label(title)
 		);
 		header.setAlignItems(FlexComponent.Alignment.CENTER);
-		header.setMargin(Top.XL, Horizontal.RESPONSIVE_L, Bottom.L);
+		header.setMargin(Bottom.L, Horizontal.RESPONSIVE_L, Top.XL);
 		header.setSpacing(Right.M);
 		return header;
 	}

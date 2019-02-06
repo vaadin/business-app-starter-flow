@@ -2,6 +2,7 @@ package com.vaadin.starter.responsiveapptemplate.ui.layout.size;
 
 public enum Wide implements Size {
 
+	AUTO("auto", null),
 	XS("var(--lumo-space-xs)", "spacing-xs"),
 	S("var(--lumo-space-s)", "spacing-s"),
 	M("var(--lumo-space-m)", "spacing-m"),
@@ -18,12 +19,12 @@ public enum Wide implements Size {
 
 	@Override
 	public String[] getMarginAttributes() {
-		return new String[] { "margin" };
+		return new String[]{"margin"};
 	}
 
 	@Override
 	public String[] getPaddingAttributes() {
-		return new String[] { "padding" };
+		return new String[]{"padding"};
 	}
 
 	@Override

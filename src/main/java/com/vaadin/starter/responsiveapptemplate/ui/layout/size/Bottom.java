@@ -2,6 +2,7 @@ package com.vaadin.starter.responsiveapptemplate.ui.layout.size;
 
 public enum Bottom implements Size {
 
+	AUTO("auto", null),
 	XS("var(--lumo-space-xs)", "spacing-b-xs"),
 	S("var(--lumo-space-s)", "spacing-b-s"),
 	M("var(--lumo-space-m)", "spacing-b-m"),
@@ -18,12 +19,12 @@ public enum Bottom implements Size {
 
 	@Override
 	public String[] getMarginAttributes() {
-		return new String[] { "margin-bottom" };
+		return new String[]{"margin-bottom"};
 	}
 
 	@Override
 	public String[] getPaddingAttributes() {
-		return new String[] { "padding-bottom" };
+		return new String[]{"padding-bottom"};
 	}
 
 	@Override

@@ -18,6 +18,10 @@ public class FlexBoxLayout extends FlexLayout {
 		component.getElement().getStyle().set("flex-basis", value);
 	}
 
+	public void setFlexDirection(FlexDirection direction) {
+		getStyle().set("flex-direction", direction.getValue());
+	}
+
 	public void setFlexShrink(String value, Component component) {
 		component.getElement().getStyle().set("flex-shrink", value);
 	}
@@ -28,6 +32,10 @@ public class FlexBoxLayout extends FlexLayout {
 				getStyle().set(attribute, size.getVariable());
 			}
 		}
+	}
+
+	public void setMaxWidth(String value) {
+		getStyle().set("max-width", value);
 	}
 
 	public void setPadding(Size... sizes) {

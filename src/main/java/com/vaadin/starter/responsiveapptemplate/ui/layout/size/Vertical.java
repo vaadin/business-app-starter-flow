@@ -2,13 +2,14 @@ package com.vaadin.starter.responsiveapptemplate.ui.layout.size;
 
 public enum Vertical implements Size {
 
+	AUTO("auto", null),
 	XS("var(--lumo-space-xs)", "spacing-v-xs"),
 	S("var(--lumo-space-s)", "spacing-v-s"),
 	M("var(--lumo-space-m)", "spacing-v-m"),
 	L("var(--lumo-space-l)", "spacing-v-l"),
 	XL("var(--lumo-space-xl)", "spacing-v-xl"),
-	RESPONSIVE_M("var(--lumo-space-r-m)", "spacing-v-r-m"),
-	RESPONSIVE_L("var(--lumo-space-r-l)", "spacing-v-r-l");
+	RESPONSIVE_M("var(--lumo-space-r-m)", null),
+	RESPONSIVE_L("var(--lumo-space-r-l)", null);
 
 	private String variable;
 	private String spacingClassName;
@@ -20,12 +21,12 @@ public enum Vertical implements Size {
 
 	@Override
 	public String[] getMarginAttributes() {
-		return new String[] { "margin-bottom", "margin-top" };
+		return new String[]{"margin-bottom", "margin-top"};
 	}
 
 	@Override
 	public String[] getPaddingAttributes() {
-		return new String[] { "padding-bottom", "padding-top" };
+		return new String[]{"padding-bottom", "padding-top"};
 	}
 
 	@Override
