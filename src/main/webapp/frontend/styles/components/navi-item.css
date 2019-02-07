@@ -10,7 +10,10 @@
 /* Sub items */
 .navi-item[level] {
   background-color: var(--lumo-contrast-5pct);
+  font-size: var(--lumo-font-size-xs);
   font-weight: normal;
+  height: var(--lumo-size-m);
+
 }
 
 .navi-item[level="1"] label {
