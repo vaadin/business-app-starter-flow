@@ -2,7 +2,6 @@ package com.vaadin.starter.responsiveapptemplate.ui.layout.size;
 
 public enum Tall implements Size {
 
-	AUTO("auto", null),
 	XS("var(--lumo-space-xs)", "spacing-tall-xs"),
 	S("var(--lumo-space-s)", "spacing-tall-s"),
 	M("var(--lumo-space-m)", "spacing-tall-m"),

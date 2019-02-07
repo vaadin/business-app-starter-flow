@@ -2,12 +2,11 @@ package com.vaadin.starter.responsiveapptemplate.ui.layout.size;
 
 public enum Wide implements Size {
 
-	AUTO("auto", null),
-	XS("var(--lumo-space-xs)", "spacing-xs"),
-	S("var(--lumo-space-s)", "spacing-s"),
-	M("var(--lumo-space-m)", "spacing-m"),
-	L("var(--lumo-space-l)", "spacing-l"),
-	XL("var(--lumo-space-xl)", "spacing-xl");
+	XS("var(--lumo-space-wide-xs)", "spacing-wide-xs"),
+	S("var(--lumo-space-wide-s)", "spacing-wide-s"),
+	M("var(--lumo-space-wide-m)", "spacing-wide-m"),
+	L("var(--lumo-space-wide-l)", "spacing-wide-l"),
+	XL("var(--lumo-space-wide-xl)", "spacing-wide-xl");
 
 	private String variable;
 	private String spacingClassName;
