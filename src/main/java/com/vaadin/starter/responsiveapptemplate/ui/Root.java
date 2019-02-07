@@ -21,6 +21,8 @@ import com.vaadin.starter.responsiveapptemplate.backend.UIConfig;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.bar.TabBar;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.drawer.NaviDrawer;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.drawer.NaviItem;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexBoxLayout;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexDirection;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.CSSProperties;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
@@ -42,7 +44,7 @@ import java.util.Collections;
 
 @HtmlImport("frontend://styles/shared-styles.html")
 @Viewport("width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes")
-public class Root extends FlexLayout
+public class Root extends FlexBoxLayout
 		implements RouterLayout, PageConfigurator, BeforeEnterObserver {
 
 	private static final Logger log = LoggerFactory.getLogger(Root.class);
@@ -67,8 +69,8 @@ public class Root extends FlexLayout
 		});
 
 		addClassName(CLASS_NAME);
-		getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN);
-		getStyle().set(CSSProperties.BackgroundColor.PROPERTY, LumoStyles.Color.Contrast._5);
+		setFlexDirection(FlexDirection.COLUMN);
+		setBackgroundColor(LumoStyles.Color.Contrast._5);
 		setSizeFull();
 
 		// Initialise the UI building blocks.
@@ -79,6 +81,10 @@ public class Root extends FlexLayout
 
 		// Configure the headers and footers (optional).
 		initHeadersAndFooters();
+
+		if (UIConfig.getShowcase().equals(UIConfig.Showcase.DEMO)) {
+			UIUtils.showNotification("Shift-click opens new tab");
+		}
 	}
 
 	/**
