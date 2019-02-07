@@ -55,6 +55,10 @@ public class FlexBoxLayout extends FlexLayout {
 		getStyle().set("max-width", value);
 	}
 
+	public void setOverflow(Overflow overflow) {
+		getStyle().set("overflow", overflow.getValue());
+	}
+
 	public void setPadding(Size... sizes) {
 		for (Size size : sizes) {
 			for (String attribute : size.getPaddingAttributes()) {

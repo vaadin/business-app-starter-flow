@@ -97,11 +97,6 @@ public abstract class NaviItem extends Div {
 		if (level == 0) {
 			expandCollapse.setIcon(new Icon(visible ? up : down));
 		}
-		if (visible) {
-			removeClassName("not-visible");
-		} else {
-			addClassName("not-visible");
-		}
 		subItems.forEach(item -> item.setVisible(visible));
 		subItemsVisible = visible;
 	}

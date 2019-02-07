@@ -128,7 +128,9 @@ public class Catalogue extends ViewFrame {
 	}
 
 	private Component createInfo(Item item) {
-		return new ListItem(item.getName(), item.getDesc());
+		ListItem listItem = new ListItem(item.getName(), item.getDesc());
+		listItem.setHorizontalPadding(false);
+		return listItem;
 	}
 
 	private Component createPrice(Item item) {
