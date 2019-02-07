@@ -137,7 +137,7 @@ public class Payments extends ViewFrame {
 
 	private Component createAmount(Payment payment) {
 		Double amount = payment.getAmount();
-		Label label = UIUtils.createH4Label(UIUtils.formatAmount(amount));
+		Label label = UIUtils.createAmountLabel(amount);
 		return UIUtils.createRightAlignedDiv(label);
 	}
 
