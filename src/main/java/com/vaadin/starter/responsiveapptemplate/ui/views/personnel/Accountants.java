@@ -130,7 +130,7 @@ public class Accountants extends ViewFrame {
 	}
 
 	private Component createInvoices() {
-		return UIUtils.createRightAlignedDiv(UIUtils.createH4Label(UIUtils.formatAmount(DummyData.getRandomInt(0, 5000))));
+		return UIUtils.createRightAlignedDiv(UIUtils.createAmountLabel(DummyData.getRandomInt(0, 5000)));
 	}
 
 	private Component createCompanies() {

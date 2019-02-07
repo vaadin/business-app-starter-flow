@@ -94,7 +94,7 @@ public class AccountDetails extends ViewFrame implements HasUrlParameter<Long> {
 	}
 
 	private Component createLogoSection() {
-		Image image = new Image(UIUtils.IMG_PATH + "sample-logo1.jpg", "");
+		Image image = DummyData.getLogo();
 		image.getStyle().set(CSSProperties.BorderRadius.PROPERTY, "100%");
 		image.addClassName(LumoStyles.Margin.Horizontal.L);
 		image.setHeight("200px");
@@ -143,25 +143,26 @@ public class AccountDetails extends ViewFrame implements HasUrlParameter<Long> {
 	}
 
 	private Div createRecentTransactionsList() {
-		Div div = UIUtils.createDiv(Arrays.asList(LumoStyles.Padding.Bottom.L, BoxShadowBorders.BOTTOM));
+		Div items = UIUtils.createDiv(Arrays.asList(LumoStyles.Padding.Bottom.L, BoxShadowBorders.BOTTOM));
 
 		for (int i = 0; i < RECENT_TRANSACTIONS; i++) {
 			Double amount = DummyData.getAmount();
 
-			Label amountLabel = UIUtils.createH4Label(UIUtils.formatAmount(amount));
-			amountLabel.addClassName(amount > 0 ? TextColor.SUCCESS.getClassName() : TextColor.ERROR.getClassName());
+			Label amountLabel = UIUtils.createAmountLabel(amount);
+			if (amount > 0) {
+				amountLabel.addClassName(TextColor.SUCCESS.getClassName());
+			} else {
+				amountLabel.addClassName(TextColor.ERROR.getClassName());
+			}
 
 			ListItem item = new ListItem(DummyData.getLogo(), DummyData.getCompany(), UIUtils.formatDate(LocalDate.now().minusDays(i)), amountLabel);
 
-			// Dividers for all but the last item. Last item has some bottom margin.
-			if (i < RECENT_TRANSACTIONS - 1) {
-				item.setDividerVisible(true);
-			}
-
-			div.add(item);
+			// Dividers for all but the last item
+			item.setDividerVisible(i < RECENT_TRANSACTIONS - 1);
+			items.add(item);
 		}
 
-		return div;
+		return items;
 	}
 
 	private Component createTransactionsChart() {

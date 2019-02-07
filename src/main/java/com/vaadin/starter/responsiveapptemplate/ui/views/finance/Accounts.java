@@ -85,7 +85,7 @@ public class Accounts extends ViewFrame implements RouterLayout {
 
 	private Component createAvailability(BankAccount bankAccount) {
 		Double availability = bankAccount.getAvailability();
-		Label label = UIUtils.createH4Label(UIUtils.formatAmount(availability));
+		Label label = UIUtils.createAmountLabel(availability);
 
 		if (availability > 0) {
 			label.addClassName(TextColor.SUCCESS.getClassName());

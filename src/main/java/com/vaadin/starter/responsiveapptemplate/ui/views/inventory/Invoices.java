@@ -128,7 +128,9 @@ public class Invoices extends ViewFrame {
 	}
 
 	private Component createAmount(Invoice invoice) {
-		return UIUtils.createRightAlignedDiv(UIUtils.createAmountLabel(invoice.getOrder().getValue()));
+		Double value = invoice.getOrder().getValue();
+		Label label = UIUtils.createAmountLabel(value);
+		return UIUtils.createRightAlignedDiv(label);
 	}
 
 	private void initDetailsDrawer() {

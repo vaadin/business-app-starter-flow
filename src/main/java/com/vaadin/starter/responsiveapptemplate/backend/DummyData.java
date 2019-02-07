@@ -311,7 +311,7 @@ public class DummyData {
 	}
 
 	public static Image getLogo() {
-		return new Image(UIUtils.IMG_PATH + "sample-logo1.jpg", "");
+		return new Image(UIUtils.IMG_PATH + "logo-" + DummyData.getRandomInt(1, 40) + ".png", "");
 	}
 
 	public static String getImageSource() {

@@ -135,7 +135,7 @@ public class Catalogue extends ViewFrame {
 
 	private Component createPrice(Item item) {
 		Double price = item.getPrice();
-		Label label = UIUtils.createH4Label(UIUtils.formatAmount(price));
+		Label label = UIUtils.createAmountLabel(price);
 		return UIUtils.createRightAlignedDiv(label);
 	}
 
