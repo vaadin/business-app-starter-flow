@@ -39,8 +39,6 @@ public class Reports extends ViewFrame {
 		grid = createGrid();
 		FlexBoxLayout content = new FlexBoxLayout(grid);
 		content.addClassName(GRID_VIEW);
-		content.setBoxSizing(BoxSizing.BORDER_BOX);
-		content.setHeight("100%");
 		return content;
 	}
 

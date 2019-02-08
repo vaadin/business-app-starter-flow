@@ -2,7 +2,6 @@ package com.vaadin.starter.responsiveapptemplate.ui.views;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Html;
-import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.starter.responsiveapptemplate.backend.UIConfig;
@@ -10,13 +9,8 @@ import com.vaadin.starter.responsiveapptemplate.ui.Root;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.bar.AppBar;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexBoxLayout;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Horizontal;
-import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Uniform;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Vertical;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.CSSProperties;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
-
-import java.util.Arrays;
 
 @Route(value = "", layout = Root.class)
 @PageTitle("Welcome")

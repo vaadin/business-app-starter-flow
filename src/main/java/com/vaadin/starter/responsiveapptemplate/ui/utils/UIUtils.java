@@ -19,6 +19,7 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.textfield.TextFieldVariant;
 import com.vaadin.starter.responsiveapptemplate.backend.*;
 import com.vaadin.starter.responsiveapptemplate.ui.components.DataSeriesItemWithRadius;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexBoxLayout;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;

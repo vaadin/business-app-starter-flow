@@ -2,7 +2,6 @@ package com.vaadin.starter.responsiveapptemplate.ui.views.demo;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.grid.Grid;
-import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -58,8 +57,6 @@ public class Personnel extends ViewFrame {
 		grid = createGrid();
 		FlexBoxLayout content = new FlexBoxLayout(grid);
 		content.addClassName(GRID_VIEW);
-		content.setBoxSizing(BoxSizing.BORDER_BOX);
-		content.setHeight("100%");
 		return content;
 	}
 
