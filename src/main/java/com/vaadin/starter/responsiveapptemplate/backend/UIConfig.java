@@ -23,11 +23,11 @@ public class UIConfig {
 	}
 
 	public static NaviHeader getNaviHeader() {
-		return NaviHeader.ACCOUNT_SWITCHER;
+		return NaviHeader.BRAND_EXPRESSION;
 	}
 
 	public static Showcase getShowcase() {
-		return Showcase.FINANCE;
+		return Showcase.DEMO;
 	}
 
 }

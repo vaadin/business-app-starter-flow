@@ -81,10 +81,12 @@ public class Invoices extends ViewFrame {
 	}
 
 	private void initGrid() {
-		grid = new Grid<>();
 		dataProvider = DataProvider.ofCollection(DummyData.getInvoices());
 		dataProvider.setSortOrder(Invoice::getDueDate, SortDirection.ASCENDING);
+
+		grid = new Grid<>();
 		grid.setDataProvider(dataProvider);
+		grid.setSizeFull();
 
 		grid.addColumn(Invoice::getId)
 				.setFlexGrow(0)
@@ -112,8 +114,6 @@ public class Invoices extends ViewFrame {
 				showDetails(e.getFirstSelectedItem().get());
 			}
 		});
-
-		grid.setSizeFull();
 	}
 
 	private void filter(HasValue.ValueChangeEvent event) {

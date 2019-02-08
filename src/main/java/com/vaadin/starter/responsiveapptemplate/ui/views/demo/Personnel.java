@@ -59,9 +59,11 @@ public class Personnel extends ViewFrame {
 	}
 
 	private void initGrid() {
-		grid = new Grid<>();
 		dataProvider = DataProvider.ofCollection(DummyData.getPersons());
+
+		grid = new Grid<>();
 		grid.setDataProvider(dataProvider);
+		grid.setSizeFull();
 
 		grid.addColumn(Person::getId)
 				.setHeader("ID")
@@ -86,8 +88,6 @@ public class Personnel extends ViewFrame {
 				.setSortable(true)
 				.setWidth("160px")
 				.setFlexGrow(0);
-
-		grid.setSizeFull();
 	}
 
 	private void filter() {

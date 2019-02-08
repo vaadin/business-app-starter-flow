@@ -43,6 +43,7 @@ public class Reports extends ViewFrame {
 	private void initGrid() {
 		grid = new Grid<>();
 		grid.setDataProvider(DataProvider.ofCollection(DummyData.getReports()));
+		grid.setSizeFull();
 
 		grid.addColumn(new ComponentRenderer<>(this::createReportInfo))
 				.setHeader("Company")
@@ -63,8 +64,6 @@ public class Reports extends ViewFrame {
 				.setFlexGrow(0);
 
 		grid.addSelectionListener(event -> event.getFirstSelectedItem().ifPresent(this::viewDetails));
-
-		grid.setSizeFull();
 	}
 
 	private Component createReportInfo(Report report) {

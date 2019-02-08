@@ -50,24 +50,23 @@ public class FilterList extends ViewFrame {
 	private Grid<Person> grid;
 
 	public FilterList() {
-		getContent().addClassName(CLASS_NAME);
+		addClassName(CLASS_NAME);
 
 		// Header
 		if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
 			setViewHeader(new AppBar("Statistics"));
 		}
 
-		// Filters
-		initFilterArea();
+		setViewContent(createContent());
+	}
 
-		// Grid
+	private Component createContent() {
+		initFilterArea();
 		initGrid();
 
-		// Content wrapper
 		FlexLayout content = UIUtils.createColumn(filterArea, grid);
 		content.setHeight("100%");
-
-		setViewContent(content);
+		return content;
 	}
 
 	private void initFilterArea() {
@@ -168,6 +167,7 @@ public class FilterList extends ViewFrame {
 	private void initGrid() {
 		grid = new Grid<>();
 		grid.addClassName(LumoStyles.Margin.Responsive.Horizontal.ML);
+		grid.setDataProvider(DataProvider.ofCollection(DummyData.getPersons()));
 		grid.setHeight("100%");
 
 		grid.addColumn(Person::getId)
@@ -193,9 +193,6 @@ public class FilterList extends ViewFrame {
 				.setSortable(true)
 				.setWidth(UIUtils.COLUMN_WIDTH_M)
 				.setFlexGrow(0);
-
-		DataProvider dataProvider = DataProvider.ofCollection(DummyData.getPersons());
-		grid.setDataProvider(dataProvider);
 	}
 
 	private Component createUserInfo(Person person) {

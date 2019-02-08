@@ -75,10 +75,12 @@ public class CustomerOrders extends ViewFrame {
 	}
 
 	private void initGrid() {
-		grid = new Grid<>();
 		dataProvider = DataProvider.ofCollection(DummyData.getOrders());
 		dataProvider.setSortOrder(Order::getDate, SortDirection.ASCENDING);
+
+		grid = new Grid<>();
 		grid.setDataProvider(dataProvider);
+		grid.setSizeFull();
 
 		grid.addColumn(new ComponentRenderer<>(UIUtils::createBadge))
 				.setFlexGrow(0)
@@ -102,8 +104,6 @@ public class CustomerOrders extends ViewFrame {
 				.setWidth(UIUtils.COLUMN_WIDTH_S);
 
 		grid.setItemDetailsRenderer(new ComponentRenderer<>(this::createDetails));
-
-		grid.setSizeFull();
 	}
 
 	private void filter(HasValue.ValueChangeEvent event) {

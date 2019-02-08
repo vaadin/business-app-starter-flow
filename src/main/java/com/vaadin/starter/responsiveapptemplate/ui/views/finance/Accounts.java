@@ -49,6 +49,7 @@ public class Accounts extends ViewFrame implements RouterLayout {
 	private void initGrid() {
 		grid = new Grid<>();
 		grid.setDataProvider(DataProvider.ofCollection(DummyData.getBankAccounts()));
+		grid.setSizeFull();
 
 		grid.addColumn(BankAccount::getId)
 				.setFlexGrow(0)
@@ -73,8 +74,6 @@ public class Accounts extends ViewFrame implements RouterLayout {
 				.setWidth(UIUtils.COLUMN_WIDTH_M);
 
 		grid.addSelectionListener(event -> event.getFirstSelectedItem().ifPresent(this::viewDetails));
-
-		grid.setSizeFull();
 	}
 
 	private Component createBankInfo(BankAccount bankAccount) {

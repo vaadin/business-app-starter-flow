@@ -69,6 +69,7 @@ public class HorizontalSplitView extends ViewFrame {
 	private void initGrid() {
 		grid = new Grid<>();
 		grid.setDataProvider(DataProvider.ofCollection(DummyData.getPersons()));
+		grid.setSizeFull();
 
 		grid.addColumn(Person::getId)
 				.setHeader("ID")
@@ -99,8 +100,6 @@ public class HorizontalSplitView extends ViewFrame {
 				showDetails(e.getFirstSelectedItem().get());
 			}
 		});
-
-		grid.setSizeFull();
 	}
 
 	private void initDetailsDrawer() {

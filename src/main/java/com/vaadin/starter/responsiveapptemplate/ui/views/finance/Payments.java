@@ -82,9 +82,11 @@ public class Payments extends ViewFrame {
 	}
 
 	private void initGrid() {
-		grid = new Grid<>();
 		dataProvider = DataProvider.ofCollection(DummyData.getPayments());
+
+		grid = new Grid<>();
 		grid.setDataProvider(dataProvider);
+		grid.setSizeFull();
 
 		grid.addColumn(new ComponentRenderer<>(UIUtils::createBadge))
 				.setHeader("Status")
@@ -113,8 +115,6 @@ public class Payments extends ViewFrame {
 				showDetails(e.getFirstSelectedItem().get());
 			}
 		});
-
-		grid.setSizeFull();
 	}
 
 	private void filter() {

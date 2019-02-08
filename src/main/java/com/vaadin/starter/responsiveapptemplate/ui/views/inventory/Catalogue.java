@@ -78,9 +78,11 @@ public class Catalogue extends ViewFrame {
 	}
 
 	private void initGrid() {
-		grid = new Grid<>();
 		dataProvider = DataProvider.ofCollection(DummyData.getItems());
+
+		grid = new Grid<>();
 		grid.setDataProvider(dataProvider);
+		grid.setSizeFull();
 
 		grid.addColumn(new ComponentRenderer<>(UIUtils::createBadge))
 				.setHeader("Category")
@@ -112,8 +114,6 @@ public class Catalogue extends ViewFrame {
 				showDetails(e.getFirstSelectedItem().get());
 			}
 		});
-
-		grid.setSizeFull();
 	}
 
 	private void filter(HasValue.ValueChangeEvent event) {

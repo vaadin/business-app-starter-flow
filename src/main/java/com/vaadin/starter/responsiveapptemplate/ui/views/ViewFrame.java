@@ -2,6 +2,7 @@ package com.vaadin.starter.responsiveapptemplate.ui.views;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Composite;
+import com.vaadin.flow.component.HasStyle;
 import com.vaadin.flow.component.html.Div;
 
 /**
@@ -12,7 +13,7 @@ import com.vaadin.flow.component.html.Div;
  * <li>Bottom {@link #setViewFooter(Component...) footer}</li>
  * </ul>
  */
-public class ViewFrame extends Composite<Div> {
+public class ViewFrame extends Composite<Div> implements HasStyle {
 
 	private final String CLASS_NAME = "view-frame";
 
@@ -21,7 +22,7 @@ public class ViewFrame extends Composite<Div> {
 	private final Div footer = new Div();
 
 	public ViewFrame() {
-		getContent().setClassName(CLASS_NAME);
+		setClassName(CLASS_NAME);
 
 		header.setClassName(CLASS_NAME + "__header");
 		content.setClassName(CLASS_NAME + "__content");

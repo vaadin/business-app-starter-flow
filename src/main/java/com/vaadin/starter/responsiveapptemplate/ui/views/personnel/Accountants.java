@@ -70,9 +70,11 @@ public class Accountants extends ViewFrame {
 	}
 
 	private void initGrid() {
-		grid = new Grid<>();
 		dataProvider = DataProvider.ofCollection(DummyData.getPersons());
+
+		grid = new Grid<>();
 		grid.setDataProvider(dataProvider);
+		grid.setSizeFull();
 
 		grid.addColumn(Person::getId)
 				.setFlexGrow(0)
@@ -105,8 +107,6 @@ public class Accountants extends ViewFrame {
 				showDetails(e.getFirstSelectedItem().get());
 			}
 		});
-
-		grid.setSizeFull();
 	}
 
 	private void filter() {

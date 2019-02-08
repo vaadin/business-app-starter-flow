@@ -251,158 +251,158 @@ public class Root extends FlexBoxLayout
 	}
 
 	private void initExampleNavigation() {
-		NaviItem ordering = naviDrawer.addNaviItem(VaadinIcon.ABACUS, "Ordering", Default.class);
+		NaviItem ordering = naviDrawer.addNaviItem(VaadinIcon.ABACUS, "Ordering", null);
 		{
-			NaviItem orderEntry = naviDrawer.addNaviItem(ordering, "Order Entry", Default.class);
+			NaviItem orderEntry = naviDrawer.addNaviItem(ordering, "Order Entry", null);
 			{
-				naviDrawer.addNaviItem(orderEntry, "New Order", Default.class);
-				naviDrawer.addNaviItem(orderEntry, "Remote CustomerOrders", Default.class);
-				naviDrawer.addNaviItem(orderEntry, "Incomplete CustomerOrders", Default.class);
+				naviDrawer.addNaviItem(orderEntry, "New Order", null);
+				naviDrawer.addNaviItem(orderEntry, "Remote CustomerOrders", null);
+				naviDrawer.addNaviItem(orderEntry, "Incomplete CustomerOrders", null);
 			}
-			NaviItem setup = naviDrawer.addNaviItem(ordering, "Setup", Default.class);
+			NaviItem setup = naviDrawer.addNaviItem(ordering, "Setup", null);
 			{
-				naviDrawer.addNaviItem(setup, "Clients", Default.class);
-				naviDrawer.addNaviItem(setup, "Client Groups", Default.class);
-				naviDrawer.addNaviItem(setup, "Providers", Default.class);
-				naviDrawer.addNaviItem(setup, "Lab Tests", Default.class);
-				naviDrawer.addNaviItem(setup, "Lab Test Panels", Default.class);
-				naviDrawer.addNaviItem(setup, "Patients", Default.class);
+				naviDrawer.addNaviItem(setup, "Clients", null);
+				naviDrawer.addNaviItem(setup, "Client Groups", null);
+				naviDrawer.addNaviItem(setup, "Providers", null);
+				naviDrawer.addNaviItem(setup, "Lab Tests", null);
+				naviDrawer.addNaviItem(setup, "Lab Test Panels", null);
+				naviDrawer.addNaviItem(setup, "Patients", null);
 			}
-			NaviItem labeling = naviDrawer.addNaviItem(ordering, "Labeling", Default.class);
+			NaviItem labeling = naviDrawer.addNaviItem(ordering, "Labeling", null);
 			{
-				naviDrawer.addNaviItem(labeling, "Order Labels", Default.class);
-				naviDrawer.addNaviItem(labeling, "Current Unprinted Batch", Default.class);
-				naviDrawer.addNaviItem(labeling, "Label Batches", Default.class);
+				naviDrawer.addNaviItem(labeling, "Order Labels", null);
+				naviDrawer.addNaviItem(labeling, "Current Unprinted Batch", null);
+				naviDrawer.addNaviItem(labeling, "Label Batches", null);
 			}
-			NaviItem dataCleanup = naviDrawer.addNaviItem(ordering, "Data Cleanup", Default.class);
+			NaviItem dataCleanup = naviDrawer.addNaviItem(ordering, "Data Cleanup", null);
 			{
-				naviDrawer.addNaviItem(dataCleanup, "Missing Info", Default.class);
+				naviDrawer.addNaviItem(dataCleanup, "Missing Info", null);
 			}
-			NaviItem reports = naviDrawer.addNaviItem(ordering, "Reports", Default.class);
+			NaviItem reports = naviDrawer.addNaviItem(ordering, "Reports", null);
 			{
-				naviDrawer.addNaviItem(reports, "Order Search", Default.class);
-				naviDrawer.addNaviItem(reports, "Order Stats", Default.class);
-				naviDrawer.addNaviItem(reports, "Workflow Action Queue", Default.class);
+				naviDrawer.addNaviItem(reports, "Order Search", null);
+				naviDrawer.addNaviItem(reports, "Order Stats", null);
+				naviDrawer.addNaviItem(reports, "Workflow Action Queue", null);
 			}
-			NaviItem interfaces = naviDrawer.addNaviItem(ordering, "Interfaces", Default.class);
+			NaviItem interfaces = naviDrawer.addNaviItem(ordering, "Interfaces", null);
 			{
-				naviDrawer.addNaviItem(interfaces, "EDI Stats", Default.class);
-				naviDrawer.addNaviItem(interfaces, "EDI Log", Default.class);
+				naviDrawer.addNaviItem(interfaces, "EDI Stats", null);
+				naviDrawer.addNaviItem(interfaces, "EDI Log", null);
 			}
-			NaviItem sendouts = naviDrawer.addNaviItem(ordering, "Sendouts", Default.class);
+			NaviItem sendouts = naviDrawer.addNaviItem(ordering, "Sendouts", null);
 			{
-				naviDrawer.addNaviItem(sendouts, "Sendout Queue", Default.class);
-				naviDrawer.addNaviItem(sendouts, "Manifest Queue", Default.class);
-				naviDrawer.addNaviItem(sendouts, "Sendout Receive Queue", Default.class);
-				naviDrawer.addNaviItem(sendouts, "Search Sendouts", Default.class);
+				naviDrawer.addNaviItem(sendouts, "Sendout Queue", null);
+				naviDrawer.addNaviItem(sendouts, "Manifest Queue", null);
+				naviDrawer.addNaviItem(sendouts, "Sendout Receive Queue", null);
+				naviDrawer.addNaviItem(sendouts, "Search Sendouts", null);
 			}
 		}
-		NaviItem anatomicPathology = naviDrawer.addNaviItem(VaadinIcon.ABACUS, "Anatomic Pathology", Default.class);
+		NaviItem anatomicPathology = naviDrawer.addNaviItem(VaadinIcon.ABACUS, "Anatomic Pathology", null);
 		{
-			naviDrawer.addNaviItem(anatomicPathology, "Pathologist Queue", Default.class);
-			naviDrawer.addNaviItem(anatomicPathology, "Case Distribution", Default.class);
+			naviDrawer.addNaviItem(anatomicPathology, "Pathologist Queue", null);
+			naviDrawer.addNaviItem(anatomicPathology, "Case Distribution", null);
 
-			NaviItem gynCytology = naviDrawer.addNaviItem(anatomicPathology, "GYN Cytology", Default.class);
+			NaviItem gynCytology = naviDrawer.addNaviItem(anatomicPathology, "GYN Cytology", null);
 			{
-				NaviItem specimenPlacement = naviDrawer.addNaviItem(gynCytology, "Specimen Placement", Default.class);
+				NaviItem specimenPlacement = naviDrawer.addNaviItem(gynCytology, "Specimen Placement", null);
 				{
-					naviDrawer.addNaviItem(specimenPlacement, "Rack Placement", Default.class);
+					naviDrawer.addNaviItem(specimenPlacement, "Rack Placement", null);
 				}
-				naviDrawer.addNaviItem(gynCytology, "Gyn Batch Log", Default.class);
-				naviDrawer.addNaviItem(gynCytology, "Cytotech", Default.class);
-				naviDrawer.addNaviItem(gynCytology, "Quality Control", Default.class);
+				naviDrawer.addNaviItem(gynCytology, "Gyn Batch Log", null);
+				naviDrawer.addNaviItem(gynCytology, "Cytotech", null);
+				naviDrawer.addNaviItem(gynCytology, "Quality Control", null);
 
-				NaviItem apReports = naviDrawer.addNaviItem(gynCytology, "AP Reports", Default.class);
+				NaviItem apReports = naviDrawer.addNaviItem(gynCytology, "AP Reports", null);
 				{
-					naviDrawer.addNaviItem(apReports, "CT [Daily Log]", Default.class);
-					naviDrawer.addNaviItem(apReports, "QC [Daily Log]", Default.class);
-					naviDrawer.addNaviItem(apReports, "Case Search", Default.class);
-					naviDrawer.addNaviItem(apReports, "Case Stats", Default.class);
-					naviDrawer.addNaviItem(apReports, "Consolidated Letter", Default.class);
-					naviDrawer.addNaviItem(apReports, "Tickler Report", Default.class);
-					naviDrawer.addNaviItem(apReports, "Followup Letter", Default.class);
-					naviDrawer.addNaviItem(apReports, "Abnormal Followup", Default.class);
+					naviDrawer.addNaviItem(apReports, "CT [Daily Log]", null);
+					naviDrawer.addNaviItem(apReports, "QC [Daily Log]", null);
+					naviDrawer.addNaviItem(apReports, "Case Search", null);
+					naviDrawer.addNaviItem(apReports, "Case Stats", null);
+					naviDrawer.addNaviItem(apReports, "Consolidated Letter", null);
+					naviDrawer.addNaviItem(apReports, "Tickler Report", null);
+					naviDrawer.addNaviItem(apReports, "Followup Letter", null);
+					naviDrawer.addNaviItem(apReports, "Abnormal Followup", null);
 				}
 			}
-			NaviItem ngynCytology = naviDrawer.addNaviItem(anatomicPathology, "Surgical/NGYN Cytology", Default.class);
+			NaviItem ngynCytology = naviDrawer.addNaviItem(anatomicPathology, "Surgical/NGYN Cytology", null);
 			{
-				naviDrawer.addNaviItem(ngynCytology, "Grossing Queue", Default.class);
-				naviDrawer.addNaviItem(ngynCytology, "Transcription Cases", Default.class);
-				naviDrawer.addNaviItem(ngynCytology, "Screening Queue", Default.class);
+				naviDrawer.addNaviItem(ngynCytology, "Grossing Queue", null);
+				naviDrawer.addNaviItem(ngynCytology, "Transcription Cases", null);
+				naviDrawer.addNaviItem(ngynCytology, "Screening Queue", null);
 
-				NaviItem historology = naviDrawer.addNaviItem(ngynCytology, "Historology", Default.class);
+				NaviItem historology = naviDrawer.addNaviItem(ngynCytology, "Historology", null);
 				{
-					naviDrawer.addNaviItem(historology, "Block Queue", Default.class);
-					naviDrawer.addNaviItem(historology, "Slide Queue", Default.class);
-					naviDrawer.addNaviItem(historology, "Histo Cases", Default.class);
-					naviDrawer.addNaviItem(historology, "Block Log", Default.class);
-					naviDrawer.addNaviItem(historology, "Slide Log", Default.class);
-					naviDrawer.addNaviItem(historology, "Block Stats", Default.class);
-					naviDrawer.addNaviItem(historology, "Slide Stats", Default.class);
-					naviDrawer.addNaviItem(historology, "Correlation Queue", Default.class);
+					naviDrawer.addNaviItem(historology, "Block Queue", null);
+					naviDrawer.addNaviItem(historology, "Slide Queue", null);
+					naviDrawer.addNaviItem(historology, "Histo Cases", null);
+					naviDrawer.addNaviItem(historology, "Block Log", null);
+					naviDrawer.addNaviItem(historology, "Slide Log", null);
+					naviDrawer.addNaviItem(historology, "Block Stats", null);
+					naviDrawer.addNaviItem(historology, "Slide Stats", null);
+					naviDrawer.addNaviItem(historology, "Correlation Queue", null);
 				}
-				NaviItem microscopicReports = naviDrawer.addNaviItem(ngynCytology, "Microscopic Reports", Default.class);
+				NaviItem microscopicReports = naviDrawer.addNaviItem(ngynCytology, "Microscopic Reports", null);
 				{
-					naviDrawer.addNaviItem(microscopicReports, "Case Log Report", Default.class);
-					naviDrawer.addNaviItem(microscopicReports, "Process Only Report", Default.class);
-					naviDrawer.addNaviItem(microscopicReports, "IntraOp Stats", Default.class);
-					naviDrawer.addNaviItem(microscopicReports, "Microscopic Case Stats", Default.class);
-					naviDrawer.addNaviItem(microscopicReports, "Microscopic Case Search", Default.class);
-					naviDrawer.addNaviItem(microscopicReports, "Consultation Stats", Default.class);
-					naviDrawer.addNaviItem(microscopicReports, "Consultation Search", Default.class);
-				}
-			}
-			NaviItem crossTypeReports = naviDrawer.addNaviItem(anatomicPathology, "Cross-type Reports", Default.class);
-			{
-				NaviItem correlation = naviDrawer.addNaviItem(crossTypeReports, "Correlation", Default.class);
-				{
-					naviDrawer.addNaviItem(correlation, "Correlation [Date]", Default.class);
-					naviDrawer.addNaviItem(correlation, "Correlation Stats", Default.class);
-					naviDrawer.addNaviItem(correlation, "Correlation Log", Default.class);
-					naviDrawer.addNaviItem(correlation, "Correlation Queue", Default.class);
-				}
-				NaviItem cytologySlide = naviDrawer.addNaviItem(crossTypeReports, "Cytology Slide", Default.class);
-				{
-					naviDrawer.addNaviItem(cytologySlide, "Cytology Slide Search", Default.class);
-					naviDrawer.addNaviItem(cytologySlide, "Cytology Slide Stats", Default.class);
+					naviDrawer.addNaviItem(microscopicReports, "Case Log Report", null);
+					naviDrawer.addNaviItem(microscopicReports, "Process Only Report", null);
+					naviDrawer.addNaviItem(microscopicReports, "IntraOp Stats", null);
+					naviDrawer.addNaviItem(microscopicReports, "Microscopic Case Stats", null);
+					naviDrawer.addNaviItem(microscopicReports, "Microscopic Case Search", null);
+					naviDrawer.addNaviItem(microscopicReports, "Consultation Stats", null);
+					naviDrawer.addNaviItem(microscopicReports, "Consultation Search", null);
 				}
 			}
-			NaviItem apSetup = naviDrawer.addNaviItem(anatomicPathology, "AP Setup", Default.class);
+			NaviItem crossTypeReports = naviDrawer.addNaviItem(anatomicPathology, "Cross-type Reports", null);
 			{
-				NaviItem gynCytologySetup = naviDrawer.addNaviItem(apSetup, "GYN Cytology Setup", Default.class);
+				NaviItem correlation = naviDrawer.addNaviItem(crossTypeReports, "Correlation", null);
 				{
-					naviDrawer.addNaviItem(gynCytologySetup, "Cytology Tests", Default.class);
-					naviDrawer.addNaviItem(gynCytologySetup, "Specimen Adequacy", Default.class);
-					naviDrawer.addNaviItem(gynCytologySetup, "Specimen Adequacy Categories", Default.class);
-					naviDrawer.addNaviItem(gynCytologySetup, "Interpretation", Default.class);
-					naviDrawer.addNaviItem(gynCytologySetup, "Interpretation Grades", Default.class);
-					naviDrawer.addNaviItem(gynCytologySetup, "Additional Findings", Default.class);
-					naviDrawer.addNaviItem(gynCytologySetup, "Additional Findings Categories", Default.class);
-					naviDrawer.addNaviItem(gynCytologySetup, "Result Comments", Default.class);
-					naviDrawer.addNaviItem(gynCytologySetup, "Result Templates", Default.class);
+					naviDrawer.addNaviItem(correlation, "Correlation [Date]", null);
+					naviDrawer.addNaviItem(correlation, "Correlation Stats", null);
+					naviDrawer.addNaviItem(correlation, "Correlation Log", null);
+					naviDrawer.addNaviItem(correlation, "Correlation Queue", null);
 				}
-				NaviItem ngynCytologyAdmin = naviDrawer.addNaviItem(apSetup, "Surgical/NGYN Cytology Admin", Default.class);
+				NaviItem cytologySlide = naviDrawer.addNaviItem(crossTypeReports, "Cytology Slide", null);
 				{
-					naviDrawer.addNaviItem(ngynCytologyAdmin, "Diagnosis Grades", Default.class);
-					naviDrawer.addNaviItem(ngynCytologyAdmin, "Site Manager", Default.class);
-					naviDrawer.addNaviItem(ngynCytologyAdmin, "Synoptic Templates", Default.class);
-					naviDrawer.addNaviItem(ngynCytologyAdmin, "Stains", Default.class);
-					naviDrawer.addNaviItem(ngynCytologyAdmin, "Stain Type", Default.class);
-					naviDrawer.addNaviItem(ngynCytologyAdmin, "Stain Panel", Default.class);
-					naviDrawer.addNaviItem(ngynCytologyAdmin, "Histo Protocols", Default.class);
-					naviDrawer.addNaviItem(ngynCytologyAdmin, "Histo Attributes", Default.class);
-					naviDrawer.addNaviItem(ngynCytologyAdmin, "Intra-Op Types", Default.class);
-					naviDrawer.addNaviItem(ngynCytologyAdmin, "Case Attributes", Default.class);
-					naviDrawer.addNaviItem(ngynCytologyAdmin, "Case Types", Default.class);
-					naviDrawer.addNaviItem(ngynCytologyAdmin, "Addendum Reasons", Default.class);
-					naviDrawer.addNaviItem(ngynCytologyAdmin, "Slide QA Status", Default.class);
-					naviDrawer.addNaviItem(ngynCytologyAdmin, "Prostate Regions", Default.class);
-					naviDrawer.addNaviItem(ngynCytologyAdmin, "Microscopic Tests", Default.class);
+					naviDrawer.addNaviItem(cytologySlide, "Cytology Slide Search", null);
+					naviDrawer.addNaviItem(cytologySlide, "Cytology Slide Stats", null);
 				}
-				NaviItem idr = naviDrawer.addNaviItem(apSetup, "IDR", Default.class);
+			}
+			NaviItem apSetup = naviDrawer.addNaviItem(anatomicPathology, "AP Setup", null);
+			{
+				NaviItem gynCytologySetup = naviDrawer.addNaviItem(apSetup, "GYN Cytology Setup", null);
 				{
-					naviDrawer.addNaviItem(idr, "IDR Test Filters", Default.class);
-					naviDrawer.addNaviItem(idr, "Templates", Default.class);
+					naviDrawer.addNaviItem(gynCytologySetup, "Cytology Tests", null);
+					naviDrawer.addNaviItem(gynCytologySetup, "Specimen Adequacy", null);
+					naviDrawer.addNaviItem(gynCytologySetup, "Specimen Adequacy Categories", null);
+					naviDrawer.addNaviItem(gynCytologySetup, "Interpretation", null);
+					naviDrawer.addNaviItem(gynCytologySetup, "Interpretation Grades", null);
+					naviDrawer.addNaviItem(gynCytologySetup, "Additional Findings", null);
+					naviDrawer.addNaviItem(gynCytologySetup, "Additional Findings Categories", null);
+					naviDrawer.addNaviItem(gynCytologySetup, "Result Comments", null);
+					naviDrawer.addNaviItem(gynCytologySetup, "Result Templates", null);
+				}
+				NaviItem ngynCytologyAdmin = naviDrawer.addNaviItem(apSetup, "Surgical/NGYN Cytology Admin", null);
+				{
+					naviDrawer.addNaviItem(ngynCytologyAdmin, "Diagnosis Grades", null);
+					naviDrawer.addNaviItem(ngynCytologyAdmin, "Site Manager", null);
+					naviDrawer.addNaviItem(ngynCytologyAdmin, "Synoptic Templates", null);
+					naviDrawer.addNaviItem(ngynCytologyAdmin, "Stains", null);
+					naviDrawer.addNaviItem(ngynCytologyAdmin, "Stain Type", null);
+					naviDrawer.addNaviItem(ngynCytologyAdmin, "Stain Panel", null);
+					naviDrawer.addNaviItem(ngynCytologyAdmin, "Histo Protocols", null);
+					naviDrawer.addNaviItem(ngynCytologyAdmin, "Histo Attributes", null);
+					naviDrawer.addNaviItem(ngynCytologyAdmin, "Intra-Op Types", null);
+					naviDrawer.addNaviItem(ngynCytologyAdmin, "Case Attributes", null);
+					naviDrawer.addNaviItem(ngynCytologyAdmin, "Case Types", null);
+					naviDrawer.addNaviItem(ngynCytologyAdmin, "Addendum Reasons", null);
+					naviDrawer.addNaviItem(ngynCytologyAdmin, "Slide QA Status", null);
+					naviDrawer.addNaviItem(ngynCytologyAdmin, "Prostate Regions", null);
+					naviDrawer.addNaviItem(ngynCytologyAdmin, "Microscopic Tests", null);
+				}
+				NaviItem idr = naviDrawer.addNaviItem(apSetup, "IDR", null);
+				{
+					naviDrawer.addNaviItem(idr, "IDR Test Filters", null);
+					naviDrawer.addNaviItem(idr, "Templates", null);
 				}
 			}
 		}
