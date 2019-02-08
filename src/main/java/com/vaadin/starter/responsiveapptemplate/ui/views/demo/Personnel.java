@@ -2,6 +2,7 @@ package com.vaadin.starter.responsiveapptemplate.ui.views.demo;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -17,7 +18,6 @@ import com.vaadin.starter.responsiveapptemplate.backend.UIConfig;
 import com.vaadin.starter.responsiveapptemplate.ui.Root;
 import com.vaadin.starter.responsiveapptemplate.ui.components.ListItem;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.bar.AppBar;
-import com.vaadin.starter.responsiveapptemplate.ui.layout.BoxSizing;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexBoxLayout;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
 import com.vaadin.starter.responsiveapptemplate.ui.views.ViewFrame;
@@ -55,7 +55,7 @@ public class Personnel extends ViewFrame {
 
 	private Component createContent() {
 		grid = createGrid();
-		FlexBoxLayout content = new FlexBoxLayout(grid);
+		Div content = new Div(grid);
 		content.addClassName(GRID_VIEW);
 		return content;
 	}
