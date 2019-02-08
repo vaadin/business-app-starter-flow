@@ -54,21 +54,20 @@ public class HorizontalSplitView extends ViewFrame {
 
 	private Component createContent() {
 		grid = createGrid();
-
 		Div gridWrapper = new Div(grid);
 		gridWrapper.addClassName(GRID_VIEW);
 
 		detailsDrawer = createDetailsDrawer();
 
 		FlexLayout content = new FlexLayout(gridWrapper, detailsDrawer);
-		content.setSizeFull();
+		content.setHeight("100%");
 		return content;
 	}
 
 	private Grid createGrid() {
 		Grid<Person> grid = new Grid<>();
 		grid.setDataProvider(DataProvider.ofCollection(DummyData.getPersons()));
-		grid.setSizeFull();
+		grid.setHeight("100%");
 
 		grid.addColumn(Person::getId)
 				.setHeader("ID")

@@ -37,18 +37,17 @@ public class Reports extends ViewFrame {
 
 	private Component createContent() {
 		grid = createGrid();
-
 		FlexBoxLayout content = new FlexBoxLayout(grid);
 		content.addClassName(GRID_VIEW);
 		content.setBoxSizing(BoxSizing.BORDER_BOX);
-		content.setSizeFull();
+		content.setHeight("100%");
 		return content;
 	}
 
 	private Grid createGrid() {
 		Grid<Report> grid = new Grid<>();
 		grid.setDataProvider(DataProvider.ofCollection(DummyData.getReports()));
-		grid.setSizeFull();
+		grid.setHeight("100%");
 
 		grid.addColumn(new ComponentRenderer<>(this::createReportInfo))
 				.setHeader("Company")
@@ -80,7 +79,7 @@ public class Reports extends ViewFrame {
 	}
 
 	private Component createBalance(Report report) {
-		return UIUtils.createRightAlignedDiv(UIUtils.formatAmount(report.getBalance()));
+		return UIUtils.createRightAlignedDiv(UIUtils.createAmountLabel(report.getBalance()));
 	}
 
 	private void viewDetails(Report report) {

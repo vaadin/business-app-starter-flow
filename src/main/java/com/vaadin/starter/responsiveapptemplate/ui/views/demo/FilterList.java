@@ -30,6 +30,7 @@ import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexBoxLayout;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexDirection;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexWrap;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Bottom;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Horizontal;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Right;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Vertical;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.BoxShadowBorders;
@@ -64,9 +65,14 @@ public class FilterList extends ViewFrame {
 
 	private Component createContent() {
 		filterArea = createFilterArea();
-		grid = createGrid();
 
-		FlexLayout content = UIUtils.createColumn(filterArea, grid);
+		grid = createGrid();
+		FlexBoxLayout gridWrapper = new FlexBoxLayout(grid);
+		gridWrapper.setFlexDirection(FlexDirection.COLUMN);
+		gridWrapper.setHeight("100%");
+		gridWrapper.setMargin(Horizontal.RESPONSIVE_X);
+
+		FlexLayout content = UIUtils.createColumn(filterArea, gridWrapper);
 		content.setHeight("100%");
 		return content;
 	}
@@ -151,9 +157,7 @@ public class FilterList extends ViewFrame {
 
 	private Grid createGrid() {
 		Grid<Person> grid = new Grid<>();
-		grid.addClassName(LumoStyles.Margin.Responsive.Horizontal.ML);
 		grid.setDataProvider(DataProvider.ofCollection(DummyData.getPersons()));
-		grid.setHeight("100%");
 
 		grid.addColumn(Person::getId)
 				.setHeader("ID")

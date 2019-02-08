@@ -27,6 +27,8 @@ import com.vaadin.starter.responsiveapptemplate.ui.components.DetailsDrawer;
 import com.vaadin.starter.responsiveapptemplate.ui.components.ListItem;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.bar.AppBar;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexBoxLayout;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexDirection;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.Overflow;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Horizontal;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Right;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Vertical;
@@ -54,21 +56,22 @@ public class VerticalSplitView extends ViewFrame {
 
 	private Component createContent() {
 		grid = createGrid();
-
 		Div gridWrapper = new Div(grid);
 		gridWrapper.addClassName(GRID_VIEW);
 
 		detailsDrawer = createDetailsDrawer();
 
-		FlexLayout content = UIUtils.createColumn(gridWrapper, detailsDrawer);
-		content.setSizeFull();
+		FlexBoxLayout content = new FlexBoxLayout(gridWrapper, detailsDrawer);
+		content.setFlexDirection(FlexDirection.COLUMN);
+		content.setOverflow(Overflow.HIDDEN);
+		content.setHeight("100%");
 		return content;
 	}
 
 	private Grid createGrid() {
 		Grid<Person> grid = new Grid<>();
 		grid.setDataProvider(DataProvider.ofCollection(DummyData.getPersons()));
-		grid.setSizeFull();
+		grid.setHeight("100%");
 
 		grid.addColumn(Person::getId)
 				.setHeader("ID")

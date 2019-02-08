@@ -105,6 +105,7 @@ public class ReportDetails extends ViewFrame implements HasUrlParameter<Long> {
 		content.setFlexDirection(FlexDirection.COLUMN);
 		content.setMargin(Horizontal.AUTO, Vertical.RESPONSIVE_L);
 		content.setMaxWidth(CSSProperties.MaxWidth._840);
+		content.setPadding(Horizontal.RESPONSIVE_X);
 		return content;
 	}
 

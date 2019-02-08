@@ -9,7 +9,8 @@ public enum Vertical implements Size {
 	L("var(--lumo-space-l)", "spacing-v-l"),
 	XL("var(--lumo-space-xl)", "spacing-v-xl"),
 	RESPONSIVE_M("var(--lumo-space-r-m)", null),
-	RESPONSIVE_L("var(--lumo-space-r-l)", null);
+	RESPONSIVE_L("var(--lumo-space-r-l)", null),
+	RESPONSIVE_X("var(--lumo-space-r-x)", null);
 
 	private String variable;
 	private String spacingClassName;

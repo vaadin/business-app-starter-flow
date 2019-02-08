@@ -3,9 +3,6 @@
 }
 
 @media (max-width: 399px) {
-  .dashboard {
-    padding: 0 !important;
-  }
   .dashboard__progress > * {
     width: calc(100% / 1);
   }

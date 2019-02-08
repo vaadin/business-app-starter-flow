@@ -18,6 +18,8 @@ import com.vaadin.starter.responsiveapptemplate.backend.UIConfig;
 import com.vaadin.starter.responsiveapptemplate.ui.Root;
 import com.vaadin.starter.responsiveapptemplate.ui.components.ListItem;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.bar.AppBar;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.BoxSizing;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexBoxLayout;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
 import com.vaadin.starter.responsiveapptemplate.ui.views.ViewFrame;
 
@@ -54,9 +56,10 @@ public class Personnel extends ViewFrame {
 
 	private Component createContent() {
 		grid = createGrid();
-
-		Div content = new Div(grid);
+		FlexBoxLayout content = new FlexBoxLayout(grid);
 		content.addClassName(GRID_VIEW);
+		content.setBoxSizing(BoxSizing.BORDER_BOX);
+		content.setHeight("100%");
 		return content;
 	}
 
@@ -65,7 +68,7 @@ public class Personnel extends ViewFrame {
 
 		Grid<Person> grid = new Grid<>();
 		grid.setDataProvider(dataProvider);
-		grid.setSizeFull();
+		grid.setHeight("100%");
 
 		grid.addColumn(Person::getId)
 				.setHeader("ID")

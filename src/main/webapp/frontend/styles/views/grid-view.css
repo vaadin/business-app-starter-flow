@@ -1,26 +1,6 @@
 .grid-view {
   flex: 1;
+  padding: var(--lumo-space-r-x) var(--lumo-space-r-x) 0 var(--lumo-space-r-x);
   transition: padding var(--transition-duration-m);
-}
 
-.grid-view vaadin-grid {
-  margin: 0 auto;
-}
-
-@media (max-width: 399px) {
-  .grid-view {
-    padding: 0;
-  }
-}
-
-@media (min-width: 400px) and (max-width: 1023px) {
-  .grid-view {
-    padding: var(--lumo-space-m) var(--lumo-space-m) 0 var(--lumo-space-m);
-  }
-}
-
-@media (min-width: 1024px) {
-  .grid-view {
-    padding: var(--lumo-space-l) var(--lumo-space-l) 0 var(--lumo-space-l);
-  }
 }

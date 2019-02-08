@@ -7,7 +7,9 @@ public enum Uniform implements Size {
 	S("var(--lumo-space-s)", "spacing-s"),
 	M("var(--lumo-space-m)", "spacing-m"),
 	L("var(--lumo-space-l)", "spacing-l"),
-	XL("var(--lumo-space-xl)", "spacing-xl");
+	XL("var(--lumo-space-xl)", "spacing-xl"),
+	RESPONSIVE_M("var(--lumo-space-r-m)", null),
+	RESPONSIVE_L("var(--lumo-space-r-l)", null);
 
 	private String variable;
 	private String spacingClassName;

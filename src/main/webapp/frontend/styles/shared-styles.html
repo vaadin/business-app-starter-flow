@@ -27,7 +27,6 @@
 <link rel="stylesheet" href="misc/box-shadow-borders.css">
 
 <link rel="stylesheet" href="views/dashboard.css">
-<link rel="stylesheet" href="views/filter-list.css">
 <link rel="stylesheet" href="views/grid-view.css">
 <link rel="stylesheet" href="views/report-details.css">
 <link rel="stylesheet" href="views/view-frame.css">
@@ -48,17 +47,25 @@
     }
 
     /* Responsive sizing and spacing */
-    @media (max-width: 1023px) {
+    @media (max-width: 479px) {
       :root {
         --lumo-space-r-m: var(--lumo-space-s);
         --lumo-space-r-l: var(--lumo-space-m);
+        --lumo-space-r-x: 0;
       }
     }
-
+    @media (min-width: 480px) and (max-width: 1023px) {
+      :root {
+        --lumo-space-r-m: var(--lumo-space-s);
+        --lumo-space-r-l: var(--lumo-space-m);
+        --lumo-space-r-x: var(--lumo-space-m);
+      }
+    }
     @media (min-width: 1024px) {
       :root {
         --lumo-space-r-m: var(--lumo-space-m);
         --lumo-space-r-l: var(--lumo-space-l);
+        --lumo-space-r-x: var(--lumo-space-l);
       }
     }
 

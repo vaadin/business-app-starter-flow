@@ -47,11 +47,10 @@ public class Dashboard extends ViewFrame {
 		items.setSpacing(Bottom.L);
 
 		FlexBoxLayout content = new FlexBoxLayout(progressHeader, progressChart, salesHeader, salesChart, items);
-		content.addClassName(CLASS_NAME);
 		content.setFlexDirection(FlexDirection.COLUMN);
 		content.setMargin(Horizontal.AUTO, Vertical.RESPONSIVE_L);
 		content.setMaxWidth(CSSProperties.MaxWidth._1024);
-		content.setPadding(Horizontal.RESPONSIVE_L);
+		content.setPadding(Horizontal.RESPONSIVE_X);
 		content.setSpacing(Bottom.L);
 		return content;
 	}

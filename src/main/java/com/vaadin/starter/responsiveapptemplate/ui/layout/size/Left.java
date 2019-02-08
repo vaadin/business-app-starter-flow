@@ -7,7 +7,10 @@ public enum Left implements Size {
 	S("var(--lumo-space-s)", "spacing-l-s"),
 	M("var(--lumo-space-m)", "spacing-l-m"),
 	L("var(--lumo-space-l)", "spacing-l-l"),
-	XL("var(--lumo-space-xl)", "spacing-l-xl");
+	XL("var(--lumo-space-xl)", "spacing-l-xl"),
+	RESPONSIVE_M("var(--lumo-space-r-m)", null),
+	RESPONSIVE_L("var(--lumo-space-r-l)", null),
+	RESPONSIVE_X("var(--lumo-space-r-x)", null);
 
 	private String variable;
 	private String spacingClassName;
