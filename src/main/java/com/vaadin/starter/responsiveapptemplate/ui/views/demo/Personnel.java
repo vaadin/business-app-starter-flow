@@ -2,6 +2,7 @@ package com.vaadin.starter.responsiveapptemplate.ui.views.demo;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -32,36 +33,37 @@ public class Personnel extends ViewFrame {
 	private ListDataProvider<Person> dataProvider;
 
 	public Personnel() {
-		// Header
 		if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-			initAppBar();
+			appBar = createAppBar();
+			setViewHeader(appBar);
 		}
+		setViewContent(createContent());
 
-		// Grid
-		initGrid();
-
-		// Set the content
-		getViewContent().addClassName(GRID_VIEW);
-		setViewContent(grid);
-
-		// Do the initial filtering
 		filter();
 	}
 
-	private void initAppBar() {
-		appBar = new AppBar("Personnel");
+	private AppBar createAppBar() {
+		AppBar appBar = new AppBar("Personnel");
 		for (Person.Role role : Person.Role.values()) {
 			appBar.addTab(role.name().substring(0, 1).toUpperCase() + role.name().substring(1).toLowerCase());
 		}
 		appBar.addTabSelectionListener(e -> filter());
 		appBar.centerTabs();
-		setViewHeader(appBar);
+		return appBar;
 	}
 
-	private void initGrid() {
+	private Component createContent() {
+		grid = createGrid();
+
+		Div content = new Div(grid);
+		content.addClassName(GRID_VIEW);
+		return content;
+	}
+
+	private Grid createGrid() {
 		dataProvider = DataProvider.ofCollection(DummyData.getPersons());
 
-		grid = new Grid<>();
+		Grid<Person> grid = new Grid<>();
 		grid.setDataProvider(dataProvider);
 		grid.setSizeFull();
 
@@ -88,6 +90,8 @@ public class Personnel extends ViewFrame {
 				.setSortable(true)
 				.setWidth("160px")
 				.setFlexGrow(0);
+
+		return grid;
 	}
 
 	private void filter() {

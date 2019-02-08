@@ -23,20 +23,30 @@ public class FlexBoxLayout extends FlexLayout {
 		getStyle().set("border-radius", radius.getValue());
 	}
 
-	public void setFlex(String value, Component component) {
-		component.getElement().getStyle().set("flex", value);
+	public void setBoxSizing(BoxSizing sizing) {
+		getStyle().set("box-sizing", sizing.getValue());
 	}
 
-	public void setFlexBasis(String value, Component component) {
-		component.getElement().getStyle().set("flex-basis", value);
+	public void setFlex(String value, Component... components) {
+		for (Component component : components) {
+			component.getElement().getStyle().set("flex", value);
+		}
+	}
+
+	public void setFlexBasis(String value, Component... components) {
+		for (Component component : components) {
+			component.getElement().getStyle().set("flex-basis", value);
+		}
 	}
 
 	public void setFlexDirection(FlexDirection direction) {
 		getStyle().set("flex-direction", direction.getValue());
 	}
 
-	public void setFlexShrink(String value, Component component) {
-		component.getElement().getStyle().set("flex-shrink", value);
+	public void setFlexShrink(String value, Component... components) {
+		for (Component component : components) {
+			component.getElement().getStyle().set("flex-shrink", value);
+		}
 	}
 
 	public void setFlexWrap(FlexWrap wrap) {

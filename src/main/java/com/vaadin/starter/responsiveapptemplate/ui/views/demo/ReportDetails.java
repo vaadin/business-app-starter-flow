@@ -7,7 +7,6 @@ import com.vaadin.flow.component.charts.model.ChartType;
 import com.vaadin.flow.component.charts.model.Configuration;
 import com.vaadin.flow.component.charts.model.ListSeries;
 import com.vaadin.flow.component.charts.model.XAxis;
-import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.Icon;
@@ -24,6 +23,11 @@ import com.vaadin.starter.responsiveapptemplate.backend.UIConfig;
 import com.vaadin.starter.responsiveapptemplate.ui.Root;
 import com.vaadin.starter.responsiveapptemplate.ui.components.ListItem;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.bar.AppBar;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.*;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Bottom;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Horizontal;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Uniform;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Vertical;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.*;
 import com.vaadin.starter.responsiveapptemplate.ui.views.ViewFrame;
 
@@ -49,48 +53,11 @@ public class ReportDetails extends ViewFrame implements HasUrlParameter<Long> {
 	private FlexLayout pendingEvents;
 
 	public ReportDetails() {
-		// Header
 		if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-			initAppBar();
+			appBar = createAppBar();
+			setViewHeader(appBar);
 		}
-
-		// Logo section
-		initLogoSection();
-
-		// Accounts
-		Label accountsHeader = UIUtils.createH6Label("Accounts (USD)");
-		accountsHeader.addClassNames(
-				LumoStyles.Margin.Bottom.M,
-				LumoStyles.Margin.Responsive.Horizontal.ML,
-				LumoStyles.Margin.Top.L
-		);
-		initAccounts();
-
-		// Pending events
-		Label pendingEventsHeader = UIUtils.createH6Label("Pending Events");
-		pendingEventsHeader.addClassNames(
-				LumoStyles.Margin.Bottom.M,
-				LumoStyles.Margin.Responsive.Horizontal.ML,
-				LumoStyles.Margin.Top.L
-		);
-		initPendingEvents();
-
-		// Transaction chart
-		Component transactionsChart = createTransactionsChart();
-
-		// Add it all to the viewport
-		Div viewport = UIUtils.createDiv(
-				Arrays.asList(LumoStyles.Margin.Horizontal.AUTO, LumoStyles.Margin.Responsive.Vertical.ML),
-				logoSection,
-				accountsHeader,
-				accounts,
-				pendingEventsHeader,
-				pendingEvents,
-				transactionsChart
-		);
-		viewport.getStyle().set(CSSProperties.MaxWidth.PROPERTY, CSSProperties.MaxWidth._840);
-
-		setViewContent(viewport);
+		setViewContent(createContent());
 	}
 
 	@Override
@@ -115,15 +82,33 @@ public class ReportDetails extends ViewFrame implements HasUrlParameter<Long> {
 		}
 	}
 
-	private void initAppBar() {
-		appBar = new AppBar("Details");
+	private AppBar createAppBar() {
+		AppBar appBar = new AppBar("Details");
 		appBar.setNaviMode(AppBar.NaviMode.CONTEXTUAL);
 		appBar.setContextNaviIcon(new Icon(VaadinIcon.ARROW_BACKWARD));
 		appBar.getContextNaviIcon().addClickListener(e -> UI.getCurrent().navigate("reports"));
-		setViewHeader(appBar);
+		return appBar;
 	}
 
-	private void initLogoSection() {
+	private Component createContent() {
+		logoSection = createLogoSection();
+
+		Label accountsHeader = createHeader("Accounts (USD)");
+		accounts = createAccounts();
+
+		Label pendingEventsHeader = createHeader("Pending Events");
+		pendingEvents = createPendingEvents();
+
+		Component transactionsChart = createTransactionsChart();
+
+		FlexBoxLayout content = new FlexBoxLayout(logoSection, accountsHeader, accounts, pendingEventsHeader, pendingEvents, transactionsChart);
+		content.setFlexDirection(FlexDirection.COLUMN);
+		content.setMargin(Horizontal.AUTO, Vertical.RESPONSIVE_L);
+		content.setMaxWidth(CSSProperties.MaxWidth._840);
+		return content;
+	}
+
+	private FlexLayout createLogoSection() {
 		image = new Image("", "");
 		image.getStyle().set(CSSProperties.BorderRadius.PROPERTY, "100%");
 		image.addClassNames(LumoStyles.Margin.Horizontal.L, LumoStyles.Margin.Bottom.S);
@@ -131,28 +116,42 @@ public class ReportDetails extends ViewFrame implements HasUrlParameter<Long> {
 		image.setWidth("200px");
 
 		balance = new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.MONEY), "", "Current Balance");
-		balance.setReverse(true);
 		balance.setDividerVisible(true);
+		balance.setReverse(true);
 
 		runningDate = new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.CALENDAR), "", "Date Range");
-		runningDate.setReverse(true);
 		runningDate.setDividerVisible(true);
+		runningDate.setReverse(true);
 
 		status = new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.LOCK), "", "Status");
 		status.setReverse(true);
 
-		FlexLayout column = UIUtils.createColumn(balance, runningDate, status);
-		column.getStyle().set(CSSProperties.Flex.PROPERTY, "1");
+		FlexBoxLayout column = new FlexBoxLayout(balance, runningDate, status);
+		column.setFlexDirection(FlexDirection.COLUMN);
 
-		logoSection = UIUtils.createWrappingFlexLayout(Arrays.asList(LumoStyles.Padding.Bottom.L, BoxShadowBorders.BOTTOM), image, column);
+		FlexBoxLayout logoSection = new FlexBoxLayout(image, column);
+		logoSection.addClassName(BoxShadowBorders.BOTTOM);
 		logoSection.setAlignItems(FlexComponent.Alignment.CENTER);
+		logoSection.setFlex("1", column);
+		logoSection.setFlexWrap(FlexWrap.WRAP);
 		logoSection.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
+		logoSection.setPadding(Bottom.L);
+		return logoSection;
 	}
 
-	private void initAccounts() {
-		Integer amount = DummyData.getRandomInt(0, 5000);
+	private Label createHeader(String title) {
+		Label header = UIUtils.createH6Label(title);
+		header.addClassNames(
+				LumoStyles.Margin.Bottom.M,
+				LumoStyles.Margin.Responsive.Horizontal.ML,
+				LumoStyles.Margin.Top.L
+		);
+		return header;
+	}
 
-		accounts = UIUtils.createWrappingFlexLayout(
+	private FlexLayout createAccounts() {
+		Integer amount = DummyData.getRandomInt(0, 5000);
+		return UIUtils.createWrappingFlexLayout(
 				Arrays.asList(LumoStyles.Padding.Bottom.L, BoxShadowBorders.BOTTOM),
 				createLargeListItem(VaadinIcon.PLUS, UIUtils.formatAmount(amount * 0.4), "14 deposits"),
 				createLargeListItem(VaadinIcon.MINUS, UIUtils.formatAmount(amount * 0.6), "9 withdrawals"),
@@ -160,8 +159,8 @@ public class ReportDetails extends ViewFrame implements HasUrlParameter<Long> {
 		);
 	}
 
-	private void initPendingEvents() {
-		pendingEvents = UIUtils.createWrappingFlexLayout(
+	private FlexLayout createPendingEvents() {
+		return UIUtils.createWrappingFlexLayout(
 				Collections.singleton(LumoStyles.Padding.Bottom.XL),
 				createLargeListItem(VaadinIcon.TIMER, UIUtils.formatAmount(DummyData.getRandomInt(0, 50)), "Open"),
 				createLargeListItem(VaadinIcon.CHECK, UIUtils.formatAmount(DummyData.getRandomInt(0, 100)), "Closed"),
@@ -204,10 +203,14 @@ public class ReportDetails extends ViewFrame implements HasUrlParameter<Long> {
 		conf.addSeries(new ListSeries("Withdrawals", 220, 100, 400, 360, 60, 660, 740, 800));
 		conf.addSeries(new ListSeries("Deposits", 400, 300, 0, 440, 480, 400, 0, 0));
 
-		FlexLayout card = UIUtils.createWrappingFlexLayout(Arrays.asList(LumoStyles.BorderRadius.S, LumoStyles.Padding.Uniform.M, LumoStyles.Shadow.S), chart);
-		card.getStyle().set(CSSProperties.BackgroundColor.PROPERTY, LumoStyles.Color.BASE_COLOR);
-		card.getStyle().set(CSSProperties.BoxSizing.PROPERTY, CSSProperties.BoxSizing.BORDER_BOX);
+		FlexBoxLayout card = new FlexBoxLayout(chart);
+		card.setBackgroundColor(LumoStyles.Color.BASE_COLOR);
+		card.setBorderRadius(BorderRadius.S);
+		card.setBoxSizing(BoxSizing.BORDER_BOX);
+		card.setFlexWrap(FlexWrap.WRAP);
 		card.setHeight("400px");
+		card.setPadding(Uniform.M);
+		card.setShadow(Shadow.S);
 		return card;
 	}
 }

@@ -26,13 +26,13 @@ import com.vaadin.starter.responsiveapptemplate.ui.Root;
 import com.vaadin.starter.responsiveapptemplate.ui.components.DetailsDrawer;
 import com.vaadin.starter.responsiveapptemplate.ui.components.ListItem;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.bar.AppBar;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.CSSProperties;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexBoxLayout;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Horizontal;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Right;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Vertical;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
 import com.vaadin.starter.responsiveapptemplate.ui.views.ViewFrame;
-
-import java.util.Arrays;
-import java.util.Collections;
 
 import static com.vaadin.starter.responsiveapptemplate.ui.utils.ViewStyles.GRID_VIEW;
 
@@ -46,28 +46,27 @@ public class VerticalSplitView extends ViewFrame {
 	private Label detailsDrawerTitle;
 
 	public VerticalSplitView() {
-		// Header
 		if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
 			setViewHeader(new AppBar("Personnel"));
 		}
+		setViewContent(createContent());
+	}
 
-		// Grid
-		initGrid();
+	private Component createContent() {
+		grid = createGrid();
 
-		// Wrapper
-		initDetailsDrawer();
+		Div gridWrapper = new Div(grid);
+		gridWrapper.addClassName(GRID_VIEW);
 
-		// Set the content
-		Div gridWrapper = UIUtils.createDiv(Collections.singleton(GRID_VIEW), grid);
+		detailsDrawer = createDetailsDrawer();
 
 		FlexLayout content = UIUtils.createColumn(gridWrapper, detailsDrawer);
 		content.setSizeFull();
-
-		setViewContent(content);
+		return content;
 	}
 
-	private void initGrid() {
-		grid = new Grid<>();
+	private Grid createGrid() {
+		Grid<Person> grid = new Grid<>();
 		grid.setDataProvider(DataProvider.ofCollection(DummyData.getPersons()));
 		grid.setSizeFull();
 
@@ -100,10 +99,12 @@ public class VerticalSplitView extends ViewFrame {
 				showDetails(e.getFirstSelectedItem().get());
 			}
 		});
+
+		return grid;
 	}
 
-	private void initDetailsDrawer() {
-		detailsDrawer = new DetailsDrawer(DetailsDrawer.Position.BOTTOM);
+	private DetailsDrawer createDetailsDrawer() {
+		DetailsDrawer detailsDrawer = new DetailsDrawer(DetailsDrawer.Position.BOTTOM);
 
 		// Header
 		detailsDrawerTitle = UIUtils.createDetailsDrawerHeader("", true, true);
@@ -116,26 +117,19 @@ public class VerticalSplitView extends ViewFrame {
 		Button cancel = UIUtils.createTertiaryButton("Cancel");
 		cancel.addClickListener(e -> detailsDrawer.hide());
 
-		FlexLayout footer = UIUtils.createFlexLayout(Arrays.asList(LumoStyles.Padding.Horizontal.L, LumoStyles.Padding.Vertical.S, LumoStyles.Spacing.Right.S), save, cancel);
-		footer.getStyle().set(CSSProperties.BackgroundColor.PROPERTY, LumoStyles.Color.Contrast._5);
+		FlexBoxLayout footer = new FlexBoxLayout(save, cancel);
+		footer.setBackgroundColor(LumoStyles.Color.Contrast._5);
+		footer.setPadding(Horizontal.L, Vertical.S);
+		footer.setSpacing(Right.S);
 		footer.setWidth("100%");
 		detailsDrawer.setFooter(footer);
-	}
 
-	private void showDetails(Person person) {
-		detailsDrawerTitle.setText(person.getName());
-		detailsDrawer.setContent(createDetails(person));
-		detailsDrawer.show();
+		return detailsDrawer;
 	}
 
 	private FormLayout createDetails(Person person) {
-		FormLayout form = UIUtils.createFormLayout(
-				Arrays.asList(
-						LumoStyles.Padding.Bottom.L,
-						LumoStyles.Padding.Horizontal.L,
-						LumoStyles.Padding.Top.S
-				)
-		);
+		FormLayout form = new FormLayout();
+		form.addClassNames(LumoStyles.Padding.Bottom.L, LumoStyles.Padding.Horizontal.L, LumoStyles.Padding.Top.S);
 
 		form.setResponsiveSteps(
 				new FormLayout.ResponsiveStep("0", 1, FormLayout.ResponsiveStep.LabelsPosition.TOP),
@@ -201,5 +195,11 @@ public class VerticalSplitView extends ViewFrame {
 			badge = UIUtils.createErrorBadge(UIUtils.formatAmount(person.getRandomInteger()));
 		}
 		return badge;
+	}
+
+	private void showDetails(Person person) {
+		detailsDrawerTitle.setText(person.getName());
+		detailsDrawer.setContent(createDetails(person));
+		detailsDrawer.show();
 	}
 }

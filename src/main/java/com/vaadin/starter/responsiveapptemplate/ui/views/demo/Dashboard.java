@@ -6,7 +6,6 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
-import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.router.PageTitle;
@@ -31,11 +30,10 @@ public class Dashboard extends ViewFrame {
 		if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
 			setViewHeader(new AppBar("Dashboard"));
 		}
-
-		setViewContent(createViewport());
+		setViewContent(createContent());
 	}
 
-	private Component createViewport() {
+	private Component createContent() {
 		Component progressHeader = createHeader(VaadinIcon.CHECK, "Progress");
 		Component progressChart = createProgressCharts();
 
@@ -44,16 +42,18 @@ public class Dashboard extends ViewFrame {
 
 		Component bookmarks = createBookmarks();
 		Component recentItems = createRecentItems();
-		FlexLayout items = new FlexLayout(bookmarks, recentItems);
+		FlexBoxLayout items = new FlexBoxLayout(bookmarks, recentItems);
 		items.addClassName(CLASS_NAME + "__bookmarks-recent-items");
+		items.setSpacing(Bottom.L);
 
-		FlexBoxLayout viewport = new FlexBoxLayout(progressHeader, progressChart, salesHeader, salesChart, items);
-		viewport.addClassName(CLASS_NAME);
-		viewport.setFlexDirection(FlexDirection.COLUMN);
-		viewport.setMargin(Horizontal.AUTO);
-		viewport.setMaxWidth(CSSProperties.MaxWidth._1024);
-		viewport.setPadding(Bottom.L, Horizontal.RESPONSIVE_L);
-		return viewport;
+		FlexBoxLayout content = new FlexBoxLayout(progressHeader, progressChart, salesHeader, salesChart, items);
+		content.addClassName(CLASS_NAME);
+		content.setFlexDirection(FlexDirection.COLUMN);
+		content.setMargin(Horizontal.AUTO, Vertical.RESPONSIVE_L);
+		content.setMaxWidth(CSSProperties.MaxWidth._1024);
+		content.setPadding(Horizontal.RESPONSIVE_L);
+		content.setSpacing(Bottom.L);
+		return content;
 	}
 
 	private Component createHeader(VaadinIcon icon, String title) {
@@ -62,7 +62,7 @@ public class Dashboard extends ViewFrame {
 				UIUtils.createH3Label(title)
 		);
 		header.setAlignItems(FlexComponent.Alignment.CENTER);
-		header.setMargin(Bottom.L, Horizontal.RESPONSIVE_L, Top.XL);
+		header.setMargin(Horizontal.RESPONSIVE_L, Top.S);
 		header.setSpacing(Right.M);
 		return header;
 	}
@@ -114,13 +114,19 @@ public class Dashboard extends ViewFrame {
 	private Component createBookmarks() {
 		Component header = createHeader(VaadinIcon.BOOKMARK, "Bookmarks");
 		Component card = createTabbedList();
-		return new Div(header, card);
+
+		Div section = new Div(header, card);
+		section.addClassName(LumoStyles.Spacing.Bottom.L);
+		return section;
 	}
 
 	private Component createRecentItems() {
 		Component header = createHeader(VaadinIcon.TIME_BACKWARD, "Recent Items");
 		Component card = createTabbedList();
-		return new Div(header, card);
+
+		Div section = new Div(header, card);
+		section.addClassName(LumoStyles.Spacing.Bottom.L);
+		return section;
 	}
 
 	private Component createTabbedList() {

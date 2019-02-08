@@ -8,7 +8,6 @@ import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
-import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.page.Viewport;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
@@ -23,7 +22,7 @@ import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.drawer.
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.drawer.NaviItem;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexBoxLayout;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexDirection;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.CSSProperties;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.Overflow;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
 import com.vaadin.starter.responsiveapptemplate.ui.views.Default;
@@ -51,16 +50,18 @@ public class Root extends FlexBoxLayout
 	private static final String CLASS_NAME = "root";
 
 	private Div appHeaderOuter;
+
+	private FlexBoxLayout row;
+	private NaviDrawer naviDrawer;
+	private FlexBoxLayout column;
+
 	private Div appHeaderInner;
+	private FlexBoxLayout viewContainer;
 	private Div appFooterInner;
+
 	private Div appFooterOuter;
 
-	private FlexLayout row;
-	private FlexLayout column;
-
-	private NaviDrawer naviDrawer;
-	private TabBar appInnerHeader;
-	private FlexLayout viewContainer;
+	private TabBar tabBar;
 
 	public Root() {
 		VaadinSession.getCurrent().setErrorHandler((ErrorHandler) errorEvent -> {
@@ -69,20 +70,20 @@ public class Root extends FlexBoxLayout
 		});
 
 		addClassName(CLASS_NAME);
-		setFlexDirection(FlexDirection.COLUMN);
 		setBackgroundColor(LumoStyles.Color.Contrast._5);
+		setFlexDirection(FlexDirection.COLUMN);
 		setSizeFull();
 
-		// Initialise the UI building blocks.
+		// Initialise the UI building blocks
 		initStructure();
 
-		// Populate the navigation drawer.
+		// Populate the navigation drawer
 		initNaviItems();
 
-		// Configure the headers and footers (optional).
+		// Configure the headers and footers (optional)
 		initHeadersAndFooters();
 
-		if (UIConfig.getShowcase().equals(UIConfig.Showcase.DEMO)) {
+		if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.TABS)) {
 			UIUtils.showNotification("Shift-click opens new tab");
 		}
 	}
@@ -93,13 +94,17 @@ public class Root extends FlexBoxLayout
 	private void initStructure() {
 		naviDrawer = AppTemplateUI.getNaviDrawer();
 
-		initViewContainer();
+		viewContainer = new FlexBoxLayout();
+		viewContainer.addClassName(CLASS_NAME + "__view-container");
 
-		column = UIUtils.createColumn(Collections.singleton(CLASS_NAME + "__column"), viewContainer);
-		column.getStyle().set(CSSProperties.Overflow.PROPERTY, CSSProperties.Overflow.HIDDEN);
+		column = new FlexBoxLayout(viewContainer);
+		column.addClassName(CLASS_NAME + "__column");
+		column.setFlexDirection(FlexDirection.COLUMN);
 		column.setFlexGrow(1, viewContainer);
+		column.setOverflow(Overflow.HIDDEN);
 
-		row = UIUtils.createFlexLayout(Collections.singleton(CLASS_NAME + "__row"), naviDrawer, column);
+		row = new FlexBoxLayout(naviDrawer, column);
+		row.addClassName(CLASS_NAME + "__row");
 		row.setFlexGrow(1, column);
 
 		add(row);
@@ -112,7 +117,7 @@ public class Root extends FlexBoxLayout
 	private void initNaviItems() {
 		UIConfig.Showcase showcase = UIConfig.getShowcase();
 
-		// Initialise the navigation items based on the showcase.
+		// Initialise the navigation items based on the showcase
 		if (showcase.equals(UIConfig.Showcase.DEMO)) {
 			naviDrawer.addNaviItem(VaadinIcon.GRID_BIG, "Dashboard", Dashboard.class);
 			naviDrawer.addNaviItem(VaadinIcon.FILE_TEXT, "Reports", Reports.class);
@@ -156,8 +161,8 @@ public class Root extends FlexBoxLayout
 		// setAppFooterInner(new Label("Inner footer"));
 
 		if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.TABS)) {
-			appInnerHeader = new TabBar();
-			setAppHeaderInner(appInnerHeader);
+			tabBar = new TabBar();
+			setAppHeaderInner(tabBar);
 
 			for (NaviItem item : naviDrawer.getNaviItems()) {
 				((ClickNotifier<Div>) item).addClickListener(event -> naviItemClicked(item, event));
@@ -169,17 +174,17 @@ public class Root extends FlexBoxLayout
 	 * Handles the click event for navigation items when in NaviMode.TABS.
 	 */
 	private void naviItemClicked(NaviItem item, ClickEvent<Div> event) {
-		// Shift-click to add a new tab.
+		// Shift-click to add a new tab
 		if (event.getButton() == 0 && event.isShiftKey()) {
-			appInnerHeader.setSelectedTab(appInnerHeader.addClosableNaviTab(item.getText(), item.getNavigationTarget()));
+			tabBar.setSelectedTab(tabBar.addClosableNaviTab(item.getText(), item.getNavigationTarget()));
 		}
 
-		// Update the current tab, or create the first one.
+		// Update the current tab, or create the first one
 		else if (event.getButton() == 0) {
-			if (appInnerHeader.getTabCount() > 0) {
-				appInnerHeader.updateSelectedTab(item.getText(), item.getNavigationTarget());
+			if (tabBar.getTabCount() > 0) {
+				tabBar.updateSelectedTab(item.getText(), item.getNavigationTarget());
 			} else {
-				appInnerHeader.addClosableNaviTab(item.getText(), item.getNavigationTarget());
+				tabBar.addClosableNaviTab(item.getText(), item.getNavigationTarget());
 			}
 		}
 	}
@@ -202,10 +207,6 @@ public class Root extends FlexBoxLayout
 
 		appHeaderInner.removeAll();
 		appHeaderInner.add(components);
-	}
-
-	private void initViewContainer() {
-		viewContainer = UIUtils.createFlexLayout(Collections.singleton(CLASS_NAME + "__view-container"));
 	}
 
 	private void setAppFooterInner(Component... components) {

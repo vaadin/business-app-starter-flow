@@ -311,11 +311,11 @@ public class DummyData {
 	}
 
 	public static Image getLogo() {
-		return new Image(UIUtils.IMG_PATH + "logo-" + DummyData.getRandomInt(1, 40) + ".png", "");
+		return new Image(getImageSource(), "");
 	}
 
 	public static String getImageSource() {
-		return UIUtils.IMG_PATH + "sample-logo1.jpg";
+		return UIUtils.IMG_PATH + "logo-" + DummyData.getRandomInt(1, 40) + ".png";
 	}
 
 

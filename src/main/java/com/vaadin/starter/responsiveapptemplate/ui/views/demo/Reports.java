@@ -15,6 +15,8 @@ import com.vaadin.starter.responsiveapptemplate.backend.UIConfig;
 import com.vaadin.starter.responsiveapptemplate.ui.Root;
 import com.vaadin.starter.responsiveapptemplate.ui.components.ListItem;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.bar.AppBar;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.BoxSizing;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexBoxLayout;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
 import com.vaadin.starter.responsiveapptemplate.ui.views.ViewFrame;
 
@@ -27,21 +29,24 @@ public class Reports extends ViewFrame {
 	private Grid<Report> grid;
 
 	public Reports() {
-		// Header
 		if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
 			setViewHeader(new AppBar("Reports"));
 		}
-
-		// Grid
-		initGrid();
-
-		// Set the content
-		setViewContent(grid);
-		getViewContent().addClassName(GRID_VIEW);
+		setViewContent(createContent());
 	}
 
-	private void initGrid() {
-		grid = new Grid<>();
+	private Component createContent() {
+		grid = createGrid();
+
+		FlexBoxLayout content = new FlexBoxLayout(grid);
+		content.addClassName(GRID_VIEW);
+		content.setBoxSizing(BoxSizing.BORDER_BOX);
+		content.setSizeFull();
+		return content;
+	}
+
+	private Grid createGrid() {
+		Grid<Report> grid = new Grid<>();
 		grid.setDataProvider(DataProvider.ofCollection(DummyData.getReports()));
 		grid.setSizeFull();
 
@@ -64,6 +69,8 @@ public class Reports extends ViewFrame {
 				.setFlexGrow(0);
 
 		grid.addSelectionListener(event -> event.getFirstSelectedItem().ifPresent(this::viewDetails));
+
+		return grid;
 	}
 
 	private Component createReportInfo(Report report) {
