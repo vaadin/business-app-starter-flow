@@ -19,6 +19,8 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.textfield.TextFieldVariant;
 import com.vaadin.starter.responsiveapptemplate.backend.*;
 import com.vaadin.starter.responsiveapptemplate.ui.components.DataSeriesItemWithRadius;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexBoxLayout;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.Theme;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -363,16 +365,15 @@ public class UIUtils {
 	/* === MISC === */
 
 	public static Component createInitials(String initials) {
-		FlexLayout layout = UIUtils.createFlexLayout(Collections.singleton("initials"), new Text(initials));
+		FlexBoxLayout layout = new FlexBoxLayout(new Text(initials));
+		layout.addClassNames("initials", FontSize.S.getClassName());
 
 		layout.setAlignItems(FlexComponent.Alignment.CENTER);
 		layout.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
+		layout.setTheme(Theme.DARK);
 
-		layout.getElement().setAttribute(LumoStyles.THEME, LumoStyles.DARK);
-		layout.addClassName(FontSize.S.getClassName());
 		layout.setHeight(LumoStyles.Size.M);
 		layout.setWidth(LumoStyles.Size.M);
-
 		return layout;
 	}
 
@@ -382,6 +383,12 @@ public class UIUtils {
 
 	public static Label createAmountLabel(double amount) {
 		Label label = UIUtils.createH5Label(UIUtils.formatAmount(amount));
+		label.addClassName(LumoStyles.FontFamily.MONOSPACE);
+		return label;
+	}
+
+	public static Label createUnitsLabel(int units) {
+		Label label = new Label(UIUtils.formatUnits(units));
 		label.addClassName(LumoStyles.FontFamily.MONOSPACE);
 		return label;
 	}

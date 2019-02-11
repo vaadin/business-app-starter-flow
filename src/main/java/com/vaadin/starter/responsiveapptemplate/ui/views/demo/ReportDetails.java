@@ -170,6 +170,7 @@ public class ReportDetails extends ViewFrame implements HasUrlParameter<Long> {
 	private ListItem createLargeListItem(VaadinIcon icon, String primary, String secondary) {
 		ListItem item = new ListItem(new Icon(icon), primary, secondary);
 		item.addClassName(CLASS_NAME + "__list-item");
+		item.addPrimaryClassNames(LumoStyles.Header.H2);
 
 		if (icon.equals(VaadinIcon.CHECK) || icon.equals(VaadinIcon.FLAG_CHECKERED)) {
 			item.addClassName(TextColor.SUCCESS.getClassName());
@@ -180,8 +181,6 @@ public class ReportDetails extends ViewFrame implements HasUrlParameter<Long> {
 		} else {
 			item.addClassName(TextColor.SECONDARY.getClassName());
 		}
-
-		item.addPrimaryClassNames(LumoStyles.Header.H2);
 
 		return item;
 	}

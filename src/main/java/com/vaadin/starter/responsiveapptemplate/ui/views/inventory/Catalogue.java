@@ -27,13 +27,13 @@ import com.vaadin.starter.responsiveapptemplate.ui.Root;
 import com.vaadin.starter.responsiveapptemplate.ui.components.DetailsDrawer;
 import com.vaadin.starter.responsiveapptemplate.ui.components.ListItem;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.bar.AppBar;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.CSSProperties;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexBoxLayout;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Horizontal;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Right;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Vertical;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
 import com.vaadin.starter.responsiveapptemplate.ui.views.ViewFrame;
-
-import java.util.Arrays;
-import java.util.Collections;
 
 import static com.vaadin.starter.responsiveapptemplate.ui.utils.ViewStyles.GRID_VIEW;
 
@@ -49,40 +49,39 @@ public class Catalogue extends ViewFrame {
 	private DetailsDrawer detailsDrawer;
 
 	public Catalogue() {
-		// Header
 		if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-			initAppBar();
+			appBar = createAppBar();
+			setViewHeader(appBar);
 		}
-
-		// Grid
-		initGrid();
-
-		// Details drawer
-		initDetailsDrawer();
-
-		// Set the content
-		Div gridWrapper = UIUtils.createDiv(Collections.singleton(GRID_VIEW), grid);
-
-		FlexLayout content = new FlexLayout(gridWrapper, detailsDrawer);
-		content.setSizeFull();
-
-		setViewContent(content);
+		setViewContent(createContent());
 	}
 
-	private void initAppBar() {
-		appBar = new AppBar("Catalogue");
+	private AppBar createAppBar() {
+		AppBar appBar = new AppBar("Catalogue");
 		appBar.addActionItem(VaadinIcon.SEARCH).addClickListener(e -> appBar.searchModeOn());
 		appBar.addSearchListener(e -> filter(e));
 		appBar.setSearchPlaceholder("Search by item name, description and vendor");
-		setViewHeader(appBar);
+		return appBar;
 	}
 
-	private void initGrid() {
-		dataProvider = DataProvider.ofCollection(DummyData.getItems());
+	private Component createContent() {
+		grid = createGrid();
+		Div gridWrapper = new Div(grid);
+		gridWrapper.addClassName(GRID_VIEW);
 
-		grid = new Grid<>();
+		detailsDrawer = createDetailsDrawer();
+
+		FlexLayout content = new FlexLayout(gridWrapper, detailsDrawer);
+		content.setHeight("100%");
+		return content;
+	}
+
+	private Grid createGrid() {
+		Grid<Item> grid = new Grid<>();
+		grid.addSelectionListener(event -> event.getFirstSelectedItem().ifPresent(this::showDetails));
+		dataProvider = DataProvider.ofCollection(DummyData.getItems());
 		grid.setDataProvider(dataProvider);
-		grid.setSizeFull();
+		grid.setHeight("100%");
 
 		grid.addColumn(new ComponentRenderer<>(UIUtils::createBadge))
 				.setHeader("Category")
@@ -98,22 +97,18 @@ public class Catalogue extends ViewFrame {
 				.setFlexGrow(1);
 		grid.addColumn(new ComponentRenderer<>(this::createPrice))
 				.setHeader(UIUtils.createRightAlignedDiv("Unit Price ($)"))
-				.setWidth(UIUtils.COLUMN_WIDTH_M)
+				.setWidth(UIUtils.COLUMN_WIDTH_S)
 				.setFlexGrow(0);
 		grid.addColumn(new ComponentRenderer<>(this::createStock))
 				.setHeader(UIUtils.createRightAlignedDiv("In Stock"))
-				.setWidth(UIUtils.COLUMN_WIDTH_M)
+				.setWidth(UIUtils.COLUMN_WIDTH_S)
 				.setFlexGrow(0);
 		grid.addColumn(new ComponentRenderer<>(this::createSold))
 				.setHeader(UIUtils.createRightAlignedDiv("Units Sold"))
-				.setWidth(UIUtils.COLUMN_WIDTH_M)
+				.setWidth(UIUtils.COLUMN_WIDTH_S)
 				.setFlexGrow(0);
 
-		grid.addSelectionListener(e -> {
-			if (e.getFirstSelectedItem().isPresent()) {
-				showDetails(e.getFirstSelectedItem().get());
-			}
-		});
+		return grid;
 	}
 
 	private void filter(HasValue.ValueChangeEvent event) {
@@ -140,15 +135,15 @@ public class Catalogue extends ViewFrame {
 	}
 
 	private Component createStock(Item item) {
-		return UIUtils.createRightAlignedDiv(UIUtils.formatUnits(item.getStock()));
+		return UIUtils.createRightAlignedDiv(UIUtils.createUnitsLabel(item.getStock()));
 	}
 
 	private Component createSold(Item item) {
-		return UIUtils.createRightAlignedDiv(UIUtils.formatUnits(item.getSold()));
+		return UIUtils.createRightAlignedDiv(UIUtils.createUnitsLabel(item.getSold()));
 	}
 
-	private void initDetailsDrawer() {
-		detailsDrawer = new DetailsDrawer(DetailsDrawer.Position.RIGHT);
+	private DetailsDrawer createDetailsDrawer() {
+		DetailsDrawer detailsDrawer = new DetailsDrawer(DetailsDrawer.Position.RIGHT);
 
 		// Footer
 		Button save = UIUtils.createPrimaryButton("Save");
@@ -161,11 +156,14 @@ public class Catalogue extends ViewFrame {
 		delete.addClassName(LumoStyles.Margin.Left.AUTO);
 		delete.addClickListener(e -> Notification.show("Not implemented yet.", 3000, Notification.Position.BOTTOM_CENTER));
 
-		FlexLayout footer = UIUtils.createFlexLayout(Arrays.asList(LumoStyles.Padding.Horizontal.L, LumoStyles.Padding.Vertical.S, LumoStyles.Spacing.Right.S), save, cancel, delete);
-		footer.getStyle().set(CSSProperties.BackgroundColor.PROPERTY, LumoStyles.Color.Contrast._5);
+		FlexBoxLayout footer = new FlexBoxLayout(save, cancel);
+		footer.setBackgroundColor(LumoStyles.Color.Contrast._5);
+		footer.setPadding(Horizontal.L, Vertical.S);
+		footer.setSpacing(Right.S);
 		footer.setWidth("100%");
-
 		detailsDrawer.setFooter(footer);
+
+		return detailsDrawer;
 	}
 
 	private void showDetails(Item item) {
@@ -174,6 +172,13 @@ public class Catalogue extends ViewFrame {
 	}
 
 	private Component createDetails(Item item) {
+		FormLayout form = new FormLayout();
+		form.addClassNames(LumoStyles.Padding.Bottom.L, LumoStyles.Padding.Horizontal.L);
+
+		form.setResponsiveSteps(
+				new FormLayout.ResponsiveStep("0", 1, FormLayout.ResponsiveStep.LabelsPosition.TOP)
+		);
+
 		Label title = UIUtils.createDetailsDrawerHeader("Edit Item", false, false);
 
 		RadioButtonGroup<Item.Category> category = new RadioButtonGroup<>();
@@ -207,11 +212,8 @@ public class Catalogue extends ViewFrame {
 		sold.setWidth("100%");
 
 		// Add it all together.
-		FormLayout form = UIUtils.createFormLayout(Arrays.asList(LumoStyles.Padding.Bottom.L, LumoStyles.Padding.Horizontal.L));
-		form.setResponsiveSteps(new FormLayout.ResponsiveStep("0", 1, FormLayout.ResponsiveStep.LabelsPosition.TOP));
-
 		form.add(title);
-		form.addFormItem(category, "Category").getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN);
+		form.addFormItem(category, "Category");
 		form.addFormItem(name, "Name");
 		form.addFormItem(desc, "Description");
 		form.addFormItem(vendor, "Vendor");
@@ -221,5 +223,4 @@ public class Catalogue extends ViewFrame {
 
 		return form;
 	}
-
 }

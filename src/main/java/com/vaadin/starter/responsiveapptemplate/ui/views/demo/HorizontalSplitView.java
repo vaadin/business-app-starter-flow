@@ -123,7 +123,12 @@ public class HorizontalSplitView extends ViewFrame {
 
 	private FormLayout createDetails(Person person) {
 		FormLayout form = new FormLayout();
-		form.addClassNames(LumoStyles.Padding.Bottom.L, LumoStyles.Padding.Horizontal.L, LumoStyles.Padding.Top.S);
+
+		form.addClassNames(
+				LumoStyles.Padding.Bottom.L,
+				LumoStyles.Padding.Horizontal.L,
+				LumoStyles.Padding.Top.S
+		);
 
 		form.setResponsiveSteps(
 				new FormLayout.ResponsiveStep("0", 1, FormLayout.ResponsiveStep.LabelsPosition.TOP),

@@ -113,12 +113,6 @@ public class Payments extends ViewFrame {
 		return grid;
 	}
 
-	private void filter() {
-		if (appBar != null) {
-			dataProvider.setFilterByValue(Payment::getStatus, Payment.Status.valueOf(appBar.getSelectedTab().getLabel().toUpperCase()));
-		}
-	}
-
 	private Component createFromInfo(Payment payment) {
 		ListItem item = new ListItem(payment.getFrom(), payment.getFromIBAN());
 		item.setHorizontalPadding(false);
@@ -194,4 +188,9 @@ public class Payments extends ViewFrame {
 		return details;
 	}
 
+	private void filter() {
+		if (appBar != null) {
+			dataProvider.setFilterByValue(Payment::getStatus, Payment.Status.valueOf(appBar.getSelectedTab().getLabel().toUpperCase()));
+		}
+	}
 }

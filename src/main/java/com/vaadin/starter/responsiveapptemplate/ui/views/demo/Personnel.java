@@ -92,12 +92,6 @@ public class Personnel extends ViewFrame {
 		return grid;
 	}
 
-	private void filter() {
-		if (appBar != null) {
-			dataProvider.setFilterByValue(Person::getRole, Person.Role.valueOf(appBar.getSelectedTab().getLabel().toUpperCase()));
-		}
-	}
-
 	private Component createUserInfo(Person person) {
 		ListItem item = new ListItem(UIUtils.createInitials(person.getInitials()), person.getName(), person.getEmail());
 		item.setHorizontalPadding(false);
@@ -122,5 +116,11 @@ public class Personnel extends ViewFrame {
 			badge = UIUtils.createErrorBadge(UIUtils.formatAmount(person.getRandomInteger()));
 		}
 		return badge;
+	}
+
+	private void filter() {
+		if (appBar != null) {
+			dataProvider.setFilterByValue(Person::getRole, Person.Role.valueOf(appBar.getSelectedTab().getLabel().toUpperCase()));
+		}
 	}
 }
