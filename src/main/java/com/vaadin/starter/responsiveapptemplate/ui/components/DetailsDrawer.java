@@ -4,17 +4,16 @@ import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.HasStyle;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
-
-import java.util.Collections;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexBoxLayout;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexDirection;
 
 public class DetailsDrawer extends Composite<FlexLayout> implements HasStyle {
 
 	private static final String CLASS_NAME = "details-drawer";
 
-	private final FlexLayout header;
-	private final FlexLayout content;
-	private final FlexLayout footer;
+	private final FlexBoxLayout header;
+	private final FlexBoxLayout content;
+	private final FlexBoxLayout footer;
 
 	public enum Position {
 		RIGHT, BOTTOM
@@ -23,9 +22,15 @@ public class DetailsDrawer extends Composite<FlexLayout> implements HasStyle {
 	public DetailsDrawer(Position position, Component... components) {
 		addClassName(CLASS_NAME);
 
-		header = UIUtils.createFlexLayout(Collections.singleton(CLASS_NAME + "__header"));
-		content = UIUtils.createColumn(Collections.singleton(CLASS_NAME + "__content"), components);
-		footer = UIUtils.createFlexLayout(Collections.singleton(CLASS_NAME + "__footer"));
+		header = new FlexBoxLayout();
+		header.addClassName(CLASS_NAME + "__header");
+
+		content = new FlexBoxLayout();
+		content.addClassName(CLASS_NAME + "__content");
+		content.setFlexDirection(FlexDirection.COLUMN);
+
+		footer = new FlexBoxLayout();
+		footer.addClassName(CLASS_NAME + "__footer");
 
 		getContent().add(header, content, footer);
 
@@ -37,7 +42,7 @@ public class DetailsDrawer extends Composite<FlexLayout> implements HasStyle {
 		this.header.add(components);
 	}
 
-	public FlexLayout getHeader() {
+	public FlexBoxLayout getHeader() {
 		return this.header;
 	}
 

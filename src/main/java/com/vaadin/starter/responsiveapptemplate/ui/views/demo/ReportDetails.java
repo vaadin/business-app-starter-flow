@@ -43,14 +43,14 @@ public class ReportDetails extends ViewFrame implements HasUrlParameter<Long> {
 
 	private AppBar appBar;
 
-	private FlexLayout logoSection;
+	private FlexBoxLayout logoSection;
 	private Image image;
 	private ListItem balance;
 	private ListItem runningDate;
 	private ListItem status;
 
 	private FlexLayout accounts;
-	private FlexLayout pendingEvents;
+	private FlexLayout events;
 
 	public ReportDetails() {
 		if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
@@ -69,7 +69,6 @@ public class ReportDetails extends ViewFrame implements HasUrlParameter<Long> {
 		}
 
 		image.setSrc(report.getSource());
-
 		balance.setPrimaryText(UIUtils.formatAmount(report.getBalance()));
 		runningDate.setPrimaryText(UIUtils.formatDate(report.getStartDate()) + " - " + UIUtils.formatDate(report.getEndDate()));
 
@@ -96,12 +95,12 @@ public class ReportDetails extends ViewFrame implements HasUrlParameter<Long> {
 		Label accountsHeader = createHeader("Accounts (USD)");
 		accounts = createAccounts();
 
-		Label pendingEventsHeader = createHeader("Pending Events");
-		pendingEvents = createPendingEvents();
+		Label eventsHeader = createHeader("Pending Events");
+		events = createPendingEvents();
 
-		Component transactionsChart = createTransactionsChart();
+		Component chart = createTransactionsChart();
 
-		FlexBoxLayout content = new FlexBoxLayout(logoSection, accountsHeader, accounts, pendingEventsHeader, pendingEvents, transactionsChart);
+		FlexBoxLayout content = new FlexBoxLayout(logoSection, accountsHeader, accounts, eventsHeader, events, chart);
 		content.setFlexDirection(FlexDirection.COLUMN);
 		content.setMargin(Horizontal.AUTO, Vertical.RESPONSIVE_L);
 		content.setMaxWidth(CSSProperties.MaxWidth._840);
@@ -109,7 +108,7 @@ public class ReportDetails extends ViewFrame implements HasUrlParameter<Long> {
 		return content;
 	}
 
-	private FlexLayout createLogoSection() {
+	private FlexBoxLayout createLogoSection() {
 		image = new Image("", "");
 		image.getStyle().set(CSSProperties.BorderRadius.PROPERTY, "100%");
 		image.addClassNames(LumoStyles.Margin.Horizontal.L, LumoStyles.Margin.Bottom.S);
@@ -127,17 +126,16 @@ public class ReportDetails extends ViewFrame implements HasUrlParameter<Long> {
 		status = new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.LOCK), "", "Status");
 		status.setReverse(true);
 
-		FlexBoxLayout column = new FlexBoxLayout(balance, runningDate, status);
-		column.setFlexDirection(FlexDirection.COLUMN);
+		FlexLayout listItems = UIUtils.createColumn(balance, runningDate, status);
 
-		FlexBoxLayout logoSection = new FlexBoxLayout(image, column);
-		logoSection.addClassName(BoxShadowBorders.BOTTOM);
-		logoSection.setAlignItems(FlexComponent.Alignment.CENTER);
-		logoSection.setFlex("1", column);
-		logoSection.setFlexWrap(FlexWrap.WRAP);
-		logoSection.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
-		logoSection.setPadding(Bottom.L);
-		return logoSection;
+		FlexBoxLayout section = new FlexBoxLayout(image, listItems);
+		section.addClassName(BoxShadowBorders.BOTTOM);
+		section.setAlignItems(FlexComponent.Alignment.CENTER);
+		section.setFlex("1", listItems);
+		section.setFlexWrap(FlexWrap.WRAP);
+		section.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
+		section.setPadding(Bottom.L);
+		return section;
 	}
 
 	private Label createHeader(String title) {
@@ -173,14 +171,14 @@ public class ReportDetails extends ViewFrame implements HasUrlParameter<Long> {
 		ListItem item = new ListItem(new Icon(icon), primary, secondary);
 		item.addClassName(CLASS_NAME + "__list-item");
 
-		if (icon.equals(VaadinIcon.TIMER)) {
-			item.addClassName(TextColor.SECONDARY.getClassName());
-
-		} else if (icon.equals(VaadinIcon.CHECK) || icon.equals(VaadinIcon.FLAG_CHECKERED)) {
+		if (icon.equals(VaadinIcon.CHECK) || icon.equals(VaadinIcon.FLAG_CHECKERED)) {
 			item.addClassName(TextColor.SUCCESS.getClassName());
 
 		} else if (icon.equals(VaadinIcon.BAN)) {
 			item.addClassName(TextColor.ERROR.getClassName());
+
+		} else {
+			item.addClassName(TextColor.SECONDARY.getClassName());
 		}
 
 		item.addPrimaryClassNames(LumoStyles.Header.H2);

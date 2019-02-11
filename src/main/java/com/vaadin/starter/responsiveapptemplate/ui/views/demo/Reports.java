@@ -43,6 +43,7 @@ public class Reports extends ViewFrame {
 
 	private Grid createGrid() {
 		Grid<Report> grid = new Grid<>();
+		grid.addSelectionListener(event -> event.getFirstSelectedItem().ifPresent(this::viewDetails));
 		grid.setDataProvider(DataProvider.ofCollection(DummyData.getReports()));
 		grid.setHeight("100%");
 
@@ -63,8 +64,6 @@ public class Reports extends ViewFrame {
 				.setHeader(UIUtils.createRightAlignedDiv("Balance ($)"))
 				.setWidth("160px")
 				.setFlexGrow(0);
-
-		grid.addSelectionListener(event -> event.getFirstSelectedItem().ifPresent(this::viewDetails));
 
 		return grid;
 	}

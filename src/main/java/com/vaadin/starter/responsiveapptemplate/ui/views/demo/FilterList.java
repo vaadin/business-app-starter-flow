@@ -44,8 +44,6 @@ import java.util.Collections;
 @PageTitle("Filter list")
 public class FilterList extends ViewFrame {
 
-	private String CLASS_NAME = "filter-list";
-
 	private Div filterArea;
 	private FlexLayout filterHeader;
 	private Button toggleButton;
@@ -55,8 +53,6 @@ public class FilterList extends ViewFrame {
 	private Grid<Person> grid;
 
 	public FilterList() {
-		addClassName(CLASS_NAME);
-
 		if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
 			setViewHeader(new AppBar("Statistics"));
 		}

@@ -70,6 +70,7 @@ public class VerticalSplitView extends ViewFrame {
 
 	private Grid createGrid() {
 		Grid<Person> grid = new Grid<>();
+		grid.addSelectionListener(event -> event.getFirstSelectedItem().ifPresent(this::showDetails));
 		grid.setDataProvider(DataProvider.ofCollection(DummyData.getPersons()));
 		grid.setHeight("100%");
 
@@ -96,12 +97,6 @@ public class VerticalSplitView extends ViewFrame {
 				.setSortable(true)
 				.setWidth(UIUtils.COLUMN_WIDTH_M)
 				.setFlexGrow(0);
-
-		grid.addSelectionListener(e -> {
-			if (e.getFirstSelectedItem().isPresent()) {
-				showDetails(e.getFirstSelectedItem().get());
-			}
-		});
 
 		return grid;
 	}

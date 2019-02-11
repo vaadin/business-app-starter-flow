@@ -3,6 +3,7 @@ package com.vaadin.starter.responsiveapptemplate.ui.views.finance;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.data.provider.DataProvider;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
@@ -33,21 +34,22 @@ public class Accounts extends ViewFrame implements RouterLayout {
 	private Grid<BankAccount> grid;
 
 	public Accounts() {
-		// View header
 		if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
 			setViewHeader(new AppBar("Accounts"));
 		}
-
-		// Grid
-		initGrid();
-
-		// Set the content
-		setViewContent(grid);
-		getViewContent().addClassName(GRID_VIEW);
+		setViewContent(createContent());
 	}
 
-	private void initGrid() {
-		grid = new Grid<>();
+	private Component createContent() {
+		grid = createGrid();
+		Div content = new Div(grid);
+		content.addClassName(GRID_VIEW);
+		return content;
+	}
+
+	private Grid createGrid() {
+		Grid<BankAccount> grid = new Grid<>();
+		grid.addSelectionListener(event -> event.getFirstSelectedItem().ifPresent(this::viewDetails));
 		grid.setDataProvider(DataProvider.ofCollection(DummyData.getBankAccounts()));
 		grid.setSizeFull();
 
@@ -73,7 +75,7 @@ public class Accounts extends ViewFrame implements RouterLayout {
 				.setHeader("Updated")
 				.setWidth(UIUtils.COLUMN_WIDTH_M);
 
-		grid.addSelectionListener(event -> event.getFirstSelectedItem().ifPresent(this::viewDetails));
+		return grid;
 	}
 
 	private Component createBankInfo(BankAccount bankAccount) {

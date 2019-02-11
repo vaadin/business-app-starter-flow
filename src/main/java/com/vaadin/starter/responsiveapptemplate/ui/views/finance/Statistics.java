@@ -17,11 +17,10 @@ import com.vaadin.starter.responsiveapptemplate.backend.UIConfig;
 import com.vaadin.starter.responsiveapptemplate.ui.Root;
 import com.vaadin.starter.responsiveapptemplate.ui.components.ListItem;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.bar.AppBar;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.*;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.size.*;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.*;
 import com.vaadin.starter.responsiveapptemplate.ui.views.ViewFrame;
-
-import java.util.Arrays;
-import java.util.Collections;
 
 @Route(value = "statistics", layout = Root.class)
 @PageTitle("Statistics")
@@ -33,60 +32,59 @@ public class Statistics extends ViewFrame {
 		if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
 			setViewHeader(new AppBar("Statistics"));
 		}
-
-		setViewContent(createViewport());
+		setViewContent(createContent());
 	}
 
-	private Component createViewport() {
-		Div viewport = UIUtils.createDiv(
-				Arrays.asList(
-						CLASS_NAME,
-						LumoStyles.Margin.Horizontal.AUTO,
-						LumoStyles.Padding.Bottom.L,
-						LumoStyles.Padding.Responsive.Horizontal.ML
-				),
-				createHeader(VaadinIcon.CREDIT_CARD, "Payments"),
-				createProgressCharts(),
-				createHeader(VaadinIcon.MONEY_EXCHANGE, "Transactions"),
-				UIUtils.createSalesChart("2018", "Number of Processed Transactions"),
-				UIUtils.createFlexLayout(
-						Collections.singleton(CLASS_NAME + "__bookmarks-recent-items"),
-						createReports(),
-						createLogs()
-				)
-		);
-		viewport.getStyle().set(CSSProperties.MaxWidth.PROPERTY, CSSProperties.MaxWidth._1024);
-		return viewport;
+	private Component createContent() {
+		Component paymentsHeader = createHeader(VaadinIcon.CREDIT_CARD, "Payments");
+		Component paymentsCharts = createPaymentsCharts();
+
+		Component transactionsHeader = createHeader(VaadinIcon.MONEY_EXCHANGE, "Transactions");
+		Component transactionsChart = UIUtils.createSalesChart("2018", "Number of Processed Transactions");
+
+		Component reports = createReports();
+		Component logs = createLogs();
+		FlexBoxLayout items = new FlexBoxLayout(reports, logs);
+		items.addClassName(CLASS_NAME + "__bookmarks-recent-items");
+		items.setSpacing(Bottom.L);
+
+		FlexBoxLayout content = new FlexBoxLayout(paymentsHeader, paymentsCharts, transactionsHeader, transactionsChart, items);
+		content.setFlexDirection(FlexDirection.COLUMN);
+		content.setMargin(Horizontal.AUTO, Vertical.RESPONSIVE_L);
+		content.setMaxWidth(CSSProperties.MaxWidth._1024);
+		content.setPadding(Horizontal.RESPONSIVE_X);
+		content.setSpacing(Bottom.L);
+		return content;
 	}
 
 	private Component createHeader(VaadinIcon icon, String title) {
-		FlexLayout header = UIUtils.createFlexLayout(
-				Arrays.asList(
-						LumoStyles.Margin.Bottom.L,
-						LumoStyles.Margin.Top.XL,
-						LumoStyles.Margin.Responsive.Horizontal.ML,
-						LumoStyles.Spacing.Right.M
-				),
+		FlexBoxLayout header = new FlexBoxLayout(
 				UIUtils.createIcon(IconSize.S, TextColor.TERTIARY, icon),
 				UIUtils.createH3Label(title)
 		);
 		header.setAlignItems(FlexComponent.Alignment.CENTER);
+		header.setMargin(Horizontal.RESPONSIVE_L, Top.S);
+		header.setSpacing(Right.M);
 		return header;
 	}
 
-	private Component createProgressCharts() {
-		FlexLayout card = UIUtils.createWrappingFlexLayout(Arrays.asList(CLASS_NAME + "__progress", LumoStyles.BorderRadius.S, LumoStyles.Shadow.S));
+	private Component createPaymentsCharts() {
+		FlexBoxLayout card = new FlexBoxLayout();
+		card.addClassName(CLASS_NAME + "__progress");
+		card.setBackgroundColor(LumoStyles.Color.BASE_COLOR);
+		card.setBorderRadius(BorderRadius.S);
+		card.setFlexWrap(FlexWrap.WRAP);
 		card.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
-		card.getStyle().set(CSSProperties.BackgroundColor.PROPERTY, LumoStyles.Color.BASE_COLOR);
+		card.setShadow(Shadow.S);
 
 		for (Payment.Status status : Payment.Status.values()) {
-			card.add(createProgressSection(status));
+			card.add(createPaymentSection(status));
 		}
 
 		return card;
 	}
 
-	private Component createProgressSection(Payment.Status status) {
+	private Component createPaymentSection(Payment.Status status) {
 		int value;
 
 		switch (status) {
@@ -107,13 +105,13 @@ public class Statistics extends ViewFrame {
 				break;
 		}
 
-		FlexLayout textContainer = UIUtils.createFlexLayout(
-				Collections.singleton(LumoStyles.Spacing.Right.XS),
+		FlexBoxLayout textContainer = new FlexBoxLayout(
 				UIUtils.createH2Label(Integer.toString(value)),
 				UIUtils.createSmallLabel("%")
 		);
 		textContainer.setAlignItems(FlexComponent.Alignment.BASELINE);
-		textContainer.getStyle().set(CSSProperties.Position.PROPERTY, CSSProperties.Position.ABSOLUTE);
+		textContainer.setPosition(Position.ABSOLUTE);
+		textContainer.setSpacing(Right.XS);
 
 		Chart chart = UIUtils.createProgressChart(value);
 		chart.addClassName(status.getName().toLowerCase());
@@ -125,12 +123,13 @@ public class Statistics extends ViewFrame {
 		chartContainer.setHeight("120px");
 		chartContainer.setWidth("120px");
 
-		FlexLayout column = UIUtils.createColumn(
-				Arrays.asList(LumoStyles.Padding.Bottom.S, LumoStyles.Padding.Top.M),
+		FlexBoxLayout column = new FlexBoxLayout(
 				new Label(status.getName()),
 				chartContainer
 		);
 		column.setAlignItems(FlexComponent.Alignment.CENTER);
+		column.setFlexDirection(FlexDirection.COLUMN);
+		column.setPadding(Bottom.S, Top.M);
 		return column;
 	}
 
@@ -142,16 +141,22 @@ public class Statistics extends ViewFrame {
 			tabs.add(new Tab(label));
 		}
 
-		FlexLayout items = UIUtils.createColumn(
-				Collections.singleton(LumoStyles.Margin.Vertical.S),
+		FlexBoxLayout items = new FlexBoxLayout(
 				new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.CHART), "Weekly Report", "Generated Oct 5, 2018", createInfoButton()),
 				new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.SITEMAP), "Payment Workflows", "Last modified Oct 24, 2018", createInfoButton())
 		);
+		items.setFlexDirection(FlexDirection.COLUMN);
+		items.setMargin(Vertical.S);
 
-		FlexLayout card = UIUtils.createColumn(Arrays.asList(LumoStyles.BorderRadius.S, LumoStyles.Shadow.S), tabs, items);
-		card.getStyle().set(CSSProperties.BackgroundColor.PROPERTY, LumoStyles.Color.BASE_COLOR);
+		FlexBoxLayout card = new FlexBoxLayout(tabs, items);
+		card.setBackgroundColor(LumoStyles.Color.BASE_COLOR);
+		card.setBorderRadius(BorderRadius.S);
+		card.setFlexDirection(FlexDirection.COLUMN);
+		card.setShadow(Shadow.S);
 
-		return new Div(header, card);
+		Div section = new Div(header, card);
+		section.addClassName(LumoStyles.Spacing.Bottom.L);
+		return section;
 	}
 
 	private Component createLogs() {
@@ -162,16 +167,22 @@ public class Statistics extends ViewFrame {
 			tabs.add(new Tab(label));
 		}
 
-		FlexLayout items = UIUtils.createColumn(
-				Collections.singleton(LumoStyles.Margin.Vertical.S),
+		FlexBoxLayout items = new FlexBoxLayout(
 				new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.EXCHANGE), "Transfers (October)", "Generated Oct 31, 2018", createInfoButton()),
 				new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.SHIELD), "Security Log", "Updated 16:31 CET", createInfoButton())
 		);
+		items.setFlexDirection(FlexDirection.COLUMN);
+		items.setMargin(Vertical.S);
 
-		FlexLayout card = UIUtils.createColumn(Arrays.asList(LumoStyles.BorderRadius.S, LumoStyles.Shadow.S), tabs, items);
-		card.getStyle().set(CSSProperties.BackgroundColor.PROPERTY, LumoStyles.Color.BASE_COLOR);
+		FlexBoxLayout card = new FlexBoxLayout(tabs, items);
+		card.setBackgroundColor(LumoStyles.Color.BASE_COLOR);
+		card.setBorderRadius(BorderRadius.S);
+		card.setFlexDirection(FlexDirection.COLUMN);
+		card.setShadow(Shadow.S);
 
-		return new Div(header, card);
+		Div section = new Div(header, card);
+		section.addClassName(LumoStyles.Spacing.Bottom.L);
+		return section;
 	}
 
 	private Button createInfoButton() {

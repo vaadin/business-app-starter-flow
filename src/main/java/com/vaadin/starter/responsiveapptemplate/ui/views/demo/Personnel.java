@@ -60,9 +60,8 @@ public class Personnel extends ViewFrame {
 	}
 
 	private Grid createGrid() {
-		dataProvider = DataProvider.ofCollection(DummyData.getPersons());
-
 		Grid<Person> grid = new Grid<>();
+		dataProvider = DataProvider.ofCollection(DummyData.getPersons());
 		grid.setDataProvider(dataProvider);
 		grid.setHeight("100%");
 

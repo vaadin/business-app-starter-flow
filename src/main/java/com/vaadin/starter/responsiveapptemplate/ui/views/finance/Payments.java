@@ -23,13 +23,15 @@ import com.vaadin.starter.responsiveapptemplate.ui.Root;
 import com.vaadin.starter.responsiveapptemplate.ui.components.DetailsDrawer;
 import com.vaadin.starter.responsiveapptemplate.ui.components.ListItem;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.bar.AppBar;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexBoxLayout;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexDirection;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Horizontal;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Right;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Vertical;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.CSSProperties;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
 import com.vaadin.starter.responsiveapptemplate.ui.views.ViewFrame;
-
-import java.util.Arrays;
-import java.util.Collections;
 
 import static com.vaadin.starter.responsiveapptemplate.ui.utils.ViewStyles.GRID_VIEW;
 
@@ -45,46 +47,44 @@ public class Payments extends ViewFrame {
 	private DetailsDrawer detailsDrawer;
 
 	public Payments() {
-		// Header
 		if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-			initAppBar();
+			appBar = createAppBar();
+			setViewHeader(appBar);
 		}
+		setViewContent(createContent());
 
-		// Grid
-		initGrid();
-
-		// Details drawer
-		initDetailsDrawer();
-
-		// Set the content
-		Div gridWrapper = UIUtils.createDiv(Collections.singleton(GRID_VIEW), grid);
-
-		FlexLayout content = new FlexLayout(gridWrapper, detailsDrawer);
-		content.setSizeFull();
-
-		setViewContent(content);
-
-		// Initial filtering
 		filter();
 	}
 
-	private void initAppBar() {
-		appBar = new AppBar("Payments");
+	private AppBar createAppBar() {
+		AppBar appBar = new AppBar("Payments");
 		for (Payment.Status status : Payment.Status.values()) {
 			appBar.addTab(status.getName());
 		}
 		appBar.addTabSelectionListener(e -> {
-			hideDetails();
 			filter();
+			hideDetails();
 		});
 		appBar.centerTabs();
-		setViewHeader(appBar);
+		return appBar;
 	}
 
-	private void initGrid() {
-		dataProvider = DataProvider.ofCollection(DummyData.getPayments());
+	private Component createContent() {
+		grid = createGrid();
+		Div gridWrapper = new Div(grid);
+		gridWrapper.addClassName(GRID_VIEW);
 
-		grid = new Grid<>();
+		detailsDrawer = createDetailsDrawer();
+
+		FlexLayout content = new FlexLayout(gridWrapper, detailsDrawer);
+		content.setSizeFull();
+		return content;
+	}
+
+	private Grid createGrid() {
+		Grid<Payment> grid = new Grid<>();
+		dataProvider = DataProvider.ofCollection(DummyData.getPayments());
+		grid.addSelectionListener(event -> event.getFirstSelectedItem().ifPresent(this::showDetails));
 		grid.setDataProvider(dataProvider);
 		grid.setSizeFull();
 
@@ -110,11 +110,7 @@ public class Payments extends ViewFrame {
 				.setWidth(UIUtils.COLUMN_WIDTH_M)
 				.setFlexGrow(0);
 
-		grid.addSelectionListener(e -> {
-			if (e.getFirstSelectedItem().isPresent()) {
-				showDetails(e.getFirstSelectedItem().get());
-			}
-		});
+		return grid;
 	}
 
 	private void filter() {
@@ -141,8 +137,8 @@ public class Payments extends ViewFrame {
 		return UIUtils.createRightAlignedDiv(label);
 	}
 
-	private void initDetailsDrawer() {
-		detailsDrawer = new DetailsDrawer(DetailsDrawer.Position.RIGHT);
+	private DetailsDrawer createDetailsDrawer() {
+		DetailsDrawer detailsDrawer = new DetailsDrawer(DetailsDrawer.Position.RIGHT);
 
 		// Header
 		Label detailsDrawerTitle = UIUtils.createDetailsDrawerHeader("Payment Details", false, true);
@@ -151,17 +147,20 @@ public class Payments extends ViewFrame {
 		tabs.addThemeVariants(TabsVariant.LUMO_EQUAL_WIDTH_TABS);
 
 		detailsDrawer.setHeader(detailsDrawerTitle, tabs);
-		detailsDrawer.getHeader().getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN);
+		detailsDrawer.getHeader().setFlexDirection(FlexDirection.COLUMN);
 
 		// Footer
 		Button close = UIUtils.createTertiaryButton("Close");
 		close.addClickListener(e -> detailsDrawer.hide());
 
-		FlexLayout footer = UIUtils.createFlexLayout(Arrays.asList(LumoStyles.Padding.Horizontal.L, LumoStyles.Padding.Vertical.S, LumoStyles.Spacing.Right.S), close);
-		footer.getStyle().set(CSSProperties.BackgroundColor.PROPERTY, LumoStyles.Color.Contrast._5);
+		FlexBoxLayout footer = new FlexBoxLayout(close);
+		footer.setBackgroundColor(LumoStyles.Color.Contrast._5);
+		footer.setPadding(Horizontal.L, Vertical.S);
+		footer.setSpacing(Right.S);
 		footer.setWidth("100%");
-
 		detailsDrawer.setFooter(footer);
+
+		return detailsDrawer;
 	}
 
 	private void showDetails(Payment payment) {
@@ -190,14 +189,9 @@ public class Payments extends ViewFrame {
 			item.setWhiteSpace(CSSProperties.WhiteSpace.PRE_LINE);
 		}
 
-		return UIUtils.createDiv(
-				Collections.singleton(LumoStyles.Padding.Vertical.S),
-				status,
-				from,
-				to,
-				amount,
-				date
-		);
+		Div details = new Div(status, from, to, amount, date);
+		details.addClassName(LumoStyles.Padding.Vertical.S);
+		return details;
 	}
 
 }

@@ -25,6 +25,8 @@ import com.vaadin.starter.responsiveapptemplate.backend.UIConfig;
 import com.vaadin.starter.responsiveapptemplate.ui.Root;
 import com.vaadin.starter.responsiveapptemplate.ui.components.ListItem;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.bar.AppBar;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.*;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.size.*;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.*;
 import com.vaadin.starter.responsiveapptemplate.ui.views.ViewFrame;
 
@@ -39,45 +41,26 @@ public class AccountDetails extends ViewFrame implements HasUrlParameter<Long> {
 
 	private AppBar appBar;
 
-	private Div viewport;
 	private ListItem availability;
 	private ListItem bankAccount;
 	private ListItem updated;
 
 	public AccountDetails() {
-		// Header
 		if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-			initAppBar();
+			appBar = createAppBar();
+			setViewHeader(appBar);
 		}
-
-		// Content
-		Label monthlyOverviewHeader = UIUtils.createH3Label("Monthly Overview");
-		monthlyOverviewHeader.addClassNames(
-				LumoStyles.Margin.Vertical.L,
-				LumoStyles.Margin.Responsive.Horizontal.ML
-		);
-
-		viewport = UIUtils.createDiv(
-				Arrays.asList(LumoStyles.Margin.Horizontal.AUTO, LumoStyles.Margin.Responsive.Vertical.ML),
-				createLogoSection(),
-				createRecentTransactionsHeader(),
-				createRecentTransactionsList(),
-				monthlyOverviewHeader,
-				createTransactionsChart()
-		);
-		viewport.getStyle().set(CSSProperties.MaxWidth.PROPERTY, CSSProperties.MaxWidth._840);
-		setViewContent(viewport);
+		setViewContent(createContent());
 	}
 
 	@Override
 	public void setParameter(BeforeEvent beforeEvent, Long id) {
 		BankAccount account = DummyData.getBankAccount(id);
+		UI.getCurrent().getPage().setTitle(account.getOwner());
 
 		if (appBar != null) {
 			appBar.setTitle(account.getOwner());
 		}
-
-		UI.getCurrent().getPage().setTitle(account.getOwner());
 
 		availability.setPrimaryText(UIUtils.formatAmount(account.getAvailability()));
 		bankAccount.setPrimaryText(account.getAccount());
@@ -85,15 +68,29 @@ public class AccountDetails extends ViewFrame implements HasUrlParameter<Long> {
 		updated.setPrimaryText(UIUtils.formatDate(account.getUpdated()));
 	}
 
-	private void initAppBar() {
-		appBar = new AppBar("Details");
+	private AppBar createAppBar() {
+		AppBar appBar = new AppBar("Details");
 		appBar.setNaviMode(AppBar.NaviMode.CONTEXTUAL);
 		appBar.setContextNaviIcon(new Icon(VaadinIcon.ARROW_BACKWARD));
 		appBar.getContextNaviIcon().addClickListener(e -> UI.getCurrent().navigate("accounts"));
-		setViewHeader(appBar);
+		return appBar;
 	}
 
-	private Component createLogoSection() {
+	private Component createContent() {
+		FlexBoxLayout content = new FlexBoxLayout(
+				createLogoSection(),
+				createRecentTransactionsHeader(),
+				createRecentTransactionsList(),
+				createMonthlyOverviewHeader(),
+				createMonthlyOverviewChart()
+		);
+		content.setFlexDirection(FlexDirection.COLUMN);
+		content.setMargin(Horizontal.AUTO, Vertical.RESPONSIVE_L);
+		content.setMaxWidth(CSSProperties.MaxWidth._840);
+		return content;
+	}
+
+	private FlexBoxLayout createLogoSection() {
 		Image image = DummyData.getLogo();
 		image.getStyle().set(CSSProperties.BorderRadius.PROPERTY, "100%");
 		image.addClassName(LumoStyles.Margin.Horizontal.L);
@@ -114,35 +111,31 @@ public class AccountDetails extends ViewFrame implements HasUrlParameter<Long> {
 		updated.setReverse(true);
 
 		FlexLayout listItems = UIUtils.createColumn(availability, bankAccount, updated);
-		listItems.getStyle().set(CSSProperties.Flex.PROPERTY, "1");
 
-		FlexLayout section = UIUtils.createWrappingFlexLayout(Arrays.asList(LumoStyles.Padding.Bottom.L, BoxShadowBorders.BOTTOM), image, listItems);
+		FlexBoxLayout section = new FlexBoxLayout(image, listItems);
+		section.addClassName(BoxShadowBorders.BOTTOM);
 		section.setAlignItems(FlexComponent.Alignment.CENTER);
+		section.setFlex("1", listItems);
+		section.setFlexWrap(FlexWrap.WRAP);
 		section.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
-
+		section.setPadding(Bottom.L);
 		return section;
 	}
 
-	private FlexLayout createRecentTransactionsHeader() {
+	private Component createRecentTransactionsHeader() {
+		Label title = UIUtils.createH3Label("Recent Transactions");
+
 		Button viewAll = UIUtils.createSmallButton("View All");
 		viewAll.addClickListener(e -> UIUtils.showNotification("Not implemented yet."));
-		viewAll.getStyle().set(CSSProperties.Margin.PROPERTY, "0 0 0 auto");
+		viewAll.addClassName(LumoStyles.Margin.Left.AUTO);
 
-		FlexLayout header = UIUtils.createFlexLayout(
-				Arrays.asList(
-						LumoStyles.Margin.Bottom.M,
-						LumoStyles.Margin.Responsive.Horizontal.ML,
-						LumoStyles.Margin.Top.L
-				),
-				UIUtils.createH3Label("Recent Transactions"),
-				viewAll
-		);
+		FlexBoxLayout header = new FlexBoxLayout(title, viewAll);
 		header.setAlignItems(FlexComponent.Alignment.CENTER);
-
+		header.setMargin(Bottom.M, Horizontal.RESPONSIVE_L, Top.L);
 		return header;
 	}
 
-	private Div createRecentTransactionsList() {
+	private Component createRecentTransactionsList() {
 		Div items = UIUtils.createDiv(Arrays.asList(LumoStyles.Padding.Bottom.L, BoxShadowBorders.BOTTOM));
 
 		for (int i = 0; i < RECENT_TRANSACTIONS; i++) {
@@ -165,7 +158,13 @@ public class AccountDetails extends ViewFrame implements HasUrlParameter<Long> {
 		return items;
 	}
 
-	private Component createTransactionsChart() {
+	private Component createMonthlyOverviewHeader() {
+		Label header = UIUtils.createH3Label("Monthly Overview");
+		header.addClassNames(LumoStyles.Margin.Vertical.L, LumoStyles.Margin.Responsive.Horizontal.ML);
+		return header;
+	}
+
+	private Component createMonthlyOverviewChart() {
 		Chart chart = new Chart(ChartType.COLUMN);
 
 		Configuration conf = chart.getConfiguration();
@@ -190,18 +189,14 @@ public class AccountDetails extends ViewFrame implements HasUrlParameter<Long> {
 		conf.addSeries(withDrawals);
 		conf.addSeries(deposits);
 
-		FlexLayout card = UIUtils.createWrappingFlexLayout(
-				Arrays.asList(
-						LumoStyles.BorderRadius.S,
-						LumoStyles.Padding.Horizontal.M,
-						LumoStyles.Padding.Top.L,
-						LumoStyles.Shadow.S
-				),
-				chart
-		);
-		card.getStyle().set(CSSProperties.BackgroundColor.PROPERTY, LumoStyles.Color.BASE_COLOR);
-		card.getStyle().set(CSSProperties.BoxSizing.PROPERTY, CSSProperties.BoxSizing.BORDER_BOX);
+		FlexBoxLayout card = new FlexBoxLayout(chart);
+		card.setBackgroundColor(LumoStyles.Color.BASE_COLOR);
+		card.setBorderRadius(BorderRadius.S);
+		card.setBoxSizing(BoxSizing.BORDER_BOX);
+		card.setFlexWrap(FlexWrap.WRAP);
 		card.setHeight("400px");
+		card.setPadding(Uniform.M);
+		card.setShadow(Shadow.S);
 		return card;
 	}
 }
