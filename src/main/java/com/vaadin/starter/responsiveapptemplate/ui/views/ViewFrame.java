@@ -31,20 +31,25 @@ public class ViewFrame extends Composite<Div> implements HasStyle {
 		getContent().add(header, content, footer);
 	}
 
+	/**
+	 * Sets the header slot's components.
+	 */
 	public void setViewHeader(Component... components) {
 		header.removeAll();
 		header.add(components);
 	}
 
+	/**
+	 * Sets the content slot's components.
+	 */
 	public void setViewContent(Component... components) {
 		content.removeAll();
 		content.add(components);
 	}
 
-	public Div getViewContent() {
-		return content;
-	}
-
+	/**
+	 * Sets the footer slot's components.
+	 */
 	public void setViewFooter(Component... components) {
 		footer.removeAll();
 		footer.add(components);
