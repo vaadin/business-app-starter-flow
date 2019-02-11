@@ -37,7 +37,6 @@ import com.vaadin.starter.responsiveapptemplate.ui.views.ViewFrame;
 
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 
