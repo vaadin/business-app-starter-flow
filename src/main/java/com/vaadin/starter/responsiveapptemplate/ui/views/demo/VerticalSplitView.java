@@ -126,20 +126,6 @@ public class VerticalSplitView extends ViewFrame {
 	}
 
 	private FormLayout createDetails(Person person) {
-		FormLayout form = new FormLayout();
-
-		form.addClassNames(
-				LumoStyles.Padding.Bottom.L,
-				LumoStyles.Padding.Horizontal.L,
-				LumoStyles.Padding.Top.S
-		);
-
-		form.setResponsiveSteps(
-				new FormLayout.ResponsiveStep("0", 1, FormLayout.ResponsiveStep.LabelsPosition.TOP),
-				new FormLayout.ResponsiveStep("600px", 2, FormLayout.ResponsiveStep.LabelsPosition.TOP),
-				new FormLayout.ResponsiveStep("1024px", 3, FormLayout.ResponsiveStep.LabelsPosition.TOP)
-		);
-
 		TextField firstName = new TextField();
 		firstName.setValue(person.getFirstName());
 		firstName.setWidth("100%");
@@ -162,6 +148,15 @@ public class VerticalSplitView extends ViewFrame {
 		company.setItems(DummyData.getCompanies());
 		company.setValue(DummyData.getCompany());
 		company.setWidth("100%");
+
+		// Form layout
+		FormLayout form = new FormLayout();
+		form.addClassNames(LumoStyles.Padding.Bottom.L, LumoStyles.Padding.Horizontal.L, LumoStyles.Padding.Top.S);
+		form.setResponsiveSteps(
+				new FormLayout.ResponsiveStep("0", 1, FormLayout.ResponsiveStep.LabelsPosition.TOP),
+				new FormLayout.ResponsiveStep("600px", 2, FormLayout.ResponsiveStep.LabelsPosition.TOP),
+				new FormLayout.ResponsiveStep("1024px", 3, FormLayout.ResponsiveStep.LabelsPosition.TOP)
+		);
 
 		form.addFormItem(firstName, "First Name");
 		form.addFormItem(lastName, "Last Name");

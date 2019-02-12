@@ -25,6 +25,10 @@ import com.vaadin.starter.responsiveapptemplate.ui.Root;
 import com.vaadin.starter.responsiveapptemplate.ui.components.DetailsDrawer;
 import com.vaadin.starter.responsiveapptemplate.ui.components.ListItem;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.bar.AppBar;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexBoxLayout;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Horizontal;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Right;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Vertical;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.CSSProperties;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
@@ -46,34 +50,30 @@ public class Managers extends ViewFrame {
 	private Label detailsDrawerTitle;
 
 	public Managers() {
-		// Header
 		if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
 			setViewHeader(new AppBar("Managers"));
 		}
+		setViewContent(createContent());
 
-		// Grid
-		initGrid();
-
-		// Details drawer
-		initDetailsDrawer();
-
-		// Set the content
-		Div gridWrapper = UIUtils.createDiv(Collections.singleton(GRID_VIEW), grid);
-
-		FlexLayout content = UIUtils.createColumn(gridWrapper, detailsDrawer);
-		content.getStyle().set(CSSProperties.Overflow.PROPERTY, CSSProperties.Overflow.HIDDEN);
-		content.setSizeFull();
-
-		setViewContent(content);
-
-		// Initial filtering
 		filter();
 	}
 
-	private void initGrid() {
-		dataProvider = DataProvider.ofCollection(DummyData.getPersons());
+	private Component createContent() {
+		grid = createGrid();
+		Div gridWrapper = new Div(grid);
+		gridWrapper.addClassName(GRID_VIEW);
 
-		grid = new Grid<>();
+		detailsDrawer = createDetailsDrawer();
+
+		FlexLayout content = new FlexLayout(gridWrapper, detailsDrawer);
+		content.setHeight("100%");
+		return content;
+	}
+
+	private Grid createGrid() {
+		Grid<Person> grid = new Grid<>();
+		grid.addSelectionListener(event -> event.getFirstSelectedItem().ifPresent(this::showDetails));
+		dataProvider = DataProvider.ofCollection(DummyData.getPersons());
 		grid.setDataProvider(dataProvider);
 		grid.setSizeFull();
 
@@ -99,15 +99,7 @@ public class Managers extends ViewFrame {
 				.setWidth(UIUtils.COLUMN_WIDTH_M)
 				.setFlexGrow(0);
 
-		grid.addSelectionListener(e -> {
-			if (e.getFirstSelectedItem().isPresent()) {
-				showDetails(e.getFirstSelectedItem().get());
-			}
-		});
-	}
-
-	private void filter() {
-		dataProvider.setFilterByValue(Person::getRole, Person.Role.MANAGER);
+		return grid;
 	}
 
 	private Component createUserInfo(Person person) {
@@ -135,8 +127,8 @@ public class Managers extends ViewFrame {
 		return UIUtils.createRightAlignedDiv(UIUtils.formatDate(person.getLastModified()));
 	}
 
-	private void initDetailsDrawer() {
-		detailsDrawer = new DetailsDrawer(DetailsDrawer.Position.BOTTOM);
+	private DetailsDrawer createDetailsDrawer() {
+		DetailsDrawer detailsDrawer = new DetailsDrawer(DetailsDrawer.Position.BOTTOM);
 
 		// Header
 		detailsDrawerTitle = UIUtils.createDetailsDrawerHeader("", true, true);
@@ -149,10 +141,14 @@ public class Managers extends ViewFrame {
 		Button cancel = UIUtils.createTertiaryButton("Cancel");
 		cancel.addClickListener(e -> detailsDrawer.hide());
 
-		FlexLayout footer = UIUtils.createFlexLayout(Arrays.asList(LumoStyles.Padding.Horizontal.L, LumoStyles.Padding.Vertical.S, LumoStyles.Spacing.Right.S), save, cancel);
-		footer.getStyle().set(CSSProperties.BackgroundColor.PROPERTY, LumoStyles.Color.Contrast._5);
+		FlexBoxLayout footer = new FlexBoxLayout(save, cancel);
+		footer.setBackgroundColor(LumoStyles.Color.Contrast._5);
+		footer.setPadding(Horizontal.L, Vertical.S);
+		footer.setSpacing(Right.S);
 		footer.setWidth("100%");
 		detailsDrawer.setFooter(footer);
+
+		return detailsDrawer;
 	}
 
 	private void showDetails(Person person) {
@@ -162,20 +158,6 @@ public class Managers extends ViewFrame {
 	}
 
 	private FormLayout createDetails(Person person) {
-		FormLayout form = UIUtils.createFormLayout(
-				Arrays.asList(
-						LumoStyles.Padding.Bottom.L,
-						LumoStyles.Padding.Horizontal.L,
-						LumoStyles.Padding.Top.S
-				)
-		);
-
-		form.setResponsiveSteps(
-				new FormLayout.ResponsiveStep("0", 1, FormLayout.ResponsiveStep.LabelsPosition.TOP),
-				new FormLayout.ResponsiveStep("600px", 2, FormLayout.ResponsiveStep.LabelsPosition.TOP),
-				new FormLayout.ResponsiveStep("1024px", 3, FormLayout.ResponsiveStep.LabelsPosition.TOP)
-		);
-
 		TextField firstName = new TextField();
 		firstName.setValue(person.getFirstName());
 		firstName.setWidth("100%");
@@ -199,6 +181,14 @@ public class Managers extends ViewFrame {
 		company.setValue(DummyData.getCompany());
 		company.setWidth("100%");
 
+		// Form layout
+		FormLayout form = new FormLayout();
+		form.addClassNames(LumoStyles.Padding.Bottom.L, LumoStyles.Padding.Horizontal.L, LumoStyles.Padding.Top.S);
+		form.setResponsiveSteps(
+				new FormLayout.ResponsiveStep("0", 1, FormLayout.ResponsiveStep.LabelsPosition.TOP),
+				new FormLayout.ResponsiveStep("600px", 2, FormLayout.ResponsiveStep.LabelsPosition.TOP),
+				new FormLayout.ResponsiveStep("1024px", 3, FormLayout.ResponsiveStep.LabelsPosition.TOP)
+		);
 		form.addFormItem(firstName, "First Name");
 		form.addFormItem(lastName, "Last Name");
 		form.addFormItem(gender, "Status");
@@ -206,8 +196,10 @@ public class Managers extends ViewFrame {
 		form.addFormItem(email, "Email");
 		form.addFormItem(company, "Company");
 		form.addFormItem(new Upload(), "Image");
-
 		return form;
 	}
 
+	private void filter() {
+		dataProvider.setFilterByValue(Person::getRole, Person.Role.MANAGER);
+	}
 }

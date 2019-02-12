@@ -30,12 +30,18 @@ import com.vaadin.starter.responsiveapptemplate.ui.Root;
 import com.vaadin.starter.responsiveapptemplate.ui.components.DetailsDrawer;
 import com.vaadin.starter.responsiveapptemplate.ui.components.ListItem;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.bar.AppBar;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.*;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexBoxLayout;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexDirection;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Horizontal;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Right;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Vertical;
+import com.vaadin.starter.responsiveapptemplate.ui.utils.FontSize;
+import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
+import com.vaadin.starter.responsiveapptemplate.ui.utils.TextColor;
+import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
 import com.vaadin.starter.responsiveapptemplate.ui.views.ViewFrame;
 
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.Collections;
 
 import static com.vaadin.starter.responsiveapptemplate.ui.utils.ViewStyles.GRID_VIEW;
 
@@ -52,41 +58,40 @@ public class Invoices extends ViewFrame {
 	private Label detailsDrawerTitle;
 
 	public Invoices() {
-		// Header
 		if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-			initAppBar();
+			appBar = createAppBar();
+			setViewHeader(appBar);
 		}
-
-		// Grid
-		initGrid();
-
-		// Details drawer
-		initDetailsDrawer();
-
-		// Set the content
-		Div gridWrapper = UIUtils.createDiv(Collections.singleton(GRID_VIEW), grid);
-
-		FlexLayout content = new FlexLayout(gridWrapper, detailsDrawer);
-		content.setSizeFull();
-
-		setViewContent(content);
+		setViewContent(createContent());
 	}
 
-	private void initAppBar() {
-		appBar = new AppBar("Invoices");
+	private AppBar createAppBar() {
+		AppBar appBar = new AppBar("Invoices");
 		appBar.addActionItem(VaadinIcon.SEARCH).addClickListener(e -> appBar.searchModeOn());
 		appBar.addSearchListener(e -> filter(e));
 		appBar.setSearchPlaceholder("Search by customer");
-		setViewHeader(appBar);
+		return appBar;
 	}
 
-	private void initGrid() {
+	private Component createContent() {
+		grid = createGrid();
+		Div gridWrapper = new Div(grid);
+		gridWrapper.addClassName(GRID_VIEW);
+
+		detailsDrawer = createDetailsDrawer();
+
+		FlexLayout content = new FlexLayout(gridWrapper, detailsDrawer);
+		content.setHeight("100%");
+		return content;
+	}
+
+	private Grid createGrid() {
+		Grid<Invoice> grid = new Grid<>();
+		grid.addSelectionListener(event -> event.getFirstSelectedItem().ifPresent(this::showDetails));
 		dataProvider = DataProvider.ofCollection(DummyData.getInvoices());
 		dataProvider.setSortOrder(Invoice::getDueDate, SortDirection.ASCENDING);
-
-		grid = new Grid<>();
 		grid.setDataProvider(dataProvider);
-		grid.setSizeFull();
+		grid.setHeight("100%");
 
 		grid.addColumn(Invoice::getId)
 				.setFlexGrow(0)
@@ -109,16 +114,7 @@ public class Invoices extends ViewFrame {
 				.setHeader(UIUtils.createRightAlignedDiv("Amount ($)"))
 				.setWidth(UIUtils.COLUMN_WIDTH_S);
 
-		grid.addSelectionListener(e -> {
-			if (e.getFirstSelectedItem().isPresent()) {
-				showDetails(e.getFirstSelectedItem().get());
-			}
-		});
-	}
-
-	private void filter(HasValue.ValueChangeEvent event) {
-		// TODO: This is just for demo purposes. Proper filtering should be done on another level.
-		dataProvider.setFilter((SerializablePredicate<Invoice>) invoice -> invoice.getOrder().getCustomer().toLowerCase().contains(event.getValue().toString().toLowerCase()));
+		return grid;
 	}
 
 	private Component createOrder(Invoice invoice) {
@@ -133,8 +129,8 @@ public class Invoices extends ViewFrame {
 		return UIUtils.createRightAlignedDiv(label);
 	}
 
-	private void initDetailsDrawer() {
-		detailsDrawer = new DetailsDrawer(DetailsDrawer.Position.RIGHT);
+	private DetailsDrawer createDetailsDrawer() {
+		DetailsDrawer detailsDrawer = new DetailsDrawer(DetailsDrawer.Position.RIGHT);
 
 		// Header
 		detailsDrawerTitle = UIUtils.createDetailsDrawerHeader("", false, true);
@@ -158,7 +154,7 @@ public class Invoices extends ViewFrame {
 		});
 
 		detailsDrawer.setHeader(detailsDrawerTitle, tabs);
-		detailsDrawer.getHeader().getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN);
+		detailsDrawer.getHeader().setFlexDirection(FlexDirection.COLUMN);
 
 		// Footer
 		Button save = UIUtils.createPrimaryButton("Save");
@@ -167,11 +163,14 @@ public class Invoices extends ViewFrame {
 		Button cancel = UIUtils.createTertiaryButton("Cancel");
 		cancel.addClickListener(e -> detailsDrawer.hide());
 
-		FlexLayout footer = UIUtils.createFlexLayout(Arrays.asList(LumoStyles.Padding.Horizontal.L, LumoStyles.Padding.Vertical.S, LumoStyles.Spacing.Right.S), save, cancel);
-		footer.getStyle().set(CSSProperties.BackgroundColor.PROPERTY, LumoStyles.Color.Contrast._5);
+		FlexBoxLayout footer = new FlexBoxLayout(save, cancel);
+		footer.setBackgroundColor(LumoStyles.Color.Contrast._5);
+		footer.setPadding(Horizontal.L, Vertical.S);
+		footer.setSpacing(Right.S);
 		footer.setWidth("100%");
-
 		detailsDrawer.setFooter(footer);
+
+		return detailsDrawer;
 	}
 
 	private void showDetails(Invoice invoice) {
@@ -194,21 +193,18 @@ public class Invoices extends ViewFrame {
 		RadioButtonGroup<Invoice.Status> status = new RadioButtonGroup<>();
 		status.addThemeVariants(RadioGroupVariant.LUMO_VERTICAL);
 		status.setItems(Invoice.Status.values());
+		status.setLabel("Status");
 		status.setRenderer(new ComponentRenderer<>(item -> UIUtils.createBadge(item)));
 		status.setValue(invoice.getStatus());
 
-		DatePicker dueDate = new DatePicker();
+		DatePicker dueDate = new DatePicker("Due Date");
 		dueDate.setValue(invoice.getDueDate());
 		dueDate.setWidth("100%");
 
-		// Add it all together.
-		FormLayout form = UIUtils.createFormLayout(Arrays.asList(LumoStyles.Padding.Bottom.L, LumoStyles.Padding.Horizontal.L, LumoStyles.Padding.Top.S));
+		// Form
+		FormLayout form = new FormLayout(invoiceId, invoiceDate, orderId, amount, status, dueDate);
+		form.addClassNames(LumoStyles.Padding.Bottom.L, LumoStyles.Padding.Horizontal.L, LumoStyles.Padding.Top.S);
 		form.setResponsiveSteps(new FormLayout.ResponsiveStep("0", 1, FormLayout.ResponsiveStep.LabelsPosition.TOP));
-
-		form.add(invoiceId, invoiceDate, orderId, amount);
-		form.addFormItem(status, "Status");
-		form.addFormItem(dueDate, "Due Date");
-
 		return form;
 	}
 
@@ -224,4 +220,8 @@ public class Invoices extends ViewFrame {
 		return label;
 	}
 
+	private void filter(HasValue.ValueChangeEvent event) {
+		// TODO: This is just for demo purposes. Proper filtering should be done on another level.
+		dataProvider.setFilter((SerializablePredicate<Invoice>) invoice -> invoice.getOrder().getCustomer().toLowerCase().contains(event.getValue().toString().toLowerCase()));
+	}
 }

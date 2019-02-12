@@ -172,13 +172,6 @@ public class Catalogue extends ViewFrame {
 	}
 
 	private Component createDetails(Item item) {
-		FormLayout form = new FormLayout();
-		form.addClassNames(LumoStyles.Padding.Bottom.L, LumoStyles.Padding.Horizontal.L);
-
-		form.setResponsiveSteps(
-				new FormLayout.ResponsiveStep("0", 1, FormLayout.ResponsiveStep.LabelsPosition.TOP)
-		);
-
 		Label title = UIUtils.createDetailsDrawerHeader("Edit Item", false, false);
 
 		RadioButtonGroup<Item.Category> category = new RadioButtonGroup<>();
@@ -211,7 +204,11 @@ public class Catalogue extends ViewFrame {
 		sold.setValue(UIUtils.formatUnits(item.getSold()));
 		sold.setWidth("100%");
 
-		// Add it all together.
+		// Form layout
+		FormLayout form = new FormLayout();
+		form.addClassNames(LumoStyles.Padding.Bottom.L, LumoStyles.Padding.Horizontal.L);
+		form.setResponsiveSteps(new FormLayout.ResponsiveStep("0", 1, FormLayout.ResponsiveStep.LabelsPosition.TOP));
+
 		form.add(title);
 		form.addFormItem(category, "Category");
 		form.addFormItem(name, "Name");

@@ -25,12 +25,14 @@ import com.vaadin.starter.responsiveapptemplate.ui.Root;
 import com.vaadin.starter.responsiveapptemplate.ui.components.DetailsDrawer;
 import com.vaadin.starter.responsiveapptemplate.ui.components.ListItem;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.bar.AppBar;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.CSSProperties;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexBoxLayout;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Horizontal;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Right;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Vertical;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
 import com.vaadin.starter.responsiveapptemplate.ui.views.ViewFrame;
 
-import java.util.Arrays;
 import java.util.Collections;
 
 import static com.vaadin.starter.responsiveapptemplate.ui.utils.ViewStyles.GRID_VIEW;
@@ -46,33 +48,30 @@ public class Accountants extends ViewFrame {
 	private Label detailsDrawerTitle;
 
 	public Accountants() {
-		// Header
 		if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
 			setViewHeader(new AppBar("Accountants"));
 		}
+		setViewContent(createContent());
 
-		// Grid
-		initGrid();
-
-		// Details drawer
-		initDetailsDrawer();
-
-		// Set the content
-		Div gridWrapper = UIUtils.createDiv(Collections.singleton(GRID_VIEW), grid);
-
-		FlexLayout content = new FlexLayout(gridWrapper, detailsDrawer);
-		content.setSizeFull();
-
-		setViewContent(content);
-
-		// Initial filtering
 		filter();
 	}
 
-	private void initGrid() {
-		dataProvider = DataProvider.ofCollection(DummyData.getPersons());
+	private Component createContent() {
+		grid = createGrid();
+		Div gridWrapper = new Div(grid);
+		gridWrapper.addClassName(GRID_VIEW);
 
-		grid = new Grid<>();
+		detailsDrawer = createDetailsDrawer();
+
+		FlexLayout content = new FlexLayout(gridWrapper, detailsDrawer);
+		content.setHeight("100%");
+		return content;
+	}
+
+	private Grid createGrid() {
+		Grid<Person> grid = new Grid<>();
+		grid.addSelectionListener(event -> event.getFirstSelectedItem().ifPresent(this::showDetails));
+		dataProvider = DataProvider.ofCollection(DummyData.getPersons());
 		grid.setDataProvider(dataProvider);
 		grid.setSizeFull();
 
@@ -102,15 +101,7 @@ public class Accountants extends ViewFrame {
 				.setHeader(UIUtils.createRightAlignedDiv("Last Report"))
 				.setWidth(UIUtils.COLUMN_WIDTH_S);
 
-		grid.addSelectionListener(e -> {
-			if (e.getFirstSelectedItem().isPresent()) {
-				showDetails(e.getFirstSelectedItem().get());
-			}
-		});
-	}
-
-	private void filter() {
-		dataProvider.setFilterByValue(Person::getRole, Person.Role.ACCOUNTANT);
+		return grid;
 	}
 
 	private Component createUserInfo(Person person) {
@@ -134,15 +125,15 @@ public class Accountants extends ViewFrame {
 	}
 
 	private Component createCompanies() {
-		return UIUtils.createRightAlignedDiv(UIUtils.createH4Label(String.valueOf(DummyData.getRandomInt(0, 50))));
+		return UIUtils.createRightAlignedDiv(UIUtils.createUnitsLabel(DummyData.getRandomInt(0, 50)));
 	}
 
 	private Component createDate(Person person) {
 		return UIUtils.createRightAlignedDiv(UIUtils.formatDate(person.getLastModified()));
 	}
 
-	private void initDetailsDrawer() {
-		detailsDrawer = new DetailsDrawer(DetailsDrawer.Position.RIGHT);
+	private DetailsDrawer createDetailsDrawer() {
+		DetailsDrawer detailsDrawer = new DetailsDrawer(DetailsDrawer.Position.RIGHT);
 
 		// Header
 		detailsDrawerTitle = UIUtils.createDetailsDrawerHeader("", true, true);
@@ -155,11 +146,14 @@ public class Accountants extends ViewFrame {
 		Button cancel = UIUtils.createTertiaryButton("Cancel");
 		cancel.addClickListener(e -> detailsDrawer.hide());
 
-		FlexLayout footer = UIUtils.createFlexLayout(Arrays.asList(LumoStyles.Padding.Horizontal.L, LumoStyles.Padding.Vertical.S, LumoStyles.Spacing.Right.S), save, cancel);
-		footer.getStyle().set(CSSProperties.BackgroundColor.PROPERTY, LumoStyles.Color.Contrast._5);
+		FlexBoxLayout footer = new FlexBoxLayout(save, cancel);
+		footer.setBackgroundColor(LumoStyles.Color.Contrast._5);
+		footer.setPadding(Horizontal.L, Vertical.S);
+		footer.setSpacing(Right.S);
 		footer.setWidth("100%");
 		detailsDrawer.setFooter(footer);
 
+		return detailsDrawer;
 	}
 
 	private void showDetails(Person person) {
@@ -168,20 +162,8 @@ public class Accountants extends ViewFrame {
 		detailsDrawer.show();
 	}
 
+
 	private FormLayout createDetails(Person person) {
-		FormLayout form = UIUtils.createFormLayout(
-				Arrays.asList(
-						LumoStyles.Padding.Bottom.L,
-						LumoStyles.Padding.Horizontal.L,
-						LumoStyles.Padding.Top.S
-				)
-		);
-
-		form.setResponsiveSteps(
-				new FormLayout.ResponsiveStep("0", 1, FormLayout.ResponsiveStep.LabelsPosition.TOP),
-				new FormLayout.ResponsiveStep("21em", 2, FormLayout.ResponsiveStep.LabelsPosition.TOP)
-		);
-
 		TextField firstName = new TextField();
 		firstName.setValue(person.getFirstName());
 		firstName.setWidth("100%");
@@ -205,6 +187,13 @@ public class Accountants extends ViewFrame {
 		company.setValue(DummyData.getCompany());
 		company.setWidth("100%");
 
+		// Form layout
+		FormLayout form = new FormLayout();
+		form.addClassNames(LumoStyles.Padding.Bottom.L, LumoStyles.Padding.Horizontal.L, LumoStyles.Padding.Top.S);
+		form.setResponsiveSteps(
+				new FormLayout.ResponsiveStep("0", 1, FormLayout.ResponsiveStep.LabelsPosition.TOP),
+				new FormLayout.ResponsiveStep("21em", 2, FormLayout.ResponsiveStep.LabelsPosition.TOP)
+		);
 		form.addFormItem(firstName, "First Name");
 		form.addFormItem(lastName, "Last Name");
 		FormLayout.FormItem statusItem = form.addFormItem(gender, "Status");
@@ -212,9 +201,11 @@ public class Accountants extends ViewFrame {
 		FormLayout.FormItem emailItem = form.addFormItem(email, "Email");
 		FormLayout.FormItem companyItem = form.addFormItem(company, "Company");
 		FormLayout.FormItem uploadItem = form.addFormItem(new Upload(), "Image");
-
 		UIUtils.setFormLayoutColSpan(2, statusItem, phoneItem, emailItem, companyItem, uploadItem);
-
 		return form;
+	}
+
+	private void filter() {
+		dataProvider.setFilterByValue(Person::getRole, Person.Role.ACCOUNTANT);
 	}
 }

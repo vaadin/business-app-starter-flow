@@ -122,19 +122,6 @@ public class HorizontalSplitView extends ViewFrame {
 	}
 
 	private FormLayout createDetails(Person person) {
-		FormLayout form = new FormLayout();
-
-		form.addClassNames(
-				LumoStyles.Padding.Bottom.L,
-				LumoStyles.Padding.Horizontal.L,
-				LumoStyles.Padding.Top.S
-		);
-
-		form.setResponsiveSteps(
-				new FormLayout.ResponsiveStep("0", 1, FormLayout.ResponsiveStep.LabelsPosition.TOP),
-				new FormLayout.ResponsiveStep("21em", 2, FormLayout.ResponsiveStep.LabelsPosition.TOP)
-		);
-
 		TextField firstName = new TextField();
 		firstName.setValue(person.getFirstName());
 		firstName.setWidth("100%");
@@ -158,6 +145,14 @@ public class HorizontalSplitView extends ViewFrame {
 		company.setValue(DummyData.getCompany());
 		company.setWidth("100%");
 
+		// Form layout
+		FormLayout form = new FormLayout();
+		form.addClassNames(LumoStyles.Padding.Bottom.L, LumoStyles.Padding.Horizontal.L, LumoStyles.Padding.Top.S);
+		form.setResponsiveSteps(
+				new FormLayout.ResponsiveStep("0", 1, FormLayout.ResponsiveStep.LabelsPosition.TOP),
+				new FormLayout.ResponsiveStep("21em", 2, FormLayout.ResponsiveStep.LabelsPosition.TOP)
+		);
+
 		form.addFormItem(firstName, "First Name");
 		form.addFormItem(lastName, "Last Name");
 		FormLayout.FormItem genderItem = form.addFormItem(gender, "Gender");
@@ -165,7 +160,6 @@ public class HorizontalSplitView extends ViewFrame {
 		FormLayout.FormItem emailItem = form.addFormItem(email, "Email");
 		FormLayout.FormItem companyItem = form.addFormItem(company, "Company");
 		FormLayout.FormItem uploadItem = form.addFormItem(new Upload(), "Image");
-
 		UIUtils.setFormLayoutColSpan(2, genderItem, phoneItem, emailItem, companyItem, uploadItem);
 
 		return form;
