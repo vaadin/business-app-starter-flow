@@ -101,6 +101,32 @@ public class VerticalSplitView extends ViewFrame {
 		return grid;
 	}
 
+	private Component createUserInfo(Person person) {
+		ListItem item = new ListItem(UIUtils.createInitials(person.getInitials()), person.getName(), person.getEmail());
+		item.setHorizontalPadding(false);
+		return item;
+	}
+
+	private Component createTwitter(Person person) {
+		Icon icon;
+		if (person.getRandomBoolean()) {
+			icon = UIUtils.createPrimaryIcon(VaadinIcon.TWITTER);
+		} else {
+			icon = UIUtils.createDisabledIcon(VaadinIcon.TWITTER);
+		}
+		return icon;
+	}
+
+	private Component createForumPosts(Person person) {
+		Span badge;
+		if (person.getRandomInteger() > 5) {
+			badge = UIUtils.createSuccessBadge(UIUtils.formatAmount(person.getRandomInteger()));
+		} else {
+			badge = UIUtils.createErrorBadge(UIUtils.formatAmount(person.getRandomInteger()));
+		}
+		return badge;
+	}
+
 	private DetailsDrawer createDetailsDrawer() {
 		DetailsDrawer detailsDrawer = new DetailsDrawer(DetailsDrawer.Position.BOTTOM);
 
@@ -123,6 +149,12 @@ public class VerticalSplitView extends ViewFrame {
 		detailsDrawer.setFooter(footer);
 
 		return detailsDrawer;
+	}
+
+	private void showDetails(Person person) {
+		detailsDrawerTitle.setText(person.getName());
+		detailsDrawer.setContent(createDetails(person));
+		detailsDrawer.show();
 	}
 
 	private FormLayout createDetails(Person person) {
@@ -167,37 +199,5 @@ public class VerticalSplitView extends ViewFrame {
 		form.addFormItem(new Upload(), "Image");
 
 		return form;
-	}
-
-	private Component createUserInfo(Person person) {
-		ListItem item = new ListItem(UIUtils.createInitials(person.getInitials()), person.getName(), person.getEmail());
-		item.setHorizontalPadding(false);
-		return item;
-	}
-
-	private Component createTwitter(Person person) {
-		Icon icon;
-		if (person.getRandomBoolean()) {
-			icon = UIUtils.createPrimaryIcon(VaadinIcon.TWITTER);
-		} else {
-			icon = UIUtils.createDisabledIcon(VaadinIcon.TWITTER);
-		}
-		return icon;
-	}
-
-	private Component createForumPosts(Person person) {
-		Span badge;
-		if (person.getRandomInteger() > 5) {
-			badge = UIUtils.createSuccessBadge(UIUtils.formatAmount(person.getRandomInteger()));
-		} else {
-			badge = UIUtils.createErrorBadge(UIUtils.formatAmount(person.getRandomInteger()));
-		}
-		return badge;
-	}
-
-	private void showDetails(Person person) {
-		detailsDrawerTitle.setText(person.getName());
-		detailsDrawer.setContent(createDetails(person));
-		detailsDrawer.show();
 	}
 }

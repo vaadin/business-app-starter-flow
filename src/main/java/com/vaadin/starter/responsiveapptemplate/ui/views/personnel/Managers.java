@@ -29,13 +29,9 @@ import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexBoxLayout;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Horizontal;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Right;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Vertical;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.CSSProperties;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
 import com.vaadin.starter.responsiveapptemplate.ui.views.ViewFrame;
-
-import java.util.Arrays;
-import java.util.Collections;
 
 import static com.vaadin.starter.responsiveapptemplate.ui.utils.ViewStyles.GRID_VIEW;
 
