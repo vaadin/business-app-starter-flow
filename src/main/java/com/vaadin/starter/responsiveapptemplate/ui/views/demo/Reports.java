@@ -35,14 +35,13 @@ public class Reports extends ViewFrame {
 	}
 
 	private Component createContent() {
-		grid = createGrid();
-		Div content = new Div(grid);
+		Div content = new Div(createGrid());
 		content.addClassName(GRID_VIEW);
 		return content;
 	}
 
 	private Grid createGrid() {
-		Grid<Report> grid = new Grid<>();
+		grid = new Grid<>();
 		grid.addSelectionListener(event -> event.getFirstSelectedItem().ifPresent(this::viewDetails));
 		grid.setDataProvider(DataProvider.ofCollection(DummyData.getReports()));
 		grid.setHeight("100%");

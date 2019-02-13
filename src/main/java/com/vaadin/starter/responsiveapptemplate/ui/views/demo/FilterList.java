@@ -25,6 +25,7 @@ import com.vaadin.starter.responsiveapptemplate.backend.Person;
 import com.vaadin.starter.responsiveapptemplate.backend.UIConfig;
 import com.vaadin.starter.responsiveapptemplate.ui.Root;
 import com.vaadin.starter.responsiveapptemplate.ui.components.ListItem;
+import com.vaadin.starter.responsiveapptemplate.ui.components.Token;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.bar.AppBar;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexBoxLayout;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexDirection;
@@ -38,18 +39,15 @@ import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
 import com.vaadin.starter.responsiveapptemplate.ui.views.ViewFrame;
 
-import java.util.Collections;
-
 @Route(value = "filter-list", layout = Root.class)
 @PageTitle("Filter list")
 public class FilterList extends ViewFrame {
 
 	private Div filterArea;
-	private FlexLayout filterHeader;
+	private FlexBoxLayout filterHeader;
 	private Button toggleButton;
-	private FlexLayout filterOptions;
-	private FlexLayout tokens;
-
+	private FlexBoxLayout options;
+	private FlexBoxLayout tokens;
 	private Grid<Person> grid;
 
 	public FilterList() {
@@ -60,47 +58,40 @@ public class FilterList extends ViewFrame {
 	}
 
 	private Component createContent() {
-		filterArea = createFilterArea();
-
-		grid = createGrid();
-		FlexBoxLayout gridWrapper = new FlexBoxLayout(grid);
-		gridWrapper.setFlexDirection(FlexDirection.COLUMN);
-		gridWrapper.setHeight("100%");
-		gridWrapper.setMargin(Horizontal.RESPONSIVE_X);
-
-		FlexLayout content = UIUtils.createColumn(filterArea, gridWrapper);
+		FlexLayout content = UIUtils.createColumn(
+				createFilterArea(),
+				createGridWrapper()
+		);
 		content.setHeight("100%");
 		return content;
 	}
 
 	private Div createFilterArea() {
-		filterHeader = createFilterHeader();
-
-		filterOptions = createFilterOptions();
-		tokens = createTokens();
-
-		FlexBoxLayout filters = new FlexBoxLayout(filterOptions, tokens);
-		filters.setFlex("1", filterOptions, tokens);
-		filters.setFlexWrap(FlexWrap.WRAP);
-		filters.setSpacing(Right.L);
-
-		Div filterArea = new Div(filterHeader, filters);
-		filterArea.addClassName(LumoStyles.Padding.Responsive.Horizontal.ML);
+		filterArea = new Div(
+				createFilterHeader(),
+				createFilters()
+		);
+		filterArea.addClassName(LumoStyles.Padding.Responsive.Horizontal.L);
 		return filterArea;
 	}
 
 	private FlexLayout createFilterHeader() {
-		toggleButton = createToggleButton();
+		toggleButton = UIUtils.createButton(VaadinIcon.CHEVRON_UP_SMALL, ButtonVariant.LUMO_SMALL, ButtonVariant.LUMO_TERTIARY);
+		toggleButton.addClickListener(event -> toggleFilterArea());
 
 		Label title = UIUtils.createH5Label("Filter");
-
 		Span badge = UIUtils.createContrastBadge("4");
 
 		TextField search = new TextField();
 		search.setPlaceholder("Quick filter...");
 		search.addClassName(LumoStyles.Margin.Left.AUTO);
 
-		FlexBoxLayout filterHeader = new FlexBoxLayout(toggleButton, title, badge, search);
+		filterHeader = new FlexBoxLayout(
+				toggleButton,
+				title,
+				badge,
+				search
+		);
 		filterHeader.addClassName(BoxShadowBorders.BOTTOM);
 		filterHeader.setAlignItems(FlexComponent.Alignment.CENTER);
 		filterHeader.setPadding(Vertical.RESPONSIVE_M);
@@ -108,10 +99,15 @@ public class FilterList extends ViewFrame {
 		return filterHeader;
 	}
 
-	private Button createToggleButton() {
-		Button button = UIUtils.createButton(VaadinIcon.CHEVRON_UP_SMALL, ButtonVariant.LUMO_SMALL, ButtonVariant.LUMO_TERTIARY);
-		button.addClickListener(event -> toggleFilterArea());
-		return button;
+	private FlexBoxLayout createFilters() {
+		FlexBoxLayout filters = new FlexBoxLayout(
+				createFilterOptions(),
+				createTokens()
+		);
+		filters.setFlex("1", options, tokens);
+		filters.setFlexWrap(FlexWrap.WRAP);
+		filters.setSpacing(Right.L);
+		return filters;
 	}
 
 	private FlexLayout createFilterOptions() {
@@ -125,7 +121,7 @@ public class FilterList extends ViewFrame {
 		RadioButtonGroup<String> optionGroup = new RadioButtonGroup<>();
 		optionGroup.setItems("Option 1", "Option 2", "Option 3");
 
-		FlexBoxLayout options = new FlexBoxLayout(title, combo, checkbox, optionGroup);
+		options = new FlexBoxLayout(title, combo, checkbox, optionGroup);
 		options.setFlexDirection(FlexDirection.COLUMN);
 		options.setPadding(Vertical.M);
 		options.setSpacing(Bottom.S);
@@ -139,20 +135,29 @@ public class FilterList extends ViewFrame {
 		combo.setClassName("token-select");
 		combo.setPlaceholder("Add filter...");
 
-		Div token = UIUtils.createDiv(Collections.singleton("token"), new Label("Filter token 1"), UIUtils.createButton(VaadinIcon.CLOSE_SMALL, ButtonVariant.LUMO_SMALL, ButtonVariant.LUMO_TERTIARY));
-		token.getElement().setAttribute(LumoStyles.THEME, LumoStyles.Badge.DEFAULT);
+		Token token1 = new Token("Filter token 1");
+		Token token2 = new Token("Filter token 2");
 
-		Div tokenArea = new Div(token);
+		Div tokenArea = new Div(token1, token2);
+		tokenArea.addClassName(LumoStyles.Spacing.Right.S);
 
-		FlexBoxLayout tokens = new FlexBoxLayout(title, combo, tokenArea);
+		tokens = new FlexBoxLayout(title, combo, tokenArea);
 		tokens.setFlexDirection(FlexDirection.COLUMN);
 		tokens.setPadding(Vertical.M);
 		tokens.setSpacing(Bottom.S);
 		return tokens;
 	}
 
+	private FlexBoxLayout createGridWrapper() {
+		FlexBoxLayout gridWrapper = new FlexBoxLayout(createGrid());
+		gridWrapper.setFlexDirection(FlexDirection.COLUMN);
+		gridWrapper.setHeight("100%");
+		gridWrapper.setMargin(Horizontal.RESPONSIVE_X);
+		return gridWrapper;
+	}
+
 	private Grid createGrid() {
-		Grid<Person> grid = new Grid<>();
+		grid = new Grid<>();
 		grid.setDataProvider(DataProvider.ofCollection(DummyData.getPersons()));
 
 		grid.addColumn(Person::getId)
@@ -209,11 +214,11 @@ public class FilterList extends ViewFrame {
 	}
 
 	private void toggleFilterArea() {
-		filterOptions.setVisible(!filterOptions.isVisible());
+		options.setVisible(!options.isVisible());
 		tokens.setVisible(!tokens.isVisible());
-		toggleButton.setIcon(filterOptions.isVisible() ? new Icon(VaadinIcon.CHEVRON_UP_SMALL) : new Icon(VaadinIcon.CHEVRON_DOWN_SMALL));
+		toggleButton.setIcon(options.isVisible() ? new Icon(VaadinIcon.CHEVRON_UP_SMALL) : new Icon(VaadinIcon.CHEVRON_DOWN_SMALL));
 
-		if (filterOptions.isVisible()) {
+		if (options.isVisible()) {
 			filterHeader.addClassNames(BoxShadowBorders.BOTTOM);
 		} else {
 			filterHeader.removeClassNames(BoxShadowBorders.BOTTOM);

@@ -2,14 +2,11 @@ package com.vaadin.starter.responsiveapptemplate.ui.views.inventory;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasValue;
-import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.flow.component.notification.Notification;
-import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
 import com.vaadin.flow.component.radiobutton.RadioGroupVariant;
 import com.vaadin.flow.component.textfield.TextArea;
@@ -24,25 +21,22 @@ import com.vaadin.starter.responsiveapptemplate.backend.DummyData;
 import com.vaadin.starter.responsiveapptemplate.backend.Item;
 import com.vaadin.starter.responsiveapptemplate.backend.UIConfig;
 import com.vaadin.starter.responsiveapptemplate.ui.Root;
-import com.vaadin.starter.responsiveapptemplate.ui.components.DetailsDrawer;
 import com.vaadin.starter.responsiveapptemplate.ui.components.ListItem;
+import com.vaadin.starter.responsiveapptemplate.ui.components.detailsdrawer.DetailsDrawer;
+import com.vaadin.starter.responsiveapptemplate.ui.components.detailsdrawer.DetailsDrawerFooter;
+import com.vaadin.starter.responsiveapptemplate.ui.components.detailsdrawer.DetailsDrawerHeader;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.bar.AppBar;
-import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexBoxLayout;
-import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Horizontal;
-import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Right;
-import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Vertical;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
-import com.vaadin.starter.responsiveapptemplate.ui.views.ViewFrame;
+import com.vaadin.starter.responsiveapptemplate.ui.views.ViewFrameWithDetails;
 
 import static com.vaadin.starter.responsiveapptemplate.ui.utils.ViewStyles.GRID_VIEW;
 
 @Route(value = "catalogue", layout = Root.class)
 @PageTitle("Catalogue")
-public class Catalogue extends ViewFrame {
+public class Catalogue extends ViewFrameWithDetails {
 
 	private AppBar appBar;
-
 	private Grid<Item> grid;
 	private ListDataProvider<Item> dataProvider;
 
@@ -50,14 +44,14 @@ public class Catalogue extends ViewFrame {
 
 	public Catalogue() {
 		if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-			appBar = createAppBar();
-			setViewHeader(appBar);
+			setViewHeader(createAppBar());
 		}
 		setViewContent(createContent());
+		setViewDetails(createDetailsDrawer());
 	}
 
 	private AppBar createAppBar() {
-		AppBar appBar = new AppBar("Catalogue");
+		appBar = new AppBar("Catalogue");
 		appBar.addActionItem(VaadinIcon.SEARCH).addClickListener(e -> appBar.searchModeOn());
 		appBar.addSearchListener(e -> filter(e));
 		appBar.setSearchPlaceholder("Search by item name, description and vendor");
@@ -65,19 +59,13 @@ public class Catalogue extends ViewFrame {
 	}
 
 	private Component createContent() {
-		grid = createGrid();
-		Div gridWrapper = new Div(grid);
-		gridWrapper.addClassName(GRID_VIEW);
-
-		detailsDrawer = createDetailsDrawer();
-
-		FlexLayout content = new FlexLayout(gridWrapper, detailsDrawer);
-		content.setHeight("100%");
+		Div content = new Div(createGrid());
+		content.addClassName(GRID_VIEW);
 		return content;
 	}
 
 	private Grid createGrid() {
-		Grid<Item> grid = new Grid<>();
+		grid = new Grid<>();
 		grid.addSelectionListener(event -> event.getFirstSelectedItem().ifPresent(this::showDetails));
 		dataProvider = DataProvider.ofCollection(DummyData.getItems());
 		grid.setDataProvider(dataProvider);
@@ -143,24 +131,14 @@ public class Catalogue extends ViewFrame {
 	}
 
 	private DetailsDrawer createDetailsDrawer() {
-		DetailsDrawer detailsDrawer = new DetailsDrawer(DetailsDrawer.Position.RIGHT);
+		detailsDrawer = new DetailsDrawer(DetailsDrawer.Position.RIGHT);
+
+		// Header
+		detailsDrawer.setHeader(new DetailsDrawerHeader("Edit Item"));
 
 		// Footer
-		Button save = UIUtils.createPrimaryButton("Save");
-		save.addClickListener(e -> Notification.show("Not implemented yet.", 3000, Notification.Position.BOTTOM_CENTER));
-
-		Button cancel = UIUtils.createTertiaryButton("Cancel");
-		cancel.addClickListener(e -> detailsDrawer.hide());
-
-		Button delete = UIUtils.createErrorPrimaryButton("Delete");
-		delete.addClassName(LumoStyles.Margin.Left.AUTO);
-		delete.addClickListener(e -> Notification.show("Not implemented yet.", 3000, Notification.Position.BOTTOM_CENTER));
-
-		FlexBoxLayout footer = new FlexBoxLayout(save, cancel);
-		footer.setBackgroundColor(LumoStyles.Color.Contrast._5);
-		footer.setPadding(Horizontal.L, Vertical.S);
-		footer.setSpacing(Right.S);
-		footer.setWidth("100%");
+		DetailsDrawerFooter footer = new DetailsDrawerFooter();
+		footer.addCancelListener(e -> detailsDrawer.hide());
 		detailsDrawer.setFooter(footer);
 
 		return detailsDrawer;
@@ -172,8 +150,6 @@ public class Catalogue extends ViewFrame {
 	}
 
 	private Component createDetails(Item item) {
-		Label title = UIUtils.createDetailsDrawerHeader("Edit Item", false, false);
-
 		RadioButtonGroup<Item.Category> category = new RadioButtonGroup<>();
 		category.addThemeVariants(RadioGroupVariant.LUMO_VERTICAL);
 		category.setItems(Item.Category.values());
@@ -207,9 +183,9 @@ public class Catalogue extends ViewFrame {
 		// Form layout
 		FormLayout form = new FormLayout();
 		form.addClassNames(LumoStyles.Padding.Bottom.L, LumoStyles.Padding.Horizontal.L);
-		form.setResponsiveSteps(new FormLayout.ResponsiveStep("0", 1, FormLayout.ResponsiveStep.LabelsPosition.TOP));
-
-		form.add(title);
+		form.setResponsiveSteps(
+				new FormLayout.ResponsiveStep("0", 1, FormLayout.ResponsiveStep.LabelsPosition.TOP)
+		);
 		form.addFormItem(category, "Category");
 		form.addFormItem(name, "Name");
 		form.addFormItem(desc, "Description");
@@ -217,7 +193,6 @@ public class Catalogue extends ViewFrame {
 		form.addFormItem(price, "Unit Price ($)");
 		form.addFormItem(stock, "In Stock");
 		form.addFormItem(sold, "Units Sold");
-
 		return form;
 	}
 }

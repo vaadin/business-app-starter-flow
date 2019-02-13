@@ -33,7 +33,7 @@ import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Right;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Top;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
-import com.vaadin.starter.responsiveapptemplate.ui.views.ViewFrame;
+import com.vaadin.starter.responsiveapptemplate.ui.views.ViewFrameWithDetails;
 
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -44,7 +44,7 @@ import static com.vaadin.starter.responsiveapptemplate.ui.utils.ViewStyles.GRID_
 
 @Route(value = "customer-orders", layout = Root.class)
 @PageTitle("Customer Orders")
-public class CustomerOrders extends ViewFrame {
+public class CustomerOrders extends ViewFrameWithDetails {
 
 	private AppBar appBar;
 	private Grid<Order> grid;
@@ -53,14 +53,13 @@ public class CustomerOrders extends ViewFrame {
 
 	public CustomerOrders() {
 		if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-			appBar = createAppBar();
-			setViewHeader(appBar);
+			setViewHeader(createAppBar());
 		}
 		setViewContent(createContent());
 	}
 
 	private AppBar createAppBar() {
-		AppBar appBar = new AppBar("Customer Orders");
+		appBar = new AppBar("Customer Orders");
 		appBar.addActionItem(VaadinIcon.SEARCH).addClickListener(e -> appBar.searchModeOn());
 		appBar.addSearchListener(e -> filter(e));
 		appBar.setSearchPlaceholder("Search by customer");
@@ -68,18 +67,17 @@ public class CustomerOrders extends ViewFrame {
 	}
 
 	private Component[] createContent() {
-		grid = createGrid();
-		Div gridWrapper = new Div(grid);
-		gridWrapper.addClassName(GRID_VIEW);
+		Div content = new Div(createGrid());
+		content.addClassName(GRID_VIEW);
 
 		Button fab = UIUtils.createFloatingActionButton(VaadinIcon.PLUS);
 		fab.addClickListener(e -> showDialog());
 
-		return new Component[]{gridWrapper, fab};
+		return new Component[]{content, fab};
 	}
 
 	private Grid createGrid() {
-		Grid<Order> grid = new Grid<>();
+		grid = new Grid<>();
 		dataProvider = DataProvider.ofCollection(DummyData.getOrders());
 		dataProvider.setSortOrder(Order::getDate, SortDirection.ASCENDING);
 		grid.setDataProvider(dataProvider);

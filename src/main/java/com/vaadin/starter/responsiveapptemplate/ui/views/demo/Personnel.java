@@ -28,14 +28,12 @@ import static com.vaadin.starter.responsiveapptemplate.ui.utils.ViewStyles.GRID_
 public class Personnel extends ViewFrame {
 
 	private AppBar appBar;
-
 	private Grid<Person> grid;
 	private ListDataProvider<Person> dataProvider;
 
 	public Personnel() {
 		if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-			appBar = createAppBar();
-			setViewHeader(appBar);
+			setViewHeader(createAppBar());
 		}
 		setViewContent(createContent());
 
@@ -43,7 +41,7 @@ public class Personnel extends ViewFrame {
 	}
 
 	private AppBar createAppBar() {
-		AppBar appBar = new AppBar("Personnel");
+		appBar = new AppBar("Personnel");
 		for (Person.Role role : Person.Role.values()) {
 			appBar.addTab(role.name().substring(0, 1).toUpperCase() + role.name().substring(1).toLowerCase());
 		}
@@ -60,7 +58,7 @@ public class Personnel extends ViewFrame {
 	}
 
 	private Grid createGrid() {
-		Grid<Person> grid = new Grid<>();
+		grid = new Grid<>();
 		dataProvider = DataProvider.ofCollection(DummyData.getPersons());
 		grid.setDataProvider(dataProvider);
 		grid.setHeight("100%");

@@ -1,12 +1,10 @@
 package com.vaadin.starter.responsiveapptemplate.ui.views.demo;
 
 import com.vaadin.flow.component.Component;
-import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -23,53 +21,42 @@ import com.vaadin.starter.responsiveapptemplate.backend.DummyData;
 import com.vaadin.starter.responsiveapptemplate.backend.Person;
 import com.vaadin.starter.responsiveapptemplate.backend.UIConfig;
 import com.vaadin.starter.responsiveapptemplate.ui.Root;
-import com.vaadin.starter.responsiveapptemplate.ui.components.DetailsDrawer;
 import com.vaadin.starter.responsiveapptemplate.ui.components.ListItem;
+import com.vaadin.starter.responsiveapptemplate.ui.components.detailsdrawer.DetailsDrawer;
+import com.vaadin.starter.responsiveapptemplate.ui.components.detailsdrawer.DetailsDrawerFooter;
+import com.vaadin.starter.responsiveapptemplate.ui.components.detailsdrawer.DetailsDrawerHeader;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.bar.AppBar;
-import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexBoxLayout;
-import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexDirection;
-import com.vaadin.starter.responsiveapptemplate.ui.layout.Overflow;
-import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Horizontal;
-import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Right;
-import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Vertical;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
-import com.vaadin.starter.responsiveapptemplate.ui.views.ViewFrame;
+import com.vaadin.starter.responsiveapptemplate.ui.views.ViewFrameWithDetails;
 
 import static com.vaadin.starter.responsiveapptemplate.ui.utils.ViewStyles.GRID_VIEW;
 
 @Route(value = "vertical-split-view", layout = Root.class)
 @PageTitle("Vertical Split View")
-public class VerticalSplitView extends ViewFrame {
+public class VerticalSplitView extends ViewFrameWithDetails {
 
 	private Grid<Person> grid;
-
 	private DetailsDrawer detailsDrawer;
-	private Label detailsDrawerTitle;
+	private DetailsDrawerHeader detailsDrawerHeader;
 
 	public VerticalSplitView() {
 		if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
 			setViewHeader(new AppBar("Personnel"));
 		}
 		setViewContent(createContent());
+		setViewDetails(createDetailsDrawer());
+		setViewDetailsPosition(Position.BOTTOM);
 	}
 
 	private Component createContent() {
-		grid = createGrid();
-		Div gridWrapper = new Div(grid);
-		gridWrapper.addClassName(GRID_VIEW);
-
-		detailsDrawer = createDetailsDrawer();
-
-		FlexBoxLayout content = new FlexBoxLayout(gridWrapper, detailsDrawer);
-		content.setFlexDirection(FlexDirection.COLUMN);
-		content.setOverflow(Overflow.HIDDEN);
-		content.setHeight("100%");
+		Div content = new Div(createGrid());
+		content.addClassName(GRID_VIEW);
 		return content;
 	}
 
 	private Grid createGrid() {
-		Grid<Person> grid = new Grid<>();
+		grid = new Grid<>();
 		grid.addSelectionListener(event -> event.getFirstSelectedItem().ifPresent(this::showDetails));
 		grid.setDataProvider(DataProvider.ofCollection(DummyData.getPersons()));
 		grid.setHeight("100%");
@@ -128,31 +115,22 @@ public class VerticalSplitView extends ViewFrame {
 	}
 
 	private DetailsDrawer createDetailsDrawer() {
-		DetailsDrawer detailsDrawer = new DetailsDrawer(DetailsDrawer.Position.BOTTOM);
+		detailsDrawer = new DetailsDrawer(DetailsDrawer.Position.BOTTOM);
 
 		// Header
-		detailsDrawerTitle = UIUtils.createDetailsDrawerHeader("", true, true);
-		detailsDrawer.setHeader(detailsDrawerTitle);
+		detailsDrawerHeader = new DetailsDrawerHeader("");
+		detailsDrawer.setHeader(detailsDrawerHeader);
 
 		// Footer
-		Button save = UIUtils.createPrimaryButton("Save");
-		save.addClickListener(e -> UIUtils.showNotification("Not implemented yet."));
-
-		Button cancel = UIUtils.createTertiaryButton("Cancel");
-		cancel.addClickListener(e -> detailsDrawer.hide());
-
-		FlexBoxLayout footer = new FlexBoxLayout(save, cancel);
-		footer.setBackgroundColor(LumoStyles.Color.Contrast._5);
-		footer.setPadding(Horizontal.L, Vertical.S);
-		footer.setSpacing(Right.S);
-		footer.setWidth("100%");
+		DetailsDrawerFooter footer = new DetailsDrawerFooter();
+		footer.addCancelListener(e -> detailsDrawer.hide());
 		detailsDrawer.setFooter(footer);
 
 		return detailsDrawer;
 	}
 
 	private void showDetails(Person person) {
-		detailsDrawerTitle.setText(person.getName());
+		detailsDrawerHeader.setText(person.getName());
 		detailsDrawer.setContent(createDetails(person));
 		detailsDrawer.show();
 	}
@@ -189,7 +167,6 @@ public class VerticalSplitView extends ViewFrame {
 				new FormLayout.ResponsiveStep("600px", 2, FormLayout.ResponsiveStep.LabelsPosition.TOP),
 				new FormLayout.ResponsiveStep("1024px", 3, FormLayout.ResponsiveStep.LabelsPosition.TOP)
 		);
-
 		form.addFormItem(firstName, "First Name");
 		form.addFormItem(lastName, "Last Name");
 		form.addFormItem(gender, "Gender");
@@ -197,7 +174,6 @@ public class VerticalSplitView extends ViewFrame {
 		form.addFormItem(email, "Email");
 		form.addFormItem(company, "Company");
 		form.addFormItem(new Upload(), "Image");
-
 		return form;
 	}
 }

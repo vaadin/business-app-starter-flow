@@ -2,14 +2,12 @@ package com.vaadin.starter.responsiveapptemplate.ui.views.inventory;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasValue;
-import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
 import com.vaadin.flow.component.radiobutton.RadioGroupVariant;
 import com.vaadin.flow.component.tabs.Tab;
@@ -27,19 +25,17 @@ import com.vaadin.starter.responsiveapptemplate.backend.DummyData;
 import com.vaadin.starter.responsiveapptemplate.backend.Invoice;
 import com.vaadin.starter.responsiveapptemplate.backend.UIConfig;
 import com.vaadin.starter.responsiveapptemplate.ui.Root;
-import com.vaadin.starter.responsiveapptemplate.ui.components.DetailsDrawer;
 import com.vaadin.starter.responsiveapptemplate.ui.components.ListItem;
+import com.vaadin.starter.responsiveapptemplate.ui.components.detailsdrawer.DetailsDrawer;
+import com.vaadin.starter.responsiveapptemplate.ui.components.detailsdrawer.DetailsDrawerFooter;
+import com.vaadin.starter.responsiveapptemplate.ui.components.detailsdrawer.DetailsDrawerHeader;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.bar.AppBar;
-import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexBoxLayout;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexDirection;
-import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Horizontal;
-import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Right;
-import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Vertical;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.FontSize;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.TextColor;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
-import com.vaadin.starter.responsiveapptemplate.ui.views.ViewFrame;
+import com.vaadin.starter.responsiveapptemplate.ui.views.ViewFrameWithDetails;
 
 import java.time.format.DateTimeFormatter;
 
@@ -47,7 +43,7 @@ import static com.vaadin.starter.responsiveapptemplate.ui.utils.ViewStyles.GRID_
 
 @Route(value = "invoices", layout = Root.class)
 @PageTitle("Invoices")
-public class Invoices extends ViewFrame {
+public class Invoices extends ViewFrameWithDetails {
 
 	private AppBar appBar;
 
@@ -55,18 +51,18 @@ public class Invoices extends ViewFrame {
 	private ListDataProvider<Invoice> dataProvider;
 
 	private DetailsDrawer detailsDrawer;
-	private Label detailsDrawerTitle;
+	private DetailsDrawerHeader detailsDrawerHeader;
 
 	public Invoices() {
 		if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-			appBar = createAppBar();
-			setViewHeader(appBar);
+			setViewHeader(createAppBar());
 		}
 		setViewContent(createContent());
+		setViewDetails(createDetailsDrawer());
 	}
 
 	private AppBar createAppBar() {
-		AppBar appBar = new AppBar("Invoices");
+		appBar = new AppBar("Invoices");
 		appBar.addActionItem(VaadinIcon.SEARCH).addClickListener(e -> appBar.searchModeOn());
 		appBar.addSearchListener(e -> filter(e));
 		appBar.setSearchPlaceholder("Search by customer");
@@ -74,19 +70,13 @@ public class Invoices extends ViewFrame {
 	}
 
 	private Component createContent() {
-		grid = createGrid();
-		Div gridWrapper = new Div(grid);
-		gridWrapper.addClassName(GRID_VIEW);
-
-		detailsDrawer = createDetailsDrawer();
-
-		FlexLayout content = new FlexLayout(gridWrapper, detailsDrawer);
-		content.setHeight("100%");
+		Div content = new Div(createGrid());
+		content.addClassName(GRID_VIEW);
 		return content;
 	}
 
 	private Grid createGrid() {
-		Grid<Invoice> grid = new Grid<>();
+		grid = new Grid<>();
 		grid.addSelectionListener(event -> event.getFirstSelectedItem().ifPresent(this::showDetails));
 		dataProvider = DataProvider.ofCollection(DummyData.getInvoices());
 		dataProvider.setSortOrder(Invoice::getDueDate, SortDirection.ASCENDING);
@@ -130,10 +120,10 @@ public class Invoices extends ViewFrame {
 	}
 
 	private DetailsDrawer createDetailsDrawer() {
-		DetailsDrawer detailsDrawer = new DetailsDrawer(DetailsDrawer.Position.RIGHT);
+		detailsDrawer = new DetailsDrawer(DetailsDrawer.Position.RIGHT);
 
 		// Header
-		detailsDrawerTitle = UIUtils.createDetailsDrawerHeader("", false, true);
+		detailsDrawerHeader = new DetailsDrawerHeader("", true);
 
 		Tab details = new Tab("Details");
 		Tab attachments = new Tab("Attachments");
@@ -153,28 +143,19 @@ public class Invoices extends ViewFrame {
 			}
 		});
 
-		detailsDrawer.setHeader(detailsDrawerTitle, tabs);
+		detailsDrawer.setHeader(detailsDrawerHeader, tabs);
 		detailsDrawer.getHeader().setFlexDirection(FlexDirection.COLUMN);
 
 		// Footer
-		Button save = UIUtils.createPrimaryButton("Save");
-		save.addClickListener(e -> UIUtils.showNotification("Not implemented yet."));
-
-		Button cancel = UIUtils.createTertiaryButton("Cancel");
-		cancel.addClickListener(e -> detailsDrawer.hide());
-
-		FlexBoxLayout footer = new FlexBoxLayout(save, cancel);
-		footer.setBackgroundColor(LumoStyles.Color.Contrast._5);
-		footer.setPadding(Horizontal.L, Vertical.S);
-		footer.setSpacing(Right.S);
-		footer.setWidth("100%");
+		DetailsDrawerFooter footer = new DetailsDrawerFooter();
+		footer.addCancelListener(e -> detailsDrawer.hide());
 		detailsDrawer.setFooter(footer);
 
 		return detailsDrawer;
 	}
 
 	private void showDetails(Invoice invoice) {
-		detailsDrawerTitle.setText(invoice.getOrder().getCustomer());
+		detailsDrawerHeader.setText(invoice.getOrder().getCustomer());
 		detailsDrawer.setContent(createDetails(invoice));
 		detailsDrawer.show();
 	}
@@ -204,7 +185,9 @@ public class Invoices extends ViewFrame {
 		// Form
 		FormLayout form = new FormLayout(invoiceId, invoiceDate, orderId, amount, status, dueDate);
 		form.addClassNames(LumoStyles.Padding.Bottom.L, LumoStyles.Padding.Horizontal.L, LumoStyles.Padding.Top.S);
-		form.setResponsiveSteps(new FormLayout.ResponsiveStep("0", 1, FormLayout.ResponsiveStep.LabelsPosition.TOP));
+		form.setResponsiveSteps(
+				new FormLayout.ResponsiveStep("0", 1, FormLayout.ResponsiveStep.LabelsPosition.TOP)
+		);
 		return form;
 	}
 

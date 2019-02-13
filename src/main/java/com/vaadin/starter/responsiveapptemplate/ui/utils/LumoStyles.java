@@ -130,13 +130,13 @@ public class LumoStyles {
 
 		public class Responsive {
 			public class Horizontal {
-				public static final String SM = "margin-r-h-m";
-				public static final String ML = "margin-r-h-l";
+				public static final String M = "margin-r-h-m";
+				public static final String L = "margin-r-h-l";
 			}
 
 			public class Vertical {
-				public static final String SM = "margin-r-v-m";
-				public static final String ML = "margin-r-v-l";
+				public static final String M = "margin-r-v-m";
+				public static final String L = "margin-r-v-l";
 			}
 		}
 
@@ -220,13 +220,13 @@ public class LumoStyles {
 
 		public class Responsive {
 			public class Horizontal {
-				public static final String SM = "padding-r-h-m";
-				public static final String ML = "padding-r-h-l";
+				public static final String M = "padding-r-h-m";
+				public static final String L = "padding-r-h-l";
 			}
 
 			public class Vertical {
-				public static final String SM = "padding-r-v-m";
-				public static final String ML = "padding-r-v-l";
+				public static final String M = "padding-r-v-m";
+				public static final String L = "padding-r-v-l";
 			}
 		}
 

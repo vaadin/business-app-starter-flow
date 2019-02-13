@@ -30,7 +30,6 @@
   position: relative;
   transition: margin var(--transition-duration-m);
   width: var(--navi-drawer-width);
-  -webkit-overflow-scrolling: touch;
 }
 
 /* Search */
@@ -46,6 +45,7 @@
   box-shadow: inset 0 -1px var(--lumo-contrast-20pct);
   flex: 1;
   overflow: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* List */

@@ -1,12 +1,10 @@
 package com.vaadin.starter.responsiveapptemplate.ui.views.finance;
 
 import com.vaadin.flow.component.Component;
-import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.tabs.TabsVariant;
@@ -20,73 +18,63 @@ import com.vaadin.starter.responsiveapptemplate.backend.DummyData;
 import com.vaadin.starter.responsiveapptemplate.backend.Payment;
 import com.vaadin.starter.responsiveapptemplate.backend.UIConfig;
 import com.vaadin.starter.responsiveapptemplate.ui.Root;
-import com.vaadin.starter.responsiveapptemplate.ui.components.DetailsDrawer;
 import com.vaadin.starter.responsiveapptemplate.ui.components.ListItem;
+import com.vaadin.starter.responsiveapptemplate.ui.components.detailsdrawer.DetailsDrawer;
+import com.vaadin.starter.responsiveapptemplate.ui.components.detailsdrawer.DetailsDrawerFooter;
+import com.vaadin.starter.responsiveapptemplate.ui.components.detailsdrawer.DetailsDrawerHeader;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.bar.AppBar;
-import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexBoxLayout;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexDirection;
-import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Horizontal;
-import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Right;
-import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Vertical;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.CSSProperties;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
-import com.vaadin.starter.responsiveapptemplate.ui.views.ViewFrame;
+import com.vaadin.starter.responsiveapptemplate.ui.views.ViewFrameWithDetails;
 
 import static com.vaadin.starter.responsiveapptemplate.ui.utils.ViewStyles.GRID_VIEW;
 
 @Route(value = "payments", layout = Root.class)
 @PageTitle("Payments")
-public class Payments extends ViewFrame {
+public class Payments extends ViewFrameWithDetails {
 
 	private AppBar appBar;
-
 	private Grid<Payment> grid;
 	private ListDataProvider<Payment> dataProvider;
-
 	private DetailsDrawer detailsDrawer;
 
 	public Payments() {
 		if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-			appBar = createAppBar();
-			setViewHeader(appBar);
+			setViewHeader(createAppBar());
 		}
 		setViewContent(createContent());
+		setViewDetails(createDetailsDrawer());
 
 		filter();
 	}
 
 	private AppBar createAppBar() {
-		AppBar appBar = new AppBar("Payments");
+		appBar = new AppBar("Payments");
 		for (Payment.Status status : Payment.Status.values()) {
 			appBar.addTab(status.getName());
 		}
 		appBar.addTabSelectionListener(e -> {
 			filter();
-			hideDetails();
+			detailsDrawer.hide();
 		});
 		appBar.centerTabs();
 		return appBar;
 	}
 
 	private Component createContent() {
-		grid = createGrid();
-		Div gridWrapper = new Div(grid);
-		gridWrapper.addClassName(GRID_VIEW);
-
-		detailsDrawer = createDetailsDrawer();
-
-		FlexLayout content = new FlexLayout(gridWrapper, detailsDrawer);
-		content.setSizeFull();
+		Div content = new Div(createGrid());
+		content.addClassName(GRID_VIEW);
 		return content;
 	}
 
 	private Grid createGrid() {
-		Grid<Payment> grid = new Grid<>();
-		dataProvider = DataProvider.ofCollection(DummyData.getPayments());
+		grid = new Grid<>();
 		grid.addSelectionListener(event -> event.getFirstSelectedItem().ifPresent(this::showDetails));
+		dataProvider = DataProvider.ofCollection(DummyData.getPayments());
 		grid.setDataProvider(dataProvider);
-		grid.setSizeFull();
+		grid.setHeight("100%");
 
 		grid.addColumn(new ComponentRenderer<>(UIUtils::createBadge))
 				.setHeader("Status")
@@ -132,10 +120,10 @@ public class Payments extends ViewFrame {
 	}
 
 	private DetailsDrawer createDetailsDrawer() {
-		DetailsDrawer detailsDrawer = new DetailsDrawer(DetailsDrawer.Position.RIGHT);
+		detailsDrawer = new DetailsDrawer(DetailsDrawer.Position.RIGHT);
 
 		// Header
-		Label detailsDrawerTitle = UIUtils.createDetailsDrawerHeader("Payment Details", false, true);
+		DetailsDrawerHeader detailsDrawerTitle = new DetailsDrawerHeader("Payment Details", true);
 
 		Tabs tabs = new Tabs(new Tab("Details"), new Tab("Attachments"), new Tab("History"));
 		tabs.addThemeVariants(TabsVariant.LUMO_EQUAL_WIDTH_TABS);
@@ -144,14 +132,8 @@ public class Payments extends ViewFrame {
 		detailsDrawer.getHeader().setFlexDirection(FlexDirection.COLUMN);
 
 		// Footer
-		Button close = UIUtils.createTertiaryButton("Close");
-		close.addClickListener(e -> detailsDrawer.hide());
-
-		FlexBoxLayout footer = new FlexBoxLayout(close);
-		footer.setBackgroundColor(LumoStyles.Color.Contrast._5);
-		footer.setPadding(Horizontal.L, Vertical.S);
-		footer.setSpacing(Right.S);
-		footer.setWidth("100%");
+		DetailsDrawerFooter footer = new DetailsDrawerFooter();
+		footer.addCancelListener(e -> detailsDrawer.hide());
 		detailsDrawer.setFooter(footer);
 
 		return detailsDrawer;
@@ -160,10 +142,6 @@ public class Payments extends ViewFrame {
 	private void showDetails(Payment payment) {
 		detailsDrawer.setContent(createDetails(payment));
 		detailsDrawer.show();
-	}
-
-	private void hideDetails() {
-		detailsDrawer.hide();
 	}
 
 	private Component createDetails(Payment payment) {

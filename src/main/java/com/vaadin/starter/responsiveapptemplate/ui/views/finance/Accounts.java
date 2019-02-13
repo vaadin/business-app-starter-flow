@@ -41,14 +41,13 @@ public class Accounts extends ViewFrame implements RouterLayout {
 	}
 
 	private Component createContent() {
-		grid = createGrid();
-		Div content = new Div(grid);
+		Div content = new Div(createGrid());
 		content.addClassName(GRID_VIEW);
 		return content;
 	}
 
 	private Grid createGrid() {
-		Grid<BankAccount> grid = new Grid<>();
+		grid = new Grid<>();
 		grid.addSelectionListener(event -> event.getFirstSelectedItem().ifPresent(this::viewDetails));
 		grid.setDataProvider(DataProvider.ofCollection(DummyData.getBankAccounts()));
 		grid.setSizeFull();

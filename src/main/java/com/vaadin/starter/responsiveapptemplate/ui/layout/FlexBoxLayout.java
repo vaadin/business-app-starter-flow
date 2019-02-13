@@ -27,6 +27,10 @@ public class FlexBoxLayout extends FlexLayout {
 		getStyle().set("box-sizing", sizing.getValue());
 	}
 
+	public void setDisplay(Display display) {
+		getStyle().set("display", display.getValue());
+	}
+
 	public void setFlex(String value, Component... components) {
 		for (Component component : components) {
 			component.getElement().getStyle().set("flex", value);

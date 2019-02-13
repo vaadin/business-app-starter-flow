@@ -687,30 +687,6 @@ public class UIUtils {
 
 
 
-	/* === DETAILS DRAWER === */
-
-	public static Label createDetailsDrawerHeader(String title, boolean border, boolean horizontalPadding) {
-		Label header = UIUtils.createH3Label(title);
-		header.addClassName(LumoStyles.Padding.Top.L);
-
-		// If we have a border, we set a slightly larger bottom padding.
-		if (border) {
-			header.addClassNames(BoxShadowBorders.BOTTOM, LumoStyles.Padding.Bottom.L);
-		} else {
-			header.addClassName(LumoStyles.Padding.Bottom.M);
-		}
-
-		if (horizontalPadding) {
-			header.addClassName(LumoStyles.Padding.Horizontal.L);
-		}
-
-		header.getStyle().set(CSSProperties.BoxSizing.PROPERTY, CSSProperties.BoxSizing.BORDER_BOX);
-		header.setWidth("100%");
-		return header;
-	}
-
-
-
 	/* === NOTIFICATIONS === */
 
 	public static void showNotification(String text) {

@@ -1,13 +1,14 @@
-package com.vaadin.starter.responsiveapptemplate.ui.components;
+package com.vaadin.starter.responsiveapptemplate.ui.components.detailsdrawer;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Composite;
+import com.vaadin.flow.component.HasSize;
 import com.vaadin.flow.component.HasStyle;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexBoxLayout;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexDirection;
 
-public class DetailsDrawer extends Composite<FlexLayout> implements HasStyle {
+public class DetailsDrawer extends Composite<FlexLayout> implements HasStyle, HasSize {
 
 	private static final String CLASS_NAME = "details-drawer";
 

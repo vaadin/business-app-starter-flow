@@ -40,15 +40,13 @@ public class AccountDetails extends ViewFrame implements HasUrlParameter<Long> {
 	public int RECENT_TRANSACTIONS = 4;
 
 	private AppBar appBar;
-
 	private ListItem availability;
 	private ListItem bankAccount;
 	private ListItem updated;
 
 	public AccountDetails() {
 		if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-			appBar = createAppBar();
-			setViewHeader(appBar);
+			setViewHeader(createAppBar());
 		}
 		setViewContent(createContent());
 	}
@@ -69,7 +67,7 @@ public class AccountDetails extends ViewFrame implements HasUrlParameter<Long> {
 	}
 
 	private AppBar createAppBar() {
-		AppBar appBar = new AppBar("Details");
+		appBar = new AppBar("Details");
 		appBar.setNaviMode(AppBar.NaviMode.CONTEXTUAL);
 		appBar.setContextNaviIcon(new Icon(VaadinIcon.ARROW_BACKWARD));
 		appBar.getContextNaviIcon().addClickListener(e -> UI.getCurrent().navigate("accounts"));
@@ -160,7 +158,7 @@ public class AccountDetails extends ViewFrame implements HasUrlParameter<Long> {
 
 	private Component createMonthlyOverviewHeader() {
 		Label header = UIUtils.createH3Label("Monthly Overview");
-		header.addClassNames(LumoStyles.Margin.Vertical.L, LumoStyles.Margin.Responsive.Horizontal.ML);
+		header.addClassNames(LumoStyles.Margin.Vertical.L, LumoStyles.Margin.Responsive.Horizontal.L);
 		return header;
 	}
 

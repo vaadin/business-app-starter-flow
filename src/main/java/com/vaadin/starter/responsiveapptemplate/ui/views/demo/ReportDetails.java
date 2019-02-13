@@ -42,20 +42,17 @@ public class ReportDetails extends ViewFrame implements HasUrlParameter<Long> {
 	private static final String CLASS_NAME = "report-details";
 
 	private AppBar appBar;
-
 	private FlexBoxLayout logoSection;
 	private Image image;
 	private ListItem balance;
 	private ListItem runningDate;
 	private ListItem status;
-
 	private FlexLayout accounts;
 	private FlexLayout events;
 
 	public ReportDetails() {
 		if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-			appBar = createAppBar();
-			setViewHeader(appBar);
+			setViewHeader(createAppBar());
 		}
 		setViewContent(createContent());
 	}
@@ -82,7 +79,7 @@ public class ReportDetails extends ViewFrame implements HasUrlParameter<Long> {
 	}
 
 	private AppBar createAppBar() {
-		AppBar appBar = new AppBar("Details");
+		appBar = new AppBar("Details");
 		appBar.setNaviMode(AppBar.NaviMode.CONTEXTUAL);
 		appBar.setContextNaviIcon(new Icon(VaadinIcon.ARROW_BACKWARD));
 		appBar.getContextNaviIcon().addClickListener(e -> UI.getCurrent().navigate("reports"));
@@ -90,13 +87,13 @@ public class ReportDetails extends ViewFrame implements HasUrlParameter<Long> {
 	}
 
 	private Component createContent() {
-		logoSection = createLogoSection();
+		createLogoSection();
 
-		Label accountsHeader = createHeader("Accounts (USD)");
-		accounts = createAccounts();
+		createHeader("Accounts (USD)");
+		createAccounts();
 
-		Label eventsHeader = createHeader("Pending Events");
-		events = createPendingEvents();
+		createHeader("Pending Events");
+		createPendingEvents();
 
 		Component chart = createTransactionsChart();
 
@@ -128,21 +125,21 @@ public class ReportDetails extends ViewFrame implements HasUrlParameter<Long> {
 
 		FlexLayout listItems = UIUtils.createColumn(balance, runningDate, status);
 
-		FlexBoxLayout section = new FlexBoxLayout(image, listItems);
-		section.addClassName(BoxShadowBorders.BOTTOM);
-		section.setAlignItems(FlexComponent.Alignment.CENTER);
-		section.setFlex("1", listItems);
-		section.setFlexWrap(FlexWrap.WRAP);
-		section.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
-		section.setPadding(Bottom.L);
-		return section;
+		logoSection = new FlexBoxLayout(image, listItems);
+		logoSection.addClassName(BoxShadowBorders.BOTTOM);
+		logoSection.setAlignItems(FlexComponent.Alignment.CENTER);
+		logoSection.setFlex("1", listItems);
+		logoSection.setFlexWrap(FlexWrap.WRAP);
+		logoSection.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
+		logoSection.setPadding(Bottom.L);
+		return logoSection;
 	}
 
 	private Label createHeader(String title) {
 		Label header = UIUtils.createH6Label(title);
 		header.addClassNames(
 				LumoStyles.Margin.Bottom.M,
-				LumoStyles.Margin.Responsive.Horizontal.ML,
+				LumoStyles.Margin.Responsive.Horizontal.L,
 				LumoStyles.Margin.Top.L
 		);
 		return header;
@@ -150,21 +147,23 @@ public class ReportDetails extends ViewFrame implements HasUrlParameter<Long> {
 
 	private FlexLayout createAccounts() {
 		Integer amount = DummyData.getRandomInt(0, 5000);
-		return UIUtils.createWrappingFlexLayout(
+		accounts = UIUtils.createWrappingFlexLayout(
 				Arrays.asList(LumoStyles.Padding.Bottom.L, BoxShadowBorders.BOTTOM),
 				createLargeListItem(VaadinIcon.PLUS, UIUtils.formatAmount(amount * 0.4), "14 deposits"),
 				createLargeListItem(VaadinIcon.MINUS, UIUtils.formatAmount(amount * 0.6), "9 withdrawals"),
 				createLargeListItem(VaadinIcon.PLUS_MINUS, UIUtils.formatAmount(amount), "23 in total")
 		);
+		return accounts;
 	}
 
 	private FlexLayout createPendingEvents() {
-		return UIUtils.createWrappingFlexLayout(
+		events = UIUtils.createWrappingFlexLayout(
 				Collections.singleton(LumoStyles.Padding.Bottom.XL),
 				createLargeListItem(VaadinIcon.TIMER, UIUtils.formatAmount(DummyData.getRandomInt(0, 50)), "Open"),
 				createLargeListItem(VaadinIcon.CHECK, UIUtils.formatAmount(DummyData.getRandomInt(0, 100)), "Closed"),
 				createLargeListItem(VaadinIcon.BAN, UIUtils.formatAmount(DummyData.getRandomInt(0, 50)), "Failed")
 		);
+		return events;
 	}
 
 	private ListItem createLargeListItem(VaadinIcon icon, String primary, String secondary) {
