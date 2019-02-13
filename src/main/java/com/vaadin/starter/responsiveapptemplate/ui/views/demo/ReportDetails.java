@@ -87,17 +87,14 @@ public class ReportDetails extends ViewFrame implements HasUrlParameter<Long> {
 	}
 
 	private Component createContent() {
-		createLogoSection();
-
-		createHeader("Accounts (USD)");
-		createAccounts();
-
-		createHeader("Pending Events");
-		createPendingEvents();
-
-		Component chart = createTransactionsChart();
-
-		FlexBoxLayout content = new FlexBoxLayout(logoSection, accountsHeader, accounts, eventsHeader, events, chart);
+		FlexBoxLayout content = new FlexBoxLayout(
+				createLogoSection(),
+				createHeader("Accounts (USD)"),
+				createAccounts(),
+				createHeader("Pending Events"),
+				createPendingEvents(),
+				createTransactionsChart()
+		);
 		content.setFlexDirection(FlexDirection.COLUMN);
 		content.setMargin(Horizontal.AUTO, Vertical.RESPONSIVE_L);
 		content.setMaxWidth(CSSProperties.MaxWidth._840);
