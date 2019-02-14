@@ -5,7 +5,8 @@ import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.CSSProperties;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.Overflow;
+import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
 import com.vaadin.starter.responsiveapptemplate.ui.views.Default;
 
 /**
@@ -17,7 +18,7 @@ public class NaviTabs extends Tabs {
 
 	public NaviTabs() {
 		getElement().setAttribute("overflow", "end");
-		getStyle().set(CSSProperties.Overflow.PROPERTY, CSSProperties.Overflow.HIDDEN);
+		UIUtils.setOverflow(Overflow.HIDDEN, this);
 		addSelectedChangeListener(listener);
 	}
 

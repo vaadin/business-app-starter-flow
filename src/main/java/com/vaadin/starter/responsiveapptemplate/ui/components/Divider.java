@@ -4,8 +4,8 @@ import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.CSSProperties;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
+import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
 
 public class Divider extends Composite<FlexLayout> {
 
@@ -24,7 +24,7 @@ public class Divider extends Composite<FlexLayout> {
 		getContent().setHeight(height);
 
 		divider = new Div();
-		divider.getStyle().set(CSSProperties.BackgroundColor.PROPERTY, LumoStyles.Color.Contrast._20);
+		UIUtils.setBackgroundColor(LumoStyles.Color.Contrast._20, divider);
 		divider.setHeight("1px");
 		divider.setWidth("100%");
 		getContent().add(divider);

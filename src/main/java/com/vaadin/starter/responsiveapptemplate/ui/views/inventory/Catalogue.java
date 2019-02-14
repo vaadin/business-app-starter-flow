@@ -28,13 +28,13 @@ import com.vaadin.starter.responsiveapptemplate.ui.components.detailsdrawer.Deta
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.bar.AppBar;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
-import com.vaadin.starter.responsiveapptemplate.ui.views.ViewFrameWithDetails;
+import com.vaadin.starter.responsiveapptemplate.ui.views.SplitViewFrame;
 
 import static com.vaadin.starter.responsiveapptemplate.ui.utils.ViewStyles.GRID_VIEW;
 
 @Route(value = "catalogue", layout = Root.class)
 @PageTitle("Catalogue")
-public class Catalogue extends ViewFrameWithDetails {
+public class Catalogue extends SplitViewFrame {
 
 	private AppBar appBar;
 	private Grid<Item> grid;

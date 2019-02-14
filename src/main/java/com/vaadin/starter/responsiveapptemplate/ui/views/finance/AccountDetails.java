@@ -27,7 +27,10 @@ import com.vaadin.starter.responsiveapptemplate.ui.components.ListItem;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.bar.AppBar;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.*;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.size.*;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.*;
+import com.vaadin.starter.responsiveapptemplate.ui.utils.BoxShadowBorders;
+import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
+import com.vaadin.starter.responsiveapptemplate.ui.utils.TextColor;
+import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
 import com.vaadin.starter.responsiveapptemplate.ui.views.ViewFrame;
 
 import java.time.LocalDate;
@@ -84,26 +87,26 @@ public class AccountDetails extends ViewFrame implements HasUrlParameter<Long> {
 		);
 		content.setFlexDirection(FlexDirection.COLUMN);
 		content.setMargin(Horizontal.AUTO, Vertical.RESPONSIVE_L);
-		content.setMaxWidth(CSSProperties.MaxWidth._840);
+		content.setMaxWidth("840px");
 		return content;
 	}
 
 	private FlexBoxLayout createLogoSection() {
 		Image image = DummyData.getLogo();
-		image.getStyle().set(CSSProperties.BorderRadius.PROPERTY, "100%");
 		image.addClassName(LumoStyles.Margin.Horizontal.L);
+		UIUtils.setBorderRadius(BorderRadius._50, image);
 		image.setHeight("200px");
 		image.setWidth("200px");
 
 		availability = new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.DOLLAR), "", "Availability");
-		availability.addPrimaryClassNames(LumoStyles.Header.H2);
+		availability.getPrimary().addClassName(LumoStyles.Header.H2);
 		availability.setDividerVisible(true);
 		availability.setReverse(true);
 
 		bankAccount = new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.INSTITUTION), "", "");
 		bankAccount.setDividerVisible(true);
 		bankAccount.setReverse(true);
-		bankAccount.getStyle().set(CSSProperties.WhiteSpace.PROPERTY, CSSProperties.WhiteSpace.PRE_LINE);
+		bankAccount.setWhiteSpace(WhiteSpace.PRE_LINE);
 
 		updated = new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.CALENDAR), "", "Updated");
 		updated.setReverse(true);

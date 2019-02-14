@@ -28,7 +28,10 @@ import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Bottom;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Horizontal;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Uniform;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Vertical;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.*;
+import com.vaadin.starter.responsiveapptemplate.ui.utils.BoxShadowBorders;
+import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
+import com.vaadin.starter.responsiveapptemplate.ui.utils.TextColor;
+import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
 import com.vaadin.starter.responsiveapptemplate.ui.views.ViewFrame;
 
 import java.time.LocalDate;
@@ -97,14 +100,14 @@ public class ReportDetails extends ViewFrame implements HasUrlParameter<Long> {
 		);
 		content.setFlexDirection(FlexDirection.COLUMN);
 		content.setMargin(Horizontal.AUTO, Vertical.RESPONSIVE_L);
-		content.setMaxWidth(CSSProperties.MaxWidth._840);
+		content.setMaxWidth("840px");
 		content.setPadding(Horizontal.RESPONSIVE_X);
 		return content;
 	}
 
 	private FlexBoxLayout createLogoSection() {
 		image = new Image("", "");
-		image.getStyle().set(CSSProperties.BorderRadius.PROPERTY, "100%");
+		UIUtils.setBorderRadius(BorderRadius._50, image);
 		image.addClassNames(LumoStyles.Margin.Horizontal.L, LumoStyles.Margin.Bottom.S);
 		image.setHeight("200px");
 		image.setWidth("200px");
@@ -166,7 +169,7 @@ public class ReportDetails extends ViewFrame implements HasUrlParameter<Long> {
 	private ListItem createLargeListItem(VaadinIcon icon, String primary, String secondary) {
 		ListItem item = new ListItem(new Icon(icon), primary, secondary);
 		item.addClassName(CLASS_NAME + "__list-item");
-		item.addPrimaryClassNames(LumoStyles.Header.H2);
+		item.getPrimary().addClassName(LumoStyles.Header.H2);
 
 		if (icon.equals(VaadinIcon.CHECK) || icon.equals(VaadinIcon.FLAG_CHECKERED)) {
 			item.addClassName(TextColor.SUCCESS.getClassName());

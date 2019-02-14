@@ -1,9 +1,10 @@
 package com.vaadin.starter.responsiveapptemplate.ui.components.detailsdrawer;
 
 import com.vaadin.flow.component.html.Label;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.BoxSizing;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.BoxShadowBorders;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.CSSProperties;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
+import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
 
 public class DetailsDrawerHeader extends Label {
 
@@ -12,7 +13,7 @@ public class DetailsDrawerHeader extends Label {
 
 		// Default styling
 		addClassNames(LumoStyles.Header.H3, LumoStyles.Padding.Responsive.Horizontal.L, LumoStyles.Padding.Top.L);
-		getStyle().set(CSSProperties.BoxSizing.PROPERTY, CSSProperties.BoxSizing.BORDER_BOX);
+		UIUtils.setBoxSizing(BoxSizing.BORDER_BOX, this);
 		setWidth("100%");
 
 		// Styling based on whether this component will share the DetailsDrawer header slot with Tabs

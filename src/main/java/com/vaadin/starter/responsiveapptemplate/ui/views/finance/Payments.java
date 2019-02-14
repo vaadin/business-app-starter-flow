@@ -5,6 +5,7 @@ import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.tabs.TabsVariant;
@@ -23,17 +24,21 @@ import com.vaadin.starter.responsiveapptemplate.ui.components.detailsdrawer.Deta
 import com.vaadin.starter.responsiveapptemplate.ui.components.detailsdrawer.DetailsDrawerFooter;
 import com.vaadin.starter.responsiveapptemplate.ui.components.detailsdrawer.DetailsDrawerHeader;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.bar.AppBar;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.AlignSelf;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexDirection;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.CSSProperties;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.WhiteSpace;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Bottom;
+import com.vaadin.starter.responsiveapptemplate.ui.utils.FontSize;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
+import com.vaadin.starter.responsiveapptemplate.ui.utils.TextColor;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
-import com.vaadin.starter.responsiveapptemplate.ui.views.ViewFrameWithDetails;
+import com.vaadin.starter.responsiveapptemplate.ui.views.SplitViewFrame;
 
 import static com.vaadin.starter.responsiveapptemplate.ui.utils.ViewStyles.GRID_VIEW;
 
 @Route(value = "payments", layout = Root.class)
 @PageTitle("Payments")
-public class Payments extends ViewFrameWithDetails {
+public class Payments extends SplitViewFrame {
 
 	private AppBar appBar;
 	private Grid<Payment> grid;
@@ -46,6 +51,9 @@ public class Payments extends ViewFrameWithDetails {
 		}
 		setViewContent(createContent());
 		setViewDetails(createDetailsDrawer());
+
+		UIUtils.createLabel(FontSize.XS, TextColor.SECONDARY, "I rule!");
+		UIUtils.createLabel(FontSize.XS, TextColor.ERROR, "I rule!");
 
 		filter();
 	}
@@ -146,10 +154,11 @@ public class Payments extends ViewFrameWithDetails {
 
 	private Component createDetails(Payment payment) {
 		ListItem status = new ListItem(payment.getStatus().getIcon(), payment.getStatus().getName(), "Status");
-		status.addPrimaryClassNames(LumoStyles.Margin.Top.XS);
-		status.setPrimaryElementAttribute(LumoStyles.THEME, payment.getStatus().getTheme());
-		status.setPrimaryStyleProperty(CSSProperties.AlignSelf.PROPERTY, CSSProperties.AlignSelf.BASELINE);
-		status.getElement().setProperty(CSSProperties.Title.PROPERTY, payment.getStatus().getDesc());
+
+		status.getContent().setAlignItems(FlexComponent.Alignment.BASELINE);
+		status.getContent().setSpacing(Bottom.XS);
+		UIUtils.setTheme(payment.getStatus().getTheme(), status.getPrimary());
+		UIUtils.setTooltip(payment.getStatus().getDesc(), status);
 
 		ListItem from = new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.UPLOAD_ALT), payment.getFrom() + "\n" + payment.getFromIBAN(), "Sender");
 		ListItem to = new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.DOWNLOAD_ALT), payment.getTo() + "\n" + payment.getToIBAN(), "Receiver");
@@ -158,7 +167,7 @@ public class Payments extends ViewFrameWithDetails {
 
 		for (ListItem item : new ListItem[]{status, from, to, amount, date}) {
 			item.setReverse(true);
-			item.setWhiteSpace(CSSProperties.WhiteSpace.PRE_LINE);
+			item.setWhiteSpace(WhiteSpace.PRE_LINE);
 		}
 
 		Div details = new Div(status, from, to, amount, date);

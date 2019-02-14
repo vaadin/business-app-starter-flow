@@ -7,40 +7,40 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.CSSProperties;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexBoxLayout;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexDirection;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.WhiteSpace;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.FontSize;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.TextColor;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
 
 import java.util.Collections;
 
-public class ListItem extends Composite<FlexLayout> implements HasStyle {
+public class ListItem extends FlexLayout implements HasStyle {
 
 	private final String CLASS_NAME = "list-item";
 
 	private Div prefix;
 	private Div suffix;
 
-	private final FlexLayout content;
+	private FlexBoxLayout content;
 
-	private final Label primary;
-	private final Label secondary;
+	private Label primary;
+	private Label secondary;
 
 	private Div divider;
 
 	public ListItem(String primary, String secondary) {
-		getContent().setClassName(CLASS_NAME);
-		getContent().setAlignItems(FlexComponent.Alignment.CENTER);
+		setClassName(CLASS_NAME);
+		setAlignItems(FlexComponent.Alignment.CENTER);
 
 		this.primary = new Label(primary);
 		this.secondary = UIUtils.createLabel(FontSize.S, TextColor.SECONDARY, secondary);
 
-		this.content = UIUtils.createColumn(
-				Collections.singleton(CLASS_NAME + "__content"),
-				this.primary,
-				this.secondary
-		);
-		getContent().add(this.content);
+		content = new FlexBoxLayout(this.primary, this.secondary);
+		content.addClassName(CLASS_NAME + "__content");
+		content.setFlexDirection(FlexDirection.COLUMN);
+		add(content);
 	}
 
 	public ListItem(String primary) {
@@ -90,30 +90,30 @@ public class ListItem extends Composite<FlexLayout> implements HasStyle {
 
 
 	/* === MISC === */
-
-	public void setAlignItems(FlexComponent.Alignment alignment) {
-		getContent().setAlignItems(alignment);
+	
+	public FlexBoxLayout getContent() {
+		return content;
 	}
 
-	public void setWhiteSpace(String value) {
-		getElement().getStyle().set(CSSProperties.WhiteSpace.PROPERTY, value);
+	public void setWhiteSpace(WhiteSpace whiteSpace) {
+		UIUtils.setWhiteSpace(whiteSpace, this);
 	}
 
 	public void setReverse(boolean reverse) {
 		if (reverse) {
-			this.content.getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN_REVERSE);
+			content.setFlexDirection(FlexDirection.COLUMN_REVERSE);
 		} else {
-			this.content.getStyle().set(CSSProperties.FlexDirection.PROPERTY, CSSProperties.FlexDirection.COLUMN);
+			content.setFlexDirection(FlexDirection.COLUMN);
 		}
 	}
 
 	public void setHorizontalPadding(boolean horizontalPadding) {
 		if (horizontalPadding) {
-			getContent().getStyle().remove(CSSProperties.PaddingLeft.PROPERTY);
-			getContent().getStyle().remove(CSSProperties.PaddingRight.PROPERTY);
+			getStyle().remove("padding-left");
+			getStyle().remove("padding-right");
 		} else {
-			getContent().getStyle().set(CSSProperties.PaddingLeft.PROPERTY, "0");
-			getContent().getStyle().set(CSSProperties.PaddingRight.PROPERTY, "0");
+			getStyle().set("padding-left", "0");
+			getStyle().set("padding-right", "0");
 		}
 	}
 
@@ -121,16 +121,8 @@ public class ListItem extends Composite<FlexLayout> implements HasStyle {
 		primary.setText(text);
 	}
 
-	public void addPrimaryClassNames(String... classNames) {
-		primary.addClassNames(classNames);
-	}
-
-	public void setPrimaryElementAttribute(String attribute, String value) {
-		primary.getElement().setAttribute(attribute, value);
-	}
-
-	public void setPrimaryStyleProperty(String property, String value) {
-		primary.getStyle().set(property, value);
+	public Label getPrimary() {
+		return primary;
 	}
 
 	public void setSecondaryText(String text) {
@@ -158,7 +150,7 @@ public class ListItem extends Composite<FlexLayout> implements HasStyle {
 	public void setDividerVisible(boolean visible) {
 		if (divider == null) {
 			divider = UIUtils.createDiv(Collections.singleton(CLASS_NAME + "__divider"));
-			getContent().add(divider);
+			add(divider);
 		}
 		divider.setVisible(visible);
 	}

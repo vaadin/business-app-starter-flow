@@ -3,11 +3,13 @@ package com.vaadin.starter.responsiveapptemplate.ui.layout.size;
 public enum Horizontal implements Size {
 
 	AUTO("auto", null),
+
 	XS("var(--lumo-space-xs)", "spacing-h-xs"),
 	S("var(--lumo-space-s)", "spacing-h-s"),
 	M("var(--lumo-space-m)", "spacing-h-m"),
 	L("var(--lumo-space-l)", "spacing-h-l"),
 	XL("var(--lumo-space-xl)", "spacing-h-xl"),
+
 	RESPONSIVE_M("var(--lumo-space-r-m)", null),
 	RESPONSIVE_L("var(--lumo-space-r-l)", null),
 	RESPONSIVE_X("var(--lumo-space-r-x)", null);

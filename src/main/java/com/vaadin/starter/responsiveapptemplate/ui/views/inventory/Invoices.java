@@ -35,7 +35,7 @@ import com.vaadin.starter.responsiveapptemplate.ui.utils.FontSize;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.TextColor;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
-import com.vaadin.starter.responsiveapptemplate.ui.views.ViewFrameWithDetails;
+import com.vaadin.starter.responsiveapptemplate.ui.views.SplitViewFrame;
 
 import java.time.format.DateTimeFormatter;
 
@@ -43,7 +43,7 @@ import static com.vaadin.starter.responsiveapptemplate.ui.utils.ViewStyles.GRID_
 
 @Route(value = "invoices", layout = Root.class)
 @PageTitle("Invoices")
-public class Invoices extends ViewFrameWithDetails {
+public class Invoices extends SplitViewFrame {
 
 	private AppBar appBar;
 

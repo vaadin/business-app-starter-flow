@@ -10,7 +10,6 @@ import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.bar.App
 import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexBoxLayout;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Horizontal;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Vertical;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.CSSProperties;
 
 @Route(value = "", layout = Root.class)
 @PageTitle("Welcome")
@@ -29,7 +28,7 @@ public class Default extends ViewFrame {
 
 		FlexBoxLayout content = new FlexBoxLayout(text);
 		content.setMargin(Horizontal.AUTO);
-		content.setMaxWidth(CSSProperties.MaxWidth._840);
+		content.setMaxWidth("840px");
 		content.setPadding(Horizontal.RESPONSIVE_L, Vertical.L);
 		return content;
 	}

@@ -28,13 +28,13 @@ import com.vaadin.starter.responsiveapptemplate.ui.components.detailsdrawer.Deta
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.bar.AppBar;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
-import com.vaadin.starter.responsiveapptemplate.ui.views.ViewFrameWithDetails;
+import com.vaadin.starter.responsiveapptemplate.ui.views.SplitViewFrame;
 
 import static com.vaadin.starter.responsiveapptemplate.ui.utils.ViewStyles.GRID_VIEW;
 
 @Route(value = "managers", layout = Root.class)
 @PageTitle("Managers")
-public class Managers extends ViewFrameWithDetails {
+public class Managers extends SplitViewFrame {
 
 	private Grid<Person> grid;
 	private ListDataProvider<Person> dataProvider;

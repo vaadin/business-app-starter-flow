@@ -15,7 +15,7 @@ import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexDirection;
  * <li>Bottom {@link #setViewFooter(Component...) footer}</li>
  * </ul>
  */
-public class ViewFrameWithDetails extends Composite<Div> implements HasStyle {
+public class SplitViewFrame extends Composite<Div> implements HasStyle {
 
 	private final String CLASS_NAME = "view-frame";
 
@@ -29,7 +29,7 @@ public class ViewFrameWithDetails extends Composite<Div> implements HasStyle {
 		RIGHT, BOTTOM
 	}
 
-	public ViewFrameWithDetails() {
+	public SplitViewFrame() {
 		setClassName(CLASS_NAME);
 
 		header.setClassName(CLASS_NAME + "__header");

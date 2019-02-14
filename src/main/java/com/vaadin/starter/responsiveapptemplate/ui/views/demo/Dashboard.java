@@ -17,7 +17,10 @@ import com.vaadin.starter.responsiveapptemplate.ui.components.ListItem;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.bar.AppBar;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.*;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.size.*;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.*;
+import com.vaadin.starter.responsiveapptemplate.ui.utils.IconSize;
+import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
+import com.vaadin.starter.responsiveapptemplate.ui.utils.TextColor;
+import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
 import com.vaadin.starter.responsiveapptemplate.ui.views.ViewFrame;
 
 @Route(value = "dashboard", layout = Root.class)
@@ -49,7 +52,7 @@ public class Dashboard extends ViewFrame {
 		FlexBoxLayout content = new FlexBoxLayout(progressHeader, progressChart, salesHeader, salesChart, items);
 		content.setFlexDirection(FlexDirection.COLUMN);
 		content.setMargin(Horizontal.AUTO, Vertical.RESPONSIVE_L);
-		content.setMaxWidth(CSSProperties.MaxWidth._1024);
+		content.setMaxWidth("1024px");
 		content.setPadding(Horizontal.RESPONSIVE_X);
 		content.setSpacing(Bottom.L);
 		return content;

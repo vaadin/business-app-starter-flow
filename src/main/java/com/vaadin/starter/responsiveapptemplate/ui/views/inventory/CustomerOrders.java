@@ -33,7 +33,7 @@ import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Right;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Top;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
-import com.vaadin.starter.responsiveapptemplate.ui.views.ViewFrameWithDetails;
+import com.vaadin.starter.responsiveapptemplate.ui.views.SplitViewFrame;
 
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -44,7 +44,7 @@ import static com.vaadin.starter.responsiveapptemplate.ui.utils.ViewStyles.GRID_
 
 @Route(value = "customer-orders", layout = Root.class)
 @PageTitle("Customer Orders")
-public class CustomerOrders extends ViewFrameWithDetails {
+public class CustomerOrders extends SplitViewFrame {
 
 	private AppBar appBar;
 	private Grid<Order> grid;
@@ -136,13 +136,13 @@ public class CustomerOrders extends ViewFrameWithDetails {
 		return new Div(
 				shippingTitle,
 				shippingItem,
-				new Divider(FlexComponent.Alignment.END, LumoStyles.Size.S),
+				new Divider(FlexComponent.Alignment.END, LumoStyles.Space.S),
 				trackingTitle,
 				trackingItem,
-				new Divider(FlexComponent.Alignment.END, LumoStyles.Size.S),
+				new Divider(FlexComponent.Alignment.END, LumoStyles.Space.S),
 				handlerTitle,
 				handlerItem,
-				new Divider(FlexComponent.Alignment.END, LumoStyles.Size.S),
+				new Divider(FlexComponent.Alignment.END, LumoStyles.Space.S),
 				itemsTitle,
 				items
 		);
@@ -181,7 +181,7 @@ public class CustomerOrders extends ViewFrameWithDetails {
 	}
 
 	private Div createItems(Order order) {
-		Div items = UIUtils.createDiv(Collections.singleton(LumoStyles.Margin.Bottom.L));
+		Div items = UIUtils.createDiv(Collections.singleton(LumoStyles.Margin.Bottom.M));
 
 		Iterator<Item> iterator = order.getItems().iterator();
 		while (iterator.hasNext()) {

@@ -28,13 +28,13 @@ import com.vaadin.starter.responsiveapptemplate.ui.components.detailsdrawer.Deta
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.bar.AppBar;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
-import com.vaadin.starter.responsiveapptemplate.ui.views.ViewFrameWithDetails;
+import com.vaadin.starter.responsiveapptemplate.ui.views.SplitViewFrame;
 
 import static com.vaadin.starter.responsiveapptemplate.ui.utils.ViewStyles.GRID_VIEW;
 
 @Route(value = "horizontal-split-view", layout = Root.class)
 @PageTitle("Horizontal Split View")
-public class HorizontalSplitView extends ViewFrameWithDetails {
+public class HorizontalSplitView extends SplitViewFrame {
 
 	private Grid<Person> grid;
 	private DetailsDrawer detailsDrawer;
@@ -172,7 +172,7 @@ public class HorizontalSplitView extends ViewFrameWithDetails {
 		FormLayout.FormItem emailItem = form.addFormItem(email, "Email");
 		FormLayout.FormItem companyItem = form.addFormItem(company, "Company");
 		FormLayout.FormItem uploadItem = form.addFormItem(new Upload(), "Image");
-		UIUtils.setFormLayoutColSpan(2, genderItem, phoneItem, emailItem, companyItem, uploadItem);
+		UIUtils.setColSpan(2, genderItem, phoneItem, emailItem, companyItem, uploadItem);
 		return form;
 	}
 }
