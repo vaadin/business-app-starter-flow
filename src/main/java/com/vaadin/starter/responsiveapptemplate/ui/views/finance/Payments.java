@@ -24,7 +24,6 @@ import com.vaadin.starter.responsiveapptemplate.ui.components.detailsdrawer.Deta
 import com.vaadin.starter.responsiveapptemplate.ui.components.detailsdrawer.DetailsDrawerFooter;
 import com.vaadin.starter.responsiveapptemplate.ui.components.detailsdrawer.DetailsDrawerHeader;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.bar.AppBar;
-import com.vaadin.starter.responsiveapptemplate.ui.layout.AlignSelf;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexDirection;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.WhiteSpace;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Bottom;

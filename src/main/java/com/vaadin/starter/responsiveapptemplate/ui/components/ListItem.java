@@ -1,7 +1,6 @@
 package com.vaadin.starter.responsiveapptemplate.ui.components;
 
 import com.vaadin.flow.component.Component;
-import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.HasStyle;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
@@ -90,7 +89,7 @@ public class ListItem extends FlexLayout implements HasStyle {
 
 
 	/* === MISC === */
-	
+
 	public FlexBoxLayout getContent() {
 		return content;
 	}
