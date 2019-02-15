@@ -288,46 +288,12 @@ public class UIUtils {
 		return label;
 	}
 
-	public static Label createXXSmallLabel(String text) {
-		Label label = new Label(text);
-		label.addClassName(FontSize.XXS.getClassName());
-		return label;
+	public static Label createLabel(FontSize size, String text) {
+		return createLabel(size, TextColor.BODY, text);
 	}
 
-	public static Label createXSmallLabel(String text) {
-		Label label = new Label(text);
-		label.addClassName(FontSize.XS.getClassName());
-		return label;
-	}
-
-	public static Label createSmallLabel(String text) {
-		Label label = new Label(text);
-		label.addClassName(FontSize.S.getClassName());
-		return label;
-	}
-
-	public static Label createLargeLabel(String text) {
-		Label label = new Label(text);
-		label.addClassName(FontSize.L.getClassName());
-		return label;
-	}
-
-	public static Label createXLargeLabel(String text) {
-		Label label = new Label(text);
-		label.addClassName(FontSize.XL.getClassName());
-		return label;
-	}
-
-	public static Label createXXLargeLabel(String text) {
-		Label label = new Label(text);
-		label.addClassName(FontSize.XXL.getClassName());
-		return label;
-	}
-
-	public static Label createXXXLargeLabel(String text) {
-		Label label = new Label(text);
-		label.addClassName(FontSize.XXXL.getClassName());
-		return label;
+	public static Label createLabel(TextColor color, String text) {
+		return createLabel(FontSize.M, color, text);
 	}
 
 	public static Label createH2Label(String text) {

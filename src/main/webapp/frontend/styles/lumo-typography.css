@@ -23,12 +23,24 @@
   color: var(--lumo-primary-text-color);
 }
 
+.primary-contrast-text {
+  color: var(--lumo-primary-contrast-color);
+}
+
 .error-text {
   color: var(--lumo-error-text-color);
 }
 
+.error-contrast-text {
+  color: var(--lumo-error-contrast-color);
+}
+
 .success-text {
   color: var(--lumo-success-text-color);
+}
+
+.success-contrast-text {
+  color: var(--lumo-success-contrast-color);
 }
 
 /* Headers */

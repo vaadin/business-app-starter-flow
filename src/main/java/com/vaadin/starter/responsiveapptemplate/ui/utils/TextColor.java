@@ -8,8 +8,11 @@ public enum TextColor {
 	TERTIARY("tertiary-text"),
 	DISABLED("disabled-text"),
 	PRIMARY("primary-text"),
+	PRIMARY_CONTRAST("primary-contrast-text"),
 	ERROR("error-text"),
-	SUCCESS("success-text");
+	ERROR_CONTRAST("error-contrast-text"),
+	SUCCESS("success-text"),
+	SUCCESS_CONTRAST("success-contrast-text");
 
 	private String style;
 

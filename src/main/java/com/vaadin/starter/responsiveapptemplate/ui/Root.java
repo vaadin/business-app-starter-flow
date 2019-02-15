@@ -6,8 +6,10 @@ import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasElement;
 import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.page.Viewport;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
@@ -24,6 +26,7 @@ import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexBoxLayout;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexDirection;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.Overflow;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
+import com.vaadin.starter.responsiveapptemplate.ui.utils.TextColor;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
 import com.vaadin.starter.responsiveapptemplate.ui.views.Default;
 import com.vaadin.starter.responsiveapptemplate.ui.views.demo.*;
@@ -106,7 +109,6 @@ public class Root extends FlexBoxLayout
 		row = new FlexBoxLayout(naviDrawer, column);
 		row.addClassName(CLASS_NAME + "__row");
 		row.setFlexGrow(1, column);
-
 		add(row);
 		setFlexGrow(1, row);
 	}
