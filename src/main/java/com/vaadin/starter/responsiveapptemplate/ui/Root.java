@@ -96,6 +96,7 @@ public class Root extends FlexBoxLayout
 
 		viewContainer = new FlexBoxLayout();
 		viewContainer.addClassName(CLASS_NAME + "__view-container");
+		viewContainer.setOverflow(Overflow.HIDDEN);
 
 		column = new FlexBoxLayout(viewContainer);
 		column.addClassName(CLASS_NAME + "__column");
@@ -106,6 +107,7 @@ public class Root extends FlexBoxLayout
 		row = new FlexBoxLayout(naviDrawer, column);
 		row.addClassName(CLASS_NAME + "__row");
 		row.setFlexGrow(1, column);
+		row.setOverflow(Overflow.HIDDEN);
 		add(row);
 		setFlexGrow(1, row);
 	}

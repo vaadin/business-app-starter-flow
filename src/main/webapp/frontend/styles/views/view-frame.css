@@ -12,6 +12,7 @@
 .view-frame__wrapper {
   display: flex;
   flex: 1;
+  overflow: hidden;
 }
 
 .view-frame__content {
