@@ -4,6 +4,7 @@ import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasValue;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.formlayout.FormLayout;
+import com.vaadin.flow.component.grid.ColumnTextAlign;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
@@ -101,8 +102,9 @@ public class Invoices extends SplitViewFrame {
 				.setWidth(UIUtils.COLUMN_WIDTH_M);
 		grid.addColumn(new ComponentRenderer<>(this::createAmount))
 				.setFlexGrow(0)
-				.setHeader(UIUtils.createRightAlignedDiv("Amount ($)"))
-				.setWidth(UIUtils.COLUMN_WIDTH_S);
+				.setHeader("Amount ($)")
+				.setWidth(UIUtils.COLUMN_WIDTH_S)
+				.setTextAlign(ColumnTextAlign.END);
 
 		return grid;
 	}
@@ -115,8 +117,7 @@ public class Invoices extends SplitViewFrame {
 
 	private Component createAmount(Invoice invoice) {
 		Double value = invoice.getOrder().getValue();
-		Label label = UIUtils.createAmountLabel(value);
-		return UIUtils.createRightAlignedDiv(label);
+		return UIUtils.createAmountLabel(value);
 	}
 
 	private DetailsDrawer createDetailsDrawer() {

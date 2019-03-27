@@ -6,6 +6,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.formlayout.FormLayout;
+import com.vaadin.flow.component.grid.ColumnTextAlign;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H5;
@@ -98,26 +99,26 @@ public class CustomerOrders extends SplitViewFrame {
 				.setWidth(UIUtils.COLUMN_WIDTH_M);
 		grid.addColumn(new ComponentRenderer<>(this::createItemCount))
 				.setFlexGrow(0)
-				.setHeader(UIUtils.createRightAlignedDiv("Item Count"))
-				.setWidth(UIUtils.COLUMN_WIDTH_S);
+				.setHeader("Item Count")
+				.setWidth(UIUtils.COLUMN_WIDTH_S)
+				.setTextAlign(ColumnTextAlign.END);
 		grid.addColumn(new ComponentRenderer<>(this::createValue))
 				.setFlexGrow(0)
-				.setHeader(UIUtils.createRightAlignedDiv("Value ($)"))
-				.setWidth(UIUtils.COLUMN_WIDTH_S);
+				.setHeader("Value ($)")
+				.setWidth(UIUtils.COLUMN_WIDTH_S)
+				.setTextAlign(ColumnTextAlign.END);
 
 		return grid;
 	}
 
 	private Component createItemCount(Order order) {
 		int itemCount = order.getItemCount();
-		Label label = UIUtils.createUnitsLabel(itemCount);
-		return UIUtils.createRightAlignedDiv(label);
+		return UIUtils.createUnitsLabel(itemCount);
 	}
 
 	private Component createValue(Order order) {
 		double value = order.getValue();
-		Label label = UIUtils.createAmountLabel(value);
-		return UIUtils.createRightAlignedDiv(label);
+		return UIUtils.createAmountLabel(value);
 	}
 
 	private Component createDetails(Order order) {

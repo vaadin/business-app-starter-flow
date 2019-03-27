@@ -3,9 +3,11 @@ package com.vaadin.starter.responsiveapptemplate.ui.views.personnel;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.formlayout.FormLayout;
+import com.vaadin.flow.component.grid.ColumnTextAlign;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
@@ -76,17 +78,20 @@ public class Managers extends SplitViewFrame {
 				.setHeader("Name")
 				.setWidth(UIUtils.COLUMN_WIDTH_XL);
 		grid.addColumn(new ComponentRenderer<>(this::createActive))
-				.setHeader(UIUtils.createRightAlignedDiv("Active"))
+				.setHeader("Active")
 				.setWidth(UIUtils.COLUMN_WIDTH_XS)
-				.setFlexGrow(0);
+				.setFlexGrow(0)
+				.setTextAlign(ColumnTextAlign.END);
 		grid.addColumn(new ComponentRenderer<>(this::createApprovalLimit))
-				.setHeader(UIUtils.createRightAlignedDiv("Approval Limit ($)"))
+				.setHeader("Approval Limit ($)")
 				.setWidth(UIUtils.COLUMN_WIDTH_L)
-				.setFlexGrow(0);
+				.setFlexGrow(0)
+				.setTextAlign(ColumnTextAlign.END);
 		grid.addColumn(new ComponentRenderer<>(this::createDate))
-				.setHeader(UIUtils.createRightAlignedDiv("Last Report"))
+				.setHeader("Last Report")
 				.setWidth(UIUtils.COLUMN_WIDTH_M)
-				.setFlexGrow(0);
+				.setFlexGrow(0)
+				.setTextAlign(ColumnTextAlign.END);
 
 		return grid;
 	}
@@ -104,16 +109,16 @@ public class Managers extends SplitViewFrame {
 		} else {
 			icon = UIUtils.createDisabledIcon(VaadinIcon.CLOSE);
 		}
-		return UIUtils.createRightAlignedDiv(icon);
+		return icon;
 	}
 
 	private Component createApprovalLimit(Person person) {
 		int amount = person.getRandomInteger() > 0 ? person.getRandomInteger() : 0;
-		return UIUtils.createRightAlignedDiv(UIUtils.createAmountLabel(amount));
+		return UIUtils.createAmountLabel(amount);
 	}
 
 	private Component createDate(Person person) {
-		return UIUtils.createRightAlignedDiv(UIUtils.formatDate(person.getLastModified()));
+		return new Span(UIUtils.formatDate(person.getLastModified()));
 	}
 
 	private DetailsDrawer createDetailsDrawer() {

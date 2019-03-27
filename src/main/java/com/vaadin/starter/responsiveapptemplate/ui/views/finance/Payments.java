@@ -1,9 +1,9 @@
 package com.vaadin.starter.responsiveapptemplate.ui.views.finance;
 
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.grid.ColumnTextAlign;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.tabs.Tab;
@@ -94,9 +94,10 @@ public class Payments extends SplitViewFrame {
 				.setHeader("To")
 				.setWidth(UIUtils.COLUMN_WIDTH_XL);
 		grid.addColumn(new ComponentRenderer<>(this::createAmount))
-				.setHeader(UIUtils.createRightAlignedDiv("Amount ($)"))
+				.setHeader("Amount ($)")
 				.setWidth(UIUtils.COLUMN_WIDTH_M)
-				.setFlexGrow(0);
+				.setFlexGrow(0)
+				.setTextAlign(ColumnTextAlign.END);
 		grid.addColumn(TemplateRenderer.<Payment>of(
 				"[[item.date]]")
 				.withProperty("date", payment -> UIUtils.formatDate(payment.getDate())))
@@ -122,8 +123,7 @@ public class Payments extends SplitViewFrame {
 
 	private Component createAmount(Payment payment) {
 		Double amount = payment.getAmount();
-		Label label = UIUtils.createAmountLabel(amount);
-		return UIUtils.createRightAlignedDiv(label);
+		return UIUtils.createAmountLabel(amount);
 	}
 
 	private DetailsDrawer createDetailsDrawer() {

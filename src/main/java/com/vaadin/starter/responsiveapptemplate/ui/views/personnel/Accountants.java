@@ -3,8 +3,10 @@ package com.vaadin.starter.responsiveapptemplate.ui.views.personnel;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.formlayout.FormLayout;
+import com.vaadin.flow.component.grid.ColumnTextAlign;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
@@ -75,20 +77,24 @@ public class Accountants extends SplitViewFrame {
 				.setWidth(UIUtils.COLUMN_WIDTH_XL);
 		grid.addColumn(new ComponentRenderer<>(this::createActive))
 				.setFlexGrow(0)
-				.setHeader(UIUtils.createRightAlignedDiv("Active"))
-				.setWidth(UIUtils.COLUMN_WIDTH_XS);
+				.setHeader("Active")
+				.setWidth(UIUtils.COLUMN_WIDTH_XS)
+				.setTextAlign(ColumnTextAlign.END);
 		grid.addColumn(new ComponentRenderer<>(this::createInvoices))
 				.setFlexGrow(0)
-				.setHeader(UIUtils.createRightAlignedDiv("Invoices"))
-				.setWidth(UIUtils.COLUMN_WIDTH_M);
+				.setHeader("Invoices")
+				.setWidth(UIUtils.COLUMN_WIDTH_M)
+				.setTextAlign(ColumnTextAlign.END);
 		grid.addColumn(new ComponentRenderer<>(this::createCompanies))
 				.setFlexGrow(0)
-				.setHeader(UIUtils.createRightAlignedDiv("Companies"))
-				.setWidth(UIUtils.COLUMN_WIDTH_S);
+				.setHeader("Companies")
+				.setWidth(UIUtils.COLUMN_WIDTH_S)
+				.setTextAlign(ColumnTextAlign.END);
 		grid.addColumn(new ComponentRenderer<>(this::createDate))
 				.setFlexGrow(0)
-				.setHeader(UIUtils.createRightAlignedDiv("Last Report"))
-				.setWidth(UIUtils.COLUMN_WIDTH_S);
+				.setHeader("Last Report")
+				.setWidth(UIUtils.COLUMN_WIDTH_S)
+				.setTextAlign(ColumnTextAlign.END);
 
 		return grid;
 	}
@@ -106,19 +112,19 @@ public class Accountants extends SplitViewFrame {
 		} else {
 			icon = UIUtils.createDisabledIcon(VaadinIcon.CLOSE);
 		}
-		return UIUtils.createRightAlignedDiv(icon);
+		return icon;
 	}
 
 	private Component createInvoices() {
-		return UIUtils.createRightAlignedDiv(UIUtils.createAmountLabel(DummyData.getRandomInt(0, 5000)));
+		return UIUtils.createAmountLabel(DummyData.getRandomInt(0, 5000));
 	}
 
 	private Component createCompanies() {
-		return UIUtils.createRightAlignedDiv(UIUtils.createUnitsLabel(DummyData.getRandomInt(0, 50)));
+		return UIUtils.createUnitsLabel(DummyData.getRandomInt(0, 50));
 	}
 
 	private Component createDate(Person person) {
-		return UIUtils.createRightAlignedDiv(UIUtils.formatDate(person.getLastModified()));
+		return new Span(UIUtils.formatDate(person.getLastModified()));
 	}
 
 	private DetailsDrawer createDetailsDrawer() {

@@ -209,7 +209,6 @@ public class DummyData {
 		ADDRESSES.add(new Address("63 Pine St.", "Snellville", "GA", "30039"));
 		ADDRESSES.add(new Address("9336 West Andover Court", "Macungie", "PA", "18062"));
 		ADDRESSES.add(new Address("8351 Sage Ave.", "Pittsfield", "MA", "01201"));
-
 	}
 
 

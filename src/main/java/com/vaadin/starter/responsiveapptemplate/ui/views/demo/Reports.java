@@ -2,6 +2,7 @@ package com.vaadin.starter.responsiveapptemplate.ui.views.demo;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
+import com.vaadin.flow.component.grid.ColumnTextAlign;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Image;
@@ -60,9 +61,10 @@ public class Reports extends ViewFrame {
 				.setWidth("160px")
 				.setFlexGrow(0);
 		grid.addColumn(new ComponentRenderer<>(this::createBalance))
-				.setHeader(UIUtils.createRightAlignedDiv("Balance ($)"))
+				.setHeader("Balance ($)")
 				.setWidth("160px")
-				.setFlexGrow(0);
+				.setFlexGrow(0)
+				.setTextAlign(ColumnTextAlign.END);
 
 		return grid;
 	}
@@ -74,7 +76,7 @@ public class Reports extends ViewFrame {
 	}
 
 	private Component createBalance(Report report) {
-		return UIUtils.createRightAlignedDiv(UIUtils.createAmountLabel(report.getBalance()));
+		return UIUtils.createAmountLabel(report.getBalance());
 	}
 
 	private void viewDetails(Report report) {

@@ -2,6 +2,7 @@ package com.vaadin.starter.responsiveapptemplate.ui.views.finance;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
+import com.vaadin.flow.component.grid.ColumnTextAlign;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
@@ -66,8 +67,9 @@ public class Accounts extends ViewFrame implements RouterLayout {
 				.setWidth(UIUtils.COLUMN_WIDTH_XL);
 		grid.addColumn(new ComponentRenderer<>(this::createAvailability))
 				.setFlexGrow(0)
-				.setHeader(UIUtils.createRightAlignedDiv("Availability ($)"))
-				.setWidth(UIUtils.COLUMN_WIDTH_M);
+				.setHeader("Availability ($)")
+				.setWidth(UIUtils.COLUMN_WIDTH_M)
+				.setTextAlign(ColumnTextAlign.END);
 		grid.addColumn(new LocalDateRenderer<>(BankAccount::getUpdated, DateTimeFormatter.ofPattern("MMM dd, YYYY")))
 				.setComparator(BankAccount::getUpdated)
 				.setFlexGrow(0)
@@ -93,7 +95,7 @@ public class Accounts extends ViewFrame implements RouterLayout {
 			label.addClassName(TextColor.ERROR.getClassName());
 		}
 
-		return UIUtils.createRightAlignedDiv(label);
+		return label;
 	}
 
 	private void viewDetails(BankAccount bankAccount) {

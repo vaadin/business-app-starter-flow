@@ -3,9 +3,9 @@ package com.vaadin.starter.responsiveapptemplate.ui.views.inventory;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasValue;
 import com.vaadin.flow.component.formlayout.FormLayout;
+import com.vaadin.flow.component.grid.ColumnTextAlign;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
 import com.vaadin.flow.component.radiobutton.RadioGroupVariant;
@@ -84,17 +84,20 @@ public class Catalogue extends SplitViewFrame {
 				.setWidth(UIUtils.COLUMN_WIDTH_XL)
 				.setFlexGrow(1);
 		grid.addColumn(new ComponentRenderer<>(this::createPrice))
-				.setHeader(UIUtils.createRightAlignedDiv("Unit Price ($)"))
+				.setHeader("Unit Price ($)")
 				.setWidth(UIUtils.COLUMN_WIDTH_S)
-				.setFlexGrow(0);
+				.setFlexGrow(0)
+				.setTextAlign(ColumnTextAlign.END);
 		grid.addColumn(new ComponentRenderer<>(this::createStock))
-				.setHeader(UIUtils.createRightAlignedDiv("In Stock"))
+				.setHeader("In Stock")
 				.setWidth(UIUtils.COLUMN_WIDTH_S)
-				.setFlexGrow(0);
+				.setFlexGrow(0)
+				.setTextAlign(ColumnTextAlign.END);
 		grid.addColumn(new ComponentRenderer<>(this::createSold))
-				.setHeader(UIUtils.createRightAlignedDiv("Units Sold"))
+				.setHeader("Units Sold")
 				.setWidth(UIUtils.COLUMN_WIDTH_S)
-				.setFlexGrow(0);
+				.setFlexGrow(0)
+				.setTextAlign(ColumnTextAlign.END);
 
 		return grid;
 	}
@@ -118,16 +121,15 @@ public class Catalogue extends SplitViewFrame {
 
 	private Component createPrice(Item item) {
 		Double price = item.getPrice();
-		Label label = UIUtils.createAmountLabel(price);
-		return UIUtils.createRightAlignedDiv(label);
+		return UIUtils.createAmountLabel(price);
 	}
 
 	private Component createStock(Item item) {
-		return UIUtils.createRightAlignedDiv(UIUtils.createUnitsLabel(item.getStock()));
+		return UIUtils.createUnitsLabel(item.getStock());
 	}
 
 	private Component createSold(Item item) {
-		return UIUtils.createRightAlignedDiv(UIUtils.createUnitsLabel(item.getSold()));
+		return UIUtils.createUnitsLabel(item.getSold());
 	}
 
 	private DetailsDrawer createDetailsDrawer() {

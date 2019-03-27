@@ -21,6 +21,7 @@ import com.vaadin.starter.responsiveapptemplate.backend.*;
 import com.vaadin.starter.responsiveapptemplate.ui.components.DataSeriesItemWithRadius;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.*;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.TextAlign;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Right;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -28,7 +29,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 
 public class UIUtils {
 
@@ -59,18 +59,6 @@ public class UIUtils {
 	public static Div createDiv(Collection<String> classNames, Component... components) {
 		Div div = new Div(components);
 		classNames.forEach(div::addClassName);
-		return div;
-	}
-
-	public static Div createRightAlignedDiv(Component... components) {
-		Div div = new Div(components);
-		setTextAlign(TextAlign.RIGHT, div);
-		return div;
-	}
-
-	public static Div createRightAlignedDiv(String text) {
-		Div div = new Div(new Text(text));
-		setTextAlign(TextAlign.RIGHT, div);
 		return div;
 	}
 
@@ -377,8 +365,9 @@ public class UIUtils {
 		TextField number = new TextField();
 		number.setValue(DummyData.getPhoneNumber());
 
-		FlexLayout layout = createFlexLayout(Collections.singleton(LumoStyles.Spacing.Right.S), prefix, number);
+		FlexBoxLayout layout = new FlexBoxLayout(prefix, number);
 		layout.setFlexGrow(1, number);
+		layout.setSpacing(Right.S);
 		return layout;
 	}
 
