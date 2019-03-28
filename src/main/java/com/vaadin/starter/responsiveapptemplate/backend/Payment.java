@@ -3,7 +3,6 @@ package com.vaadin.starter.responsiveapptemplate.backend;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.BadgeColor;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
 
 import java.time.LocalDate;

@@ -460,7 +460,6 @@ public class UIUtils {
 	}
 
 
-
 	// Transaction badge
 
 	public static Component createBadge(Transaction transaction) {

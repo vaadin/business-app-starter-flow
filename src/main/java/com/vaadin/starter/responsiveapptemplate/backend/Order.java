@@ -1,7 +1,6 @@
 package com.vaadin.starter.responsiveapptemplate.backend;
 
 import com.vaadin.starter.responsiveapptemplate.ui.utils.BadgeColor;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
 
 import java.time.LocalDate;
 import java.util.Collection;
