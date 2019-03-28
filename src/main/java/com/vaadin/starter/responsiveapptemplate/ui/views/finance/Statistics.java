@@ -58,12 +58,12 @@ public class Statistics extends ViewFrame {
 
 	private Component createHeader(VaadinIcon icon, String title) {
 		FlexBoxLayout header = new FlexBoxLayout(
-				UIUtils.createIcon(IconSize.S, TextColor.TERTIARY, icon),
+				UIUtils.createIcon(IconSize.M, TextColor.TERTIARY, icon),
 				UIUtils.createH3Label(title)
 		);
 		header.setAlignItems(FlexComponent.Alignment.CENTER);
 		header.setMargin(Horizontal.RESPONSIVE_L, Top.S);
-		header.setSpacing(Right.M);
+		header.setSpacing(Right.L);
 		return header;
 	}
 
@@ -141,8 +141,8 @@ public class Statistics extends ViewFrame {
 		}
 
 		FlexBoxLayout items = new FlexBoxLayout(
-				new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.CHART), "Weekly Report", "Generated Oct 5, 2018", createInfoButton()),
-				new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.SITEMAP), "Payment Workflows", "Last modified Oct 24, 2018", createInfoButton())
+				new ListItem(UIUtils.createIcon(IconSize.M, TextColor.TERTIARY, VaadinIcon.CHART), "Weekly Report", "Generated Oct 5, 2018", createInfoButton()),
+				new ListItem(UIUtils.createIcon(IconSize.M, TextColor.TERTIARY, VaadinIcon.SITEMAP), "Payment Workflows", "Last modified Oct 24, 2018", createInfoButton())
 		);
 		items.setFlexDirection(FlexDirection.COLUMN);
 		items.setMargin(Vertical.S);
@@ -167,8 +167,8 @@ public class Statistics extends ViewFrame {
 		}
 
 		FlexBoxLayout items = new FlexBoxLayout(
-				new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.EXCHANGE), "Transfers (October)", "Generated Oct 31, 2018", createInfoButton()),
-				new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.SHIELD), "Security Log", "Updated 16:31 CET", createInfoButton())
+				new ListItem(UIUtils.createIcon(IconSize.M, TextColor.TERTIARY, VaadinIcon.EXCHANGE), "Transfers (October)", "Generated Oct 31, 2018", createInfoButton()),
+				new ListItem(UIUtils.createIcon(IconSize.M, TextColor.TERTIARY, VaadinIcon.SHIELD), "Security Log", "Updated 16:31 CET", createInfoButton())
 		);
 		items.setFlexDirection(FlexDirection.COLUMN);
 		items.setMargin(Vertical.S);

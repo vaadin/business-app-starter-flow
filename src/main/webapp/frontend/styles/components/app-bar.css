@@ -17,7 +17,7 @@
 
 /* Menu button */
 .app-bar__navi-icon {
-  margin-right: var(--lumo-space-m);
+  margin-right: var(--lumo-space-l);
   transition: margin-right var(--transition-duration-m),
               min-width var(--transition-duration-m),
               opacity var(--transition-duration-s),
@@ -48,6 +48,7 @@
 /* Avatar */
 .app-bar__avatar {
   border-radius: 100%;
+  flex-shrink: 0;
   height: var(--lumo-size-s);
   margin-left: var(--lumo-space-m);
   width: var(--lumo-size-s);
@@ -70,7 +71,7 @@
 @media (max-width: 1023px) {
   .app-bar__container {
     height: var(--app-bar-height-mobile);
-    padding: 0 var(--lumo-space-s);
+    padding: 0 var(--lumo-space-m);
   }
 
   .app-bar__action-items > *:not(:last-child) {

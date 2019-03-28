@@ -84,7 +84,7 @@ public class ReportDetails extends ViewFrame implements HasUrlParameter<Long> {
 	private AppBar createAppBar() {
 		appBar = new AppBar("Details");
 		appBar.setNaviMode(AppBar.NaviMode.CONTEXTUAL);
-		appBar.setContextNaviIcon(new Icon(VaadinIcon.ARROW_BACKWARD));
+		appBar.setContextNaviIcon(new Icon(VaadinIcon.ARROW_LEFT));
 		appBar.getContextNaviIcon().addClickListener(e -> UI.getCurrent().navigate("reports"));
 		return appBar;
 	}

@@ -29,6 +29,9 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.StringJoiner;
+
+import static com.vaadin.starter.responsiveapptemplate.ui.utils.BadgeShape.PILL;
 
 public class UIUtils {
 
@@ -393,27 +396,70 @@ public class UIUtils {
 
 	public static Span createBadge(String text) {
 		Span badge = new Span(text);
-		setTheme(LumoStyles.Badge.DEFAULT, badge);
+		setTheme(BadgeColor.NORMAL.getThemeName(), badge);
+		return badge;
+	}
+
+	public static Span createPrimaryBadge(String text) {
+		Span badge = new Span(text);
+		setTheme(BadgeColor.NORMAL_PRIMARY.getThemeName(), badge);
 		return badge;
 	}
 
 	public static Span createSuccessBadge(String text) {
 		Span badge = new Span(text);
-		setTheme(LumoStyles.Badge.SUCCESS, badge);
+		setTheme(BadgeColor.SUCCESS.getThemeName(), badge);
+		return badge;
+	}
+
+	public static Span createSuccessPrimaryBadge(String text) {
+		Span badge = new Span(text);
+		setTheme(BadgeColor.SUCCESS_PRIMARY.getThemeName(), badge);
 		return badge;
 	}
 
 	public static Span createContrastBadge(String text) {
 		Span badge = new Span(text);
-		setTheme(LumoStyles.Badge.CONTRAST, badge);
+		setTheme(BadgeColor.CONTRAST.getThemeName(), badge);
+		return badge;
+	}
+
+	public static Span createContrastPrimaryBadge(String text) {
+		Span badge = new Span(text);
+		setTheme(BadgeColor.CONTRAST_PRIMARY.getThemeName(), badge);
 		return badge;
 	}
 
 	public static Span createErrorBadge(String text) {
 		Span badge = new Span(text);
-		setTheme(LumoStyles.Badge.ERROR, badge);
+		setTheme(BadgeColor.ERROR.getThemeName(), badge);
 		return badge;
 	}
+
+	public static Span createErrorPrimaryBadge(String text) {
+		Span badge = new Span(text);
+		setTheme(BadgeColor.ERROR_PRIMARY.getThemeName(), badge);
+		return badge;
+	}
+
+	public static Span createBadge(BadgeSize size, BadgeShape shape, BadgeColor color, String text) {
+		StringJoiner joiner = new StringJoiner(" ");
+		joiner.add(color.getThemeName());
+
+		if (shape.equals(PILL)) {
+			joiner.add(shape.getThemeName());
+		}
+
+		if (size.equals(BadgeSize.S)) {
+			joiner.add(size.getThemeName());
+		}
+
+		Span badge = new Span(text);
+		setTheme(joiner.toString(), badge);
+		return badge;
+	}
+
+
 
 	// Transaction badge
 

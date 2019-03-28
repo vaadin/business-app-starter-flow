@@ -77,13 +77,15 @@ public class AppBar extends Composite<FlexLayout> {
 	}
 
 	private void initMenuNaviIcon() {
-		menuNaviIcon = UIUtils.createButton(VaadinIcon.MENU, ButtonVariant.LUMO_SMALL, ButtonVariant.LUMO_TERTIARY);
+		menuNaviIcon = UIUtils.createTertiaryInlineButton(VaadinIcon.MENU);
+		menuNaviIcon.removeThemeVariants(ButtonVariant.LUMO_ICON);
 		menuNaviIcon.addClassName(CLASS_NAME + "__navi-icon");
 		menuNaviIcon.addClickListener(e -> AppTemplateUI.getNaviDrawer().toggle());
 	}
 
 	private void initContextNaviIcon() {
-		contextNaviIcon = UIUtils.createButton(VaadinIcon.ARROW_BACKWARD, ButtonVariant.LUMO_SMALL, ButtonVariant.LUMO_TERTIARY);
+		contextNaviIcon = UIUtils.createTertiaryInlineButton(VaadinIcon.ARROW_LEFT);
+		contextNaviIcon.removeThemeVariants(ButtonVariant.LUMO_ICON);
 		contextNaviIcon.addClassNames(CLASS_NAME + "__navi-icon", CLASS_NAME + "__navi-icon--visible");
 		contextNaviIcon.setVisible(false);
 	}
@@ -165,6 +167,7 @@ public class AppBar extends Composite<FlexLayout> {
 
 	public void setContextNaviIcon(Icon icon) {
 		contextNaviIcon.setIcon(icon);
+		contextNaviIcon.removeThemeVariants(ButtonVariant.LUMO_ICON);
 	}
 
 

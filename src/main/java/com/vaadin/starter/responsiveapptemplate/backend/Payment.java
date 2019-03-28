@@ -2,6 +2,7 @@ package com.vaadin.starter.responsiveapptemplate.backend;
 
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.starter.responsiveapptemplate.ui.utils.BadgeColor;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
 
@@ -18,10 +19,10 @@ public class Payment {
 	private LocalDate date;
 
 	public enum Status {
-		PENDING(VaadinIcon.CLOCK, "Pending", "Payment created, not yet submitted.", LumoStyles.Badge.CONTRAST),
-		SUBMITTED(VaadinIcon.QUESTION_CIRCLE, "Submitted", "Payment submitted for processing.", LumoStyles.Badge.DEFAULT),
-		CONFIRMED(VaadinIcon.CHECK, "Confirmed", "Payment sent successfully.", LumoStyles.Badge.SUCCESS),
-		FAILED(VaadinIcon.WARNING, "Failed", "Payment failed.", LumoStyles.Badge.ERROR);
+		PENDING(VaadinIcon.CLOCK, "Pending", "Payment created, not yet submitted.", BadgeColor.CONTRAST.getThemeName()),
+		SUBMITTED(VaadinIcon.QUESTION_CIRCLE, "Submitted", "Payment submitted for processing.", BadgeColor.NORMAL.getThemeName()),
+		CONFIRMED(VaadinIcon.CHECK, "Confirmed", "Payment sent successfully.", BadgeColor.SUCCESS.getThemeName()),
+		FAILED(VaadinIcon.WARNING, "Failed", "Payment failed.", BadgeColor.ERROR.getThemeName());
 
 		private VaadinIcon icon;
 		private String name;

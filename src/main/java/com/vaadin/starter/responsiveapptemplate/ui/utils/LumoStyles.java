@@ -5,13 +5,6 @@ public class LumoStyles {
 	public static final String DARK = "dark";
 	public static final String THEME = "theme";
 
-	public class Badge {
-		public static final String DEFAULT = "badge";
-		public static final String SUCCESS = "badge success";
-		public static final String ERROR = "badge error";
-		public static final String CONTRAST = "badge contrast";
-	}
-
 	public class BorderRadius {
 		public static final String S = "border-radius-s";
 		public static final String M = "border-radius-m";

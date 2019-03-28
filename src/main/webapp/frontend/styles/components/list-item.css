@@ -1,7 +1,7 @@
 .list-item {
   box-sizing: border-box;
   overflow: hidden;
-  padding: var(--lumo-space-wide-l);
+  padding: var(--lumo-space-wide-r-l);
   position: relative;
 }
 
@@ -42,11 +42,6 @@
   left: calc(var(--lumo-space-l) * 3);
 }
 
-vaadin-grid .list-item {
-  padding-bottom: var(--lumo-space-s);
-  padding-top: var(--lumo-space-s);
-}
-
 vaadin-grid .list-item__prefix {
   margin-right: var(--lumo-space-m);
 }
@@ -55,4 +50,10 @@ vaadin-grid .list-item * {
   overflow: hidden;
   pointer-events: none;
   text-overflow: ellipsis;
+}
+
+@media (max-width: 1023px) {
+  .list-item__prefix ~ .list-item__divider {
+    left: calc(calc(var(--lumo-space-l) * 2) + var(--lumo-space-m));
+  }
 }

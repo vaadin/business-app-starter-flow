@@ -1,5 +1,6 @@
 package com.vaadin.starter.responsiveapptemplate.backend;
 
+import com.vaadin.starter.responsiveapptemplate.ui.utils.BadgeColor;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
 
 import java.time.LocalDate;
@@ -15,10 +16,10 @@ public class Order {
 	private final Double value;
 
 	public enum Status {
-		PENDING("Pending", "Order received, payment pending.", LumoStyles.Badge.CONTRAST),
-		OPEN("Open", "Order received, not yet billed.", LumoStyles.Badge.DEFAULT),
-		SENT("Sent", "Order shipped.", LumoStyles.Badge.SUCCESS),
-		FAILED("Failed", "Payment unsuccessful", LumoStyles.Badge.ERROR);
+		PENDING("Pending", "Order received, payment pending.", BadgeColor.CONTRAST.getThemeName()),
+		OPEN("Open", "Order received, not yet billed.", BadgeColor.NORMAL.getThemeName()),
+		SENT("Sent", "Order shipped.", BadgeColor.SUCCESS.getThemeName()),
+		FAILED("Failed", "Payment unsuccessful", BadgeColor.ERROR.getThemeName());
 
 		private String name;
 		private String desc;
