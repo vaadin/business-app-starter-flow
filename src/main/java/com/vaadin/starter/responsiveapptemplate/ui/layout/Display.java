@@ -2,6 +2,8 @@ package com.vaadin.starter.responsiveapptemplate.ui.layout;
 
 public enum Display {
 
+	BLOCK("block"),
+	INLINE("inline"),
 	FLEX("flex"),
 	INLINE_FLEX("inline-flex");
 
