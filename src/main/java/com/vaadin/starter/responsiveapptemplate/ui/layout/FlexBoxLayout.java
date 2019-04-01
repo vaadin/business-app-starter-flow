@@ -6,29 +6,56 @@ import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Size;
 
 public class FlexBoxLayout extends FlexLayout {
 
+	public static final String BACKGROUND_COLOR = "background-color";
+	public static final String BORDER_RADIUS = "border-radius";
+	public static final String BOX_SHADOW = "box-shadow";
+	public static final String BOX_SIZING = "box-sizing";
+	public static final String DISPLAY = "display";
+	public static final String FLEX_DIRECTION = "flex-direction";
+	public static final String FLEX_WRAP = "flex-wrap";
+	public static final String MAX_WIDTH = "max-width";
+	public static final String OVERFLOW = "overflow";
+	public static final String POSITION = "position";
+
 	public FlexBoxLayout(Component... components) {
 		super(components);
 	}
 
 	public void setBackgroundColor(String value) {
-		getStyle().set("background-color", value);
+		getStyle().set(BACKGROUND_COLOR, value);
 	}
 
 	public void setBackgroundColor(String value, Theme theme) {
-		getStyle().set("background-color", value);
+		getStyle().set(BACKGROUND_COLOR, value);
 		setTheme(theme);
 	}
 
+	public void removeBackgroundColor() {
+		getStyle().remove(BACKGROUND_COLOR);
+	}
+
 	public void setBorderRadius(BorderRadius radius) {
-		getStyle().set("border-radius", radius.getValue());
+		getStyle().set(BORDER_RADIUS, radius.getValue());
+	}
+
+	public void removeBorderRadius() {
+		getStyle().remove(BORDER_RADIUS);
 	}
 
 	public void setBoxSizing(BoxSizing sizing) {
-		getStyle().set("box-sizing", sizing.getValue());
+		getStyle().set(BOX_SIZING, sizing.getValue());
+	}
+
+	public void removeBoxSizing() {
+		getStyle().remove(BOX_SIZING);
 	}
 
 	public void setDisplay(Display display) {
-		getStyle().set("display", display.getValue());
+		getStyle().set(DISPLAY, display.getValue());
+	}
+
+	public void removeDisplay() {
+		getStyle().remove(DISPLAY);
 	}
 
 	public void setFlex(String value, Component... components) {
@@ -44,7 +71,11 @@ public class FlexBoxLayout extends FlexLayout {
 	}
 
 	public void setFlexDirection(FlexDirection direction) {
-		getStyle().set("flex-direction", direction.getValue());
+		getStyle().set(FLEX_DIRECTION, direction.getValue());
+	}
+
+	public void removeFlexDirection() {
+		getStyle().remove(FLEX_DIRECTION);
 	}
 
 	public void setFlexShrink(String value, Component... components) {
@@ -54,7 +85,11 @@ public class FlexBoxLayout extends FlexLayout {
 	}
 
 	public void setFlexWrap(FlexWrap wrap) {
-		getStyle().set("flex-wrap", wrap.getValue());
+		getStyle().set(FLEX_WRAP, wrap.getValue());
+	}
+
+	public void removeFlexWrap() {
+		getStyle().remove(FLEX_WRAP);
 	}
 
 	public void setMargin(Size... sizes) {
@@ -65,12 +100,28 @@ public class FlexBoxLayout extends FlexLayout {
 		}
 	}
 
+	public void removeMargin() {
+		getStyle().remove("margin");
+		getStyle().remove("margin-bottom");
+		getStyle().remove("margin-left");
+		getStyle().remove("margin-right");
+		getStyle().remove("margin-top");
+	}
+
 	public void setMaxWidth(String value) {
-		getStyle().set("max-width", value);
+		getStyle().set(MAX_WIDTH, value);
+	}
+
+	public void removeMaxWidth() {
+		getStyle().remove(MAX_WIDTH);
 	}
 
 	public void setOverflow(Overflow overflow) {
-		getStyle().set("overflow", overflow.getValue());
+		getStyle().set(OVERFLOW, overflow.getValue());
+	}
+
+	public void removeOverflow() {
+		getStyle().remove(OVERFLOW);
 	}
 
 	public void setPadding(Size... sizes) {
@@ -81,12 +132,28 @@ public class FlexBoxLayout extends FlexLayout {
 		}
 	}
 
+	public void removePadding() {
+		getStyle().remove("padding");
+		getStyle().remove("padding-bottom");
+		getStyle().remove("padding-left");
+		getStyle().remove("padding-right");
+		getStyle().remove("padding-top");
+	}
+
 	public void setPosition(Position position) {
-		getStyle().set("position", position.getValue());
+		getStyle().set(POSITION, position.getValue());
+	}
+
+	public void removePosition() {
+		getStyle().remove(POSITION);
 	}
 
 	public void setShadow(Shadow shadow) {
-		getStyle().set("box-shadow", shadow.getValue());
+		getStyle().set(BOX_SHADOW, shadow.getValue());
+	}
+
+	public void removeShadow() {
+		getStyle().remove(BOX_SHADOW);
 	}
 
 	public void setSpacing(Size... sizes) {
