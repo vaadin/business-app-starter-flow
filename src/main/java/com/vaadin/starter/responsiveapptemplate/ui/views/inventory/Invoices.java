@@ -46,166 +46,182 @@ import static com.vaadin.starter.responsiveapptemplate.ui.utils.ViewStyles.GRID_
 @PageTitle("Invoices")
 public class Invoices extends SplitViewFrame {
 
-	private AppBar appBar;
+    private AppBar appBar;
 
-	private Grid<Invoice> grid;
-	private ListDataProvider<Invoice> dataProvider;
+    private Grid<Invoice> grid;
+    private ListDataProvider<Invoice> dataProvider;
 
-	private DetailsDrawer detailsDrawer;
-	private DetailsDrawerHeader detailsDrawerHeader;
+    private DetailsDrawer detailsDrawer;
+    private DetailsDrawerHeader detailsDrawerHeader;
 
-	public Invoices() {
-		if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-			setViewHeader(createAppBar());
-		}
-		setViewContent(createContent());
-		setViewDetails(createDetailsDrawer());
-	}
+    public Invoices() {
+        if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
+            setViewHeader(createAppBar());
+        }
+        setViewContent(createContent());
+        setViewDetails(createDetailsDrawer());
+    }
 
-	private AppBar createAppBar() {
-		appBar = new AppBar("Invoices");
-		appBar.addActionItem(VaadinIcon.SEARCH).addClickListener(e -> appBar.searchModeOn());
-		appBar.addSearchListener(e -> filter(e));
-		appBar.setSearchPlaceholder("Search by customer");
-		return appBar;
-	}
+    private AppBar createAppBar() {
+        appBar = new AppBar("Invoices");
+        appBar.addActionItem(VaadinIcon.SEARCH)
+                .addClickListener(e -> appBar.searchModeOn());
+        appBar.addSearchListener(e -> filter(e));
+        appBar.setSearchPlaceholder("Search by customer");
+        return appBar;
+    }
 
-	private Component createContent() {
-		Div content = new Div(createGrid());
-		content.addClassName(GRID_VIEW);
-		return content;
-	}
+    private Component createContent() {
+        Div content = new Div(createGrid());
+        content.addClassName(GRID_VIEW);
+        return content;
+    }
 
-	private Grid createGrid() {
-		grid = new Grid<>();
-		grid.addSelectionListener(event -> event.getFirstSelectedItem().ifPresent(this::showDetails));
-		dataProvider = DataProvider.ofCollection(DummyData.getInvoices());
-		dataProvider.setSortOrder(Invoice::getDueDate, SortDirection.ASCENDING);
-		grid.setDataProvider(dataProvider);
-		grid.setHeight("100%");
+    private Grid createGrid() {
+        grid = new Grid<>();
+        grid.addSelectionListener(event -> event.getFirstSelectedItem()
+                .ifPresent(this::showDetails));
+        dataProvider = DataProvider.ofCollection(DummyData.getInvoices());
+        dataProvider.setSortOrder(Invoice::getDueDate, SortDirection.ASCENDING);
+        grid.setDataProvider(dataProvider);
+        grid.setHeight("100%");
 
-		grid.addColumn(Invoice::getId)
-				.setFlexGrow(0)
-				.setHeader("ID")
-				.setWidth(UIUtils.COLUMN_WIDTH_XS);
-		grid.addColumn(new ComponentRenderer<>(UIUtils::createBadge))
-				.setFlexGrow(0)
-				.setHeader("Status")
-				.setWidth(UIUtils.COLUMN_WIDTH_S);
-		grid.addColumn(new ComponentRenderer<>(this::createOrder))
-				.setHeader("Customer / Order ID")
-				.setWidth(UIUtils.COLUMN_WIDTH_XL);
-		grid.addColumn(new LocalDateRenderer<>(Invoice::getDueDate, DateTimeFormatter.ofPattern("MMM dd, YYYY")))
-				.setComparator(Invoice::getDueDate)
-				.setFlexGrow(0)
-				.setHeader("Due Date")
-				.setWidth(UIUtils.COLUMN_WIDTH_M);
-		grid.addColumn(new ComponentRenderer<>(this::createAmount))
-				.setFlexGrow(0)
-				.setHeader("Amount ($)")
-				.setWidth(UIUtils.COLUMN_WIDTH_S)
-				.setTextAlign(ColumnTextAlign.END);
+        grid.addColumn(Invoice::getId).setFlexGrow(0).setHeader("ID")
+                .setWidth(UIUtils.COLUMN_WIDTH_XS);
+        grid.addColumn(new ComponentRenderer<>(UIUtils::createBadge))
+                .setFlexGrow(0).setHeader("Status")
+                .setWidth(UIUtils.COLUMN_WIDTH_S);
+        grid.addColumn(new ComponentRenderer<>(this::createOrder))
+                .setHeader("Customer / Order ID")
+                .setWidth(UIUtils.COLUMN_WIDTH_XL);
+        grid.addColumn(new LocalDateRenderer<>(Invoice::getDueDate,
+                DateTimeFormatter.ofPattern("MMM dd, YYYY")))
+                .setComparator(Invoice::getDueDate).setFlexGrow(0)
+                .setHeader("Due Date").setWidth(UIUtils.COLUMN_WIDTH_M);
+        grid.addColumn(new ComponentRenderer<>(this::createAmount))
+                .setFlexGrow(0).setHeader("Amount ($)")
+                .setWidth(UIUtils.COLUMN_WIDTH_S)
+                .setTextAlign(ColumnTextAlign.END);
 
-		return grid;
-	}
+        return grid;
+    }
 
-	private Component createOrder(Invoice invoice) {
-		ListItem item = new ListItem(invoice.getOrder().getCustomer(), String.valueOf(invoice.getOrder().getId()));
-		item.setHorizontalPadding(false);
-		return item;
-	}
+    private Component createOrder(Invoice invoice) {
+        ListItem item = new ListItem(invoice.getOrder().getCustomer(),
+                String.valueOf(invoice.getOrder().getId()));
+        item.setHorizontalPadding(false);
+        return item;
+    }
 
-	private Component createAmount(Invoice invoice) {
-		Double value = invoice.getOrder().getValue();
-		return UIUtils.createAmountLabel(value);
-	}
+    private Component createAmount(Invoice invoice) {
+        Double value = invoice.getOrder().getValue();
+        return UIUtils.createAmountLabel(value);
+    }
 
-	private DetailsDrawer createDetailsDrawer() {
-		detailsDrawer = new DetailsDrawer(DetailsDrawer.Position.RIGHT);
+    private DetailsDrawer createDetailsDrawer() {
+        detailsDrawer = new DetailsDrawer(DetailsDrawer.Position.RIGHT);
 
-		// Header
-		detailsDrawerHeader = new DetailsDrawerHeader("", true);
+        // Header
+        detailsDrawerHeader = new DetailsDrawerHeader("", true);
 
-		Tab details = new Tab("Details");
-		Tab attachments = new Tab("Attachments");
-		Tab activity = new Tab("Activity");
+        Tab details = new Tab("Details");
+        Tab attachments = new Tab("Attachments");
+        Tab activity = new Tab("Activity");
 
-		Tabs tabs = new Tabs(details, attachments, activity);
-		tabs.addThemeVariants(TabsVariant.LUMO_EQUAL_WIDTH_TABS);
+        Tabs tabs = new Tabs(details, attachments, activity);
+        tabs.addThemeVariants(TabsVariant.LUMO_EQUAL_WIDTH_TABS);
 
-		tabs.addSelectedChangeListener(e -> {
-			Tab selectedTab = tabs.getSelectedTab();
-			if (selectedTab.equals(details)) {
-				detailsDrawer.setContent(createDetails(grid.getSelectionModel().getFirstSelectedItem().get()));
-			} else if (selectedTab.equals(attachments)) {
-				detailsDrawer.setContent(createAttachments());
-			} else if (selectedTab.equals(activity)) {
-				detailsDrawer.setContent(createActivity());
-			}
-		});
+        tabs.addSelectedChangeListener(e -> {
+            Tab selectedTab = tabs.getSelectedTab();
+            if (selectedTab.equals(details)) {
+                detailsDrawer.setContent(createDetails(
+                        grid.getSelectionModel().getFirstSelectedItem().get()));
+            } else if (selectedTab.equals(attachments)) {
+                detailsDrawer.setContent(createAttachments());
+            } else if (selectedTab.equals(activity)) {
+                detailsDrawer.setContent(createActivity());
+            }
+        });
 
-		detailsDrawer.setHeader(detailsDrawerHeader, tabs);
-		detailsDrawer.getHeader().setFlexDirection(FlexDirection.COLUMN);
+        detailsDrawer.setHeader(detailsDrawerHeader, tabs);
+        detailsDrawer.getHeader().setFlexDirection(FlexDirection.COLUMN);
 
-		// Footer
-		DetailsDrawerFooter footer = new DetailsDrawerFooter();
-		footer.addCancelListener(e -> detailsDrawer.hide());
-		detailsDrawer.setFooter(footer);
+        // Footer
+        DetailsDrawerFooter footer = new DetailsDrawerFooter();
+        footer.addCancelListener(e -> detailsDrawer.hide());
+        detailsDrawer.setFooter(footer);
 
-		return detailsDrawer;
-	}
+        return detailsDrawer;
+    }
 
-	private void showDetails(Invoice invoice) {
-		detailsDrawerHeader.setText(invoice.getOrder().getCustomer());
-		detailsDrawer.setContent(createDetails(invoice));
-		detailsDrawer.show();
-	}
+    private void showDetails(Invoice invoice) {
+        detailsDrawerHeader.setText(invoice.getOrder().getCustomer());
+        detailsDrawer.setContent(createDetails(invoice));
+        detailsDrawer.show();
+    }
 
-	private Component createDetails(Invoice invoice) {
-		ListItem invoiceId = new ListItem(UIUtils.createSecondaryIcon(VaadinIcon.INVOICE), String.valueOf(invoice.getId()), "Invoice ID");
-		ListItem invoiceDate = new ListItem(UIUtils.createSecondaryIcon(VaadinIcon.CALENDAR), UIUtils.formatDate(invoice.getInvoiceDate()), "Invoice Date");
-		ListItem orderId = new ListItem(UIUtils.createSecondaryIcon(VaadinIcon.PACKAGE), String.valueOf(invoice.getOrder().getId()), "Order ID");
-		ListItem amount = new ListItem(UIUtils.createSecondaryIcon(VaadinIcon.DOLLAR), UIUtils.formatAmount(invoice.getOrder().getValue()), "Amount");
+    private Component createDetails(Invoice invoice) {
+        ListItem invoiceId = new ListItem(
+                UIUtils.createSecondaryIcon(VaadinIcon.INVOICE),
+                String.valueOf(invoice.getId()), "Invoice ID");
+        ListItem invoiceDate = new ListItem(
+                UIUtils.createSecondaryIcon(VaadinIcon.CALENDAR),
+                UIUtils.formatDate(invoice.getInvoiceDate()), "Invoice Date");
+        ListItem orderId = new ListItem(
+                UIUtils.createSecondaryIcon(VaadinIcon.PACKAGE),
+                String.valueOf(invoice.getOrder().getId()), "Order ID");
+        ListItem amount = new ListItem(
+                UIUtils.createSecondaryIcon(VaadinIcon.DOLLAR),
+                UIUtils.formatAmount(invoice.getOrder().getValue()), "Amount");
 
-		for (ListItem item : new ListItem[]{invoiceId, invoiceDate, orderId, amount}) {
-			item.setHorizontalPadding(false);
-			item.setReverse(true);
-		}
+        for (ListItem item : new ListItem[] { invoiceId, invoiceDate, orderId,
+                amount }) {
+            item.setHorizontalPadding(false);
+            item.setReverse(true);
+        }
 
-		RadioButtonGroup<Invoice.Status> status = new RadioButtonGroup<>();
-		status.addThemeVariants(RadioGroupVariant.LUMO_VERTICAL);
-		status.setItems(Invoice.Status.values());
-		status.setLabel("Status");
-		status.setRenderer(new ComponentRenderer<>(item -> UIUtils.createBadge(item)));
-		status.setValue(invoice.getStatus());
+        RadioButtonGroup<Invoice.Status> status = new RadioButtonGroup<>();
+        status.addThemeVariants(RadioGroupVariant.LUMO_VERTICAL);
+        status.setItems(Invoice.Status.values());
+        status.setLabel("Status");
+        status.setRenderer(
+                new ComponentRenderer<>(item -> UIUtils.createBadge(item)));
+        status.setValue(invoice.getStatus());
 
-		DatePicker dueDate = new DatePicker("Due Date");
-		dueDate.setValue(invoice.getDueDate());
-		dueDate.setWidth("100%");
+        DatePicker dueDate = new DatePicker("Due Date");
+        dueDate.setValue(invoice.getDueDate());
+        dueDate.setWidth("100%");
 
-		// Form
-		FormLayout form = new FormLayout(invoiceId, invoiceDate, orderId, amount, status, dueDate);
-		form.addClassNames(LumoStyles.Padding.Bottom.L, LumoStyles.Padding.Horizontal.L, LumoStyles.Padding.Top.S);
-		form.setResponsiveSteps(
-				new FormLayout.ResponsiveStep("0", 1, FormLayout.ResponsiveStep.LabelsPosition.TOP)
-		);
-		return form;
-	}
+        // Form
+        FormLayout form = new FormLayout(invoiceId, invoiceDate, orderId,
+                amount, status, dueDate);
+        form.addClassNames(LumoStyles.Padding.Bottom.L,
+                LumoStyles.Padding.Horizontal.L, LumoStyles.Padding.Top.S);
+        form.setResponsiveSteps(new FormLayout.ResponsiveStep("0", 1,
+                FormLayout.ResponsiveStep.LabelsPosition.TOP));
+        return form;
+    }
 
-	private Component createAttachments() {
-		Label label = UIUtils.createLabel(FontSize.S, TextColor.SECONDARY, "Not implemented yet.");
-		label.addClassName(LumoStyles.Padding.Uniform.L);
-		return label;
-	}
+    private Component createAttachments() {
+        Label label = UIUtils.createLabel(FontSize.S, TextColor.SECONDARY,
+                "Not implemented yet.");
+        label.addClassName(LumoStyles.Padding.Uniform.L);
+        return label;
+    }
 
-	private Component createActivity() {
-		Label label = UIUtils.createLabel(FontSize.S, TextColor.SECONDARY, "Not implemented yet.");
-		label.addClassName(LumoStyles.Padding.Uniform.L);
-		return label;
-	}
+    private Component createActivity() {
+        Label label = UIUtils.createLabel(FontSize.S, TextColor.SECONDARY,
+                "Not implemented yet.");
+        label.addClassName(LumoStyles.Padding.Uniform.L);
+        return label;
+    }
 
-	private void filter(HasValue.ValueChangeEvent event) {
-		// TODO: This is just for demo purposes. Proper filtering should be done on another level.
-		dataProvider.setFilter((SerializablePredicate<Invoice>) invoice -> invoice.getOrder().getCustomer().toLowerCase().contains(event.getValue().toString().toLowerCase()));
-	}
+    private void filter(HasValue.ValueChangeEvent event) {
+        // TODO: This is just for demo purposes. Proper filtering should be done
+        // on another level.
+        dataProvider
+                .setFilter((SerializablePredicate<Invoice>) invoice -> invoice
+                        .getOrder().getCustomer().toLowerCase()
+                        .contains(event.getValue().toString().toLowerCase()));
+    }
 }

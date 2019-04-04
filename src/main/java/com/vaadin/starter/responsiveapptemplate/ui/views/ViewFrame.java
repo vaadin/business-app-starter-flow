@@ -6,7 +6,8 @@ import com.vaadin.flow.component.HasStyle;
 import com.vaadin.flow.component.html.Div;
 
 /**
- * A view frame that establishes app design guidelines. It consists of three parts:
+ * A view frame that establishes app design guidelines. It consists of three
+ * parts:
  * <ul>
  * <li>Topmost {@link #setViewHeader(Component...) header}</li>
  * <li>Center {@link #setViewContent(Component...) content}</li>
@@ -15,43 +16,43 @@ import com.vaadin.flow.component.html.Div;
  */
 public class ViewFrame extends Composite<Div> implements HasStyle {
 
-	private final String CLASS_NAME = "view-frame";
+    private final String CLASS_NAME = "view-frame";
 
-	private final Div header = new Div();
-	private final Div content = new Div();
-	private final Div footer = new Div();
+    private final Div header = new Div();
+    private final Div content = new Div();
+    private final Div footer = new Div();
 
-	public ViewFrame() {
-		setClassName(CLASS_NAME);
+    public ViewFrame() {
+        setClassName(CLASS_NAME);
 
-		header.setClassName(CLASS_NAME + "__header");
-		content.setClassName(CLASS_NAME + "__content");
-		footer.setClassName(CLASS_NAME + "__footer");
+        header.setClassName(CLASS_NAME + "__header");
+        content.setClassName(CLASS_NAME + "__content");
+        footer.setClassName(CLASS_NAME + "__footer");
 
-		getContent().add(header, content, footer);
-	}
+        getContent().add(header, content, footer);
+    }
 
-	/**
-	 * Sets the header slot's components.
-	 */
-	public void setViewHeader(Component... components) {
-		header.removeAll();
-		header.add(components);
-	}
+    /**
+     * Sets the header slot's components.
+     */
+    public void setViewHeader(Component... components) {
+        header.removeAll();
+        header.add(components);
+    }
 
-	/**
-	 * Sets the content slot's components.
-	 */
-	public void setViewContent(Component... components) {
-		content.removeAll();
-		content.add(components);
-	}
+    /**
+     * Sets the content slot's components.
+     */
+    public void setViewContent(Component... components) {
+        content.removeAll();
+        content.add(components);
+    }
 
-	/**
-	 * Sets the footer slot's components.
-	 */
-	public void setViewFooter(Component... components) {
-		footer.removeAll();
-		footer.add(components);
-	}
+    /**
+     * Sets the footer slot's components.
+     */
+    public void setViewFooter(Component... components) {
+        footer.removeAll();
+        footer.add(components);
+    }
 }

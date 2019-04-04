@@ -32,73 +32,69 @@ import static com.vaadin.starter.responsiveapptemplate.ui.utils.ViewStyles.GRID_
 @PageTitle("Accounts")
 public class Accounts extends ViewFrame implements RouterLayout {
 
-	private Grid<BankAccount> grid;
+    private Grid<BankAccount> grid;
 
-	public Accounts() {
-		if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-			setViewHeader(new AppBar("Accounts"));
-		}
-		setViewContent(createContent());
-	}
+    public Accounts() {
+        if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
+            setViewHeader(new AppBar("Accounts"));
+        }
+        setViewContent(createContent());
+    }
 
-	private Component createContent() {
-		Div content = new Div(createGrid());
-		content.addClassName(GRID_VIEW);
-		return content;
-	}
+    private Component createContent() {
+        Div content = new Div(createGrid());
+        content.addClassName(GRID_VIEW);
+        return content;
+    }
 
-	private Grid createGrid() {
-		grid = new Grid<>();
-		grid.addSelectionListener(event -> event.getFirstSelectedItem().ifPresent(this::viewDetails));
-		grid.setDataProvider(DataProvider.ofCollection(DummyData.getBankAccounts()));
-		grid.setSizeFull();
+    private Grid createGrid() {
+        grid = new Grid<>();
+        grid.addSelectionListener(event -> event.getFirstSelectedItem()
+                .ifPresent(this::viewDetails));
+        grid.setDataProvider(
+                DataProvider.ofCollection(DummyData.getBankAccounts()));
+        grid.setSizeFull();
 
-		grid.addColumn(BankAccount::getId)
-				.setFlexGrow(0)
-				.setFrozen(true)
-				.setHeader("ID")
-				.setSortable(true)
-				.setWidth(UIUtils.COLUMN_WIDTH_XS);
-		grid.addColumn(new ComponentRenderer<>(this::createBankInfo))
-				.setHeader("Bank Account")
-				.setWidth(UIUtils.COLUMN_WIDTH_XL);
-		grid.addColumn(BankAccount::getOwner)
-				.setHeader("Owner")
-				.setWidth(UIUtils.COLUMN_WIDTH_XL);
-		grid.addColumn(new ComponentRenderer<>(this::createAvailability))
-				.setFlexGrow(0)
-				.setHeader("Availability ($)")
-				.setWidth(UIUtils.COLUMN_WIDTH_M)
-				.setTextAlign(ColumnTextAlign.END);
-		grid.addColumn(new LocalDateRenderer<>(BankAccount::getUpdated, DateTimeFormatter.ofPattern("MMM dd, YYYY")))
-				.setComparator(BankAccount::getUpdated)
-				.setFlexGrow(0)
-				.setHeader("Updated")
-				.setWidth(UIUtils.COLUMN_WIDTH_M);
+        grid.addColumn(BankAccount::getId).setFlexGrow(0).setFrozen(true)
+                .setHeader("ID").setSortable(true)
+                .setWidth(UIUtils.COLUMN_WIDTH_XS);
+        grid.addColumn(new ComponentRenderer<>(this::createBankInfo))
+                .setHeader("Bank Account").setWidth(UIUtils.COLUMN_WIDTH_XL);
+        grid.addColumn(BankAccount::getOwner).setHeader("Owner")
+                .setWidth(UIUtils.COLUMN_WIDTH_XL);
+        grid.addColumn(new ComponentRenderer<>(this::createAvailability))
+                .setFlexGrow(0).setHeader("Availability ($)")
+                .setWidth(UIUtils.COLUMN_WIDTH_M)
+                .setTextAlign(ColumnTextAlign.END);
+        grid.addColumn(new LocalDateRenderer<>(BankAccount::getUpdated,
+                DateTimeFormatter.ofPattern("MMM dd, YYYY")))
+                .setComparator(BankAccount::getUpdated).setFlexGrow(0)
+                .setHeader("Updated").setWidth(UIUtils.COLUMN_WIDTH_M);
 
-		return grid;
-	}
+        return grid;
+    }
 
-	private Component createBankInfo(BankAccount bankAccount) {
-		ListItem item = new ListItem(bankAccount.getAccount(), bankAccount.getBank());
-		item.setHorizontalPadding(false);
-		return item;
-	}
+    private Component createBankInfo(BankAccount bankAccount) {
+        ListItem item = new ListItem(bankAccount.getAccount(),
+                bankAccount.getBank());
+        item.setHorizontalPadding(false);
+        return item;
+    }
 
-	private Component createAvailability(BankAccount bankAccount) {
-		Double availability = bankAccount.getAvailability();
-		Label label = UIUtils.createAmountLabel(availability);
+    private Component createAvailability(BankAccount bankAccount) {
+        Double availability = bankAccount.getAvailability();
+        Label label = UIUtils.createAmountLabel(availability);
 
-		if (availability > 0) {
-			label.addClassName(TextColor.SUCCESS.getClassName());
-		} else {
-			label.addClassName(TextColor.ERROR.getClassName());
-		}
+        if (availability > 0) {
+            label.addClassName(TextColor.SUCCESS.getClassName());
+        } else {
+            label.addClassName(TextColor.ERROR.getClassName());
+        }
 
-		return label;
-	}
+        return label;
+    }
 
-	private void viewDetails(BankAccount bankAccount) {
-		UI.getCurrent().navigate(AccountDetails.class, bankAccount.getId());
-	}
+    private void viewDetails(BankAccount bankAccount) {
+        UI.getCurrent().navigate(AccountDetails.class, bankAccount.getId());
+    }
 }

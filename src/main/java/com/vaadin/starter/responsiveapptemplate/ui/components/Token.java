@@ -21,23 +21,24 @@ import static com.vaadin.flow.component.button.ButtonVariant.LUMO_ICON;
 
 public class Token extends Composite<FlexBoxLayout> implements HasStyle {
 
-	private final String CLASS_NAME = "token";
+    private final String CLASS_NAME = "token";
 
-	public Token(String text) {
-		addClassName(CLASS_NAME);
-		getContent().setAlignItems(FlexComponent.Alignment.CENTER);
-		getContent().setBackgroundColor(LumoStyles.Color.Primary._10);
-		getContent().setBorderRadius(BorderRadius.M);
-		getContent().setDisplay(Display.INLINE_FLEX);
-		getContent().setPadding(Left.S);
-		getContent().setPadding(Right.XS);
-		getContent().setSpacing(Right.XS);
+    public Token(String text) {
+        addClassName(CLASS_NAME);
+        getContent().setAlignItems(FlexComponent.Alignment.CENTER);
+        getContent().setBackgroundColor(LumoStyles.Color.Primary._10);
+        getContent().setBorderRadius(BorderRadius.M);
+        getContent().setDisplay(Display.INLINE_FLEX);
+        getContent().setPadding(Left.S);
+        getContent().setPadding(Right.XS);
+        getContent().setSpacing(Right.XS);
 
-		Label label = UIUtils.createLabel(FontSize.S, TextColor.BODY, text);
-		Button button = UIUtils.createButton(VaadinIcon.CLOSE_SMALL, ButtonVariant.LUMO_SMALL, ButtonVariant.LUMO_TERTIARY_INLINE);
-		button.getThemeNames().remove(LUMO_ICON.getVariantName());
+        Label label = UIUtils.createLabel(FontSize.S, TextColor.BODY, text);
+        Button button = UIUtils.createButton(VaadinIcon.CLOSE_SMALL,
+                ButtonVariant.LUMO_SMALL, ButtonVariant.LUMO_TERTIARY_INLINE);
+        button.getThemeNames().remove(LUMO_ICON.getVariantName());
 
-		getContent().add(label, button);
-	}
+        getContent().add(label, button);
+    }
 
 }

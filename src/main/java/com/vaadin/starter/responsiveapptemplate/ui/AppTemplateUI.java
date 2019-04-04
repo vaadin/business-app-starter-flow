@@ -14,15 +14,16 @@ import javax.servlet.annotation.WebServlet;
  * @author mavi
  */
 public class AppTemplateUI extends UI {
-	private final NaviDrawer naviDrawer = UIConfig.getNaviMode() == UIConfig.NaviMode.LINKS ?
-			new NaviLinkDrawer() : new NaviTabDrawer();
+    private final NaviDrawer naviDrawer = UIConfig
+            .getNaviMode() == UIConfig.NaviMode.LINKS ? new NaviLinkDrawer()
+                    : new NaviTabDrawer();
 
-	public static NaviDrawer getNaviDrawer() {
-		return ((AppTemplateUI) UI.getCurrent()).naviDrawer;
-	}
+    public static NaviDrawer getNaviDrawer() {
+        return ((AppTemplateUI) UI.getCurrent()).naviDrawer;
+    }
 
-	@VaadinServletConfiguration(productionMode = false, ui = AppTemplateUI.class)
-	@WebServlet(urlPatterns = {"/*"})
-	public static class AppServlet extends VaadinServlet {
-	}
+    @VaadinServletConfiguration(productionMode = false, ui = AppTemplateUI.class)
+    @WebServlet(urlPatterns = { "/*" })
+    public static class AppServlet extends VaadinServlet {
+    }
 }

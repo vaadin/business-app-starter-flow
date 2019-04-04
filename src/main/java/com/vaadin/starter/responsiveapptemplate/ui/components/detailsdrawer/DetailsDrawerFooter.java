@@ -14,26 +14,28 @@ import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
 
 public class DetailsDrawerFooter extends Composite<FlexBoxLayout> {
 
-	private final Button save;
-	private final Button cancel;
+    private final Button save;
+    private final Button cancel;
 
-	public DetailsDrawerFooter() {
-		getContent().setBackgroundColor(LumoStyles.Color.Contrast._5);
-		getContent().setPadding(Horizontal.RESPONSIVE_L, Vertical.S);
-		getContent().setSpacing(Right.S);
-		getContent().setWidth("100%");
+    public DetailsDrawerFooter() {
+        getContent().setBackgroundColor(LumoStyles.Color.Contrast._5);
+        getContent().setPadding(Horizontal.RESPONSIVE_L, Vertical.S);
+        getContent().setSpacing(Right.S);
+        getContent().setWidth("100%");
 
-		save = UIUtils.createPrimaryButton("Save");
-		cancel = UIUtils.createTertiaryButton("Cancel");
-		getContent().add(save, cancel);
-	}
+        save = UIUtils.createPrimaryButton("Save");
+        cancel = UIUtils.createTertiaryButton("Cancel");
+        getContent().add(save, cancel);
+    }
 
-	public Registration addSaveListener(ComponentEventListener<ClickEvent<Button>> listener) {
-		return save.addClickListener(listener);
-	}
+    public Registration addSaveListener(
+            ComponentEventListener<ClickEvent<Button>> listener) {
+        return save.addClickListener(listener);
+    }
 
-	public Registration addCancelListener(ComponentEventListener<ClickEvent<Button>> listener) {
-		return cancel.addClickListener(listener);
-	}
+    public Registration addCancelListener(
+            ComponentEventListener<ClickEvent<Button>> listener) {
+        return cancel.addClickListener(listener);
+    }
 
 }

@@ -26,60 +26,56 @@ import static com.vaadin.starter.responsiveapptemplate.ui.utils.ViewStyles.GRID_
 @PageTitle("Reports")
 public class Reports extends ViewFrame {
 
-	private Grid<Report> grid;
+    private Grid<Report> grid;
 
-	public Reports() {
-		if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-			setViewHeader(new AppBar("Reports"));
-		}
-		setViewContent(createContent());
-	}
+    public Reports() {
+        if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
+            setViewHeader(new AppBar("Reports"));
+        }
+        setViewContent(createContent());
+    }
 
-	private Component createContent() {
-		Div content = new Div(createGrid());
-		content.addClassName(GRID_VIEW);
-		return content;
-	}
+    private Component createContent() {
+        Div content = new Div(createGrid());
+        content.addClassName(GRID_VIEW);
+        return content;
+    }
 
-	private Grid createGrid() {
-		grid = new Grid<>();
-		grid.addSelectionListener(event -> event.getFirstSelectedItem().ifPresent(this::viewDetails));
-		grid.setDataProvider(DataProvider.ofCollection(DummyData.getReports()));
-		grid.setHeight("100%");
+    private Grid createGrid() {
+        grid = new Grid<>();
+        grid.addSelectionListener(event -> event.getFirstSelectedItem()
+                .ifPresent(this::viewDetails));
+        grid.setDataProvider(DataProvider.ofCollection(DummyData.getReports()));
+        grid.setHeight("100%");
 
-		grid.addColumn(new ComponentRenderer<>(this::createReportInfo))
-				.setHeader("Company")
-				.setFrozen(true)
-				.setWidth("200px")
-				.setFlexGrow(1);
-		grid.addColumn(new LocalDateRenderer<>(Report::getStartDate, "MMM dd, YYYY"))
-				.setHeader("Start Date")
-				.setWidth("160px")
-				.setFlexGrow(0);
-		grid.addColumn(new LocalDateRenderer<>(Report::getEndDate, "MMM dd, YYYY"))
-				.setHeader("End Date")
-				.setWidth("160px")
-				.setFlexGrow(0);
-		grid.addColumn(new ComponentRenderer<>(this::createBalance))
-				.setHeader("Balance ($)")
-				.setWidth("160px")
-				.setFlexGrow(0)
-				.setTextAlign(ColumnTextAlign.END);
+        grid.addColumn(new ComponentRenderer<>(this::createReportInfo))
+                .setHeader("Company").setFrozen(true).setWidth("200px")
+                .setFlexGrow(1);
+        grid.addColumn(
+                new LocalDateRenderer<>(Report::getStartDate, "MMM dd, YYYY"))
+                .setHeader("Start Date").setWidth("160px").setFlexGrow(0);
+        grid.addColumn(
+                new LocalDateRenderer<>(Report::getEndDate, "MMM dd, YYYY"))
+                .setHeader("End Date").setWidth("160px").setFlexGrow(0);
+        grid.addColumn(new ComponentRenderer<>(this::createBalance))
+                .setHeader("Balance ($)").setWidth("160px").setFlexGrow(0)
+                .setTextAlign(ColumnTextAlign.END);
 
-		return grid;
-	}
+        return grid;
+    }
 
-	private Component createReportInfo(Report report) {
-		ListItem item = new ListItem(new Image(report.getSource(), ""), report.getName());
-		item.setHorizontalPadding(false);
-		return item;
-	}
+    private Component createReportInfo(Report report) {
+        ListItem item = new ListItem(new Image(report.getSource(), ""),
+                report.getName());
+        item.setHorizontalPadding(false);
+        return item;
+    }
 
-	private Component createBalance(Report report) {
-		return UIUtils.createAmountLabel(report.getBalance());
-	}
+    private Component createBalance(Report report) {
+        return UIUtils.createAmountLabel(report.getBalance());
+    }
 
-	private void viewDetails(Report report) {
-		UI.getCurrent().navigate(ReportDetails.class, report.getId());
-	}
+    private void viewDetails(Report report) {
+        UI.getCurrent().navigate(ReportDetails.class, report.getId());
+    }
 }

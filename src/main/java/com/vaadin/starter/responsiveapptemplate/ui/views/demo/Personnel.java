@@ -27,98 +27,92 @@ import static com.vaadin.starter.responsiveapptemplate.ui.utils.ViewStyles.GRID_
 @PageTitle("Personnel")
 public class Personnel extends ViewFrame {
 
-	private AppBar appBar;
-	private Grid<Person> grid;
-	private ListDataProvider<Person> dataProvider;
+    private AppBar appBar;
+    private Grid<Person> grid;
+    private ListDataProvider<Person> dataProvider;
 
-	public Personnel() {
-		if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-			setViewHeader(createAppBar());
-		}
-		setViewContent(createContent());
+    public Personnel() {
+        if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
+            setViewHeader(createAppBar());
+        }
+        setViewContent(createContent());
 
-		filter();
-	}
+        filter();
+    }
 
-	private AppBar createAppBar() {
-		appBar = new AppBar("Personnel");
-		for (Person.Role role : Person.Role.values()) {
-			appBar.addTab(role.name().substring(0, 1).toUpperCase() + role.name().substring(1).toLowerCase());
-		}
-		appBar.addTabSelectionListener(e -> filter());
-		appBar.centerTabs();
-		return appBar;
-	}
+    private AppBar createAppBar() {
+        appBar = new AppBar("Personnel");
+        for (Person.Role role : Person.Role.values()) {
+            appBar.addTab(role.name().substring(0, 1).toUpperCase()
+                    + role.name().substring(1).toLowerCase());
+        }
+        appBar.addTabSelectionListener(e -> filter());
+        appBar.centerTabs();
+        return appBar;
+    }
 
-	private Component createContent() {
-		grid = createGrid();
-		Div content = new Div(grid);
-		content.addClassName(GRID_VIEW);
-		return content;
-	}
+    private Component createContent() {
+        grid = createGrid();
+        Div content = new Div(grid);
+        content.addClassName(GRID_VIEW);
+        return content;
+    }
 
-	private Grid createGrid() {
-		grid = new Grid<>();
-		dataProvider = DataProvider.ofCollection(DummyData.getPersons());
-		grid.setDataProvider(dataProvider);
-		grid.setHeight("100%");
+    private Grid createGrid() {
+        grid = new Grid<>();
+        dataProvider = DataProvider.ofCollection(DummyData.getPersons());
+        grid.setDataProvider(dataProvider);
+        grid.setHeight("100%");
 
-		grid.addColumn(Person::getId)
-				.setHeader("ID")
-				.setFrozen(true)
-				.setSortable(true)
-				.setWidth("60px")
-				.setFlexGrow(0);
-		grid.addColumn(new ComponentRenderer<>(this::createUserInfo))
-				.setHeader("Name")
-				.setWidth("240px")
-				.setFlexGrow(1);
-		grid.addColumn(new ComponentRenderer<>(this::createActive))
-				.setHeader("Twitter")
-				.setWidth("160px")
-				.setFlexGrow(0);
-		grid.addColumn(new ComponentRenderer<>(this::createForumPosts))
-				.setHeader("Forum Posts")
-				.setWidth("160px")
-				.setFlexGrow(0);
-		grid.addColumn(new LocalDateRenderer<>(Person::getLastModified, "MMM dd, YYYY"))
-				.setHeader("Last Modified")
-				.setSortable(true)
-				.setWidth("160px")
-				.setFlexGrow(0);
+        grid.addColumn(Person::getId).setHeader("ID").setFrozen(true)
+                .setSortable(true).setWidth("60px").setFlexGrow(0);
+        grid.addColumn(new ComponentRenderer<>(this::createUserInfo))
+                .setHeader("Name").setWidth("240px").setFlexGrow(1);
+        grid.addColumn(new ComponentRenderer<>(this::createActive))
+                .setHeader("Twitter").setWidth("160px").setFlexGrow(0);
+        grid.addColumn(new ComponentRenderer<>(this::createForumPosts))
+                .setHeader("Forum Posts").setWidth("160px").setFlexGrow(0);
+        grid.addColumn(new LocalDateRenderer<>(Person::getLastModified,
+                "MMM dd, YYYY")).setHeader("Last Modified").setSortable(true)
+                .setWidth("160px").setFlexGrow(0);
 
-		return grid;
-	}
+        return grid;
+    }
 
-	private Component createUserInfo(Person person) {
-		ListItem item = new ListItem(UIUtils.createInitials(person.getInitials()), person.getName(), person.getEmail());
-		item.setHorizontalPadding(false);
-		return item;
-	}
+    private Component createUserInfo(Person person) {
+        ListItem item = new ListItem(
+                UIUtils.createInitials(person.getInitials()), person.getName(),
+                person.getEmail());
+        item.setHorizontalPadding(false);
+        return item;
+    }
 
-	private Component createActive(Person person) {
-		Icon icon;
-		if (person.getRandomBoolean()) {
-			icon = UIUtils.createPrimaryIcon(VaadinIcon.CHECK);
-		} else {
-			icon = UIUtils.createDisabledIcon(VaadinIcon.CLOSE);
-		}
-		return icon;
-	}
+    private Component createActive(Person person) {
+        Icon icon;
+        if (person.getRandomBoolean()) {
+            icon = UIUtils.createPrimaryIcon(VaadinIcon.CHECK);
+        } else {
+            icon = UIUtils.createDisabledIcon(VaadinIcon.CLOSE);
+        }
+        return icon;
+    }
 
-	private Component createForumPosts(Person person) {
-		Span badge;
-		if (person.getRandomInteger() > 5) {
-			badge = UIUtils.createSuccessBadge(UIUtils.formatAmount(person.getRandomInteger()));
-		} else {
-			badge = UIUtils.createErrorBadge(UIUtils.formatAmount(person.getRandomInteger()));
-		}
-		return badge;
-	}
+    private Component createForumPosts(Person person) {
+        Span badge;
+        if (person.getRandomInteger() > 5) {
+            badge = UIUtils.createSuccessBadge(
+                    UIUtils.formatAmount(person.getRandomInteger()));
+        } else {
+            badge = UIUtils.createErrorBadge(
+                    UIUtils.formatAmount(person.getRandomInteger()));
+        }
+        return badge;
+    }
 
-	private void filter() {
-		if (appBar != null) {
-			dataProvider.setFilterByValue(Person::getRole, Person.Role.valueOf(appBar.getSelectedTab().getLabel().toUpperCase()));
-		}
-	}
+    private void filter() {
+        if (appBar != null) {
+            dataProvider.setFilterByValue(Person::getRole, Person.Role
+                    .valueOf(appBar.getSelectedTab().getLabel().toUpperCase()));
+        }
+    }
 }

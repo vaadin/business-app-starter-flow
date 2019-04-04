@@ -8,17 +8,19 @@ import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
 
 public class ClosableNaviTab extends NaviTab {
 
-	private final Button close;
+    private final Button close;
 
-	public ClosableNaviTab(String label, Class<? extends Component> navigationTarget) {
-		super(label, navigationTarget);
-		getElement().setAttribute("closable", true);
+    public ClosableNaviTab(String label,
+            Class<? extends Component> navigationTarget) {
+        super(label, navigationTarget);
+        getElement().setAttribute("closable", true);
 
-		close = UIUtils.createButton(VaadinIcon.CLOSE, ButtonVariant.LUMO_SMALL, ButtonVariant.LUMO_TERTIARY);
-		add(close);
-	}
+        close = UIUtils.createButton(VaadinIcon.CLOSE, ButtonVariant.LUMO_SMALL,
+                ButtonVariant.LUMO_TERTIARY);
+        add(close);
+    }
 
-	public Button getCloseButton() {
-		return close;
-	}
+    public Button getCloseButton() {
+        return close;
+    }
 }

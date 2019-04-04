@@ -15,22 +15,23 @@ import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Vertical;
 @PageTitle("Welcome")
 public class Default extends ViewFrame {
 
-	public Default() {
-		if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-			setViewHeader(new AppBar("Responsive App Template"));
-		}
+    public Default() {
+        if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
+            setViewHeader(new AppBar("Responsive App Template"));
+        }
 
-		setViewContent(createContent());
-	}
+        setViewContent(createContent());
+    }
 
-	private Component createContent() {
-		Html text = new Html("<span>A responsive application template with some dummy data. Loosely based on the <b>responsive layout grid</b> guidelines set by <a href=\"https://material.io/design/layout/responsive-layout-grid.html\">Material Design</a>. Utilises the <a href=\"https://vaadin.com/themes/lumo\">Lumo</a> theme.</span>");
+    private Component createContent() {
+        Html text = new Html(
+                "<span>A responsive application template with some dummy data. Loosely based on the <b>responsive layout grid</b> guidelines set by <a href=\"https://material.io/design/layout/responsive-layout-grid.html\">Material Design</a>. Utilises the <a href=\"https://vaadin.com/themes/lumo\">Lumo</a> theme.</span>");
 
-		FlexBoxLayout content = new FlexBoxLayout(text);
-		content.setMargin(Horizontal.AUTO);
-		content.setMaxWidth("840px");
-		content.setPadding(Horizontal.RESPONSIVE_L, Vertical.L);
-		return content;
-	}
+        FlexBoxLayout content = new FlexBoxLayout(text);
+        content.setMargin(Horizontal.AUTO);
+        content.setMaxWidth("840px");
+        content.setPadding(Horizontal.RESPONSIVE_L, Vertical.L);
+        return content;
+    }
 
 }
