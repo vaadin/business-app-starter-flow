@@ -1,5 +1,7 @@
 package com.vaadin.starter.responsiveapptemplate.ui.components.navigation.bar;
 
+import java.util.Collections;
+
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.Composite;
@@ -12,13 +14,11 @@ import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.starter.responsiveapptemplate.backend.UIConfig;
-import com.vaadin.starter.responsiveapptemplate.ui.AppTemplateUI;
+import com.vaadin.starter.responsiveapptemplate.ui.Root;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.tab.NaviTabs;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
 import com.vaadin.starter.responsiveapptemplate.ui.views.Default;
-
-import java.util.Collections;
 
 public class TabBar extends Composite<FlexLayout> {
 
@@ -39,8 +39,7 @@ public class TabBar extends Composite<FlexLayout> {
         menuNaviIcon = UIUtils.createButton(VaadinIcon.MENU,
                 ButtonVariant.LUMO_SMALL, ButtonVariant.LUMO_TERTIARY);
         menuNaviIcon.addClassNames(CLASS_NAME + "__navi-icon");
-        menuNaviIcon
-                .addClickListener(e -> AppTemplateUI.getNaviDrawer().toggle());
+        menuNaviIcon.addClickListener(e -> Root.get().getNaviDrawer().toggle());
 
         avatar = new Image();
         avatar.setClassName(CLASS_NAME + "__avatar");

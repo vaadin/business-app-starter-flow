@@ -1,9 +1,15 @@
 package com.vaadin.starter.responsiveapptemplate.ui;
 
+import java.util.Collections;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.ClickNotifier;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasElement;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -20,13 +26,19 @@ import com.vaadin.starter.responsiveapptemplate.backend.UIConfig;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.bar.TabBar;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.drawer.NaviDrawer;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.drawer.NaviItem;
+import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.drawer.NaviLinkDrawer;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexBoxLayout;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexDirection;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.Overflow;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
 import com.vaadin.starter.responsiveapptemplate.ui.views.Default;
-import com.vaadin.starter.responsiveapptemplate.ui.views.demo.*;
+import com.vaadin.starter.responsiveapptemplate.ui.views.demo.Dashboard;
+import com.vaadin.starter.responsiveapptemplate.ui.views.demo.FilterList;
+import com.vaadin.starter.responsiveapptemplate.ui.views.demo.HorizontalSplitView;
+import com.vaadin.starter.responsiveapptemplate.ui.views.demo.Personnel;
+import com.vaadin.starter.responsiveapptemplate.ui.views.demo.Reports;
+import com.vaadin.starter.responsiveapptemplate.ui.views.demo.VerticalSplitView;
 import com.vaadin.starter.responsiveapptemplate.ui.views.finance.Accounts;
 import com.vaadin.starter.responsiveapptemplate.ui.views.finance.Payments;
 import com.vaadin.starter.responsiveapptemplate.ui.views.finance.Statistics;
@@ -36,10 +48,6 @@ import com.vaadin.starter.responsiveapptemplate.ui.views.inventory.Invoices;
 import com.vaadin.starter.responsiveapptemplate.ui.views.inventory.Overview;
 import com.vaadin.starter.responsiveapptemplate.ui.views.personnel.Accountants;
 import com.vaadin.starter.responsiveapptemplate.ui.views.personnel.Managers;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.Collections;
 
 @HtmlImport("frontend://styles/shared-styles.html")
 @Viewport("width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes")
@@ -95,7 +103,7 @@ public class Root extends FlexBoxLayout
      * Initialise the required components and containers.
      */
     private void initStructure() {
-        naviDrawer = AppTemplateUI.getNaviDrawer();
+        naviDrawer = new NaviLinkDrawer();
 
         viewContainer = new FlexBoxLayout();
         viewContainer.addClassName(CLASS_NAME + "__view-container");
@@ -506,4 +514,15 @@ public class Root extends FlexBoxLayout
             }
         }
     }
+
+    public NaviDrawer getNaviDrawer() {
+        return naviDrawer;
+    }
+
+    public static Root get() {
+        return (Root) UI.getCurrent().getChildren()
+                .filter(component -> component.getClass() == Root.class)
+                .findFirst().get();
+    }
+
 }
