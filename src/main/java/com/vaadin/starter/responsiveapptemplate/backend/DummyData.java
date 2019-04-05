@@ -1,10 +1,14 @@
 package com.vaadin.starter.responsiveapptemplate.backend;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
+
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
-
-import java.time.LocalDate;
-import java.util.*;
 
 public class DummyData {
 
@@ -201,7 +205,7 @@ public class DummyData {
 
         /* === BANK ACCOUNTS ==== */
 
-        int startingPoint = getRandomInt(0, 9999);
+        int startingPoint = 1000;
         for (i = 0; i < 40; i++) {
             BANK_ACCOUNTS.put(i + startingPoint,
                     new BankAccount(i + startingPoint, getBank(), getIBAN(),
