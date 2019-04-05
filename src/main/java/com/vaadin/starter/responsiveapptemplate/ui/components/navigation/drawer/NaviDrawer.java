@@ -13,7 +13,6 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.AfterNavigationEvent;
 import com.vaadin.flow.router.AfterNavigationObserver;
-import com.vaadin.starter.responsiveapptemplate.backend.UIConfig;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
 
 public abstract class NaviDrawer extends Composite<Div>
@@ -64,12 +63,7 @@ public abstract class NaviDrawer extends Composite<Div>
     }
 
     private void initHeader() {
-        if (UIConfig.getNaviHeader()
-                .equals(UIConfig.NaviHeader.ACCOUNT_SWITCHER)) {
-            mainContent.add(new AccountSwitcher());
-        } else {
-            mainContent.add(new BrandExpression());
-        }
+        mainContent.add(new BrandExpression());
     }
 
     private void initSearch() {

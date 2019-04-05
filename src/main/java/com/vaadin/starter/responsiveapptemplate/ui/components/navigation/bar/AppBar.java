@@ -20,7 +20,6 @@ import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.shared.Registration;
-import com.vaadin.starter.responsiveapptemplate.backend.UIConfig;
 import com.vaadin.starter.responsiveapptemplate.ui.Root;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.tab.NaviTab;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.tab.NaviTabs;
@@ -109,8 +108,6 @@ public class AppBar extends Composite<FlexLayout> {
         avatar.setClassName(CLASS_NAME + "__avatar");
         avatar.setSrc(
                 "https://pbs.twimg.com/profile_images/2642704545/a77c0524766c6f3b4be4929f2005e627_400x400.png");
-        avatar.setVisible(UIConfig.getNaviHeader()
-                .equals(UIConfig.NaviHeader.BRAND_EXPRESSION));
 
         ContextMenu contextMenu = new ContextMenu(avatar);
         contextMenu.setOpenOnClick(true);
