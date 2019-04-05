@@ -14,16 +14,8 @@ public class UIConfig {
         ACCOUNT_SWITCHER, BRAND_EXPRESSION
     }
 
-    public enum Showcase {
-        DEMO, FINANCE, INVENTORY
-    }
-
     public static NaviHeader getNaviHeader() {
         return NaviHeader.BRAND_EXPRESSION;
-    }
-
-    public static Showcase getShowcase() {
-        return Showcase.FINANCE;
     }
 
 }

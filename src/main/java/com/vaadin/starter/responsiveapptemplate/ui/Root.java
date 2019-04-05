@@ -20,7 +20,6 @@ import com.vaadin.flow.server.ErrorHandler;
 import com.vaadin.flow.server.InitialPageSettings;
 import com.vaadin.flow.server.PageConfigurator;
 import com.vaadin.flow.server.VaadinSession;
-import com.vaadin.starter.responsiveapptemplate.backend.UIConfig;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.bar.AppBar;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.bar.TabBar;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.drawer.NaviDrawer;
@@ -32,19 +31,9 @@ import com.vaadin.starter.responsiveapptemplate.ui.layout.Overflow;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
 import com.vaadin.starter.responsiveapptemplate.ui.views.Home;
-import com.vaadin.starter.responsiveapptemplate.ui.views.demo.Dashboard;
-import com.vaadin.starter.responsiveapptemplate.ui.views.demo.FilterList;
-import com.vaadin.starter.responsiveapptemplate.ui.views.demo.HorizontalSplitView;
-import com.vaadin.starter.responsiveapptemplate.ui.views.demo.Personnel;
-import com.vaadin.starter.responsiveapptemplate.ui.views.demo.Reports;
-import com.vaadin.starter.responsiveapptemplate.ui.views.demo.VerticalSplitView;
 import com.vaadin.starter.responsiveapptemplate.ui.views.finance.Accounts;
 import com.vaadin.starter.responsiveapptemplate.ui.views.finance.Payments;
 import com.vaadin.starter.responsiveapptemplate.ui.views.finance.Statistics;
-import com.vaadin.starter.responsiveapptemplate.ui.views.inventory.Catalogue;
-import com.vaadin.starter.responsiveapptemplate.ui.views.inventory.CustomerOrders;
-import com.vaadin.starter.responsiveapptemplate.ui.views.inventory.Invoices;
-import com.vaadin.starter.responsiveapptemplate.ui.views.inventory.Overview;
 import com.vaadin.starter.responsiveapptemplate.ui.views.personnel.Accountants;
 import com.vaadin.starter.responsiveapptemplate.ui.views.personnel.Managers;
 
@@ -124,55 +113,18 @@ public class Root extends FlexBoxLayout
      * Initialise the navigation items.
      */
     private void initNaviItems() {
-        UIConfig.Showcase showcase = UIConfig.getShowcase();
+        naviDrawer.addNaviItem(VaadinIcon.HOME, "Home", Home.class);
+        naviDrawer.addNaviItem(VaadinIcon.INSTITUTION, "Accounts",
+                Accounts.class);
+        naviDrawer.addNaviItem(VaadinIcon.CREDIT_CARD, "Payments",
+                Payments.class);
+        naviDrawer.addNaviItem(VaadinIcon.CHART, "Statistics",
+                Statistics.class);
 
-        // Initialise the navigation items based on the showcase
-        if (showcase.equals(UIConfig.Showcase.DEMO)) {
-            naviDrawer.addNaviItem(VaadinIcon.GRID_BIG, "Dashboard",
-                    Dashboard.class);
-            naviDrawer.addNaviItem(VaadinIcon.FILE_TEXT, "Reports",
-                    Reports.class);
-
-            NaviLinkItem personnel = naviDrawer.addNaviItem(VaadinIcon.USERS,
-                    "Personnel", Personnel.class);
-            naviDrawer.addNaviItem(personnel, "Vertical Split",
-                    VerticalSplitView.class);
-            naviDrawer.addNaviItem(personnel, "Horizontal Split",
-                    HorizontalSplitView.class);
-
-            naviDrawer.addNaviItem(VaadinIcon.FILTER, "Filter List",
-                    FilterList.class);
-
-        } else if (showcase.equals(UIConfig.Showcase.FINANCE)) {
-            naviDrawer.addNaviItem(VaadinIcon.HOME, "Home", Home.class);
-            naviDrawer.addNaviItem(VaadinIcon.INSTITUTION, "Accounts",
-                    Accounts.class);
-            naviDrawer.addNaviItem(VaadinIcon.CREDIT_CARD, "Payments",
-                    Payments.class);
-            naviDrawer.addNaviItem(VaadinIcon.CHART, "Statistics",
-                    Statistics.class);
-
-            NaviLinkItem personnel = naviDrawer.addNaviItem(VaadinIcon.USERS,
-                    "Personnel", null);
-            naviDrawer.addNaviItem(personnel, "Accountants", Accountants.class);
-            naviDrawer.addNaviItem(personnel, "Managers", Managers.class);
-
-        } else if (showcase.equals(UIConfig.Showcase.INVENTORY)) {
-            naviDrawer.addNaviItem(VaadinIcon.HOME, "Home", Home.class);
-            naviDrawer.addNaviItem(VaadinIcon.PACKAGE, "Customer Orders",
-                    CustomerOrders.class);
-            naviDrawer.addNaviItem(VaadinIcon.INVOICE, "Invoices",
-                    Invoices.class);
-            naviDrawer.addNaviItem(VaadinIcon.PIE_BAR_CHART, "Overview",
-                    Overview.class);
-            naviDrawer.addNaviItem(VaadinIcon.STOCK, "Catalogue",
-                    Catalogue.class);
-
-            NaviLinkItem personnel = naviDrawer.addNaviItem(VaadinIcon.USERS,
-                    "Personnel", null);
-            naviDrawer.addNaviItem(personnel, "Accountants", Accountants.class);
-            naviDrawer.addNaviItem(personnel, "Managers", Managers.class);
-        }
+        NaviLinkItem personnel = naviDrawer.addNaviItem(VaadinIcon.USERS,
+                "Personnel", null);
+        naviDrawer.addNaviItem(personnel, "Accountants", Accountants.class);
+        naviDrawer.addNaviItem(personnel, "Managers", Managers.class);
     }
 
     /**
@@ -254,16 +206,8 @@ public class Root extends FlexBoxLayout
         settings.addMetaTag("apple-mobile-web-app-capable", "yes");
         settings.addMetaTag("apple-mobile-web-app-status-bar-style", "black");
 
-        if (UIConfig.getShowcase().equals(UIConfig.Showcase.INVENTORY)) {
-            settings.addFavIcon("icon",
-                    "frontend/styles/favicons/inventory.ico", "256x256");
-        } else if (UIConfig.getShowcase().equals(UIConfig.Showcase.FINANCE)) {
-            settings.addFavIcon("icon", "frontend/styles/favicons/finance.ico",
-                    "256x256");
-        } else {
-            settings.addFavIcon("icon", "frontend/styles/favicons/proto-x.ico",
-                    "256x256");
-        }
+        settings.addFavIcon("icon", "frontend/styles/favicons/finance.ico",
+                "256x256");
     }
 
     @Override
