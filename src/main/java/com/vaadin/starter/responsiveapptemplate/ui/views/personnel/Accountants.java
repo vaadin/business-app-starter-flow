@@ -18,6 +18,7 @@ import com.vaadin.flow.data.provider.ListDataProvider;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.router.internal.BeforeEnterHandler;
 import com.vaadin.starter.responsiveapptemplate.backend.DummyData;
 import com.vaadin.starter.responsiveapptemplate.backend.Person;
 import com.vaadin.starter.responsiveapptemplate.backend.UIConfig;
@@ -44,9 +45,6 @@ public class Accountants extends SplitViewFrame {
     private DetailsDrawerHeader detailsDrawerHeader;
 
     public Accountants() {
-        if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-            setViewHeader(new AppBar("Accountants"));
-        }
         setViewContent(createContent());
         setViewDetails(createDetailsDrawer());
 
@@ -191,4 +189,5 @@ public class Accountants extends SplitViewFrame {
     private void filter() {
         dataProvider.setFilterByValue(Person::getRole, Person.Role.ACCOUNTANT);
     }
+
 }

@@ -32,9 +32,7 @@ public class Personnel extends ViewFrame {
     private ListDataProvider<Person> dataProvider;
 
     public Personnel() {
-        if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-            setViewHeader(createAppBar());
-        }
+        setViewHeader(createAppBar());
         setViewContent(createContent());
 
         filter();

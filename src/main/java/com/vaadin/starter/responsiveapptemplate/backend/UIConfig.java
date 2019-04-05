@@ -18,10 +18,6 @@ public class UIConfig {
         DEMO, FINANCE, INVENTORY
     }
 
-    public static NaviMode getNaviMode() {
-        return NaviMode.LINKS;
-    }
-
     public static NaviHeader getNaviHeader() {
         return NaviHeader.BRAND_EXPRESSION;
     }

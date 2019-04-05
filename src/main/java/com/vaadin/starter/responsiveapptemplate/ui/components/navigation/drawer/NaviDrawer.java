@@ -1,5 +1,8 @@
 package com.vaadin.starter.responsiveapptemplate.ui.components.navigation.drawer;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.button.Button;
@@ -12,9 +15,6 @@ import com.vaadin.flow.router.AfterNavigationEvent;
 import com.vaadin.flow.router.AfterNavigationObserver;
 import com.vaadin.starter.responsiveapptemplate.backend.UIConfig;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
-
-import java.util.ArrayList;
-import java.util.Collections;
 
 public abstract class NaviDrawer extends Composite<Div>
         implements AfterNavigationObserver {
@@ -30,7 +30,7 @@ public abstract class NaviDrawer extends Composite<Div>
     private Div scrollableArea;
 
     private Div naviList;
-    private ArrayList<NaviItem> items;
+    private ArrayList<NaviLinkItem> items;
 
     private Button railButton;
 
@@ -136,29 +136,29 @@ public abstract class NaviDrawer extends Composite<Div>
         getElement().setAttribute(OPEN, false);
     }
 
-    protected void addNaviItem(NaviItem item) {
+    protected void addNaviItem(NaviLinkItem item) {
         naviList.add(item);
         items.add(item);
     }
 
-    protected void addNaviItem(NaviItem parent, NaviItem item) {
+    protected void addNaviItem(NaviLinkItem parent, NaviLinkItem item) {
         parent.addSubItem(item);
         addNaviItem(item);
     }
 
-    public abstract NaviItem addNaviItem(VaadinIcon icon, String text,
+    public abstract NaviLinkItem addNaviItem(VaadinIcon icon, String text,
             Class<? extends Component> navigationTarget);
 
-    public abstract NaviItem addNaviItem(Image image, String text,
+    public abstract NaviLinkItem addNaviItem(Image image, String text,
             Class<? extends Component> navigationTarget);
 
-    public abstract NaviItem addNaviItem(String path, String text,
+    public abstract NaviLinkItem addNaviItem(String path, String text,
             Class<? extends Component> navigationTarget);
 
-    public abstract NaviItem addNaviItem(NaviItem parent, String text,
+    public abstract NaviLinkItem addNaviItem(NaviLinkItem parent, String text,
             Class<? extends Component> navigationTarget);
 
-    public ArrayList<NaviItem> getNaviItems() {
+    public ArrayList<NaviLinkItem> getNaviItems() {
         return items;
     }
 

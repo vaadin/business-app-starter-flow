@@ -5,8 +5,6 @@ import java.util.Collections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.vaadin.flow.component.ClickEvent;
-import com.vaadin.flow.component.ClickNotifier;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasElement;
 import com.vaadin.flow.component.UI;
@@ -15,24 +13,25 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.page.Viewport;
-import com.vaadin.flow.router.BeforeEnterEvent;
-import com.vaadin.flow.router.BeforeEnterObserver;
+import com.vaadin.flow.router.AfterNavigationEvent;
+import com.vaadin.flow.router.AfterNavigationObserver;
 import com.vaadin.flow.router.RouterLayout;
 import com.vaadin.flow.server.ErrorHandler;
 import com.vaadin.flow.server.InitialPageSettings;
 import com.vaadin.flow.server.PageConfigurator;
 import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.starter.responsiveapptemplate.backend.UIConfig;
+import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.bar.AppBar;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.bar.TabBar;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.drawer.NaviDrawer;
-import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.drawer.NaviItem;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.drawer.NaviLinkDrawer;
+import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.drawer.NaviLinkItem;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexBoxLayout;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexDirection;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.Overflow;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
-import com.vaadin.starter.responsiveapptemplate.ui.views.Default;
+import com.vaadin.starter.responsiveapptemplate.ui.views.Home;
 import com.vaadin.starter.responsiveapptemplate.ui.views.demo.Dashboard;
 import com.vaadin.starter.responsiveapptemplate.ui.views.demo.FilterList;
 import com.vaadin.starter.responsiveapptemplate.ui.views.demo.HorizontalSplitView;
@@ -52,7 +51,7 @@ import com.vaadin.starter.responsiveapptemplate.ui.views.personnel.Managers;
 @HtmlImport("frontend://styles/shared-styles.html")
 @Viewport("width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes")
 public class Root extends FlexBoxLayout
-        implements RouterLayout, PageConfigurator, BeforeEnterObserver {
+        implements RouterLayout, PageConfigurator, AfterNavigationObserver {
 
     private static final Logger log = LoggerFactory.getLogger(Root.class);
     private static final String CLASS_NAME = "root";
@@ -70,6 +69,8 @@ public class Root extends FlexBoxLayout
     private Div appFooterOuter;
 
     private TabBar tabBar;
+    private boolean navigationTabs = false;
+    private AppBar appBar;
 
     public Root() {
         VaadinSession.getCurrent()
@@ -93,10 +94,6 @@ public class Root extends FlexBoxLayout
 
         // Configure the headers and footers (optional)
         initHeadersAndFooters();
-
-        if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.TABS)) {
-            UIUtils.showNotification("Shift-click opens new tab");
-        }
     }
 
     /**
@@ -136,7 +133,7 @@ public class Root extends FlexBoxLayout
             naviDrawer.addNaviItem(VaadinIcon.FILE_TEXT, "Reports",
                     Reports.class);
 
-            NaviItem personnel = naviDrawer.addNaviItem(VaadinIcon.USERS,
+            NaviLinkItem personnel = naviDrawer.addNaviItem(VaadinIcon.USERS,
                     "Personnel", Personnel.class);
             naviDrawer.addNaviItem(personnel, "Vertical Split",
                     VerticalSplitView.class);
@@ -147,7 +144,7 @@ public class Root extends FlexBoxLayout
                     FilterList.class);
 
         } else if (showcase.equals(UIConfig.Showcase.FINANCE)) {
-            naviDrawer.addNaviItem(VaadinIcon.HOME, "Home", Default.class);
+            naviDrawer.addNaviItem(VaadinIcon.HOME, "Home", Home.class);
             naviDrawer.addNaviItem(VaadinIcon.INSTITUTION, "Accounts",
                     Accounts.class);
             naviDrawer.addNaviItem(VaadinIcon.CREDIT_CARD, "Payments",
@@ -155,13 +152,13 @@ public class Root extends FlexBoxLayout
             naviDrawer.addNaviItem(VaadinIcon.CHART, "Statistics",
                     Statistics.class);
 
-            NaviItem personnel = naviDrawer.addNaviItem(VaadinIcon.USERS,
+            NaviLinkItem personnel = naviDrawer.addNaviItem(VaadinIcon.USERS,
                     "Personnel", null);
             naviDrawer.addNaviItem(personnel, "Accountants", Accountants.class);
             naviDrawer.addNaviItem(personnel, "Managers", Managers.class);
 
         } else if (showcase.equals(UIConfig.Showcase.INVENTORY)) {
-            naviDrawer.addNaviItem(VaadinIcon.HOME, "Home", Default.class);
+            naviDrawer.addNaviItem(VaadinIcon.HOME, "Home", Home.class);
             naviDrawer.addNaviItem(VaadinIcon.PACKAGE, "Customer Orders",
                     CustomerOrders.class);
             naviDrawer.addNaviItem(VaadinIcon.INVOICE, "Invoices",
@@ -171,7 +168,7 @@ public class Root extends FlexBoxLayout
             naviDrawer.addNaviItem(VaadinIcon.STOCK, "Catalogue",
                     Catalogue.class);
 
-            NaviItem personnel = naviDrawer.addNaviItem(VaadinIcon.USERS,
+            NaviLinkItem personnel = naviDrawer.addNaviItem(VaadinIcon.USERS,
                     "Personnel", null);
             naviDrawer.addNaviItem(personnel, "Accountants", Accountants.class);
             naviDrawer.addNaviItem(personnel, "Managers", Managers.class);
@@ -182,41 +179,29 @@ public class Root extends FlexBoxLayout
      * Configure the app's inner and outer headers and footers.
      */
     private void initHeadersAndFooters() {
-        // setAppHeaderOuter(new Label("Inner header"));
-        // setAppHeaderInner(new Label("Inner header"));
-        // setAppFooterOuter(new Label("Outer footer"));
-        // setAppFooterInner(new Label("Inner footer"));
+        // With tabs:
+        // the title, avatar and menu button (small screens) go into the TabBar
+        // Without:
+        // all of them go into the AppBar
 
-        if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.TABS)) {
+        appBar = new AppBar("");
+
+        if (navigationTabs) {
+            appBar.getAvatar().setVisible(false);
+            appBar.getMenuNaviIcon().setVisible(false);
             tabBar = new TabBar();
-            setAppHeaderInner(tabBar);
-
-            for (NaviItem item : naviDrawer.getNaviItems()) {
-                ((ClickNotifier<Div>) item).addClickListener(
-                        event -> naviItemClicked(item, event));
+            for (NaviLinkItem item : naviDrawer.getNaviItems()) {
+                item.addClickListener(e -> {
+                    // Shift-click to add a new tab
+                    if (e.getButton() == 0 && e.isShiftKey()) {
+                        tabBar.setSelectedTab(tabBar.addClosableNaviTab(
+                                item.getText(), item.getNavigationTarget()));
+                    }
+                });
             }
-        }
-    }
-
-    /**
-     * Handles the click event for navigation items when in NaviMode.TABS.
-     */
-    private void naviItemClicked(NaviItem item, ClickEvent<Div> event) {
-        // Shift-click to add a new tab
-        if (event.getButton() == 0 && event.isShiftKey()) {
-            tabBar.setSelectedTab(tabBar.addClosableNaviTab(item.getText(),
-                    item.getNavigationTarget()));
-        }
-
-        // Update the current tab, or create the first one
-        else if (event.getButton() == 0) {
-            if (tabBar.getTabCount() > 0) {
-                tabBar.updateSelectedTab(item.getText(),
-                        item.getNavigationTarget());
-            } else {
-                tabBar.addClosableNaviTab(item.getText(),
-                        item.getNavigationTarget());
-            }
+            setAppHeaderInner(tabBar, appBar);
+        } else {
+            setAppHeaderInner(appBar);
         }
     }
 
@@ -286,235 +271,6 @@ public class Root extends FlexBoxLayout
         this.viewContainer.getElement().appendChild(content.getElement());
     }
 
-    @Override
-    public void beforeEnter(BeforeEnterEvent beforeEnterEvent) {
-        // Customise the app's headers and footers when changing views.
-    }
-
-    private void initExampleNavigation() {
-        NaviItem ordering = naviDrawer.addNaviItem(VaadinIcon.ABACUS,
-                "Ordering", null);
-        {
-            NaviItem orderEntry = naviDrawer.addNaviItem(ordering,
-                    "Order Entry", null);
-            {
-                naviDrawer.addNaviItem(orderEntry, "New Order", null);
-                naviDrawer.addNaviItem(orderEntry, "Remote CustomerOrders",
-                        null);
-                naviDrawer.addNaviItem(orderEntry, "Incomplete CustomerOrders",
-                        null);
-            }
-            NaviItem setup = naviDrawer.addNaviItem(ordering, "Setup", null);
-            {
-                naviDrawer.addNaviItem(setup, "Clients", null);
-                naviDrawer.addNaviItem(setup, "Client Groups", null);
-                naviDrawer.addNaviItem(setup, "Providers", null);
-                naviDrawer.addNaviItem(setup, "Lab Tests", null);
-                naviDrawer.addNaviItem(setup, "Lab Test Panels", null);
-                naviDrawer.addNaviItem(setup, "Patients", null);
-            }
-            NaviItem labeling = naviDrawer.addNaviItem(ordering, "Labeling",
-                    null);
-            {
-                naviDrawer.addNaviItem(labeling, "Order Labels", null);
-                naviDrawer.addNaviItem(labeling, "Current Unprinted Batch",
-                        null);
-                naviDrawer.addNaviItem(labeling, "Label Batches", null);
-            }
-            NaviItem dataCleanup = naviDrawer.addNaviItem(ordering,
-                    "Data Cleanup", null);
-            {
-                naviDrawer.addNaviItem(dataCleanup, "Missing Info", null);
-            }
-            NaviItem reports = naviDrawer.addNaviItem(ordering, "Reports",
-                    null);
-            {
-                naviDrawer.addNaviItem(reports, "Order Search", null);
-                naviDrawer.addNaviItem(reports, "Order Stats", null);
-                naviDrawer.addNaviItem(reports, "Workflow Action Queue", null);
-            }
-            NaviItem interfaces = naviDrawer.addNaviItem(ordering, "Interfaces",
-                    null);
-            {
-                naviDrawer.addNaviItem(interfaces, "EDI Stats", null);
-                naviDrawer.addNaviItem(interfaces, "EDI Log", null);
-            }
-            NaviItem sendouts = naviDrawer.addNaviItem(ordering, "Sendouts",
-                    null);
-            {
-                naviDrawer.addNaviItem(sendouts, "Sendout Queue", null);
-                naviDrawer.addNaviItem(sendouts, "Manifest Queue", null);
-                naviDrawer.addNaviItem(sendouts, "Sendout Receive Queue", null);
-                naviDrawer.addNaviItem(sendouts, "Search Sendouts", null);
-            }
-        }
-        NaviItem anatomicPathology = naviDrawer.addNaviItem(VaadinIcon.ABACUS,
-                "Anatomic Pathology", null);
-        {
-            naviDrawer.addNaviItem(anatomicPathology, "Pathologist Queue",
-                    null);
-            naviDrawer.addNaviItem(anatomicPathology, "Case Distribution",
-                    null);
-
-            NaviItem gynCytology = naviDrawer.addNaviItem(anatomicPathology,
-                    "GYN Cytology", null);
-            {
-                NaviItem specimenPlacement = naviDrawer.addNaviItem(gynCytology,
-                        "Specimen Placement", null);
-                {
-                    naviDrawer.addNaviItem(specimenPlacement, "Rack Placement",
-                            null);
-                }
-                naviDrawer.addNaviItem(gynCytology, "Gyn Batch Log", null);
-                naviDrawer.addNaviItem(gynCytology, "Cytotech", null);
-                naviDrawer.addNaviItem(gynCytology, "Quality Control", null);
-
-                NaviItem apReports = naviDrawer.addNaviItem(gynCytology,
-                        "AP Reports", null);
-                {
-                    naviDrawer.addNaviItem(apReports, "CT [Daily Log]", null);
-                    naviDrawer.addNaviItem(apReports, "QC [Daily Log]", null);
-                    naviDrawer.addNaviItem(apReports, "Case Search", null);
-                    naviDrawer.addNaviItem(apReports, "Case Stats", null);
-                    naviDrawer.addNaviItem(apReports, "Consolidated Letter",
-                            null);
-                    naviDrawer.addNaviItem(apReports, "Tickler Report", null);
-                    naviDrawer.addNaviItem(apReports, "Followup Letter", null);
-                    naviDrawer.addNaviItem(apReports, "Abnormal Followup",
-                            null);
-                }
-            }
-            NaviItem ngynCytology = naviDrawer.addNaviItem(anatomicPathology,
-                    "Surgical/NGYN Cytology", null);
-            {
-                naviDrawer.addNaviItem(ngynCytology, "Grossing Queue", null);
-                naviDrawer.addNaviItem(ngynCytology, "Transcription Cases",
-                        null);
-                naviDrawer.addNaviItem(ngynCytology, "Screening Queue", null);
-
-                NaviItem historology = naviDrawer.addNaviItem(ngynCytology,
-                        "Historology", null);
-                {
-                    naviDrawer.addNaviItem(historology, "Block Queue", null);
-                    naviDrawer.addNaviItem(historology, "Slide Queue", null);
-                    naviDrawer.addNaviItem(historology, "Histo Cases", null);
-                    naviDrawer.addNaviItem(historology, "Block Log", null);
-                    naviDrawer.addNaviItem(historology, "Slide Log", null);
-                    naviDrawer.addNaviItem(historology, "Block Stats", null);
-                    naviDrawer.addNaviItem(historology, "Slide Stats", null);
-                    naviDrawer.addNaviItem(historology, "Correlation Queue",
-                            null);
-                }
-                NaviItem microscopicReports = naviDrawer
-                        .addNaviItem(ngynCytology, "Microscopic Reports", null);
-                {
-                    naviDrawer.addNaviItem(microscopicReports,
-                            "Case Log Report", null);
-                    naviDrawer.addNaviItem(microscopicReports,
-                            "Process Only Report", null);
-                    naviDrawer.addNaviItem(microscopicReports, "IntraOp Stats",
-                            null);
-                    naviDrawer.addNaviItem(microscopicReports,
-                            "Microscopic Case Stats", null);
-                    naviDrawer.addNaviItem(microscopicReports,
-                            "Microscopic Case Search", null);
-                    naviDrawer.addNaviItem(microscopicReports,
-                            "Consultation Stats", null);
-                    naviDrawer.addNaviItem(microscopicReports,
-                            "Consultation Search", null);
-                }
-            }
-            NaviItem crossTypeReports = naviDrawer
-                    .addNaviItem(anatomicPathology, "Cross-type Reports", null);
-            {
-                NaviItem correlation = naviDrawer.addNaviItem(crossTypeReports,
-                        "Correlation", null);
-                {
-                    naviDrawer.addNaviItem(correlation, "Correlation [Date]",
-                            null);
-                    naviDrawer.addNaviItem(correlation, "Correlation Stats",
-                            null);
-                    naviDrawer.addNaviItem(correlation, "Correlation Log",
-                            null);
-                    naviDrawer.addNaviItem(correlation, "Correlation Queue",
-                            null);
-                }
-                NaviItem cytologySlide = naviDrawer
-                        .addNaviItem(crossTypeReports, "Cytology Slide", null);
-                {
-                    naviDrawer.addNaviItem(cytologySlide,
-                            "Cytology Slide Search", null);
-                    naviDrawer.addNaviItem(cytologySlide,
-                            "Cytology Slide Stats", null);
-                }
-            }
-            NaviItem apSetup = naviDrawer.addNaviItem(anatomicPathology,
-                    "AP Setup", null);
-            {
-                NaviItem gynCytologySetup = naviDrawer.addNaviItem(apSetup,
-                        "GYN Cytology Setup", null);
-                {
-                    naviDrawer.addNaviItem(gynCytologySetup, "Cytology Tests",
-                            null);
-                    naviDrawer.addNaviItem(gynCytologySetup,
-                            "Specimen Adequacy", null);
-                    naviDrawer.addNaviItem(gynCytologySetup,
-                            "Specimen Adequacy Categories", null);
-                    naviDrawer.addNaviItem(gynCytologySetup, "Interpretation",
-                            null);
-                    naviDrawer.addNaviItem(gynCytologySetup,
-                            "Interpretation Grades", null);
-                    naviDrawer.addNaviItem(gynCytologySetup,
-                            "Additional Findings", null);
-                    naviDrawer.addNaviItem(gynCytologySetup,
-                            "Additional Findings Categories", null);
-                    naviDrawer.addNaviItem(gynCytologySetup, "Result Comments",
-                            null);
-                    naviDrawer.addNaviItem(gynCytologySetup, "Result Templates",
-                            null);
-                }
-                NaviItem ngynCytologyAdmin = naviDrawer.addNaviItem(apSetup,
-                        "Surgical/NGYN Cytology Admin", null);
-                {
-                    naviDrawer.addNaviItem(ngynCytologyAdmin,
-                            "Diagnosis Grades", null);
-                    naviDrawer.addNaviItem(ngynCytologyAdmin, "Site Manager",
-                            null);
-                    naviDrawer.addNaviItem(ngynCytologyAdmin,
-                            "Synoptic Templates", null);
-                    naviDrawer.addNaviItem(ngynCytologyAdmin, "Stains", null);
-                    naviDrawer.addNaviItem(ngynCytologyAdmin, "Stain Type",
-                            null);
-                    naviDrawer.addNaviItem(ngynCytologyAdmin, "Stain Panel",
-                            null);
-                    naviDrawer.addNaviItem(ngynCytologyAdmin, "Histo Protocols",
-                            null);
-                    naviDrawer.addNaviItem(ngynCytologyAdmin,
-                            "Histo Attributes", null);
-                    naviDrawer.addNaviItem(ngynCytologyAdmin, "Intra-Op Types",
-                            null);
-                    naviDrawer.addNaviItem(ngynCytologyAdmin, "Case Attributes",
-                            null);
-                    naviDrawer.addNaviItem(ngynCytologyAdmin, "Case Types",
-                            null);
-                    naviDrawer.addNaviItem(ngynCytologyAdmin,
-                            "Addendum Reasons", null);
-                    naviDrawer.addNaviItem(ngynCytologyAdmin, "Slide QA Status",
-                            null);
-                    naviDrawer.addNaviItem(ngynCytologyAdmin,
-                            "Prostate Regions", null);
-                    naviDrawer.addNaviItem(ngynCytologyAdmin,
-                            "Microscopic Tests", null);
-                }
-                NaviItem idr = naviDrawer.addNaviItem(apSetup, "IDR", null);
-                {
-                    naviDrawer.addNaviItem(idr, "IDR Test Filters", null);
-                    naviDrawer.addNaviItem(idr, "Templates", null);
-                }
-            }
-        }
-    }
-
     public NaviDrawer getNaviDrawer() {
         return naviDrawer;
     }
@@ -523,6 +279,52 @@ public class Root extends FlexBoxLayout
         return (Root) UI.getCurrent().getChildren()
                 .filter(component -> component.getClass() == Root.class)
                 .findFirst().get();
+    }
+
+    public AppBar getAppBar() {
+        return appBar;
+    }
+
+    @Override
+    public void afterNavigation(AfterNavigationEvent event) {
+        if (navigationTabs) {
+            afterNavigationWithTabs(event);
+        } else {
+            afterNavigationWithoutTabs(event);
+        }
+
+    }
+
+    private void afterNavigationWithTabs(AfterNavigationEvent e) {
+        NaviLinkItem active = getActiveItem(e);
+        if (active == null) {
+            if (tabBar.getTabCount() == 0) {
+                tabBar.addClosableNaviTab("", Home.class);
+            }
+        } else {
+            if (tabBar.getTabCount() > 0) {
+                tabBar.updateSelectedTab(active.getText(),
+                        active.getNavigationTarget());
+            } else {
+                tabBar.addClosableNaviTab(active.getText(),
+                        active.getNavigationTarget());
+            }
+        }
+    }
+
+    private NaviLinkItem getActiveItem(AfterNavigationEvent e) {
+        for (NaviLinkItem item : naviDrawer.getNaviItems()) {
+            if (item.isHighlighted(e)) {
+                return item;
+            }
+        }
+
+        return null;
+    }
+
+    private void afterNavigationWithoutTabs(AfterNavigationEvent e) {
+        NaviLinkItem active = getActiveItem(e);
+        getAppBar().setTitle(active.getText());
     }
 
 }

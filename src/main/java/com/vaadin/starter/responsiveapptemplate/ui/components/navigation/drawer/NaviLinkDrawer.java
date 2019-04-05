@@ -31,7 +31,7 @@ public class NaviLinkDrawer extends NaviDrawer {
         return item;
     }
 
-    public NaviLinkItem addNaviItem(NaviItem parent, String text,
+    public NaviLinkItem addNaviItem(NaviLinkItem parent, String text,
             Class<? extends Component> navigationTarget) {
         NaviLinkItem item = new NaviLinkItem(text, navigationTarget);
         addNaviItem(parent, item);

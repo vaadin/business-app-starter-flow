@@ -4,22 +4,16 @@ import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Html;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import com.vaadin.starter.responsiveapptemplate.backend.UIConfig;
 import com.vaadin.starter.responsiveapptemplate.ui.Root;
-import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.bar.AppBar;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexBoxLayout;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Horizontal;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Vertical;
 
 @Route(value = "", layout = Root.class)
 @PageTitle("Welcome")
-public class Default extends ViewFrame {
+public class Home extends ViewFrame {
 
-    public Default() {
-        if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-            setViewHeader(new AppBar("Responsive App Template"));
-        }
-
+    public Home() {
         setViewContent(createContent());
     }
 

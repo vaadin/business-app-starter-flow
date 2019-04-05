@@ -55,9 +55,7 @@ public class Invoices extends SplitViewFrame {
     private DetailsDrawerHeader detailsDrawerHeader;
 
     public Invoices() {
-        if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
             setViewHeader(createAppBar());
-        }
         setViewContent(createContent());
         setViewDetails(createDetailsDrawer());
     }

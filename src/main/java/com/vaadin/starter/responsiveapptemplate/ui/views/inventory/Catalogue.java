@@ -43,9 +43,7 @@ public class Catalogue extends SplitViewFrame {
     private DetailsDrawer detailsDrawer;
 
     public Catalogue() {
-        if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
             setViewHeader(createAppBar());
-        }
         setViewContent(createContent());
         setViewDetails(createDetailsDrawer());
     }

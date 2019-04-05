@@ -1,5 +1,8 @@
 package com.vaadin.starter.responsiveapptemplate.ui.views.finance;
 
+import static com.vaadin.starter.responsiveapptemplate.ui.utils.ViewStyles.GRID_VIEW;
+
+import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.grid.ColumnTextAlign;
 import com.vaadin.flow.component.grid.Grid;
@@ -17,7 +20,6 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.starter.responsiveapptemplate.backend.DummyData;
 import com.vaadin.starter.responsiveapptemplate.backend.Payment;
-import com.vaadin.starter.responsiveapptemplate.backend.UIConfig;
 import com.vaadin.starter.responsiveapptemplate.ui.Root;
 import com.vaadin.starter.responsiveapptemplate.ui.components.ListItem;
 import com.vaadin.starter.responsiveapptemplate.ui.components.detailsdrawer.DetailsDrawer;
@@ -27,38 +29,29 @@ import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.bar.App
 import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexDirection;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.WhiteSpace;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Bottom;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.FontSize;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.TextColor;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
 import com.vaadin.starter.responsiveapptemplate.ui.views.SplitViewFrame;
-
-import static com.vaadin.starter.responsiveapptemplate.ui.utils.ViewStyles.GRID_VIEW;
 
 @Route(value = "payments", layout = Root.class)
 @PageTitle("Payments")
 public class Payments extends SplitViewFrame {
 
-    private AppBar appBar;
     private Grid<Payment> grid;
     private ListDataProvider<Payment> dataProvider;
     private DetailsDrawer detailsDrawer;
 
-    public Payments() {
-        if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-            setViewHeader(createAppBar());
-        }
+    @Override
+    protected void onAttach(AttachEvent attachEvent) {
+        super.onAttach(attachEvent);
+        initAppBar();
         setViewContent(createContent());
         setViewDetails(createDetailsDrawer());
-
-        UIUtils.createLabel(FontSize.XS, TextColor.SECONDARY, "I rule!");
-        UIUtils.createLabel(FontSize.XS, TextColor.ERROR, "I rule!");
-
         filter();
     }
 
-    private AppBar createAppBar() {
-        appBar = new AppBar("Payments");
+    private void initAppBar() {
+        AppBar appBar = Root.get().getAppBar();
         for (Payment.Status status : Payment.Status.values()) {
             appBar.addTab(status.getName());
         }
@@ -67,7 +60,6 @@ public class Payments extends SplitViewFrame {
             detailsDrawer.hide();
         });
         appBar.centerTabs();
-        return appBar;
     }
 
     private Component createContent() {
@@ -181,9 +173,9 @@ public class Payments extends SplitViewFrame {
     }
 
     private void filter() {
-        if (appBar != null) {
+        Tab selectedTab = Root.get().getAppBar().getSelectedTab();
+        if (selectedTab != null)
             dataProvider.setFilterByValue(Payment::getStatus, Payment.Status
-                    .valueOf(appBar.getSelectedTab().getLabel().toUpperCase()));
-        }
+                    .valueOf(selectedTab.getLabel().toUpperCase()));
     }
 }

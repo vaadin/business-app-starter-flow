@@ -41,9 +41,7 @@ public class VerticalSplitView extends SplitViewFrame {
     private DetailsDrawerHeader detailsDrawerHeader;
 
     public VerticalSplitView() {
-        if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-            setViewHeader(new AppBar("Personnel"));
-        }
+        setViewHeader(new AppBar("Personnel"));
         setViewContent(createContent());
         setViewDetails(createDetailsDrawer());
         setViewDetailsPosition(Position.BOTTOM);

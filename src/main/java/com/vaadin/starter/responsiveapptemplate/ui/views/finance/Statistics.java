@@ -12,13 +12,24 @@ import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.starter.responsiveapptemplate.backend.Payment;
-import com.vaadin.starter.responsiveapptemplate.backend.UIConfig;
 import com.vaadin.starter.responsiveapptemplate.ui.Root;
 import com.vaadin.starter.responsiveapptemplate.ui.components.ListItem;
-import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.bar.AppBar;
-import com.vaadin.starter.responsiveapptemplate.ui.layout.*;
-import com.vaadin.starter.responsiveapptemplate.ui.layout.size.*;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.*;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.BorderRadius;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexBoxLayout;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexDirection;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexWrap;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.Position;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.Shadow;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Bottom;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Horizontal;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Right;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Top;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Vertical;
+import com.vaadin.starter.responsiveapptemplate.ui.utils.FontSize;
+import com.vaadin.starter.responsiveapptemplate.ui.utils.IconSize;
+import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
+import com.vaadin.starter.responsiveapptemplate.ui.utils.TextColor;
+import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
 import com.vaadin.starter.responsiveapptemplate.ui.views.ViewFrame;
 
 @Route(value = "statistics", layout = Root.class)
@@ -28,9 +39,6 @@ public class Statistics extends ViewFrame {
     private static final String CLASS_NAME = "dashboard";
 
     public Statistics() {
-        if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-            setViewHeader(new AppBar("Statistics"));
-        }
         setViewContent(createContent());
     }
 

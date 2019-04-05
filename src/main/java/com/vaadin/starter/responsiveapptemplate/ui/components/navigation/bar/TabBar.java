@@ -1,7 +1,5 @@
 package com.vaadin.starter.responsiveapptemplate.ui.components.navigation.bar;
 
-import java.util.Collections;
-
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.Composite;
@@ -13,12 +11,11 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
-import com.vaadin.starter.responsiveapptemplate.backend.UIConfig;
 import com.vaadin.starter.responsiveapptemplate.ui.Root;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.tab.NaviTabs;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
-import com.vaadin.starter.responsiveapptemplate.ui.views.Default;
+import com.vaadin.starter.responsiveapptemplate.ui.views.Home;
 
 public class TabBar extends Composite<FlexLayout> {
 
@@ -45,8 +42,6 @@ public class TabBar extends Composite<FlexLayout> {
         avatar.setClassName(CLASS_NAME + "__avatar");
         avatar.setSrc(
                 "https://pbs.twimg.com/profile_images/2642704545/a77c0524766c6f3b4be4929f2005e627_400x400.png");
-        avatar.setVisible(UIConfig.getNaviHeader()
-                .equals(UIConfig.NaviHeader.BRAND_EXPRESSION));
 
         ContextMenu contextMenu = new ContextMenu(avatar);
         contextMenu.setOpenOnClick(true);
@@ -57,19 +52,15 @@ public class TabBar extends Composite<FlexLayout> {
         contextMenu.addItem("Settings", e -> System.out.println("Testing..."));
         contextMenu.addItem("Logout", e -> System.out.println("Testing..."));
 
-        actionItems = UIUtils.createFlexLayout(
-                Collections.singleton(CLASS_NAME + "__action-items"), avatar);
-        actionItems.setVisible(false);
-
         addTab = UIUtils.createSmallButton(VaadinIcon.PLUS);
         addTab.addClickListener(e -> tabs
-                .setSelectedTab(addClosableNaviTab("New Tab", Default.class)));
+                .setSelectedTab(addClosableNaviTab("New Tab", Home.class)));
         addTab.setClassName(CLASS_NAME + "__add-tab");
 
         tabs = new NaviTabs();
         tabs.setClassName(CLASS_NAME + "__tabs");
 
-        getContent().add(menuNaviIcon, tabs, addTab, actionItems);
+        getContent().add(menuNaviIcon, tabs, addTab, avatar);
     }
 
     /* === MENU ICON === */

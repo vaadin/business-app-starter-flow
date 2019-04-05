@@ -53,9 +53,7 @@ public class CustomerOrders extends SplitViewFrame {
     private Dialog dialog;
 
     public CustomerOrders() {
-        if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-            setViewHeader(createAppBar());
-        }
+        setViewHeader(createAppBar());
         setViewContent(createContent());
     }
 

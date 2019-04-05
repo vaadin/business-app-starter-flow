@@ -1,5 +1,13 @@
 package com.vaadin.starter.responsiveapptemplate.ui.components.navigation.drawer;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.io.Charsets;
+import org.apache.commons.io.IOUtils;
+
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -10,13 +18,6 @@ import com.vaadin.flow.dom.Element;
 import com.vaadin.flow.server.VaadinService;
 import com.vaadin.flow.server.startup.FakeBrowser;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
-import org.apache.commons.io.Charsets;
-import org.apache.commons.io.IOUtils;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
 
 public abstract class NaviItem extends Div {
 
@@ -122,4 +123,5 @@ public abstract class NaviItem extends Div {
         svg.getElement().setProperty("innerHTML", content);
         return svg.getElement();
     }
+
 }

@@ -6,6 +6,7 @@ import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.router.AfterNavigationEvent;
 import com.vaadin.flow.router.HighlightConditions;
 import com.vaadin.flow.router.RouterLink;
 
@@ -55,5 +56,10 @@ public class NaviLinkItem extends NaviItem {
         }
 
         getElement().insertChild(0, link.getElement());
+    }
+
+    public boolean isHighlighted(AfterNavigationEvent e) {
+        return link instanceof RouterLink && ((RouterLink) link)
+                .getHighlightCondition().shouldHighlight((RouterLink) link, e);
     }
 }

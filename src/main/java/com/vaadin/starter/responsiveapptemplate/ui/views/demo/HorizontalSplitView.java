@@ -41,9 +41,6 @@ public class HorizontalSplitView extends SplitViewFrame {
     private DetailsDrawerHeader detailsDrawerHeader;
 
     public HorizontalSplitView() {
-        if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-            setViewHeader(new AppBar("Personnel"));
-        }
         setViewContent(createContent());
         setViewDetails(createDetailsDrawer());
     }

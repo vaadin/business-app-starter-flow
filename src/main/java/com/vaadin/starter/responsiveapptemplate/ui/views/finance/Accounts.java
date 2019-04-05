@@ -1,5 +1,9 @@
 package com.vaadin.starter.responsiveapptemplate.ui.views.finance;
 
+import static com.vaadin.starter.responsiveapptemplate.ui.utils.ViewStyles.GRID_VIEW;
+
+import java.time.format.DateTimeFormatter;
+
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.grid.ColumnTextAlign;
@@ -15,17 +19,11 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLayout;
 import com.vaadin.starter.responsiveapptemplate.backend.BankAccount;
 import com.vaadin.starter.responsiveapptemplate.backend.DummyData;
-import com.vaadin.starter.responsiveapptemplate.backend.UIConfig;
 import com.vaadin.starter.responsiveapptemplate.ui.Root;
 import com.vaadin.starter.responsiveapptemplate.ui.components.ListItem;
-import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.bar.AppBar;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.TextColor;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
 import com.vaadin.starter.responsiveapptemplate.ui.views.ViewFrame;
-
-import java.time.format.DateTimeFormatter;
-
-import static com.vaadin.starter.responsiveapptemplate.ui.utils.ViewStyles.GRID_VIEW;
 
 @Route(value = "accounts", layout = Root.class)
 @ParentLayout(Root.class)
@@ -35,9 +33,6 @@ public class Accounts extends ViewFrame implements RouterLayout {
     private Grid<BankAccount> grid;
 
     public Accounts() {
-        if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-            setViewHeader(new AppBar("Accounts"));
-        }
         setViewContent(createContent());
     }
 

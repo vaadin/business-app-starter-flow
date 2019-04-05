@@ -29,9 +29,7 @@ public class Reports extends ViewFrame {
     private Grid<Report> grid;
 
     public Reports() {
-        if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-            setViewHeader(new AppBar("Reports"));
-        }
+        setViewHeader(new AppBar("Reports"));
         setViewContent(createContent());
     }
 

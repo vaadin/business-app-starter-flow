@@ -1,5 +1,9 @@
 package com.vaadin.starter.responsiveapptemplate.ui.views.finance;
 
+import java.time.LocalDate;
+import java.util.Arrays;
+
+import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
@@ -21,20 +25,26 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.starter.responsiveapptemplate.backend.BankAccount;
 import com.vaadin.starter.responsiveapptemplate.backend.DummyData;
-import com.vaadin.starter.responsiveapptemplate.backend.UIConfig;
 import com.vaadin.starter.responsiveapptemplate.ui.Root;
 import com.vaadin.starter.responsiveapptemplate.ui.components.ListItem;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.bar.AppBar;
-import com.vaadin.starter.responsiveapptemplate.ui.layout.*;
-import com.vaadin.starter.responsiveapptemplate.ui.layout.size.*;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.BorderRadius;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.BoxSizing;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexBoxLayout;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexDirection;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexWrap;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.Shadow;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.WhiteSpace;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Bottom;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Horizontal;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Top;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Uniform;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Vertical;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.BoxShadowBorders;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.TextColor;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
 import com.vaadin.starter.responsiveapptemplate.ui.views.ViewFrame;
-
-import java.time.LocalDate;
-import java.util.Arrays;
 
 @Route(value = "account-details", layout = Root.class)
 @PageTitle("Account Details")
@@ -42,26 +52,21 @@ public class AccountDetails extends ViewFrame implements HasUrlParameter<Long> {
 
     public int RECENT_TRANSACTIONS = 4;
 
-    private AppBar appBar;
     private ListItem availability;
     private ListItem bankAccount;
     private ListItem updated;
 
-    public AccountDetails() {
-        if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-            setViewHeader(createAppBar());
-        }
-        setViewContent(createContent());
+    @Override
+    protected void onAttach(AttachEvent attachEvent) {
+        super.onAttach(attachEvent);
+        initAppBar();
     }
 
     @Override
     public void setParameter(BeforeEvent beforeEvent, Long id) {
+        setViewContent(createContent());
         BankAccount account = DummyData.getBankAccount(id);
         UI.getCurrent().getPage().setTitle(account.getOwner());
-
-        if (appBar != null) {
-            appBar.setTitle(account.getOwner());
-        }
 
         availability.setPrimaryText(
                 UIUtils.formatAmount(account.getAvailability()));
@@ -70,13 +75,12 @@ public class AccountDetails extends ViewFrame implements HasUrlParameter<Long> {
         updated.setPrimaryText(UIUtils.formatDate(account.getUpdated()));
     }
 
-    private AppBar createAppBar() {
-        appBar = new AppBar("Details");
+    private void initAppBar() {
+        AppBar appBar = Root.get().getAppBar();
         appBar.setNaviMode(AppBar.NaviMode.CONTEXTUAL);
         appBar.setContextNaviIcon(new Icon(VaadinIcon.ARROW_BACKWARD));
-        appBar.getContextNaviIcon()
-                .addClickListener(e -> UI.getCurrent().navigate("accounts"));
-        return appBar;
+        appBar.getContextNaviIcon().addClickListener(
+                e -> UI.getCurrent().navigate(Accounts.class));
     }
 
     private Component createContent() {

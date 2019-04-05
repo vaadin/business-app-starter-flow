@@ -51,9 +51,7 @@ public class FilterList extends ViewFrame {
     private Grid<Person> grid;
 
     public FilterList() {
-        if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-            setViewHeader(new AppBar("Statistics"));
-        }
+        setViewHeader(new AppBar("Statistics"));
         setViewContent(createContent());
     }
 

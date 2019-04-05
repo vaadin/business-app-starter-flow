@@ -54,9 +54,7 @@ public class ReportDetails extends ViewFrame implements HasUrlParameter<Long> {
     private FlexLayout events;
 
     public ReportDetails() {
-        if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
             setViewHeader(createAppBar());
-        }
         setViewContent(createContent());
     }
 

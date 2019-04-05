@@ -26,7 +26,7 @@ import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.tab.Nav
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.tab.NaviTabs;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
-import com.vaadin.starter.responsiveapptemplate.ui.views.Default;
+import com.vaadin.starter.responsiveapptemplate.ui.views.Home;
 
 public class AppBar extends Composite<FlexLayout> {
 
@@ -80,8 +80,7 @@ public class AppBar extends Composite<FlexLayout> {
         menuNaviIcon = UIUtils.createTertiaryInlineButton(VaadinIcon.MENU);
         menuNaviIcon.removeThemeVariants(ButtonVariant.LUMO_ICON);
         menuNaviIcon.addClassName(CLASS_NAME + "__navi-icon");
-        menuNaviIcon
-                .addClickListener(e -> Root.get().getNaviDrawer().toggle());
+        menuNaviIcon.addClickListener(e -> Root.get().getNaviDrawer().toggle());
     }
 
     private void initContextNaviIcon() {
@@ -118,9 +117,6 @@ public class AppBar extends Composite<FlexLayout> {
         contextMenu.addItem("john.smith@gmail.com",
                 e -> Notification.show("Not implemented yet.", 3000,
                         Notification.Position.BOTTOM_CENTER));
-        contextMenu.addItem("john.smith@yahoo.com",
-                e -> Notification.show("Not implemented yet.", 3000,
-                        Notification.Position.BOTTOM_CENTER));
         contextMenu.addItem("Settings",
                 e -> Notification.show("Not implemented yet.", 3000,
                         Notification.Position.BOTTOM_CENTER));
@@ -147,7 +143,7 @@ public class AppBar extends Composite<FlexLayout> {
     private void initTabs(NaviTab... tabs) {
         addTab = UIUtils.createSmallButton(VaadinIcon.PLUS);
         addTab.addClickListener(e -> naviTabs
-                .setSelectedTab(addClosableNaviTab("New Tab", Default.class)));
+                .setSelectedTab(addClosableNaviTab("New Tab", Home.class)));
         addTab.setVisible(false);
 
         naviTabs = tabs.length > 0 ? new NaviTabs(tabs) : new NaviTabs();
@@ -339,5 +335,9 @@ public class AppBar extends Composite<FlexLayout> {
 
     private void updateTabsVisibility() {
         naviTabs.setVisible(naviTabs.getComponentCount() > 0);
+    }
+
+    public Image getAvatar() {
+        return avatar;
     }
 }

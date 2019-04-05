@@ -1,9 +1,11 @@
 package com.vaadin.starter.responsiveapptemplate.ui.views;
 
+import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.HasStyle;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.starter.responsiveapptemplate.ui.Root;
 
 /**
  * A view frame that establishes app design guidelines. It consists of three
@@ -55,4 +57,11 @@ public class ViewFrame extends Composite<Div> implements HasStyle {
         footer.removeAll();
         footer.add(components);
     }
+
+    @Override
+    protected void onAttach(AttachEvent attachEvent) {
+        super.onAttach(attachEvent);
+        Root.get().getAppBar().reset();
+    }
+
 }

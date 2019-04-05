@@ -1,9 +1,11 @@
 package com.vaadin.starter.responsiveapptemplate.ui.views;
 
+import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.HasStyle;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.starter.responsiveapptemplate.ui.Root;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexBoxLayout;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexDirection;
 
@@ -82,5 +84,11 @@ public class SplitViewFrame extends Composite<Div> implements HasStyle {
     public void setViewFooter(Component... components) {
         footer.removeAll();
         footer.add(components);
+    }
+
+    @Override
+    protected void onAttach(AttachEvent attachEvent) {
+        super.onAttach(attachEvent);
+        Root.get().getAppBar().reset();
     }
 }

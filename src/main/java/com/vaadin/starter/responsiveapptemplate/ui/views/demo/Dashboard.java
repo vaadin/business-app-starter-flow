@@ -27,9 +27,7 @@ public class Dashboard extends ViewFrame {
     private static final String CLASS_NAME = "dashboard";
 
     public Dashboard() {
-        if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-            setViewHeader(new AppBar("Dashboard"));
-        }
+        setViewHeader(new AppBar("Dashboard"));
         setViewContent(createContent());
     }
 

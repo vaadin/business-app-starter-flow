@@ -30,9 +30,7 @@ public class Overview extends ViewFrame {
     private static final String LOGS = "Logs";
 
     public Overview() {
-        if (UIConfig.getNaviMode().equals(UIConfig.NaviMode.LINKS)) {
-            setViewHeader(new AppBar("Overview"));
-        }
+        setViewHeader(new AppBar("Overview"));
         setViewContent(createContent());
     }
 
