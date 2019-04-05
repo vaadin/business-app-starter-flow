@@ -268,7 +268,9 @@ public class Root extends FlexBoxLayout
 
     private void afterNavigationWithoutTabs(AfterNavigationEvent e) {
         NaviLinkItem active = getActiveItem(e);
-        getAppBar().setTitle(active.getText());
+        if (active != null) {
+            getAppBar().setTitle(active.getText());
+        }
     }
 
 }
