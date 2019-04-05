@@ -3,9 +3,13 @@ package com.vaadin.starter.responsiveapptemplate.ui.components.navigation.drawer
 import java.util.ArrayList;
 import java.util.Collections;
 
+import com.vaadin.flow.component.AttachEvent;
+import com.vaadin.flow.component.ClientCallable;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Composite;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.icon.Icon;
@@ -15,6 +19,9 @@ import com.vaadin.flow.router.AfterNavigationEvent;
 import com.vaadin.flow.router.AfterNavigationObserver;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
 
+import elemental.json.JsonObject;
+
+@HtmlImport("swipe-away.html")
 public abstract class NaviDrawer extends Composite<Div>
         implements AfterNavigationObserver {
 
@@ -32,6 +39,20 @@ public abstract class NaviDrawer extends Composite<Div>
     private ArrayList<NaviLinkItem> items;
 
     private Button railButton;
+
+    @Override
+    protected void onAttach(AttachEvent attachEvent) {
+        super.onAttach(attachEvent);
+        UI ui = attachEvent.getUI();
+        ui.getPage().executeJavaScript("window.addSwipeAway($0,$1,$2,$3)",
+                mainContent.getElement(), this, "onSwipeAway",
+                scrim.getElement());
+    }
+
+    @ClientCallable
+    public void onSwipeAway(JsonObject data) {
+        close();
+    }
 
     public NaviDrawer() {
         getContent().setClassName(CLASS_NAME);
