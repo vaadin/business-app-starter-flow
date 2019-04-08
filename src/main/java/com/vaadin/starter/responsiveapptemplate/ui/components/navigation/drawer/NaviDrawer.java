@@ -132,6 +132,11 @@ public abstract class NaviDrawer extends Composite<Div>
             getElement().setAttribute(RAIL, true);
             railButton.setIcon(new Icon(VaadinIcon.CHEVRON_RIGHT_SMALL));
             railButton.setText("Expand");
+            getUI().get().getPage().executeJavaScript(
+                    "var originalStyle = getComputedStyle($0).pointerEvents;" //
+                            + "$0.style.pointerEvents='none';" //
+                            + "setTimeout(function() {$0.style.pointerEvents=originalStyle;}, 170);",
+                    getElement());
         }
     }
 
