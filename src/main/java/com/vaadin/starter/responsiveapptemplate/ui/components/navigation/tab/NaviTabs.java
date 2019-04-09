@@ -46,7 +46,7 @@ public class NaviTabs extends Tabs {
     /**
      * Creates a tab that when clicked navigates to the specified target.
      */
-    public Tab addNaviTab(String text,
+    public Tab addTab(String text,
             Class<? extends Component> navigationTarget) {
         Tab tab = new NaviTab(text, navigationTarget);
         add(tab);
@@ -57,7 +57,7 @@ public class NaviTabs extends Tabs {
      * Creates a (closable) tab that when clicked navigates to the specified
      * target.
      */
-    public Tab addClosableNaviTab(String text,
+    public Tab addClosableTab(String text,
             Class<? extends Component> navigationTarget) {
         ClosableNaviTab tab = new ClosableNaviTab(text, navigationTarget);
         add(tab);

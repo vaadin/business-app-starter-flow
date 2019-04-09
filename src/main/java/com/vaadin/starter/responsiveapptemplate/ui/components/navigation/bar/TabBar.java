@@ -21,7 +21,7 @@ public class TabBar extends Composite<FlexLayout> {
 
     private final String CLASS_NAME = "tab-bar";
 
-    private Button menuNaviIcon;
+    private Button menuIcon;
 
     private FlexLayout actionItems;
     private Image avatar;
@@ -33,10 +33,10 @@ public class TabBar extends Composite<FlexLayout> {
         getContent().setClassName(CLASS_NAME);
         getElement().setAttribute(LumoStyles.THEME, LumoStyles.DARK);
 
-        menuNaviIcon = UIUtils.createButton(VaadinIcon.MENU,
-                ButtonVariant.LUMO_SMALL, ButtonVariant.LUMO_TERTIARY);
-        menuNaviIcon.addClassNames(CLASS_NAME + "__navi-icon");
-        menuNaviIcon.addClickListener(e -> MainLayout.get().getNaviDrawer().toggle());
+        menuIcon = UIUtils.createTertiaryInlineButton(VaadinIcon.MENU);
+        menuIcon.removeThemeVariants(ButtonVariant.LUMO_ICON);
+        menuIcon.addClassName(CLASS_NAME + "__navi-icon");
+        menuIcon.addClickListener(e -> MainLayout.get().getNaviDrawer().toggle());
 
         avatar = new Image();
         avatar.setClassName(CLASS_NAME + "__avatar");
@@ -60,17 +60,13 @@ public class TabBar extends Composite<FlexLayout> {
         tabs = new NaviTabs();
         tabs.setClassName(CLASS_NAME + "__tabs");
 
-        getContent().add(menuNaviIcon, tabs, addTab, avatar);
+        getContent().add(menuIcon, tabs, addTab, avatar);
     }
 
     /* === MENU ICON === */
 
-    public Button getMenuNaviIcon() {
-        return menuNaviIcon;
-    }
-
-    public void setMenuNaviIconVisible(boolean visible) {
-        menuNaviIcon.setVisible(visible);
+    public Button getMenuIcon() {
+        return menuIcon;
     }
 
     /* === TABS === */
@@ -91,14 +87,14 @@ public class TabBar extends Composite<FlexLayout> {
 
     public Tab addNaviTab(String text,
             Class<? extends Component> navigationTarget) {
-        Tab tab = tabs.addNaviTab(text, navigationTarget);
+        Tab tab = tabs.addTab(text, navigationTarget);
         configureTab(tab);
         return tab;
     }
 
     public Tab addClosableNaviTab(String text,
             Class<? extends Component> navigationTarget) {
-        Tab tab = tabs.addClosableNaviTab(text, navigationTarget);
+        Tab tab = tabs.addClosableTab(text, navigationTarget);
         configureTab(tab);
         return tab;
     }

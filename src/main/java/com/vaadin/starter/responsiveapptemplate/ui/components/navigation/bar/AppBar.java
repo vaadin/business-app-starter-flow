@@ -33,15 +33,15 @@ public class AppBar extends Composite<FlexLayout> {
 
     private FlexLayout container;
 
-    private Button menuNaviIcon;
-    private Button contextNaviIcon;
+    private Button menuIcon;
+    private Button contextIcon;
 
     private H4 title;
     private FlexLayout actionItems;
     private Image avatar;
 
     private FlexLayout tabContainer;
-    private NaviTabs naviTabs;
+    private NaviTabs tabs;
     private Button addTab;
 
     private TextField search;
@@ -55,8 +55,8 @@ public class AppBar extends Composite<FlexLayout> {
         getContent().setClassName(CLASS_NAME);
         getElement().setAttribute(LumoStyles.THEME, LumoStyles.DARK);
 
-        initMenuNaviIcon();
-        initContextNaviIcon();
+        initMenuIcon();
+        initContextIcon();
         initTitle(title);
         initSearch();
         initAvatar();
@@ -67,28 +67,27 @@ public class AppBar extends Composite<FlexLayout> {
 
     public void setNaviMode(NaviMode mode) {
         if (mode.equals(NaviMode.MENU)) {
-            menuNaviIcon.setVisible(true);
-            contextNaviIcon.setVisible(false);
+            menuIcon.setVisible(true);
+            contextIcon.setVisible(false);
         } else {
-            menuNaviIcon.setVisible(false);
-            contextNaviIcon.setVisible(true);
+            menuIcon.setVisible(false);
+            contextIcon.setVisible(true);
         }
     }
 
-    private void initMenuNaviIcon() {
-        menuNaviIcon = UIUtils.createTertiaryInlineButton(VaadinIcon.MENU);
-        menuNaviIcon.removeThemeVariants(ButtonVariant.LUMO_ICON);
-        menuNaviIcon.addClassName(CLASS_NAME + "__navi-icon");
-        menuNaviIcon.addClickListener(e -> MainLayout.get().getNaviDrawer().toggle());
+    private void initMenuIcon() {
+        menuIcon = UIUtils.createTertiaryInlineButton(VaadinIcon.MENU);
+        menuIcon.removeThemeVariants(ButtonVariant.LUMO_ICON);
+        menuIcon.addClassName(CLASS_NAME + "__navi-icon");
+        menuIcon.addClickListener(e -> MainLayout.get().getNaviDrawer().toggle());
     }
 
-    private void initContextNaviIcon() {
-        contextNaviIcon = UIUtils
+    private void initContextIcon() {
+        contextIcon = UIUtils
                 .createTertiaryInlineButton(VaadinIcon.ARROW_LEFT);
-        contextNaviIcon.removeThemeVariants(ButtonVariant.LUMO_ICON);
-        contextNaviIcon.addClassNames(CLASS_NAME + "__navi-icon",
-                CLASS_NAME + "__navi-icon--visible");
-        contextNaviIcon.setVisible(false);
+        contextIcon.removeThemeVariants(ButtonVariant.LUMO_ICON);
+        contextIcon.addClassNames(CLASS_NAME + "__context-icon");
+        contextIcon.setVisible(false);
     }
 
     private void initTitle(String title) {
@@ -130,8 +129,8 @@ public class AppBar extends Composite<FlexLayout> {
 
     private void initContainer() {
         container = UIUtils.createFlexLayout(
-                Collections.singleton(CLASS_NAME + "__container"), menuNaviIcon,
-                contextNaviIcon, this.title, search, actionItems, avatar);
+                Collections.singleton(CLASS_NAME + "__container"), menuIcon,
+                contextIcon, this.title, search, actionItems, avatar);
         container.setAlignItems(FlexComponent.Alignment.CENTER);
         container.setFlexGrow(1, search);
         getContent().add(container);
@@ -139,19 +138,19 @@ public class AppBar extends Composite<FlexLayout> {
 
     private void initTabs(NaviTab... tabs) {
         addTab = UIUtils.createSmallButton(VaadinIcon.PLUS);
-        addTab.addClickListener(e -> naviTabs
+        addTab.addClickListener(e -> this.tabs
                 .setSelectedTab(addClosableNaviTab("New Tab", Home.class)));
         addTab.setVisible(false);
 
-        naviTabs = tabs.length > 0 ? new NaviTabs(tabs) : new NaviTabs();
-        naviTabs.setClassName(CLASS_NAME + "__tabs");
-        naviTabs.setVisible(false);
+        this.tabs = tabs.length > 0 ? new NaviTabs(tabs) : new NaviTabs();
+        this.tabs.setClassName(CLASS_NAME + "__tabs");
+        this.tabs.setVisible(false);
         for (NaviTab tab : tabs) {
             configureTab(tab);
         }
 
         tabContainer = UIUtils.createFlexLayout(
-                Collections.singleton(CLASS_NAME + "__tab-container"), naviTabs,
+                Collections.singleton(CLASS_NAME + "__tab-container"), this.tabs,
                 addTab);
         tabContainer.setAlignItems(FlexComponent.Alignment.CENTER);
         getContent().add(tabContainer);
@@ -159,23 +158,19 @@ public class AppBar extends Composite<FlexLayout> {
 
     /* === MENU ICON === */
 
-    public Button getMenuNaviIcon() {
-        return menuNaviIcon;
-    }
-
-    public void setMenuNaviIconVisible(boolean visible) {
-        menuNaviIcon.setVisible(visible);
+    public Button getMenuIcon() {
+        return menuIcon;
     }
 
     /* === CONTEXT ICON === */
 
-    public Button getContextNaviIcon() {
-        return contextNaviIcon;
+    public Button getContextIcon() {
+        return contextIcon;
     }
 
-    public void setContextNaviIcon(Icon icon) {
-        contextNaviIcon.setIcon(icon);
-        contextNaviIcon.removeThemeVariants(ButtonVariant.LUMO_ICON);
+    public void setContextIcon(Icon icon) {
+        contextIcon.setIcon(icon);
+        contextIcon.removeThemeVariants(ButtonVariant.LUMO_ICON);
     }
 
     /* === TITLE === */
@@ -211,7 +206,7 @@ public class AppBar extends Composite<FlexLayout> {
     /* === TABS === */
 
     public void centerTabs() {
-        naviTabs.addClassName(LumoStyles.Margin.Horizontal.AUTO);
+        tabs.addClassName(LumoStyles.Margin.Horizontal.AUTO);
     }
 
     private void configureTab(Tab tab) {
@@ -220,53 +215,53 @@ public class AppBar extends Composite<FlexLayout> {
     }
 
     public Tab addTab(String text) {
-        Tab tab = naviTabs.addTab(text);
+        Tab tab = tabs.addTab(text);
         configureTab(tab);
         return tab;
     }
 
-    public Tab addNaviTab(String text,
+    public Tab addTab(String text,
             Class<? extends Component> navigationTarget) {
-        Tab tab = naviTabs.addNaviTab(text, navigationTarget);
+        Tab tab = tabs.addTab(text, navigationTarget);
         configureTab(tab);
         return tab;
     }
 
     public Tab addClosableNaviTab(String text,
             Class<? extends Component> navigationTarget) {
-        Tab tab = naviTabs.addClosableNaviTab(text, navigationTarget);
+        Tab tab = tabs.addClosableTab(text, navigationTarget);
         configureTab(tab);
         return tab;
     }
 
     public Tab getSelectedTab() {
-        return naviTabs.getSelectedTab();
+        return tabs.getSelectedTab();
     }
 
     public void setSelectedTab(Tab selectedTab) {
-        naviTabs.setSelectedTab(selectedTab);
+        tabs.setSelectedTab(selectedTab);
     }
 
     public void updateSelectedTab(String text,
             Class<? extends Component> navigationTarget) {
-        naviTabs.updateSelectedTab(text, navigationTarget);
+        tabs.updateSelectedTab(text, navigationTarget);
     }
 
     public void navigateToSelectedTab() {
-        naviTabs.navigateToSelectedTab();
+        tabs.navigateToSelectedTab();
     }
 
     public void addTabSelectionListener(
             ComponentEventListener<Tabs.SelectedChangeEvent> listener) {
-        naviTabs.addSelectedChangeListener(listener);
+        tabs.addSelectedChangeListener(listener);
     }
 
     public int getTabCount() {
-        return naviTabs.getTabCount();
+        return tabs.getTabCount();
     }
 
     public void removeAllTabs() {
-        naviTabs.removeAll();
+        tabs.removeAll();
         updateTabsVisibility();
     }
 
@@ -279,14 +274,14 @@ public class AppBar extends Composite<FlexLayout> {
     /* === SEARCH === */
 
     public void searchModeOn() {
-        menuNaviIcon.setVisible(false);
+        menuIcon.setVisible(false);
         title.setVisible(false);
         actionItems.setVisible(false);
         tabContainer.setVisible(false);
 
-        contextNaviIcon.setIcon(new Icon(VaadinIcon.ARROW_BACKWARD));
-        contextNaviIcon.setVisible(true);
-        searchRegistration = contextNaviIcon
+        contextIcon.setIcon(new Icon(VaadinIcon.ARROW_BACKWARD));
+        contextIcon.setVisible(true);
+        searchRegistration = contextIcon
                 .addClickListener(e -> searchModeOff());
 
         search.setVisible(true);
@@ -302,14 +297,14 @@ public class AppBar extends Composite<FlexLayout> {
     }
 
     private void searchModeOff() {
-        menuNaviIcon.setVisible(true);
+        menuIcon.setVisible(true);
         title.setVisible(true);
         tabContainer.setVisible(true);
 
         updateActionItemsVisibility();
         updateTabsVisibility();
 
-        contextNaviIcon.setVisible(false);
+        contextIcon.setVisible(false);
         searchRegistration.remove();
 
         search.clear();
@@ -331,7 +326,7 @@ public class AppBar extends Composite<FlexLayout> {
     }
 
     private void updateTabsVisibility() {
-        naviTabs.setVisible(naviTabs.getComponentCount() > 0);
+        tabs.setVisible(tabs.getComponentCount() > 0);
     }
 
     public Image getAvatar() {

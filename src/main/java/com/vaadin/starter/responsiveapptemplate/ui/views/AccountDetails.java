@@ -1,8 +1,5 @@
 package com.vaadin.starter.responsiveapptemplate.ui.views;
 
-import java.time.LocalDate;
-import java.util.Arrays;
-
 import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
@@ -15,7 +12,6 @@ import com.vaadin.flow.component.charts.model.XAxis;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Label;
-import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
@@ -29,21 +25,15 @@ import com.vaadin.starter.responsiveapptemplate.ui.MainLayout;
 import com.vaadin.starter.responsiveapptemplate.ui.components.FlexBoxLayout;
 import com.vaadin.starter.responsiveapptemplate.ui.components.ListItem;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.bar.AppBar;
-import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Bottom;
-import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Horizontal;
-import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Top;
-import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Uniform;
-import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Vertical;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.size.*;
 import com.vaadin.starter.responsiveapptemplate.ui.util.BoxShadowBorders;
 import com.vaadin.starter.responsiveapptemplate.ui.util.LumoStyles;
 import com.vaadin.starter.responsiveapptemplate.ui.util.TextColor;
 import com.vaadin.starter.responsiveapptemplate.ui.util.UIUtils;
-import com.vaadin.starter.responsiveapptemplate.ui.util.css.BorderRadius;
-import com.vaadin.starter.responsiveapptemplate.ui.util.css.BoxSizing;
-import com.vaadin.starter.responsiveapptemplate.ui.util.css.FlexDirection;
-import com.vaadin.starter.responsiveapptemplate.ui.util.css.FlexWrap;
-import com.vaadin.starter.responsiveapptemplate.ui.util.css.Shadow;
-import com.vaadin.starter.responsiveapptemplate.ui.util.css.WhiteSpace;
+import com.vaadin.starter.responsiveapptemplate.ui.util.css.*;
+
+import java.time.LocalDate;
+import java.util.Arrays;
 
 @Route(value = "account-details", layout = MainLayout.class)
 @PageTitle("Account Details")
@@ -77,8 +67,7 @@ public class AccountDetails extends ViewFrame implements HasUrlParameter<Long> {
     private void initAppBar() {
         AppBar appBar = MainLayout.get().getAppBar();
         appBar.setNaviMode(AppBar.NaviMode.CONTEXTUAL);
-        appBar.setContextNaviIcon(new Icon(VaadinIcon.ARROW_BACKWARD));
-        appBar.getContextNaviIcon().addClickListener(
+        appBar.getContextIcon().addClickListener(
                 e -> UI.getCurrent().navigate(Accounts.class));
     }
 
