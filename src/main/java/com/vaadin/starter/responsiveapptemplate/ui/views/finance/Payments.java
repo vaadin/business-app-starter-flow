@@ -20,7 +20,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.starter.responsiveapptemplate.backend.DummyData;
 import com.vaadin.starter.responsiveapptemplate.backend.Payment;
-import com.vaadin.starter.responsiveapptemplate.ui.Root;
+import com.vaadin.starter.responsiveapptemplate.ui.MainLayout;
 import com.vaadin.starter.responsiveapptemplate.ui.components.ListItem;
 import com.vaadin.starter.responsiveapptemplate.ui.components.detailsdrawer.DetailsDrawer;
 import com.vaadin.starter.responsiveapptemplate.ui.components.detailsdrawer.DetailsDrawerFooter;
@@ -33,7 +33,7 @@ import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
 import com.vaadin.starter.responsiveapptemplate.ui.views.SplitViewFrame;
 
-@Route(value = "payments", layout = Root.class)
+@Route(value = "payments", layout = MainLayout.class)
 @PageTitle("Payments")
 public class Payments extends SplitViewFrame {
 
@@ -51,7 +51,7 @@ public class Payments extends SplitViewFrame {
     }
 
     private void initAppBar() {
-        AppBar appBar = Root.get().getAppBar();
+        AppBar appBar = MainLayout.get().getAppBar();
         for (Payment.Status status : Payment.Status.values()) {
             appBar.addTab(status.getName());
         }
@@ -173,7 +173,7 @@ public class Payments extends SplitViewFrame {
     }
 
     private void filter() {
-        Tab selectedTab = Root.get().getAppBar().getSelectedTab();
+        Tab selectedTab = MainLayout.get().getAppBar().getSelectedTab();
         if (selectedTab != null)
             dataProvider.setFilterByValue(Payment::getStatus, Payment.Status
                     .valueOf(selectedTab.getLabel().toUpperCase()));

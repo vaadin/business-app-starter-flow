@@ -5,7 +5,7 @@ import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.HasStyle;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.starter.responsiveapptemplate.ui.Root;
+import com.vaadin.starter.responsiveapptemplate.ui.MainLayout;
 
 /**
  * A view frame that establishes app design guidelines. It consists of three
@@ -61,7 +61,7 @@ public class ViewFrame extends Composite<Div> implements HasStyle {
     @Override
     protected void onAttach(AttachEvent attachEvent) {
         super.onAttach(attachEvent);
-        Root.get().getAppBar().reset();
+        MainLayout.get().getAppBar().reset();
     }
 
 }

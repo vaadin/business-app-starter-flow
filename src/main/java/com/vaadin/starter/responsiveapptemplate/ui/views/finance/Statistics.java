@@ -12,7 +12,7 @@ import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.starter.responsiveapptemplate.backend.Payment;
-import com.vaadin.starter.responsiveapptemplate.ui.Root;
+import com.vaadin.starter.responsiveapptemplate.ui.MainLayout;
 import com.vaadin.starter.responsiveapptemplate.ui.components.ListItem;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.BorderRadius;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexBoxLayout;
@@ -32,7 +32,7 @@ import com.vaadin.starter.responsiveapptemplate.ui.utils.TextColor;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
 import com.vaadin.starter.responsiveapptemplate.ui.views.ViewFrame;
 
-@Route(value = "statistics", layout = Root.class)
+@Route(value = "statistics", layout = MainLayout.class)
 @PageTitle("Statistics")
 public class Statistics extends ViewFrame {
 

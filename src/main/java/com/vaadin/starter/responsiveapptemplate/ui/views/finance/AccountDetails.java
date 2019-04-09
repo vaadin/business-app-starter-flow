@@ -25,7 +25,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.starter.responsiveapptemplate.backend.BankAccount;
 import com.vaadin.starter.responsiveapptemplate.backend.DummyData;
-import com.vaadin.starter.responsiveapptemplate.ui.Root;
+import com.vaadin.starter.responsiveapptemplate.ui.MainLayout;
 import com.vaadin.starter.responsiveapptemplate.ui.components.ListItem;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.bar.AppBar;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.BorderRadius;
@@ -46,7 +46,7 @@ import com.vaadin.starter.responsiveapptemplate.ui.utils.TextColor;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
 import com.vaadin.starter.responsiveapptemplate.ui.views.ViewFrame;
 
-@Route(value = "account-details", layout = Root.class)
+@Route(value = "account-details", layout = MainLayout.class)
 @PageTitle("Account Details")
 public class AccountDetails extends ViewFrame implements HasUrlParameter<Long> {
 
@@ -76,7 +76,7 @@ public class AccountDetails extends ViewFrame implements HasUrlParameter<Long> {
     }
 
     private void initAppBar() {
-        AppBar appBar = Root.get().getAppBar();
+        AppBar appBar = MainLayout.get().getAppBar();
         appBar.setNaviMode(AppBar.NaviMode.CONTEXTUAL);
         appBar.setContextNaviIcon(new Icon(VaadinIcon.ARROW_BACKWARD));
         appBar.getContextNaviIcon().addClickListener(

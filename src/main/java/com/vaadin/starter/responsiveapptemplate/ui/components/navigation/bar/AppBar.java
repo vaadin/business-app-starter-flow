@@ -20,7 +20,7 @@ import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.shared.Registration;
-import com.vaadin.starter.responsiveapptemplate.ui.Root;
+import com.vaadin.starter.responsiveapptemplate.ui.MainLayout;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.tab.NaviTab;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.tab.NaviTabs;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
@@ -79,7 +79,7 @@ public class AppBar extends Composite<FlexLayout> {
         menuNaviIcon = UIUtils.createTertiaryInlineButton(VaadinIcon.MENU);
         menuNaviIcon.removeThemeVariants(ButtonVariant.LUMO_ICON);
         menuNaviIcon.addClassName(CLASS_NAME + "__navi-icon");
-        menuNaviIcon.addClickListener(e -> Root.get().getNaviDrawer().toggle());
+        menuNaviIcon.addClickListener(e -> MainLayout.get().getNaviDrawer().toggle());
     }
 
     private void initContextNaviIcon() {

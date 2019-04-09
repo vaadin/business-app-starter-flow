@@ -4,12 +4,12 @@ import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Html;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import com.vaadin.starter.responsiveapptemplate.ui.Root;
+import com.vaadin.starter.responsiveapptemplate.ui.MainLayout;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexBoxLayout;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Horizontal;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Vertical;
 
-@Route(value = "", layout = Root.class)
+@Route(value = "", layout = MainLayout.class)
 @PageTitle("Welcome")
 public class Home extends ViewFrame {
 

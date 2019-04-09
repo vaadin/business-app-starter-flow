@@ -23,8 +23,8 @@ import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.bar.AppBar;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.bar.TabBar;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.drawer.NaviDrawer;
-import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.drawer.NaviLinkDrawer;
-import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.drawer.NaviLinkItem;
+import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.drawer.NaviItem;
+import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.drawer.NaviMenu;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexBoxLayout;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexDirection;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.Overflow;
@@ -39,10 +39,10 @@ import com.vaadin.starter.responsiveapptemplate.ui.views.personnel.Managers;
 
 @HtmlImport("frontend://styles/shared-styles.html")
 @Viewport("width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes")
-public class Root extends FlexBoxLayout
+public class MainLayout extends FlexBoxLayout
         implements RouterLayout, PageConfigurator, AfterNavigationObserver {
 
-    private static final Logger log = LoggerFactory.getLogger(Root.class);
+    private static final Logger log = LoggerFactory.getLogger(MainLayout.class);
     private static final String CLASS_NAME = "root";
 
     private Div appHeaderOuter;
@@ -61,7 +61,7 @@ public class Root extends FlexBoxLayout
     private boolean navigationTabs = false;
     private AppBar appBar;
 
-    public Root() {
+    public MainLayout() {
         VaadinSession.getCurrent()
                 .setErrorHandler((ErrorHandler) errorEvent -> {
                     log.error("Uncaught UI exception",
@@ -89,7 +89,7 @@ public class Root extends FlexBoxLayout
      * Initialise the required components and containers.
      */
     private void initStructure() {
-        naviDrawer = new NaviLinkDrawer();
+        naviDrawer = new NaviDrawer();
 
         viewContainer = new FlexBoxLayout();
         viewContainer.addClassName(CLASS_NAME + "__view-container");
@@ -113,18 +113,16 @@ public class Root extends FlexBoxLayout
      * Initialise the navigation items.
      */
     private void initNaviItems() {
-        naviDrawer.addNaviItem(VaadinIcon.HOME, "Home", Home.class);
-        naviDrawer.addNaviItem(VaadinIcon.INSTITUTION, "Accounts",
-                Accounts.class);
-        naviDrawer.addNaviItem(VaadinIcon.CREDIT_CARD, "Payments",
-                Payments.class);
-        naviDrawer.addNaviItem(VaadinIcon.CHART, "Statistics",
-                Statistics.class);
+        NaviMenu menu = naviDrawer.getMenu();
+        menu.addNaviItem(VaadinIcon.HOME, "Home", Home.class);
+        menu.addNaviItem(VaadinIcon.INSTITUTION, "Accounts", Accounts.class);
+        menu.addNaviItem(VaadinIcon.CREDIT_CARD, "Payments", Payments.class);
+        menu.addNaviItem(VaadinIcon.CHART, "Statistics", Statistics.class);
 
-        NaviLinkItem personnel = naviDrawer.addNaviItem(VaadinIcon.USERS,
-                "Personnel", null);
-        naviDrawer.addNaviItem(personnel, "Accountants", Accountants.class);
-        naviDrawer.addNaviItem(personnel, "Managers", Managers.class);
+        NaviItem personnel = menu.addNaviItem(VaadinIcon.USERS, "Personnel",
+                null);
+        menu.addNaviItem(personnel, "Accountants", Accountants.class);
+        menu.addNaviItem(personnel, "Managers", Managers.class);
     }
 
     /**
@@ -142,7 +140,7 @@ public class Root extends FlexBoxLayout
             appBar.getAvatar().setVisible(false);
             appBar.getMenuNaviIcon().setVisible(false);
             tabBar = new TabBar();
-            for (NaviLinkItem item : naviDrawer.getNaviItems()) {
+            for (NaviItem item : naviDrawer.getMenu().getNaviItems()) {
                 item.addClickListener(e -> {
                     // Shift-click to add a new tab
                     if (e.getButton() == 0 && e.isShiftKey()) {
@@ -219,9 +217,9 @@ public class Root extends FlexBoxLayout
         return naviDrawer;
     }
 
-    public static Root get() {
-        return (Root) UI.getCurrent().getChildren()
-                .filter(component -> component.getClass() == Root.class)
+    public static MainLayout get() {
+        return (MainLayout) UI.getCurrent().getChildren()
+                .filter(component -> component.getClass() == MainLayout.class)
                 .findFirst().get();
     }
 
@@ -240,7 +238,7 @@ public class Root extends FlexBoxLayout
     }
 
     private void afterNavigationWithTabs(AfterNavigationEvent e) {
-        NaviLinkItem active = getActiveItem(e);
+        NaviItem active = getActiveItem(e);
         if (active == null) {
             if (tabBar.getTabCount() == 0) {
                 tabBar.addClosableNaviTab("", Home.class);
@@ -256,8 +254,8 @@ public class Root extends FlexBoxLayout
         }
     }
 
-    private NaviLinkItem getActiveItem(AfterNavigationEvent e) {
-        for (NaviLinkItem item : naviDrawer.getNaviItems()) {
+    private NaviItem getActiveItem(AfterNavigationEvent e) {
+        for (NaviItem item : naviDrawer.getMenu().getNaviItems()) {
             if (item.isHighlighted(e)) {
                 return item;
             }
@@ -267,7 +265,7 @@ public class Root extends FlexBoxLayout
     }
 
     private void afterNavigationWithoutTabs(AfterNavigationEvent e) {
-        NaviLinkItem active = getActiveItem(e);
+        NaviItem active = getActiveItem(e);
         if (active != null) {
             getAppBar().setTitle(active.getText());
         }

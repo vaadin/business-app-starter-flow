@@ -1,17 +1,14 @@
 package com.vaadin.starter.responsiveapptemplate.ui.components.navigation.drawer;
 
-import java.util.ArrayList;
 import java.util.Collections;
 
 import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.ClientCallable;
-import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.textfield.TextField;
@@ -22,7 +19,7 @@ import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
 import elemental.json.JsonObject;
 
 @HtmlImport("swipe-away.html")
-public abstract class NaviDrawer extends Composite<Div>
+public class NaviDrawer extends Composite<Div>
         implements AfterNavigationObserver {
 
     private static final String CLASS_NAME = "navi-drawer";
@@ -35,10 +32,8 @@ public abstract class NaviDrawer extends Composite<Div>
     private TextField search;
     private Div scrollableArea;
 
-    private Div naviList;
-    private ArrayList<NaviLinkItem> items;
-
     private Button railButton;
+    private NaviMenu menu;
 
     @Override
     protected void onAttach(AttachEvent attachEvent) {
@@ -64,7 +59,7 @@ public abstract class NaviDrawer extends Composite<Div>
         initSearch();
 
         initScrollableArea();
-        initNaviList();
+        initMenu();
 
         initFooter();
     }
@@ -91,13 +86,8 @@ public abstract class NaviDrawer extends Composite<Div>
         search = new TextField();
         search.setPlaceholder("Search");
         search.setPrefixComponent(new Icon(VaadinIcon.SEARCH));
-        search.addValueChangeListener(e -> search());
+        search.addValueChangeListener(e -> menu.filter(search.getValue()));
         mainContent.add(search);
-    }
-
-    private void search() {
-        items.forEach(naviItem -> naviItem.setVisible(naviItem.getText()
-                .toLowerCase().contains(search.getValue().toLowerCase())));
     }
 
     private void initScrollableArea() {
@@ -106,13 +96,10 @@ public abstract class NaviDrawer extends Composite<Div>
         mainContent.add(scrollableArea);
     }
 
-    private void initNaviList() {
-        // Wrapper for navigation items
-        naviList = UIUtils
-                .createDiv(Collections.singleton(CLASS_NAME + "__list"));
-        scrollableArea.add(naviList);
+    private void initMenu() {
+        menu = new NaviMenu();
+        scrollableArea.add(menu);
 
-        items = new ArrayList<>();
     }
 
     private void initFooter() {
@@ -167,34 +154,13 @@ public abstract class NaviDrawer extends Composite<Div>
                 mainContent.getElement());
     }
 
-    protected void addNaviItem(NaviLinkItem item) {
-        naviList.add(item);
-        items.add(item);
-    }
-
-    protected void addNaviItem(NaviLinkItem parent, NaviLinkItem item) {
-        parent.addSubItem(item);
-        addNaviItem(item);
-    }
-
-    public abstract NaviLinkItem addNaviItem(VaadinIcon icon, String text,
-            Class<? extends Component> navigationTarget);
-
-    public abstract NaviLinkItem addNaviItem(Image image, String text,
-            Class<? extends Component> navigationTarget);
-
-    public abstract NaviLinkItem addNaviItem(String path, String text,
-            Class<? extends Component> navigationTarget);
-
-    public abstract NaviLinkItem addNaviItem(NaviLinkItem parent, String text,
-            Class<? extends Component> navigationTarget);
-
-    public ArrayList<NaviLinkItem> getNaviItems() {
-        return items;
+    public NaviMenu getMenu() {
+        return menu;
     }
 
     @Override
     public void afterNavigation(AfterNavigationEvent afterNavigationEvent) {
         close();
     }
+
 }
