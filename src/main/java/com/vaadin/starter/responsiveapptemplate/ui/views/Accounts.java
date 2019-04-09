@@ -1,7 +1,5 @@
 package com.vaadin.starter.responsiveapptemplate.ui.views;
 
-import static com.vaadin.starter.responsiveapptemplate.ui.util.ViewStyles.GRID_VIEW;
-
 import java.time.format.DateTimeFormatter;
 
 import com.vaadin.flow.component.Component;
@@ -37,7 +35,7 @@ public class Accounts extends ViewFrame implements RouterLayout {
 
     private Component createContent() {
         Div content = new Div(createGrid());
-        content.addClassName(GRID_VIEW);
+        content.addClassName("grid-view");
         return content;
     }
 

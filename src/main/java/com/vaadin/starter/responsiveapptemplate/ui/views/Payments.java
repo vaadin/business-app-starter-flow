@@ -1,7 +1,5 @@
 package com.vaadin.starter.responsiveapptemplate.ui.views;
 
-import static com.vaadin.starter.responsiveapptemplate.ui.util.ViewStyles.GRID_VIEW;
-
 import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.grid.ColumnTextAlign;
@@ -64,7 +62,7 @@ public class Payments extends SplitViewFrame {
 
     private Component createContent() {
         Div content = new Div(createGrid());
-        content.addClassName(GRID_VIEW);
+        content.addClassName("grid-view");
         return content;
     }
 

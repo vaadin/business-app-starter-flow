@@ -1,7 +1,5 @@
 package com.vaadin.starter.responsiveapptemplate.ui.views.personnel;
 
-import static com.vaadin.starter.responsiveapptemplate.ui.util.ViewStyles.GRID_VIEW;
-
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.formlayout.FormLayout;
@@ -50,7 +48,7 @@ public class Accountants extends SplitViewFrame {
 
     private Component createContent() {
         Div content = new Div(createGrid());
-        content.addClassName(GRID_VIEW);
+        content.addClassName("grid-view");
         return content;
     }
 
