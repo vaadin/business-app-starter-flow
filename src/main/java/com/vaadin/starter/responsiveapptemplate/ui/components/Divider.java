@@ -4,8 +4,8 @@ import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
+import com.vaadin.starter.responsiveapptemplate.ui.util.LumoStyles;
+import com.vaadin.starter.responsiveapptemplate.ui.util.UIUtils;
 
 public class Divider extends Composite<FlexLayout> {
 

@@ -2,9 +2,9 @@ package com.vaadin.starter.responsiveapptemplate.ui.components.detailsdrawer;
 
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.BoxSizing;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.BoxShadowBorders;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
+import com.vaadin.starter.responsiveapptemplate.ui.util.BoxShadowBorders;
+import com.vaadin.starter.responsiveapptemplate.ui.util.LumoStyles;
+import com.vaadin.starter.responsiveapptemplate.ui.util.UIUtils;
 
 public class DetailsDrawerHeader extends Label {
 

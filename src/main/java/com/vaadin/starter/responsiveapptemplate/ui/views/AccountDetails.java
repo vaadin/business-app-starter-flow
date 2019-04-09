@@ -40,10 +40,10 @@ import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Horizontal;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Top;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Uniform;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Vertical;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.BoxShadowBorders;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.TextColor;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
+import com.vaadin.starter.responsiveapptemplate.ui.util.BoxShadowBorders;
+import com.vaadin.starter.responsiveapptemplate.ui.util.LumoStyles;
+import com.vaadin.starter.responsiveapptemplate.ui.util.TextColor;
+import com.vaadin.starter.responsiveapptemplate.ui.util.UIUtils;
 
 @Route(value = "account-details", layout = MainLayout.class)
 @PageTitle("Account Details")

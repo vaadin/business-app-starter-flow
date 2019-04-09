@@ -12,10 +12,10 @@ import com.vaadin.starter.responsiveapptemplate.ui.layout.Display;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexBoxLayout;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Left;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Right;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.FontSize;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.TextColor;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
+import com.vaadin.starter.responsiveapptemplate.ui.util.FontSize;
+import com.vaadin.starter.responsiveapptemplate.ui.util.LumoStyles;
+import com.vaadin.starter.responsiveapptemplate.ui.util.TextColor;
+import com.vaadin.starter.responsiveapptemplate.ui.util.UIUtils;
 
 import static com.vaadin.flow.component.button.ButtonVariant.LUMO_ICON;
 

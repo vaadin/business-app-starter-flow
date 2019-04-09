@@ -9,9 +9,9 @@ import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexBoxLayout;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexDirection;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.WhiteSpace;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.FontSize;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.TextColor;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
+import com.vaadin.starter.responsiveapptemplate.ui.util.FontSize;
+import com.vaadin.starter.responsiveapptemplate.ui.util.TextColor;
+import com.vaadin.starter.responsiveapptemplate.ui.util.UIUtils;
 
 import java.util.Collections;
 

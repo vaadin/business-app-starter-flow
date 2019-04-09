@@ -1,6 +1,6 @@
 package com.vaadin.starter.responsiveapptemplate.ui.views;
 
-import static com.vaadin.starter.responsiveapptemplate.ui.utils.ViewStyles.GRID_VIEW;
+import static com.vaadin.starter.responsiveapptemplate.ui.util.ViewStyles.GRID_VIEW;
 
 import java.time.format.DateTimeFormatter;
 
@@ -21,8 +21,8 @@ import com.vaadin.starter.responsiveapptemplate.backend.BankAccount;
 import com.vaadin.starter.responsiveapptemplate.backend.DummyData;
 import com.vaadin.starter.responsiveapptemplate.ui.MainLayout;
 import com.vaadin.starter.responsiveapptemplate.ui.components.ListItem;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.TextColor;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
+import com.vaadin.starter.responsiveapptemplate.ui.util.TextColor;
+import com.vaadin.starter.responsiveapptemplate.ui.util.UIUtils;
 
 @Route(value = "accounts", layout = MainLayout.class)
 @ParentLayout(MainLayout.class)

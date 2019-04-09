@@ -1,6 +1,6 @@
 package com.vaadin.starter.responsiveapptemplate.ui.views;
 
-import static com.vaadin.starter.responsiveapptemplate.ui.utils.ViewStyles.GRID_VIEW;
+import static com.vaadin.starter.responsiveapptemplate.ui.util.ViewStyles.GRID_VIEW;
 
 import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.Component;
@@ -29,8 +29,8 @@ import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.bar.App
 import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexDirection;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.WhiteSpace;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Bottom;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
+import com.vaadin.starter.responsiveapptemplate.ui.util.LumoStyles;
+import com.vaadin.starter.responsiveapptemplate.ui.util.UIUtils;
 
 @Route(value = "payments", layout = MainLayout.class)
 @PageTitle("Payments")

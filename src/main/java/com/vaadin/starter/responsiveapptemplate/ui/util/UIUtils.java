@@ -1,4 +1,4 @@
-package com.vaadin.starter.responsiveapptemplate.ui.utils;
+package com.vaadin.starter.responsiveapptemplate.ui.util;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Text;
@@ -23,6 +23,8 @@ import com.vaadin.starter.responsiveapptemplate.ui.layout.TextAlign;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.*;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Right;
 
+import static com.vaadin.starter.responsiveapptemplate.ui.util.BadgeShape.PILL;
+
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.time.LocalDate;
@@ -30,8 +32,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.StringJoiner;
-
-import static com.vaadin.starter.responsiveapptemplate.ui.utils.BadgeShape.PILL;
 
 public class UIUtils {
 

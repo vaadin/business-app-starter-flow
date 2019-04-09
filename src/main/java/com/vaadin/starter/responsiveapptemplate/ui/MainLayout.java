@@ -28,8 +28,8 @@ import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.drawer.
 import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexBoxLayout;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexDirection;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.Overflow;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
+import com.vaadin.starter.responsiveapptemplate.ui.util.LumoStyles;
+import com.vaadin.starter.responsiveapptemplate.ui.util.UIUtils;
 import com.vaadin.starter.responsiveapptemplate.ui.views.Accounts;
 import com.vaadin.starter.responsiveapptemplate.ui.views.Home;
 import com.vaadin.starter.responsiveapptemplate.ui.views.Payments;

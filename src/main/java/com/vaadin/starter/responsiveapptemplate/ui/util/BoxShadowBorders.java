@@ -1,4 +1,4 @@
-package com.vaadin.starter.responsiveapptemplate.ui.utils;
+package com.vaadin.starter.responsiveapptemplate.ui.util;
 
 public class BoxShadowBorders {
     public static final String BOTTOM = "bsb-b";

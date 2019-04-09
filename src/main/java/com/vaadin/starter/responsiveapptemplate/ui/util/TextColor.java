@@ -1,4 +1,4 @@
-package com.vaadin.starter.responsiveapptemplate.ui.utils;
+package com.vaadin.starter.responsiveapptemplate.ui.util;
 
 public enum TextColor {
 

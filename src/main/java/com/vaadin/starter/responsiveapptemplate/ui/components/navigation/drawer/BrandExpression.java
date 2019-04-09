@@ -3,7 +3,7 @@ package com.vaadin.starter.responsiveapptemplate.ui.components.navigation.drawer
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Image;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
+import com.vaadin.starter.responsiveapptemplate.ui.util.UIUtils;
 
 public class BrandExpression extends Composite<Div> {
 

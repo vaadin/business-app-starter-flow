@@ -25,11 +25,11 @@ import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Horizontal;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Right;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Top;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Vertical;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.FontSize;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.IconSize;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.TextColor;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
+import com.vaadin.starter.responsiveapptemplate.ui.util.FontSize;
+import com.vaadin.starter.responsiveapptemplate.ui.util.IconSize;
+import com.vaadin.starter.responsiveapptemplate.ui.util.LumoStyles;
+import com.vaadin.starter.responsiveapptemplate.ui.util.TextColor;
+import com.vaadin.starter.responsiveapptemplate.ui.util.UIUtils;
 
 @Route(value = "statistics", layout = MainLayout.class)
 @PageTitle("Statistics")

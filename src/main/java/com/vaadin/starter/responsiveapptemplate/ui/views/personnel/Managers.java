@@ -1,6 +1,6 @@
 package com.vaadin.starter.responsiveapptemplate.ui.views.personnel;
 
-import static com.vaadin.starter.responsiveapptemplate.ui.utils.ViewStyles.GRID_VIEW;
+import static com.vaadin.starter.responsiveapptemplate.ui.util.ViewStyles.GRID_VIEW;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.combobox.ComboBox;
@@ -28,8 +28,8 @@ import com.vaadin.starter.responsiveapptemplate.ui.components.ListItem;
 import com.vaadin.starter.responsiveapptemplate.ui.components.detailsdrawer.DetailsDrawer;
 import com.vaadin.starter.responsiveapptemplate.ui.components.detailsdrawer.DetailsDrawerFooter;
 import com.vaadin.starter.responsiveapptemplate.ui.components.detailsdrawer.DetailsDrawerHeader;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
-import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
+import com.vaadin.starter.responsiveapptemplate.ui.util.LumoStyles;
+import com.vaadin.starter.responsiveapptemplate.ui.util.UIUtils;
 import com.vaadin.starter.responsiveapptemplate.ui.views.SplitViewFrame;
 
 @Route(value = "managers", layout = MainLayout.class)
