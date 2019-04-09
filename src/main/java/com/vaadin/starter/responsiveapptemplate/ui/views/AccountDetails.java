@@ -1,4 +1,4 @@
-package com.vaadin.starter.responsiveapptemplate.ui.views.finance;
+package com.vaadin.starter.responsiveapptemplate.ui.views;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -44,7 +44,6 @@ import com.vaadin.starter.responsiveapptemplate.ui.utils.BoxShadowBorders;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.TextColor;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
-import com.vaadin.starter.responsiveapptemplate.ui.views.ViewFrame;
 
 @Route(value = "account-details", layout = MainLayout.class)
 @PageTitle("Account Details")

@@ -30,10 +30,10 @@ import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexDirection;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.Overflow;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
+import com.vaadin.starter.responsiveapptemplate.ui.views.Accounts;
 import com.vaadin.starter.responsiveapptemplate.ui.views.Home;
-import com.vaadin.starter.responsiveapptemplate.ui.views.finance.Accounts;
-import com.vaadin.starter.responsiveapptemplate.ui.views.finance.Payments;
-import com.vaadin.starter.responsiveapptemplate.ui.views.finance.Statistics;
+import com.vaadin.starter.responsiveapptemplate.ui.views.Payments;
+import com.vaadin.starter.responsiveapptemplate.ui.views.Statistics;
 import com.vaadin.starter.responsiveapptemplate.ui.views.personnel.Accountants;
 import com.vaadin.starter.responsiveapptemplate.ui.views.personnel.Managers;
 
@@ -204,7 +204,7 @@ public class MainLayout extends FlexBoxLayout
         settings.addMetaTag("apple-mobile-web-app-capable", "yes");
         settings.addMetaTag("apple-mobile-web-app-status-bar-style", "black");
 
-        settings.addFavIcon("icon", "frontend/styles/favicons/finance.ico",
+        settings.addFavIcon("icon", "frontend/styles/favicons/favicon.ico",
                 "256x256");
     }
 

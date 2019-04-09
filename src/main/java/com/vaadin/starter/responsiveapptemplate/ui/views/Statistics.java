@@ -1,4 +1,4 @@
-package com.vaadin.starter.responsiveapptemplate.ui.views.finance;
+package com.vaadin.starter.responsiveapptemplate.ui.views;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
@@ -30,7 +30,6 @@ import com.vaadin.starter.responsiveapptemplate.ui.utils.IconSize;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.LumoStyles;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.TextColor;
 import com.vaadin.starter.responsiveapptemplate.ui.utils.UIUtils;
-import com.vaadin.starter.responsiveapptemplate.ui.views.ViewFrame;
 
 @Route(value = "statistics", layout = MainLayout.class)
 @PageTitle("Statistics")

@@ -21,8 +21,8 @@ public class BrandExpression extends Composite<Div> {
         railLogo = new Image();
         railLogo.addClassName(CLASS_NAME + "__rail-logo");
 
-        logo.setSrc(UIUtils.IMG_PATH + "finance-logo.svg");
-        railLogo.setSrc(UIUtils.IMG_PATH + "finance-logo-only.svg");
+        logo.setSrc(UIUtils.IMG_PATH + "logo.svg");
+        railLogo.setSrc(UIUtils.IMG_PATH + "logo-only.svg");
 
         getContent().add(logo, railLogo);
     }
