@@ -13,13 +13,8 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.starter.responsiveapptemplate.backend.Payment;
 import com.vaadin.starter.responsiveapptemplate.ui.MainLayout;
+import com.vaadin.starter.responsiveapptemplate.ui.components.FlexBoxLayout;
 import com.vaadin.starter.responsiveapptemplate.ui.components.ListItem;
-import com.vaadin.starter.responsiveapptemplate.ui.layout.BorderRadius;
-import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexBoxLayout;
-import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexDirection;
-import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexWrap;
-import com.vaadin.starter.responsiveapptemplate.ui.layout.Position;
-import com.vaadin.starter.responsiveapptemplate.ui.layout.Shadow;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Bottom;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Horizontal;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Right;
@@ -30,6 +25,11 @@ import com.vaadin.starter.responsiveapptemplate.ui.util.IconSize;
 import com.vaadin.starter.responsiveapptemplate.ui.util.LumoStyles;
 import com.vaadin.starter.responsiveapptemplate.ui.util.TextColor;
 import com.vaadin.starter.responsiveapptemplate.ui.util.UIUtils;
+import com.vaadin.starter.responsiveapptemplate.ui.util.css.BorderRadius;
+import com.vaadin.starter.responsiveapptemplate.ui.util.css.FlexDirection;
+import com.vaadin.starter.responsiveapptemplate.ui.util.css.FlexWrap;
+import com.vaadin.starter.responsiveapptemplate.ui.util.css.Position;
+import com.vaadin.starter.responsiveapptemplate.ui.util.css.Shadow;
 
 @Route(value = "statistics", layout = MainLayout.class)
 @PageTitle("Statistics")

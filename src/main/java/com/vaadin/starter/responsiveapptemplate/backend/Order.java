@@ -3,7 +3,7 @@ package com.vaadin.starter.responsiveapptemplate.backend;
 import java.time.LocalDate;
 import java.util.Collection;
 
-import com.vaadin.starter.responsiveapptemplate.ui.util.BadgeColor;
+import com.vaadin.starter.responsiveapptemplate.ui.util.css.lumo.BadgeColor;
 
 public class Order {
 

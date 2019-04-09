@@ -21,16 +21,17 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.starter.responsiveapptemplate.backend.DummyData;
 import com.vaadin.starter.responsiveapptemplate.backend.Payment;
 import com.vaadin.starter.responsiveapptemplate.ui.MainLayout;
+import com.vaadin.starter.responsiveapptemplate.ui.components.Badge;
 import com.vaadin.starter.responsiveapptemplate.ui.components.ListItem;
 import com.vaadin.starter.responsiveapptemplate.ui.components.detailsdrawer.DetailsDrawer;
 import com.vaadin.starter.responsiveapptemplate.ui.components.detailsdrawer.DetailsDrawerFooter;
 import com.vaadin.starter.responsiveapptemplate.ui.components.detailsdrawer.DetailsDrawerHeader;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.bar.AppBar;
-import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexDirection;
-import com.vaadin.starter.responsiveapptemplate.ui.layout.WhiteSpace;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Bottom;
 import com.vaadin.starter.responsiveapptemplate.ui.util.LumoStyles;
 import com.vaadin.starter.responsiveapptemplate.ui.util.UIUtils;
+import com.vaadin.starter.responsiveapptemplate.ui.util.css.FlexDirection;
+import com.vaadin.starter.responsiveapptemplate.ui.util.css.WhiteSpace;
 
 @Route(value = "payments", layout = MainLayout.class)
 @PageTitle("Payments")
@@ -75,9 +76,16 @@ public class Payments extends SplitViewFrame {
         grid.setDataProvider(dataProvider);
         grid.setHeight("100%");
 
-        grid.addColumn(new ComponentRenderer<>(UIUtils::createBadge))
-                .setHeader("Status").setWidth(UIUtils.COLUMN_WIDTH_S)
-                .setFlexGrow(0);
+        ComponentRenderer<Badge, Payment> badgeRenderer = new ComponentRenderer<>(
+                payment -> {
+                    Payment.Status status = payment.getStatus();
+                    Badge badge = new Badge(status.getName(),
+                            status.getTheme());
+                    UIUtils.setTooltip(status.getDesc(), badge);
+                    return badge;
+                });
+        grid.addColumn(badgeRenderer).setHeader("Status")
+                .setWidth(UIUtils.COLUMN_WIDTH_S).setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createFromInfo))
                 .setHeader("From").setWidth(UIUtils.COLUMN_WIDTH_XL);
         grid.addColumn(new ComponentRenderer<>(this::createToInfo))
@@ -144,7 +152,8 @@ public class Payments extends SplitViewFrame {
 
         status.getContent().setAlignItems(FlexComponent.Alignment.BASELINE);
         status.getContent().setSpacing(Bottom.XS);
-        UIUtils.setTheme(payment.getStatus().getTheme(), status.getPrimary());
+        UIUtils.setTheme(payment.getStatus().getTheme().getThemeName(),
+                status.getPrimary());
         UIUtils.setTooltip(payment.getStatus().getDesc(), status);
 
         ListItem from = new ListItem(

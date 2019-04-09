@@ -5,8 +5,8 @@ import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
-import com.vaadin.starter.responsiveapptemplate.ui.layout.Overflow;
 import com.vaadin.starter.responsiveapptemplate.ui.util.UIUtils;
+import com.vaadin.starter.responsiveapptemplate.ui.util.css.Overflow;
 import com.vaadin.starter.responsiveapptemplate.ui.views.Home;
 
 /**

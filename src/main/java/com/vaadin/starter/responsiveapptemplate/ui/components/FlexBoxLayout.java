@@ -1,8 +1,17 @@
-package com.vaadin.starter.responsiveapptemplate.ui.layout;
+package com.vaadin.starter.responsiveapptemplate.ui.components;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
+import com.vaadin.flow.theme.lumo.Lumo;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Size;
+import com.vaadin.starter.responsiveapptemplate.ui.util.css.BorderRadius;
+import com.vaadin.starter.responsiveapptemplate.ui.util.css.BoxSizing;
+import com.vaadin.starter.responsiveapptemplate.ui.util.css.Display;
+import com.vaadin.starter.responsiveapptemplate.ui.util.css.FlexDirection;
+import com.vaadin.starter.responsiveapptemplate.ui.util.css.FlexWrap;
+import com.vaadin.starter.responsiveapptemplate.ui.util.css.Overflow;
+import com.vaadin.starter.responsiveapptemplate.ui.util.css.Position;
+import com.vaadin.starter.responsiveapptemplate.ui.util.css.Shadow;
 
 public class FlexBoxLayout extends FlexLayout {
 
@@ -25,7 +34,7 @@ public class FlexBoxLayout extends FlexLayout {
         getStyle().set(BACKGROUND_COLOR, value);
     }
 
-    public void setBackgroundColor(String value, Theme theme) {
+    public void setBackgroundColor(String value, String theme) {
         getStyle().set(BACKGROUND_COLOR, value);
         setTheme(theme);
     }
@@ -162,8 +171,8 @@ public class FlexBoxLayout extends FlexLayout {
         }
     }
 
-    public void setTheme(Theme theme) {
-        if (theme.equals(Theme.DARK)) {
+    public void setTheme(String theme) {
+        if (Lumo.DARK.equals(theme)) {
             getElement().setAttribute("theme", "dark");
         } else {
             getElement().removeAttribute("theme");

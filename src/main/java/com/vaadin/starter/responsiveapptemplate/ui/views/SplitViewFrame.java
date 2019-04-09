@@ -6,8 +6,8 @@ import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.HasStyle;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.starter.responsiveapptemplate.ui.MainLayout;
-import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexBoxLayout;
-import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexDirection;
+import com.vaadin.starter.responsiveapptemplate.ui.components.FlexBoxLayout;
+import com.vaadin.starter.responsiveapptemplate.ui.util.css.FlexDirection;
 
 /**
  * A view frame that establishes app design guidelines. It consists of three

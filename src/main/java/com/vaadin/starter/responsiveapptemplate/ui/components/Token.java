@@ -7,15 +7,14 @@ import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
-import com.vaadin.starter.responsiveapptemplate.ui.layout.BorderRadius;
-import com.vaadin.starter.responsiveapptemplate.ui.layout.Display;
-import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexBoxLayout;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Left;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Right;
 import com.vaadin.starter.responsiveapptemplate.ui.util.FontSize;
 import com.vaadin.starter.responsiveapptemplate.ui.util.LumoStyles;
 import com.vaadin.starter.responsiveapptemplate.ui.util.TextColor;
 import com.vaadin.starter.responsiveapptemplate.ui.util.UIUtils;
+import com.vaadin.starter.responsiveapptemplate.ui.util.css.BorderRadius;
+import com.vaadin.starter.responsiveapptemplate.ui.util.css.Display;
 
 import static com.vaadin.flow.component.button.ButtonVariant.LUMO_ICON;
 

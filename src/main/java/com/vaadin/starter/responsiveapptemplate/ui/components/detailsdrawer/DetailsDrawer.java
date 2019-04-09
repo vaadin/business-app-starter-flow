@@ -5,8 +5,8 @@ import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.HasSize;
 import com.vaadin.flow.component.HasStyle;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
-import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexBoxLayout;
-import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexDirection;
+import com.vaadin.starter.responsiveapptemplate.ui.components.FlexBoxLayout;
+import com.vaadin.starter.responsiveapptemplate.ui.util.css.FlexDirection;
 
 public class DetailsDrawer extends Composite<FlexLayout>
         implements HasStyle, HasSize {

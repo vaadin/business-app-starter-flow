@@ -1,4 +1,4 @@
-package com.vaadin.starter.responsiveapptemplate.ui.util;
+package com.vaadin.starter.responsiveapptemplate.ui.util.css.lumo;
 
 public enum BadgeColor {
 

@@ -1,15 +1,29 @@
 package com.vaadin.starter.responsiveapptemplate.ui.util;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+import java.util.Collection;
+
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.charts.Chart;
-import com.vaadin.flow.component.charts.model.*;
+import com.vaadin.flow.component.charts.model.Background;
+import com.vaadin.flow.component.charts.model.BackgroundShape;
+import com.vaadin.flow.component.charts.model.ChartType;
+import com.vaadin.flow.component.charts.model.Configuration;
+import com.vaadin.flow.component.charts.model.DataSeries;
+import com.vaadin.flow.component.charts.model.ListSeries;
+import com.vaadin.flow.component.charts.model.Pane;
+import com.vaadin.flow.component.charts.model.PlotOptionsSolidgauge;
+import com.vaadin.flow.component.charts.model.XAxis;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
-import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
@@ -17,21 +31,20 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.textfield.TextFieldVariant;
-import com.vaadin.starter.responsiveapptemplate.backend.*;
+import com.vaadin.flow.theme.lumo.Lumo;
+import com.vaadin.starter.responsiveapptemplate.backend.Address;
+import com.vaadin.starter.responsiveapptemplate.backend.DummyData;
 import com.vaadin.starter.responsiveapptemplate.ui.components.DataSeriesItemWithRadius;
-import com.vaadin.starter.responsiveapptemplate.ui.layout.TextAlign;
-import com.vaadin.starter.responsiveapptemplate.ui.layout.*;
+import com.vaadin.starter.responsiveapptemplate.ui.components.FlexBoxLayout;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Right;
-
-import static com.vaadin.starter.responsiveapptemplate.ui.util.BadgeShape.PILL;
-
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.StringJoiner;
+import com.vaadin.starter.responsiveapptemplate.ui.util.css.AlignSelf;
+import com.vaadin.starter.responsiveapptemplate.ui.util.css.BorderRadius;
+import com.vaadin.starter.responsiveapptemplate.ui.util.css.BoxSizing;
+import com.vaadin.starter.responsiveapptemplate.ui.util.css.FlexDirection;
+import com.vaadin.starter.responsiveapptemplate.ui.util.css.FlexWrap;
+import com.vaadin.starter.responsiveapptemplate.ui.util.css.Overflow;
+import com.vaadin.starter.responsiveapptemplate.ui.util.css.TextAlign;
+import com.vaadin.starter.responsiveapptemplate.ui.util.css.WhiteSpace;
 
 public class UIUtils {
 
@@ -340,7 +353,7 @@ public class UIUtils {
 
         layout.setAlignItems(FlexComponent.Alignment.CENTER);
         layout.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
-        layout.setTheme(Theme.DARK);
+        layout.setTheme(Lumo.DARK);
 
         layout.setHeight(LumoStyles.Size.M);
         layout.setWidth(LumoStyles.Size.M);
@@ -401,161 +414,6 @@ public class UIUtils {
     }
 
     /* === BADGES === */
-
-    public static Span createBadge(String text) {
-        Span badge = new Span(text);
-        setTheme(BadgeColor.NORMAL.getThemeName(), badge);
-        return badge;
-    }
-
-    public static Span createPrimaryBadge(String text) {
-        Span badge = new Span(text);
-        setTheme(BadgeColor.NORMAL_PRIMARY.getThemeName(), badge);
-        return badge;
-    }
-
-    public static Span createSuccessBadge(String text) {
-        Span badge = new Span(text);
-        setTheme(BadgeColor.SUCCESS.getThemeName(), badge);
-        return badge;
-    }
-
-    public static Span createSuccessPrimaryBadge(String text) {
-        Span badge = new Span(text);
-        setTheme(BadgeColor.SUCCESS_PRIMARY.getThemeName(), badge);
-        return badge;
-    }
-
-    public static Span createContrastBadge(String text) {
-        Span badge = new Span(text);
-        setTheme(BadgeColor.CONTRAST.getThemeName(), badge);
-        return badge;
-    }
-
-    public static Span createContrastPrimaryBadge(String text) {
-        Span badge = new Span(text);
-        setTheme(BadgeColor.CONTRAST_PRIMARY.getThemeName(), badge);
-        return badge;
-    }
-
-    public static Span createErrorBadge(String text) {
-        Span badge = new Span(text);
-        setTheme(BadgeColor.ERROR.getThemeName(), badge);
-        return badge;
-    }
-
-    public static Span createErrorPrimaryBadge(String text) {
-        Span badge = new Span(text);
-        setTheme(BadgeColor.ERROR_PRIMARY.getThemeName(), badge);
-        return badge;
-    }
-
-    public static Span createBadge(BadgeSize size, BadgeShape shape,
-            BadgeColor color, String text) {
-        StringJoiner joiner = new StringJoiner(" ");
-        joiner.add(color.getThemeName());
-
-        if (shape.equals(PILL)) {
-            joiner.add(shape.getThemeName());
-        }
-
-        if (size.equals(BadgeSize.S)) {
-            joiner.add(size.getThemeName());
-        }
-
-        Span badge = new Span(text);
-        setTheme(joiner.toString(), badge);
-        return badge;
-    }
-
-    // Transaction badge
-
-    public static Component createBadge(Transaction transaction) {
-        return createBadge(transaction.getStatus());
-    }
-
-    public static Component createBadge(Transaction.Status status) {
-        Span badge;
-        switch (status) {
-        case PENDING:
-            badge = createContrastBadge(status.getName());
-            break;
-        default:
-            badge = createBadge(status.getName());
-            break;
-        }
-        return badge;
-    }
-
-    // Invoice badge
-
-    public static Component createBadge(Invoice invoice) {
-        return createBadge(invoice.getStatus());
-    }
-
-    public static Component createBadge(Invoice.Status status) {
-        Span badge;
-        switch (status) {
-        case OUTSTANDING:
-            badge = createContrastBadge(status.getName());
-            break;
-        case OVERDUE:
-            badge = createErrorBadge(status.getName());
-            break;
-        case PAID:
-            badge = createSuccessBadge(status.getName());
-            break;
-        default:
-            badge = createBadge(status.getName());
-            break;
-        }
-        return badge;
-    }
-
-    // Order badge
-
-    public static Component createBadge(Order order) {
-        return createBadge(order.getStatus());
-    }
-
-    public static Component createBadge(Order.Status status) {
-        Span badge = new Span(status.getName());
-        setTheme(status.getTheme(), badge);
-        setTooltip(status.getDesc(), badge);
-        return badge;
-    }
-
-    // Payment badge
-
-    public static Component createBadge(Payment payment) {
-        Payment.Status status = payment.getStatus();
-        Span badge = new Span(status.getName());
-        setTheme(status.getTheme(), badge);
-        setTooltip(status.getDesc(), badge);
-        return badge;
-    }
-
-    // Item badge
-
-    public static Component createBadge(Item item) {
-        return createBadge(item.getCategory());
-    }
-
-    public static Component createBadge(Item.Category category) {
-        Span badge;
-        switch (category) {
-        case HEALTHCARE:
-            badge = createSuccessBadge(category.getName());
-            break;
-        case CONSTRUCTION:
-            badge = createContrastBadge(category.getName());
-            break;
-        default:
-            badge = createBadge(category.getName());
-            break;
-        }
-        return badge;
-    }
 
     /* === ICONS === */
 

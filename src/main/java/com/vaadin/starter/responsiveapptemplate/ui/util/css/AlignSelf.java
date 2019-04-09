@@ -1,4 +1,4 @@
-package com.vaadin.starter.responsiveapptemplate.ui.layout;
+package com.vaadin.starter.responsiveapptemplate.ui.util.css;
 
 public enum AlignSelf {
 

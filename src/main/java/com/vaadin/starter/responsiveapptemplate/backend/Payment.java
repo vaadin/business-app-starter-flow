@@ -1,11 +1,11 @@
 package com.vaadin.starter.responsiveapptemplate.backend;
 
+import java.time.LocalDate;
+
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.starter.responsiveapptemplate.ui.util.BadgeColor;
 import com.vaadin.starter.responsiveapptemplate.ui.util.UIUtils;
-
-import java.time.LocalDate;
+import com.vaadin.starter.responsiveapptemplate.ui.util.css.lumo.BadgeColor;
 
 public class Payment {
 
@@ -20,23 +20,20 @@ public class Payment {
     public enum Status {
         PENDING(VaadinIcon.CLOCK, "Pending",
                 "Payment created, not yet submitted.",
-                BadgeColor.CONTRAST.getThemeName()), SUBMITTED(
-                        VaadinIcon.QUESTION_CIRCLE, "Submitted",
-                        "Payment submitted for processing.",
-                        BadgeColor.NORMAL.getThemeName()), CONFIRMED(
-                                VaadinIcon.CHECK, "Confirmed",
-                                "Payment sent successfully.",
-                                BadgeColor.SUCCESS.getThemeName()), FAILED(
-                                        VaadinIcon.WARNING, "Failed",
-                                        "Payment failed.",
-                                        BadgeColor.ERROR.getThemeName());
+                BadgeColor.CONTRAST), SUBMITTED(VaadinIcon.QUESTION_CIRCLE,
+                        "Submitted", "Payment submitted for processing.",
+                        BadgeColor.NORMAL), CONFIRMED(VaadinIcon.CHECK,
+                                "Confirmed", "Payment sent successfully.",
+                                BadgeColor.SUCCESS), FAILED(VaadinIcon.WARNING,
+                                        "Failed", "Payment failed.",
+                                        BadgeColor.ERROR);
 
         private VaadinIcon icon;
         private String name;
         private String desc;
-        private String theme;
+        private BadgeColor theme;
 
-        Status(VaadinIcon icon, String name, String desc, String theme) {
+        Status(VaadinIcon icon, String name, String desc, BadgeColor theme) {
             this.icon = icon;
             this.name = name;
             this.desc = desc;
@@ -70,7 +67,7 @@ public class Payment {
             return desc;
         }
 
-        public String getTheme() {
+        public BadgeColor getTheme() {
             return theme;
         }
     }

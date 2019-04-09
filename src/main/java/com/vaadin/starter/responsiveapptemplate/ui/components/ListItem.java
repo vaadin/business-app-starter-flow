@@ -6,12 +6,11 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
-import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexBoxLayout;
-import com.vaadin.starter.responsiveapptemplate.ui.layout.FlexDirection;
-import com.vaadin.starter.responsiveapptemplate.ui.layout.WhiteSpace;
 import com.vaadin.starter.responsiveapptemplate.ui.util.FontSize;
 import com.vaadin.starter.responsiveapptemplate.ui.util.TextColor;
 import com.vaadin.starter.responsiveapptemplate.ui.util.UIUtils;
+import com.vaadin.starter.responsiveapptemplate.ui.util.css.FlexDirection;
+import com.vaadin.starter.responsiveapptemplate.ui.util.css.WhiteSpace;
 
 import java.util.Collections;
 
