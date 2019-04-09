@@ -54,7 +54,7 @@ public class TabBar extends Composite<FlexLayout> {
 
         addTab = UIUtils.createSmallButton(VaadinIcon.PLUS);
         addTab.addClickListener(e -> tabs
-                .setSelectedTab(addClosableNaviTab("New Tab", Home.class)));
+                .setSelectedTab(addClosableTab("New Tab", Home.class)));
         addTab.setClassName(CLASS_NAME + "__add-tab");
 
         tabs = new NaviTabs();
@@ -85,14 +85,14 @@ public class TabBar extends Composite<FlexLayout> {
         return tab;
     }
 
-    public Tab addNaviTab(String text,
+    public Tab addTab(String text,
             Class<? extends Component> navigationTarget) {
         Tab tab = tabs.addTab(text, navigationTarget);
         configureTab(tab);
         return tab;
     }
 
-    public Tab addClosableNaviTab(String text,
+    public Tab addClosableTab(String text,
             Class<? extends Component> navigationTarget) {
         Tab tab = tabs.addClosableTab(text, navigationTarget);
         configureTab(tab);

@@ -58,7 +58,7 @@ public class MainLayout extends FlexBoxLayout
     private Div appFooterOuter;
 
     private TabBar tabBar;
-    private boolean navigationTabs = false;
+    private boolean navigationTabs = true;
     private AppBar appBar;
 
     public MainLayout() {
@@ -144,7 +144,7 @@ public class MainLayout extends FlexBoxLayout
                 item.addClickListener(e -> {
                     // Shift-click to add a new tab
                     if (e.getButton() == 0 && e.isShiftKey()) {
-                        tabBar.setSelectedTab(tabBar.addClosableNaviTab(
+                        tabBar.setSelectedTab(tabBar.addClosableTab(
                                 item.getText(), item.getNavigationTarget()));
                     }
                 });
@@ -241,14 +241,14 @@ public class MainLayout extends FlexBoxLayout
         NaviItem active = getActiveItem(e);
         if (active == null) {
             if (tabBar.getTabCount() == 0) {
-                tabBar.addClosableNaviTab("", Home.class);
+                tabBar.addClosableTab("", Home.class);
             }
         } else {
             if (tabBar.getTabCount() > 0) {
                 tabBar.updateSelectedTab(active.getText(),
                         active.getNavigationTarget());
             } else {
-                tabBar.addClosableNaviTab(active.getText(),
+                tabBar.addClosableTab(active.getText(),
                         active.getNavigationTarget());
             }
         }

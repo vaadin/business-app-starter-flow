@@ -5,17 +5,12 @@
   z-index: 1;
 }
 
-/* Navi icon */
-.tab-bar__navi-icon {
-  margin-right: var(--lumo-space-l);
-}
-
 /* Avatar */
 .tab-bar__avatar {
   border-radius: 100%;
   flex-shrink: 0;
   height: var(--lumo-size-s);
-  margin-left: var(--lumo-space-m);
+  margin-left: auto;
   width: var(--lumo-size-s);
 }
 
@@ -30,7 +25,6 @@
 
 .tab-bar__add-tab {
   flex-shrink: 0;
-  margin: calc(calc(var(--lumo-size-l) - var(--lumo-size-s)) / 2) 0;
 }
 
 @media (max-width: 719px) {
@@ -40,6 +34,12 @@
   vaadin-tab[closable]:after,
   vaadin-tab[closable]:before {
     display: none;
+  }
+
+  vaadin-tab[closable][selected] {
+    color: var(--lumo-header-text-color);
+    font-size: var(--lumo-font-size-l);
+    font-weight: 600;
   }
 }
 

@@ -50,7 +50,6 @@
 
 .app-bar__add-tab {
   flex-shrink: 0;
-  margin: calc(calc(var(--lumo-size-l) - var(--lumo-size-s)) / 2) 0;
 }
 
 @media (max-width: 1023px) {
