@@ -19,18 +19,18 @@ vaadin-board-row.large .dashboard__payment-chart:not(:last-child) {
 }
 
 /* Reports & Logs */
-vaadin-board-row.small > *:first-child {
+vaadin-board-row.small .dashboard__reports {
   padding-right: var(--lumo-space-r-l);
 }
 
-vaadin-board-row.small > *:last-child {
+vaadin-board-row.small .dashboard__logs {
   padding-left: var(--lumo-space-r-l);
 }
 
-vaadin-board-row:not(.small) > *:first-child {
+vaadin-board-row:not(.small)  .dashboard__reports {
   padding-right: calc(var(--lumo-space-l) / 2);
 }
 
-vaadin-board-row:not(.small) > *:last-child {
+vaadin-board-row:not(.small)  .dashboard__logs {
   padding-left: calc(var(--lumo-space-l) / 2);
 }

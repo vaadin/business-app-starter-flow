@@ -1,7 +1,6 @@
 package com.vaadin.starter.responsiveapptemplate.ui.views;
 
 import com.vaadin.flow.component.Component;
-import com.vaadin.flow.component.board.Board;
 import com.vaadin.flow.component.board.Row;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.charts.Chart;
@@ -19,16 +18,12 @@ import com.vaadin.starter.responsiveapptemplate.ui.MainLayout;
 import com.vaadin.starter.responsiveapptemplate.ui.components.DataSeriesItemWithRadius;
 import com.vaadin.starter.responsiveapptemplate.ui.components.FlexBoxLayout;
 import com.vaadin.starter.responsiveapptemplate.ui.components.ListItem;
-import com.vaadin.starter.responsiveapptemplate.ui.layout.size.*;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Bottom;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Top;
-import com.vaadin.starter.responsiveapptemplate.ui.util.FontSize;
-import com.vaadin.starter.responsiveapptemplate.ui.util.IconSize;
-import com.vaadin.starter.responsiveapptemplate.ui.util.LumoStyles;
-import com.vaadin.starter.responsiveapptemplate.ui.util.TextColor;
-import com.vaadin.starter.responsiveapptemplate.ui.util.UIUtils;
-import com.vaadin.starter.responsiveapptemplate.ui.util.css.*;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.size.*;
+import com.vaadin.starter.responsiveapptemplate.ui.util.*;
 import com.vaadin.starter.responsiveapptemplate.ui.util.css.Position;
+import com.vaadin.starter.responsiveapptemplate.ui.util.css.*;
 
 @Route(value = "statistics", layout = MainLayout.class)
 @PageTitle("Statistics")
@@ -77,7 +72,7 @@ public class Statistics extends ViewFrame {
     }
 
     private Component createPaymentsCharts() {
-        Row charts = new Board().addRow();
+        Row charts = new Row();
         UIUtils.setBackgroundColor(LumoStyles.Color.BASE_COLOR, charts);
         UIUtils.setBorderRadius(BorderRadius.S, charts);
         UIUtils.setShadow(Shadow.S, charts);
@@ -218,7 +213,7 @@ public class Statistics extends ViewFrame {
         Component reports = createReports();
         Component logs = createLogs();
 
-        Row docs = new Board().addRow(reports, logs);
+        Row docs = new Row(reports, logs);
         docs.addClassName(LumoStyles.Margin.Top.XL);
         UIUtils.setMaxWidth(MAX_WIDTH, docs);
         docs.setWidth("100%");
@@ -254,6 +249,7 @@ public class Statistics extends ViewFrame {
         UIUtils.setShadow(Shadow.S, card);
 
         FlexBoxLayout reports = new FlexBoxLayout(header, card);
+        reports.addClassName(CLASS_NAME + "__reports");
         reports.setFlexDirection(FlexDirection.COLUMN);
         reports.setPadding(Bottom.XL, Left.RESPONSIVE_L);
         return reports;
@@ -287,6 +283,7 @@ public class Statistics extends ViewFrame {
         UIUtils.setShadow(Shadow.S, card);
 
         FlexBoxLayout logs = new FlexBoxLayout(header, card);
+        logs.addClassName(CLASS_NAME + "__logs");
         logs.setFlexDirection(FlexDirection.COLUMN);
         logs.setPadding(Bottom.XL, Right.RESPONSIVE_L);
         return logs;
