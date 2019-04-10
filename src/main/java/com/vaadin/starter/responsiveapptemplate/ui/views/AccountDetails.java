@@ -106,8 +106,9 @@ public class AccountDetails extends ViewFrame implements HasUrlParameter<Long> {
                 "", "Updated");
         updated.setReverse(true);
 
-        FlexLayout listItems = UIUtils.createColumn(availability, bankAccount,
+        FlexBoxLayout listItems = new FlexBoxLayout(availability, bankAccount,
                 updated);
+        listItems.setFlexDirection(FlexDirection.COLUMN);
 
         FlexBoxLayout section = new FlexBoxLayout(image, listItems);
         section.addClassName(BoxShadowBorders.BOTTOM);
@@ -134,8 +135,8 @@ public class AccountDetails extends ViewFrame implements HasUrlParameter<Long> {
     }
 
     private Component createRecentTransactionsList() {
-        Div items = UIUtils.createDiv(Arrays.asList(LumoStyles.Padding.Bottom.L,
-                BoxShadowBorders.BOTTOM));
+        Div items = new Div();
+        items.addClassNames(BoxShadowBorders.BOTTOM, LumoStyles.Padding.Bottom.L);
 
         for (int i = 0; i < RECENT_TRANSACTIONS; i++) {
             Double amount = DummyData.getAmount();

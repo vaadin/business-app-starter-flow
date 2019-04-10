@@ -21,6 +21,7 @@ import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.shared.Registration;
 import com.vaadin.starter.responsiveapptemplate.ui.MainLayout;
+import com.vaadin.starter.responsiveapptemplate.ui.components.FlexBoxLayout;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.tab.NaviTab;
 import com.vaadin.starter.responsiveapptemplate.ui.components.navigation.tab.NaviTabs;
 import com.vaadin.starter.responsiveapptemplate.ui.util.LumoStyles;
@@ -31,16 +32,16 @@ public class AppBar extends Composite<FlexLayout> {
 
     private String CLASS_NAME = "app-bar";
 
-    private FlexLayout container;
+    private FlexBoxLayout container;
 
     private Button menuIcon;
     private Button contextIcon;
 
     private H4 title;
-    private FlexLayout actionItems;
+    private FlexBoxLayout actionItems;
     private Image avatar;
 
-    private FlexLayout tabContainer;
+    private FlexBoxLayout tabContainer;
     private NaviTabs tabs;
     private Button addTab;
 
@@ -122,15 +123,15 @@ public class AppBar extends Composite<FlexLayout> {
     }
 
     private void initActionItems() {
-        actionItems = UIUtils.createFlexLayout(
-                Collections.singleton(CLASS_NAME + "__action-items"), avatar);
+        actionItems = new FlexBoxLayout();
+        actionItems.addClassName(CLASS_NAME + "__action-items");
         actionItems.setVisible(false);
     }
 
     private void initContainer() {
-        container = UIUtils.createFlexLayout(
-                Collections.singleton(CLASS_NAME + "__container"), menuIcon,
-                contextIcon, this.title, search, actionItems, avatar);
+        container = new FlexBoxLayout(menuIcon, contextIcon, this.title, search,
+                actionItems, avatar);
+        container.addClassName(CLASS_NAME + "__container");
         container.setAlignItems(FlexComponent.Alignment.CENTER);
         container.setFlexGrow(1, search);
         getContent().add(container);
@@ -149,9 +150,8 @@ public class AppBar extends Composite<FlexLayout> {
             configureTab(tab);
         }
 
-        tabContainer = UIUtils.createFlexLayout(
-                Collections.singleton(CLASS_NAME + "__tab-container"), this.tabs,
-                addTab);
+        tabContainer = new FlexBoxLayout(this.tabs, addTab);
+        tabContainer.addClassName(CLASS_NAME + "__tab-container");
         tabContainer.setAlignItems(FlexComponent.Alignment.CENTER);
         getContent().add(tabContainer);
     }

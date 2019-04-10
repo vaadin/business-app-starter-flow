@@ -157,8 +157,8 @@ public class MainLayout extends FlexBoxLayout
 
     private void setAppHeaderOuter(Component... components) {
         if (appHeaderOuter == null) {
-            appHeaderOuter = UIUtils
-                    .createDiv(Collections.singleton("app-header-outer"));
+            appHeaderOuter = new Div();
+            appHeaderOuter.addClassName("app-header-outer");
             getElement().insertChild(0, appHeaderOuter.getElement());
         }
 
@@ -168,8 +168,8 @@ public class MainLayout extends FlexBoxLayout
 
     private void setAppHeaderInner(Component... components) {
         if (appHeaderInner == null) {
-            appHeaderInner = UIUtils
-                    .createDiv(Collections.singleton("app-header-inner"));
+            appHeaderInner = new Div();
+            appHeaderInner.addClassName("app-header-inner");
             column.getElement().insertChild(0, appHeaderInner.getElement());
         }
 
@@ -179,8 +179,8 @@ public class MainLayout extends FlexBoxLayout
 
     private void setAppFooterInner(Component... components) {
         if (appFooterInner == null) {
-            appFooterInner = UIUtils
-                    .createDiv(Collections.singleton("app-footer-inner"));
+            appFooterInner = new Div();
+            appFooterInner.addClassName("app-footer-inner");
             column.getElement().insertChild(column.getElement().getChildCount(),
                     appFooterInner.getElement());
         }
@@ -190,8 +190,8 @@ public class MainLayout extends FlexBoxLayout
 
     private void setAppFooterOuter(Component... components) {
         if (appFooterOuter == null) {
-            appFooterOuter = UIUtils
-                    .createDiv(Collections.singleton("app-footer-outer"));
+            appFooterOuter = new Div();
+            appFooterOuter.addClassName("app-footer-outer");
             getElement().insertChild(getElement().getChildCount(),
                     appFooterOuter.getElement());
         }

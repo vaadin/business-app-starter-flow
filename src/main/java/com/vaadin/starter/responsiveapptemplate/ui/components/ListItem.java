@@ -123,8 +123,8 @@ public class ListItem extends FlexLayout implements HasStyle {
 
     public void setPrefix(Component... components) {
         if (prefix == null) {
-            prefix = UIUtils
-                    .createDiv(Collections.singleton(CLASS_NAME + "__prefix"));
+            prefix = new Div();
+            prefix.addClassName(CLASS_NAME + "__prefix");
             getElement().insertChild(0, prefix.getElement());
         }
         prefix.removeAll();
@@ -133,8 +133,8 @@ public class ListItem extends FlexLayout implements HasStyle {
 
     public void setSuffix(Component... components) {
         if (suffix == null) {
-            suffix = UIUtils
-                    .createDiv(Collections.singleton(CLASS_NAME + "__suffix"));
+            suffix = new Div();
+            suffix.addClassName(CLASS_NAME + "__suffix");
             getElement().insertChild(getElement().getChildCount(),
                     suffix.getElement());
         }
@@ -144,8 +144,8 @@ public class ListItem extends FlexLayout implements HasStyle {
 
     public void setDividerVisible(boolean visible) {
         if (divider == null) {
-            divider = UIUtils
-                    .createDiv(Collections.singleton(CLASS_NAME + "__divider"));
+            divider = new Div();
+            divider.addClassName(CLASS_NAME + "__divider");
             add(divider);
         }
         divider.setVisible(visible);

@@ -1,28 +1,9 @@
 package com.vaadin.starter.responsiveapptemplate.ui.util;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.Collection;
-
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
-import com.vaadin.flow.component.charts.Chart;
-import com.vaadin.flow.component.charts.model.Background;
-import com.vaadin.flow.component.charts.model.BackgroundShape;
-import com.vaadin.flow.component.charts.model.ChartType;
-import com.vaadin.flow.component.charts.model.Configuration;
-import com.vaadin.flow.component.charts.model.DataSeries;
-import com.vaadin.flow.component.charts.model.ListSeries;
-import com.vaadin.flow.component.charts.model.Pane;
-import com.vaadin.flow.component.charts.model.PlotOptionsSolidgauge;
-import com.vaadin.flow.component.charts.model.XAxis;
-import com.vaadin.flow.component.formlayout.FormLayout;
-import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -34,17 +15,14 @@ import com.vaadin.flow.component.textfield.TextFieldVariant;
 import com.vaadin.flow.theme.lumo.Lumo;
 import com.vaadin.starter.responsiveapptemplate.backend.Address;
 import com.vaadin.starter.responsiveapptemplate.backend.DummyData;
-import com.vaadin.starter.responsiveapptemplate.ui.components.DataSeriesItemWithRadius;
 import com.vaadin.starter.responsiveapptemplate.ui.components.FlexBoxLayout;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Right;
-import com.vaadin.starter.responsiveapptemplate.ui.util.css.AlignSelf;
-import com.vaadin.starter.responsiveapptemplate.ui.util.css.BorderRadius;
-import com.vaadin.starter.responsiveapptemplate.ui.util.css.BoxSizing;
-import com.vaadin.starter.responsiveapptemplate.ui.util.css.FlexDirection;
-import com.vaadin.starter.responsiveapptemplate.ui.util.css.FlexWrap;
-import com.vaadin.starter.responsiveapptemplate.ui.util.css.Overflow;
-import com.vaadin.starter.responsiveapptemplate.ui.util.css.TextAlign;
-import com.vaadin.starter.responsiveapptemplate.ui.util.css.WhiteSpace;
+import com.vaadin.starter.responsiveapptemplate.ui.util.css.*;
+
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class UIUtils {
 
@@ -63,55 +41,6 @@ public class UIUtils {
             .withInitial(() -> new DecimalFormat("###,###,###.00"));
     private static final ThreadLocal<DateTimeFormatter> dateFormat = ThreadLocal
             .withInitial(() -> DateTimeFormatter.ofPattern("MMM dd, YYYY"));
-
-    /* ==== LAYOUTS ==== */
-
-    public static FormLayout createFormLayout(Collection<String> classNames,
-            Component... components) {
-        FormLayout form = new FormLayout(components);
-        classNames.forEach(form::addClassName);
-        return form;
-    }
-
-    public static Div createDiv(Collection<String> classNames,
-            Component... components) {
-        Div div = new Div(components);
-        classNames.forEach(div::addClassName);
-        return div;
-    }
-
-    public static FlexLayout createWrappingFlexLayout(Component... components) {
-        FlexBoxLayout layout = new FlexBoxLayout(components);
-        layout.setFlexWrap(FlexWrap.WRAP);
-        return layout;
-    }
-
-    public static FlexLayout createWrappingFlexLayout(
-            Collection<String> classNames, Component... components) {
-        FlexLayout layout = createWrappingFlexLayout(components);
-        classNames.forEach(layout::addClassName);
-        return layout;
-    }
-
-    public static FlexLayout createFlexLayout(Collection<String> classNames,
-            Component... components) {
-        FlexLayout layout = new FlexLayout(components);
-        classNames.forEach(layout::addClassName);
-        return layout;
-    }
-
-    public static FlexLayout createColumn(Component... components) {
-        FlexBoxLayout layout = new FlexBoxLayout(components);
-        layout.setFlexDirection(FlexDirection.COLUMN);
-        return layout;
-    }
-
-    public static FlexLayout createColumn(Collection<String> classNames,
-            Component... components) {
-        FlexLayout layout = createColumn(components);
-        classNames.forEach(layout::addClassName);
-        return layout;
-    }
 
     /* ==== BUTTONS ==== */
 
@@ -480,71 +409,6 @@ public class UIUtils {
         return dateFormat.get().format(date);
     }
 
-    /* === CHARTS === */
-
-    public static Chart createProgressChart(int value) {
-        Chart chart = new Chart();
-        chart.setSizeFull();
-
-        Configuration configuration = chart.getConfiguration();
-        configuration.getChart().setType(ChartType.SOLIDGAUGE);
-        configuration.setTitle("");
-        configuration.getTooltip().setEnabled(false);
-
-        configuration.getyAxis().setMin(0);
-        configuration.getyAxis().setMax(100);
-        configuration.getyAxis().getLabels().setEnabled(false);
-
-        PlotOptionsSolidgauge opt = new PlotOptionsSolidgauge();
-        opt.getDataLabels().setEnabled(false);
-        configuration.setPlotOptions(opt);
-
-        DataSeriesItemWithRadius point = new DataSeriesItemWithRadius();
-        point.setY(value);
-        point.setInnerRadius("100%");
-        point.setRadius("110%");
-        configuration.setSeries(new DataSeries(point));
-
-        Pane pane = configuration.getPane();
-        pane.setStartAngle(0);
-        pane.setEndAngle(360);
-
-        Background background = new Background();
-        background.setShape(BackgroundShape.ARC);
-        background.setInnerRadius("100%");
-        background.setOuterRadius("110%");
-        pane.setBackground(background);
-
-        return chart;
-    }
-
-    public static Component createSalesChart(String title, String yAxis) {
-        Chart chart = new Chart(ChartType.AREASPLINE);
-
-        Configuration conf = chart.getConfiguration();
-        conf.setTitle(title);
-        conf.getLegend().setEnabled(false);
-
-        XAxis xAxis = new XAxis();
-        xAxis.setCategories("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul",
-                "Aug", "Sep", "Oct", "Nov", "Dec");
-        conf.addxAxis(xAxis);
-
-        conf.getyAxis().setTitle(yAxis);
-
-        conf.addSeries(new ListSeries(220, 240, 400, 360, 420, 640, 580, 800,
-                600, 580, 740, 800));
-
-        FlexLayout card = createWrappingFlexLayout(
-                Arrays.asList(LumoStyles.BorderRadius.S,
-                        LumoStyles.Padding.Uniform.M, LumoStyles.Shadow.S),
-                chart);
-        setBackgroundColor(LumoStyles.Color.BASE_COLOR, card);
-        setBoxSizing(BoxSizing.BORDER_BOX, card);
-        card.setHeight("400px");
-        return card;
-    }
-
     /* === NOTIFICATIONS === */
 
     public static void showNotification(String text) {
@@ -592,10 +456,24 @@ public class UIUtils {
         }
     }
 
+    public static void setMaxWidth(String value, Component... components) {
+        for (Component component : components) {
+            component.getElement().getStyle().set("max-width",
+                    value);
+        }
+    }
+
     public static void setOverflow(Overflow overflow, Component... components) {
         for (Component component : components) {
             component.getElement().getStyle().set("overflow",
                     overflow.getValue());
+        }
+    }
+
+    public static void setShadow(Shadow shadow, Component... components) {
+        for (Component component : components) {
+            component.getElement().getStyle().set("box-shadow",
+                    shadow.getValue());
         }
     }
 
@@ -624,6 +502,13 @@ public class UIUtils {
         for (Component component : components) {
             component.getElement().setProperty("white-space",
                     whiteSpace.getValue());
+        }
+    }
+
+    public static void setWidth(String value, Component... components) {
+        for (Component component : components) {
+            component.getElement().getStyle().set("width",
+                    value);
         }
     }
 

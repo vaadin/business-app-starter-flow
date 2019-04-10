@@ -1,8 +1,11 @@
 package com.vaadin.starter.responsiveapptemplate.ui.views;
 
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.board.Board;
+import com.vaadin.flow.component.board.Row;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.charts.Chart;
+import com.vaadin.flow.component.charts.model.*;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -13,87 +16,80 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.starter.responsiveapptemplate.backend.Payment;
 import com.vaadin.starter.responsiveapptemplate.ui.MainLayout;
+import com.vaadin.starter.responsiveapptemplate.ui.components.DataSeriesItemWithRadius;
 import com.vaadin.starter.responsiveapptemplate.ui.components.FlexBoxLayout;
 import com.vaadin.starter.responsiveapptemplate.ui.components.ListItem;
+import com.vaadin.starter.responsiveapptemplate.ui.layout.size.*;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Bottom;
-import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Horizontal;
-import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Right;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Top;
-import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Vertical;
 import com.vaadin.starter.responsiveapptemplate.ui.util.FontSize;
 import com.vaadin.starter.responsiveapptemplate.ui.util.IconSize;
 import com.vaadin.starter.responsiveapptemplate.ui.util.LumoStyles;
 import com.vaadin.starter.responsiveapptemplate.ui.util.TextColor;
 import com.vaadin.starter.responsiveapptemplate.ui.util.UIUtils;
-import com.vaadin.starter.responsiveapptemplate.ui.util.css.BorderRadius;
-import com.vaadin.starter.responsiveapptemplate.ui.util.css.FlexDirection;
-import com.vaadin.starter.responsiveapptemplate.ui.util.css.FlexWrap;
+import com.vaadin.starter.responsiveapptemplate.ui.util.css.*;
 import com.vaadin.starter.responsiveapptemplate.ui.util.css.Position;
-import com.vaadin.starter.responsiveapptemplate.ui.util.css.Shadow;
 
 @Route(value = "statistics", layout = MainLayout.class)
 @PageTitle("Statistics")
 public class Statistics extends ViewFrame {
 
     private static final String CLASS_NAME = "dashboard";
+    public static final String MAX_WIDTH = "1024px";
 
     public Statistics() {
         setViewContent(createContent());
     }
 
     private Component createContent() {
-        Component paymentsHeader = createHeader(VaadinIcon.CREDIT_CARD,
-                "Payments");
-        Component paymentsCharts = createPaymentsCharts();
+        Component payments = createPayments();
+        Component transactions = createTransactions();
+        Component docs = createDocs();
 
-        Component transactionsHeader = createHeader(VaadinIcon.MONEY_EXCHANGE,
-                "Transactions");
-        Component transactionsChart = UIUtils.createSalesChart("2018",
-                "Number of Processed Transactions");
-
-        Component reports = createReports();
-        Component logs = createLogs();
-        FlexBoxLayout items = new FlexBoxLayout(reports, logs);
-        items.addClassName(CLASS_NAME + "__bookmarks-recent-items");
-        items.setSpacing(Bottom.L);
-
-        FlexBoxLayout content = new FlexBoxLayout(paymentsHeader,
-                paymentsCharts, transactionsHeader, transactionsChart, items);
+        FlexBoxLayout content = new FlexBoxLayout(payments, transactions, docs);
+        content.setAlignItems(FlexComponent.Alignment.CENTER);
         content.setFlexDirection(FlexDirection.COLUMN);
-        content.setMargin(Horizontal.AUTO, Vertical.RESPONSIVE_L);
-        content.setMaxWidth("1024px");
-        content.setPadding(Horizontal.RESPONSIVE_X);
-        content.setSpacing(Bottom.L);
         return content;
     }
 
-    private Component createHeader(VaadinIcon icon, String title) {
+    private Component createPayments() {
+        FlexBoxLayout payments = new FlexBoxLayout(
+                createHeader(VaadinIcon.CREDIT_CARD, "Payments"),
+                createPaymentsCharts()
+        );
+        payments.setBoxSizing(BoxSizing.BORDER_BOX);
+        payments.setDisplay(Display.BLOCK);
+        payments.setMargin(Top.L);
+        payments.setMaxWidth(MAX_WIDTH);
+        payments.setPadding(Horizontal.RESPONSIVE_L);
+        payments.setWidth("100%");
+        return payments;
+    }
+
+    private FlexBoxLayout createHeader(VaadinIcon icon, String title) {
         FlexBoxLayout header = new FlexBoxLayout(
                 UIUtils.createIcon(IconSize.M, TextColor.TERTIARY, icon),
                 UIUtils.createH3Label(title));
         header.setAlignItems(FlexComponent.Alignment.CENTER);
-        header.setMargin(Horizontal.RESPONSIVE_L, Top.S);
+        header.setMargin(Bottom.L, Horizontal.RESPONSIVE_L);
         header.setSpacing(Right.L);
         return header;
     }
 
     private Component createPaymentsCharts() {
-        FlexBoxLayout card = new FlexBoxLayout();
-        card.addClassName(CLASS_NAME + "__progress");
-        card.setBackgroundColor(LumoStyles.Color.BASE_COLOR);
-        card.setBorderRadius(BorderRadius.S);
-        card.setFlexWrap(FlexWrap.WRAP);
-        card.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
-        card.setShadow(Shadow.S);
+        Row charts = new Board().addRow();
+        UIUtils.setBackgroundColor(LumoStyles.Color.BASE_COLOR, charts);
+        UIUtils.setBorderRadius(BorderRadius.S, charts);
+        UIUtils.setShadow(Shadow.S, charts);
 
         for (Payment.Status status : Payment.Status.values()) {
-            card.add(createPaymentSection(status));
+            charts.add(createPaymentChart(status));
         }
 
-        return card;
+        return charts;
     }
 
-    private Component createPaymentSection(Payment.Status status) {
+    private Component createPaymentChart(Payment.Status status) {
         int value;
 
         switch (status) {
@@ -121,8 +117,7 @@ public class Statistics extends ViewFrame {
         textContainer.setPosition(Position.ABSOLUTE);
         textContainer.setSpacing(Right.XS);
 
-        Chart chart = UIUtils.createProgressChart(value);
-        chart.addClassName(status.getName().toLowerCase());
+        Chart chart = createProgressChart(status, value);
 
         FlexBoxLayout chartContainer = new FlexBoxLayout(chart, textContainer);
         chartContainer.setAlignItems(FlexComponent.Alignment.CENTER);
@@ -132,16 +127,107 @@ public class Statistics extends ViewFrame {
         chartContainer.setHeight("120px");
         chartContainer.setWidth("120px");
 
-        FlexBoxLayout column = new FlexBoxLayout(new Label(status.getName()),
+        FlexBoxLayout paymentChart = new FlexBoxLayout(new Label(status.getName()),
                 chartContainer);
-        column.setAlignItems(FlexComponent.Alignment.CENTER);
-        column.setFlexDirection(FlexDirection.COLUMN);
-        column.setPadding(Bottom.S, Top.M);
-        return column;
+        paymentChart.addClassName(CLASS_NAME + "__payment-chart");
+        paymentChart.setAlignItems(FlexComponent.Alignment.CENTER);
+        paymentChart.setFlexDirection(FlexDirection.COLUMN);
+        paymentChart.setPadding(Bottom.S, Top.M);
+        return paymentChart;
+    }
+
+    private Chart createProgressChart(Payment.Status status, int value) {
+        Chart chart = new Chart();
+        chart.addClassName(status.getName().toLowerCase());
+        chart.setSizeFull();
+
+        Configuration configuration = chart.getConfiguration();
+        configuration.getChart().setType(ChartType.SOLIDGAUGE);
+        configuration.setTitle("");
+        configuration.getTooltip().setEnabled(false);
+
+        configuration.getyAxis().setMin(0);
+        configuration.getyAxis().setMax(100);
+        configuration.getyAxis().getLabels().setEnabled(false);
+
+        PlotOptionsSolidgauge opt = new PlotOptionsSolidgauge();
+        opt.getDataLabels().setEnabled(false);
+        configuration.setPlotOptions(opt);
+
+        DataSeriesItemWithRadius point = new DataSeriesItemWithRadius();
+        point.setY(value);
+        point.setInnerRadius("100%");
+        point.setRadius("110%");
+        configuration.setSeries(new DataSeries(point));
+
+        Pane pane = configuration.getPane();
+        pane.setStartAngle(0);
+        pane.setEndAngle(360);
+
+        Background background = new Background();
+        background.setShape(BackgroundShape.ARC);
+        background.setInnerRadius("100%");
+        background.setOuterRadius("110%");
+        pane.setBackground(background);
+
+        return chart;
+    }
+
+    private Component createTransactions() {
+        FlexBoxLayout transactions = new FlexBoxLayout(
+                createHeader(VaadinIcon.MONEY_EXCHANGE, "Transactions"),
+                createAreaChart()
+        );
+        transactions.setBoxSizing(BoxSizing.BORDER_BOX);
+        transactions.setDisplay(Display.BLOCK);
+        transactions.setMargin(Top.XL);
+        transactions.setMaxWidth(MAX_WIDTH);
+        transactions.setPadding(Horizontal.RESPONSIVE_L);
+        transactions.setWidth("100%");
+        return transactions;
+    }
+
+    private Component createAreaChart() {
+        Chart chart = new Chart(ChartType.AREASPLINE);
+
+        Configuration conf = chart.getConfiguration();
+        conf.setTitle("2019");
+        conf.getLegend().setEnabled(false);
+
+        XAxis xAxis = new XAxis();
+        xAxis.setCategories("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul",
+                "Aug", "Sep", "Oct", "Nov", "Dec");
+        conf.addxAxis(xAxis);
+
+        conf.getyAxis().setTitle("Number of Processed Transactions");
+
+        conf.addSeries(new ListSeries(220, 240, 400, 360, 420, 640, 580, 800,
+                600, 580, 740, 800));
+
+        FlexBoxLayout card = new FlexBoxLayout(chart);
+        card.setBorderRadius(BorderRadius.S);
+        card.setBackgroundColor(LumoStyles.Color.BASE_COLOR);
+        card.setBoxSizing(BoxSizing.BORDER_BOX);
+        card.setHeight("400px");
+        card.setPadding(Uniform.M);
+        card.setShadow(Shadow.S);
+        return card;
+    }
+
+    private Component createDocs() {
+        Component reports = createReports();
+        Component logs = createLogs();
+
+        Row docs = new Board().addRow(reports, logs);
+        docs.addClassName(LumoStyles.Margin.Top.XL);
+        UIUtils.setMaxWidth(MAX_WIDTH, docs);
+        docs.setWidth("100%");
+
+        return docs;
     }
 
     private Component createReports() {
-        Component header = createHeader(VaadinIcon.RECORDS, "Reports");
+        FlexBoxLayout header = createHeader(VaadinIcon.RECORDS, "Reports");
 
         Tabs tabs = new Tabs();
         for (String label : new String[] { "All", "Archive", "Workflows",
@@ -149,7 +235,7 @@ public class Statistics extends ViewFrame {
             tabs.add(new Tab(label));
         }
 
-        FlexBoxLayout items = new FlexBoxLayout(
+        Div items = new Div(
                 new ListItem(
                         UIUtils.createIcon(IconSize.M, TextColor.TERTIARY,
                                 VaadinIcon.CHART),
@@ -160,22 +246,21 @@ public class Statistics extends ViewFrame {
                                 VaadinIcon.SITEMAP),
                         "Payment Workflows", "Last modified Oct 24, 2018",
                         createInfoButton()));
-        items.setFlexDirection(FlexDirection.COLUMN);
-        items.setMargin(Vertical.S);
+        items.addClassNames(LumoStyles.Padding.Vertical.S);
 
-        FlexBoxLayout card = new FlexBoxLayout(tabs, items);
-        card.setBackgroundColor(LumoStyles.Color.BASE_COLOR);
-        card.setBorderRadius(BorderRadius.S);
-        card.setFlexDirection(FlexDirection.COLUMN);
-        card.setShadow(Shadow.S);
+        Div card = new Div(tabs, items);
+        UIUtils.setBackgroundColor(LumoStyles.Color.BASE_COLOR, card);
+        UIUtils.setBorderRadius(BorderRadius.S, card);
+        UIUtils.setShadow(Shadow.S, card);
 
-        Div section = new Div(header, card);
-        section.addClassName(LumoStyles.Spacing.Bottom.L);
-        return section;
+        FlexBoxLayout reports = new FlexBoxLayout(header, card);
+        reports.setFlexDirection(FlexDirection.COLUMN);
+        reports.setPadding(Bottom.XL, Left.RESPONSIVE_L);
+        return reports;
     }
 
     private Component createLogs() {
-        Component header = createHeader(VaadinIcon.EDIT, "Logs");
+        FlexBoxLayout header = createHeader(VaadinIcon.EDIT, "Logs");
 
         Tabs tabs = new Tabs();
         for (String label : new String[] { "All", "Transfer", "Security",
@@ -183,7 +268,7 @@ public class Statistics extends ViewFrame {
             tabs.add(new Tab(label));
         }
 
-        FlexBoxLayout items = new FlexBoxLayout(
+        Div items = new Div(
                 new ListItem(
                         UIUtils.createIcon(IconSize.M, TextColor.TERTIARY,
                                 VaadinIcon.EXCHANGE),
@@ -194,18 +279,17 @@ public class Statistics extends ViewFrame {
                                 VaadinIcon.SHIELD),
                         "Security Log", "Updated 16:31 CET",
                         createInfoButton()));
-        items.setFlexDirection(FlexDirection.COLUMN);
-        items.setMargin(Vertical.S);
+        items.addClassNames(LumoStyles.Padding.Vertical.S);
 
-        FlexBoxLayout card = new FlexBoxLayout(tabs, items);
-        card.setBackgroundColor(LumoStyles.Color.BASE_COLOR);
-        card.setBorderRadius(BorderRadius.S);
-        card.setFlexDirection(FlexDirection.COLUMN);
-        card.setShadow(Shadow.S);
+        Div card = new Div(tabs, items);
+        UIUtils.setBackgroundColor(LumoStyles.Color.BASE_COLOR, card);
+        UIUtils.setBorderRadius(BorderRadius.S, card);
+        UIUtils.setShadow(Shadow.S, card);
 
-        Div section = new Div(header, card);
-        section.addClassName(LumoStyles.Spacing.Bottom.L);
-        return section;
+        FlexBoxLayout logs = new FlexBoxLayout(header, card);
+        logs.setFlexDirection(FlexDirection.COLUMN);
+        logs.setPadding(Bottom.XL, Right.RESPONSIVE_L);
+        return logs;
     }
 
     private Button createInfoButton() {

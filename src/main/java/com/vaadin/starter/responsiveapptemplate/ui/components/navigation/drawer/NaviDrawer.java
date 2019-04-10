@@ -66,15 +66,15 @@ public class NaviDrawer extends Composite<Div>
 
     private void initScrim() {
         // Backdrop on small viewports
-        scrim = UIUtils
-                .createDiv(Collections.singleton(CLASS_NAME + "__scrim"));
+        scrim = new Div();
+        scrim.addClassName(CLASS_NAME + "__scrim");
         scrim.addClickListener(event -> close());
         getContent().add(scrim);
     }
 
     private void initMainContent() {
-        mainContent = UIUtils
-                .createDiv(Collections.singleton(CLASS_NAME + "__content"));
+        mainContent = new Div();
+        mainContent.addClassName(CLASS_NAME + "__content");
         getContent().add(mainContent);
     }
 
@@ -91,15 +91,14 @@ public class NaviDrawer extends Composite<Div>
     }
 
     private void initScrollableArea() {
-        scrollableArea = UIUtils
-                .createDiv(Collections.singleton(CLASS_NAME + "__scroll-area"));
+        scrollableArea = new Div();
+        scrollableArea.addClassName(CLASS_NAME + "__scroll-area");
         mainContent.add(scrollableArea);
     }
 
     private void initMenu() {
         menu = new NaviMenu();
         scrollableArea.add(menu);
-
     }
 
     private void initFooter() {
