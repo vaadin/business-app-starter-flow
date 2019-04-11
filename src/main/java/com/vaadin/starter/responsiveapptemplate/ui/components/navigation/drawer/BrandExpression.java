@@ -3,6 +3,7 @@ package com.vaadin.starter.responsiveapptemplate.ui.components.navigation.drawer
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Image;
+import com.vaadin.flow.component.html.Label;
 import com.vaadin.starter.responsiveapptemplate.ui.util.UIUtils;
 
 public class BrandExpression extends Composite<Div> {
@@ -10,21 +11,18 @@ public class BrandExpression extends Composite<Div> {
     private String CLASS_NAME = "brand-expression";
 
     private Image logo;
-    private Image railLogo;
+    private Label title;
 
-    public BrandExpression() {
+    public BrandExpression(String text) {
         getContent().setClassName(CLASS_NAME);
 
-        logo = new Image();
+        logo = new Image(UIUtils.IMG_PATH + "logo-18.png", "");
         logo.addClassName(CLASS_NAME + "__logo");
 
-        railLogo = new Image();
-        railLogo.addClassName(CLASS_NAME + "__rail-logo");
+        title = UIUtils.createH3Label(text);
+        title.addClassName(CLASS_NAME + "__title");
 
-        logo.setSrc(UIUtils.IMG_PATH + "logo.svg");
-        railLogo.setSrc(UIUtils.IMG_PATH + "logo-only.svg");
-
-        getContent().add(logo, railLogo);
+        getContent().add(logo, title);
     }
 
 }

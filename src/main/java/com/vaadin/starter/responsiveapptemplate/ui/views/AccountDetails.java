@@ -57,6 +57,8 @@ public class AccountDetails extends ViewFrame implements HasUrlParameter<Long> {
         BankAccount account = DummyData.getBankAccount(id);
         UI.getCurrent().getPage().setTitle(account.getOwner());
 
+        MainLayout.get().getAppBar().setTitle(account.getOwner());
+
         availability.setPrimaryText(
                 UIUtils.formatAmount(account.getAvailability()));
         bankAccount.setPrimaryText(account.getAccount());

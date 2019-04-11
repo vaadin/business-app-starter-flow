@@ -79,7 +79,7 @@ public class NaviDrawer extends Composite<Div>
     }
 
     private void initHeader() {
-        mainContent.add(new BrandExpression());
+        mainContent.add(new BrandExpression("Arturrifinance"));
     }
 
     private void initSearch() {
