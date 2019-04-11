@@ -17,6 +17,8 @@ import com.vaadin.starter.responsiveapptemplate.ui.util.LumoStyles;
 import com.vaadin.starter.responsiveapptemplate.ui.util.UIUtils;
 import com.vaadin.starter.responsiveapptemplate.ui.views.Home;
 
+import static com.vaadin.starter.responsiveapptemplate.ui.util.UIUtils.IMG_PATH;
+
 public class TabBar extends Composite<FlexLayout> {
 
     private final String CLASS_NAME = "tab-bar";
@@ -40,8 +42,7 @@ public class TabBar extends Composite<FlexLayout> {
 
         avatar = new Image();
         avatar.setClassName(CLASS_NAME + "__avatar");
-        avatar.setSrc(
-                "https://pbs.twimg.com/profile_images/2642704545/a77c0524766c6f3b4be4929f2005e627_400x400.png");
+        avatar.setSrc(IMG_PATH + "avatar.png");
 
         ContextMenu contextMenu = new ContextMenu(avatar);
         contextMenu.setOpenOnClick(true);
