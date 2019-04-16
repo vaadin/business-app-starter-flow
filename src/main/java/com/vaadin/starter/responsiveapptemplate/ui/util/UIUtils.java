@@ -1,5 +1,10 @@
 package com.vaadin.starter.responsiveapptemplate.ui.util;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
@@ -17,16 +22,17 @@ import com.vaadin.starter.responsiveapptemplate.backend.Address;
 import com.vaadin.starter.responsiveapptemplate.backend.DummyData;
 import com.vaadin.starter.responsiveapptemplate.ui.components.FlexBoxLayout;
 import com.vaadin.starter.responsiveapptemplate.ui.layout.size.Right;
-import com.vaadin.starter.responsiveapptemplate.ui.util.css.*;
-
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import com.vaadin.starter.responsiveapptemplate.ui.util.css.AlignSelf;
+import com.vaadin.starter.responsiveapptemplate.ui.util.css.BorderRadius;
+import com.vaadin.starter.responsiveapptemplate.ui.util.css.BoxSizing;
+import com.vaadin.starter.responsiveapptemplate.ui.util.css.Overflow;
+import com.vaadin.starter.responsiveapptemplate.ui.util.css.Shadow;
+import com.vaadin.starter.responsiveapptemplate.ui.util.css.TextAlign;
+import com.vaadin.starter.responsiveapptemplate.ui.util.css.WhiteSpace;
 
 public class UIUtils {
 
-    public static final String IMG_PATH = "frontend/styles/images/";
+    public static final String IMG_PATH = "images/";
 
     public static final String COLUMN_WIDTH_XS = "80px";
     public static final String COLUMN_WIDTH_S = "120px";
@@ -464,8 +470,7 @@ public class UIUtils {
 
     public static void setMaxWidth(String value, Component... components) {
         for (Component component : components) {
-            component.getElement().getStyle().set("max-width",
-                    value);
+            component.getElement().getStyle().set("max-width", value);
         }
     }
 
@@ -513,8 +518,7 @@ public class UIUtils {
 
     public static void setWidth(String value, Component... components) {
         for (Component component : components) {
-            component.getElement().getStyle().set("width",
-                    value);
+            component.getElement().getStyle().set("width", value);
         }
     }
 

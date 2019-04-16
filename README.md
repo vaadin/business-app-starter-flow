@@ -10,7 +10,7 @@ Note that when running in development mode, the application will not work in IE1
 
 # Running the Project in Production Mode
 
-`mvn jetty:run -Dvaadin.productionMode`
+`mvn jetty:run-exploded -Dvaadin.productionMode`
 
 The default mode when the application is built or started is 'development'. The 'production' mode is turned on by setting the `vaadin.productionMode` system property when building or starting the app.
 
