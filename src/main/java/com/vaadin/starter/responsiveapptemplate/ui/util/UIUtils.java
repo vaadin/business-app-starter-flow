@@ -456,6 +456,12 @@ public class UIUtils {
         }
     }
 
+    public static void setFontWeight(FontWeight fontWeight, Component... components) {
+        for (Component component : components) {
+            component.getElement().getStyle().set("font-weight", fontWeight.getValue());
+        }
+    }
+
     public static void setMaxWidth(String value, Component... components) {
         for (Component component : components) {
             component.getElement().getStyle().set("max-width",
