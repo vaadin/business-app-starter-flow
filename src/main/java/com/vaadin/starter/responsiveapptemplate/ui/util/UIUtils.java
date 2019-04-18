@@ -250,6 +250,12 @@ public class UIUtils {
         return createLabel(FontSize.M, color, text);
     }
 
+    public static Label createH1Label(String text) {
+        Label label = new Label(text);
+        label.addClassName(LumoStyles.Header.H1);
+        return label;
+    }
+
     public static Label createH2Label(String text) {
         Label label = new Label(text);
         label.addClassName(LumoStyles.Header.H2);
