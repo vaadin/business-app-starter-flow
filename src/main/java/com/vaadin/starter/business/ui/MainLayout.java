@@ -16,6 +16,7 @@ import com.vaadin.flow.router.AfterNavigationObserver;
 import com.vaadin.flow.router.RouterLayout;
 import com.vaadin.flow.server.ErrorHandler;
 import com.vaadin.flow.server.InitialPageSettings;
+import com.vaadin.flow.server.PWA;
 import com.vaadin.flow.server.PageConfigurator;
 import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.starter.business.ui.components.FlexBoxLayout;
@@ -36,6 +37,7 @@ import com.vaadin.starter.business.ui.views.personnel.Managers;
 
 @HtmlImport("frontend://styles/shared-styles.html")
 @Viewport("width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes")
+@PWA(name = "###Project Name###", shortName = "###Project Name###", iconPath = "images/logo-18.png", backgroundColor = "#233348", themeColor = "#233348")
 public class MainLayout extends FlexBoxLayout
         implements RouterLayout, PageConfigurator, AfterNavigationObserver {
 
