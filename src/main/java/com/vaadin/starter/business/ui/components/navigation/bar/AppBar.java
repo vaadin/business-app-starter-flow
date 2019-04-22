@@ -68,10 +68,8 @@ public class AppBar extends Composite<FlexLayout> {
 
     public void setNaviMode(NaviMode mode) {
         if (mode.equals(NaviMode.MENU)) {
-            menuIcon.setVisible(true);
             contextIcon.setVisible(false);
         } else {
-            menuIcon.setVisible(false);
             contextIcon.setVisible(true);
         }
     }
@@ -316,6 +314,7 @@ public class AppBar extends Composite<FlexLayout> {
     /* === RESET === */
 
     public void reset() {
+        title.setText("");
         setNaviMode(AppBar.NaviMode.MENU);
         removeAllActionItems();
         removeAllTabs();

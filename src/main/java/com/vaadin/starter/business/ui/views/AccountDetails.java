@@ -52,20 +52,15 @@ public class AccountDetails extends ViewFrame implements HasUrlParameter<Long> {
     private ListItem bankAccount;
     private ListItem updated;
 
+    private BankAccount account;
+
     @Override
     protected void onAttach(AttachEvent attachEvent) {
         super.onAttach(attachEvent);
-        initAppBar();
-    }
+        AppBar appBar = initAppBar();
 
-    @Override
-    public void setParameter(BeforeEvent beforeEvent, Long id) {
-        setViewContent(createContent());
-        BankAccount account = DummyData.getBankAccount(id);
+        appBar.setTitle(account.getOwner());
         UI.getCurrent().getPage().setTitle(account.getOwner());
-
-        MainLayout.get().getAppBar().setTitle(account.getOwner());
-
         availability.setPrimaryText(
                 UIUtils.formatAmount(account.getAvailability()));
         bankAccount.setPrimaryText(account.getAccount());
@@ -73,11 +68,19 @@ public class AccountDetails extends ViewFrame implements HasUrlParameter<Long> {
         updated.setPrimaryText(UIUtils.formatDate(account.getUpdated()));
     }
 
-    private void initAppBar() {
+    @Override
+    public void setParameter(BeforeEvent beforeEvent, Long id) {
+        setViewContent(createContent());
+        account = DummyData.getBankAccount(id);
+
+    }
+
+    private AppBar initAppBar() {
         AppBar appBar = MainLayout.get().getAppBar();
         appBar.setNaviMode(AppBar.NaviMode.CONTEXTUAL);
         appBar.getContextIcon().addClickListener(
                 e -> UI.getCurrent().navigate(Accounts.class));
+        return appBar;
     }
 
     private Component createContent() {
@@ -145,7 +148,8 @@ public class AccountDetails extends ViewFrame implements HasUrlParameter<Long> {
 
     private Component createRecentTransactionsList() {
         Div items = new Div();
-        items.addClassNames(BoxShadowBorders.BOTTOM, LumoStyles.Padding.Bottom.L);
+        items.addClassNames(BoxShadowBorders.BOTTOM,
+                LumoStyles.Padding.Bottom.L);
 
         for (int i = 0; i < RECENT_TRANSACTIONS; i++) {
             Double amount = DummyData.getAmount();
