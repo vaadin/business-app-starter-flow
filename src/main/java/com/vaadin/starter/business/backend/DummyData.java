@@ -555,7 +555,9 @@ public class DummyData {
     }
 
     public static Image getLogo() {
-        return new Image(getImageSource(), "");
+        Image image = new Image(getImageSource(), "");
+        image.setAlt("Company logo");
+        return image;
     }
 
     public static String getImageSource() {
