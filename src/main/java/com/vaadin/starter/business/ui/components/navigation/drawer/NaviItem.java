@@ -76,8 +76,8 @@ public class NaviItem extends Div {
         expandCollapse.addClickListener(
                 event -> setSubItemsVisible(!subItemsVisible));
         add(expandCollapse);
-
         subItemsVisible = true;
+        updateAriaLabel();
         subItems = new ArrayList<>();
 
         setLevel(0);
@@ -147,6 +147,18 @@ public class NaviItem extends Div {
         }
         subItems.forEach(item -> item.setVisible(visible));
         subItemsVisible = visible;
+        updateAriaLabel();
+    }
+
+
+    private void updateAriaLabel(){
+        String action;
+        if(subItemsVisible) {
+            action = "Collapse " + text;
+        } else {
+            action = "Expand " + text;
+        }
+        expandCollapse.getElement().setAttribute("aria-label", action);
     }
 
     public boolean hasSubItems() {
