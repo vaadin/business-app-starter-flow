@@ -104,6 +104,7 @@ public class NaviDrawer extends Composite<Div>
                 VaadinIcon.CHEVRON_LEFT_SMALL);
         railButton.addClassName(CLASS_NAME + "__footer");
         railButton.addClickListener(event -> toggleRailMode());
+        railButton.getElement().setAttribute("aria-label", "Collapse menu");
         mainContent.add(railButton);
     }
 
@@ -112,10 +113,12 @@ public class NaviDrawer extends Composite<Div>
             getElement().setAttribute(RAIL, false);
             railButton.setIcon(new Icon(VaadinIcon.CHEVRON_LEFT_SMALL));
             railButton.setText("Collapse");
+            railButton.getElement().setAttribute("aria-label", "Collapse menu");
         } else {
             getElement().setAttribute(RAIL, true);
             railButton.setIcon(new Icon(VaadinIcon.CHEVRON_RIGHT_SMALL));
             railButton.setText("Expand");
+            railButton.getElement().setAttribute("aria-label", "Expand menu");
             getUI().get().getPage().executeJavaScript(
                     "var originalStyle = getComputedStyle($0).pointerEvents;" //
                             + "$0.style.pointerEvents='none';" //
