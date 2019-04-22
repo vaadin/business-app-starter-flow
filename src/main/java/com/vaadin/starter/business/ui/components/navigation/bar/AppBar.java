@@ -311,6 +311,7 @@ public class AppBar extends Composite<FlexLayout> {
     /* === RESET === */
 
     public void reset() {
+        title.setText("");
         setNaviMode(AppBar.NaviMode.MENU);
         removeAllActionItems();
         removeAllTabs();
