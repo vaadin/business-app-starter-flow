@@ -137,7 +137,6 @@ public class MainLayout extends FlexBoxLayout
 
         if (navigationTabs) {
             appBar.getAvatar().setVisible(false);
-            appBar.getMenuIcon().setVisible(false);
             tabBar = new TabBar();
             for (NaviItem item : naviDrawer.getMenu().getNaviItems()) {
                 item.addClickListener(e -> {
@@ -251,6 +250,7 @@ public class MainLayout extends FlexBoxLayout
                         active.getNavigationTarget());
             }
         }
+        appBar.getMenuIcon().setVisible(false);
     }
 
     private NaviItem getActiveItem(AfterNavigationEvent e) {
