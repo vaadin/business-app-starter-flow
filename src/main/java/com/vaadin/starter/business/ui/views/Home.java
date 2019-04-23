@@ -14,6 +14,7 @@ import com.vaadin.starter.business.ui.layout.size.Vertical;
 public class Home extends ViewFrame {
 
     public Home() {
+        setId("home");
         setViewContent(createContent());
     }
 

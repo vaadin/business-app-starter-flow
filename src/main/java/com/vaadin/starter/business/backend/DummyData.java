@@ -21,7 +21,7 @@ public class DummyData {
     private static final Map<Long, Order> ORDERS = new HashMap<>();
     private static final Map<Long, Invoice> INVOICES = new HashMap<>();
 
-    private static final Random random = new Random();
+    private static final Random random = new Random(1);
 
     private static final String[] IBANS = new String[] {
             "AD12 0001 2030 2003 5910 0100", "AE07 0331 2345 6789 0123 456",

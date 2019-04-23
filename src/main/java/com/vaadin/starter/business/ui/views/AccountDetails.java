@@ -104,12 +104,14 @@ public class AccountDetails extends ViewFrame implements HasUrlParameter<Long> {
         availability = new ListItem(
                 UIUtils.createTertiaryIcon(VaadinIcon.DOLLAR), "",
                 "Availability");
+        availability.setId("availability");
         availability.getPrimary().addClassName(LumoStyles.Header.H2);
         availability.setDividerVisible(true);
         availability.setReverse(true);
 
         bankAccount = new ListItem(
                 UIUtils.createTertiaryIcon(VaadinIcon.INSTITUTION), "", "");
+        bankAccount.setId("bankAccount");
         bankAccount.setDividerVisible(true);
         bankAccount.setReverse(true);
         bankAccount.setWhiteSpace(WhiteSpace.PRE_LINE);
