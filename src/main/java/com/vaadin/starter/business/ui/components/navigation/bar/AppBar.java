@@ -68,8 +68,10 @@ public class AppBar extends Composite<FlexLayout> {
 
     public void setNaviMode(NaviMode mode) {
         if (mode.equals(NaviMode.MENU)) {
+            menuIcon.setVisible(true);
             contextIcon.setVisible(false);
         } else {
+            menuIcon.setVisible(false);
             contextIcon.setVisible(true);
         }
     }
@@ -79,7 +81,7 @@ public class AppBar extends Composite<FlexLayout> {
         menuIcon.removeThemeVariants(ButtonVariant.LUMO_ICON);
         menuIcon.addClassName(CLASS_NAME + "__navi-icon");
         menuIcon.addClickListener(e -> MainLayout.get().getNaviDrawer().toggle());
-        menuIcon.getElement().setAttribute("aria-label", "Menu");
+        UIUtils.setAriaLabel("Menu", menuIcon);
     }
 
     private void initContextIcon() {
@@ -88,7 +90,7 @@ public class AppBar extends Composite<FlexLayout> {
         contextIcon.removeThemeVariants(ButtonVariant.LUMO_ICON);
         contextIcon.addClassNames(CLASS_NAME + "__context-icon");
         contextIcon.setVisible(false);
-        contextIcon.getElement().setAttribute("aria-label", "Back");
+        UIUtils.setAriaLabel("Back", contextIcon);
     }
 
     private void initTitle(String title) {

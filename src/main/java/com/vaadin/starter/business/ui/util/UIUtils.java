@@ -527,4 +527,13 @@ public class UIUtils {
         }
     }
 
+
+    /* === ACCESSIBILITY === */
+
+    public static void setAriaLabel(String value, Component... components) {
+        for (Component component : components) {
+            component.getElement().setAttribute("aria-label", value);
+        }
+    }
+
 }

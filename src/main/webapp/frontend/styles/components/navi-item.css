@@ -13,7 +13,6 @@
   font-size: var(--lumo-font-size-xs);
   font-weight: normal;
   height: var(--lumo-size-m);
-
 }
 
 .navi-item[level="1"] label {
@@ -64,9 +63,7 @@
 }
 
 /* Link icon */
-.navi-item__link iron-icon,
-.navi-item__link img,
-.navi-item__link svg {
+.navi-item__link iron-icon {
   height: var(--lumo-icon-size-s);
   flex-shrink: 0;
   margin: 0 var(--lumo-space-l) 0 0;
@@ -76,10 +73,6 @@
 
 .navi-item__link > div:first-child {
   display: flex;
-}
-
-.navi-item__link path {
-  fill: var(--lumo-secondary-text-color);
 }
 
 /* Link label */

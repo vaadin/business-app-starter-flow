@@ -12,7 +12,7 @@ public class NaviMenu extends Div {
     private static final String CLASS_NAME = "navi-menu";
 
     public NaviMenu() {
-        setClassName(CLASS_NAME + "__list");
+        setClassName(CLASS_NAME);
     }
 
     protected void addNaviItem(NaviItem item) {

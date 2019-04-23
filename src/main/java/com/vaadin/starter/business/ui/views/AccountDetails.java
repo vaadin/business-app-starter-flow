@@ -57,10 +57,11 @@ public class AccountDetails extends ViewFrame implements HasUrlParameter<Long> {
     @Override
     protected void onAttach(AttachEvent attachEvent) {
         super.onAttach(attachEvent);
-        AppBar appBar = initAppBar();
 
+        AppBar appBar = initAppBar();
         appBar.setTitle(account.getOwner());
         UI.getCurrent().getPage().setTitle(account.getOwner());
+
         availability.setPrimaryText(
                 UIUtils.formatAmount(account.getAvailability()));
         bankAccount.setPrimaryText(account.getAccount());
@@ -72,7 +73,6 @@ public class AccountDetails extends ViewFrame implements HasUrlParameter<Long> {
     public void setParameter(BeforeEvent beforeEvent, Long id) {
         setViewContent(createContent());
         account = DummyData.getBankAccount(id);
-
     }
 
     private AppBar initAppBar() {

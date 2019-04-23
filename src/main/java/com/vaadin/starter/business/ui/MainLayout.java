@@ -160,7 +160,6 @@ public class MainLayout extends FlexBoxLayout
             appHeaderOuter.addClassName("app-header-outer");
             getElement().insertChild(0, appHeaderOuter.getElement());
         }
-
         appHeaderOuter.removeAll();
         appHeaderOuter.add(components);
     }
@@ -171,7 +170,6 @@ public class MainLayout extends FlexBoxLayout
             appHeaderInner.addClassName("app-header-inner");
             column.getElement().insertChild(0, appHeaderInner.getElement());
         }
-
         appHeaderInner.removeAll();
         appHeaderInner.add(components);
     }
@@ -233,7 +231,6 @@ public class MainLayout extends FlexBoxLayout
         } else {
             afterNavigationWithoutTabs(event);
         }
-
     }
 
     private void afterNavigationWithTabs(AfterNavigationEvent e) {
@@ -259,7 +256,6 @@ public class MainLayout extends FlexBoxLayout
                 return item;
             }
         }
-
         return null;
     }
 
