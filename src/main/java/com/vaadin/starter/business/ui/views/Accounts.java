@@ -41,6 +41,7 @@ public class Accounts extends ViewFrame implements RouterLayout {
 
     private Grid createGrid() {
         grid = new Grid<>();
+        grid.setId("accounts");
         grid.addSelectionListener(event -> event.getFirstSelectedItem()
                 .ifPresent(this::viewDetails));
         grid.setDataProvider(
@@ -56,9 +57,8 @@ public class Accounts extends ViewFrame implements RouterLayout {
         grid.addColumn(BankAccount::getOwner).setHeader("Owner")
                 .setWidth(UIUtils.COLUMN_WIDTH_XL).setResizable(true);
         grid.addColumn(new ComponentRenderer<>(this::createAvailability))
-                .setFlexGrow(0).setHeader("Availability ($)")
-                .setWidth("130px").setResizable(true)
-                .setTextAlign(ColumnTextAlign.END);
+                .setFlexGrow(0).setHeader("Availability ($)").setWidth("130px")
+                .setResizable(true).setTextAlign(ColumnTextAlign.END);
         grid.addColumn(new LocalDateRenderer<>(BankAccount::getUpdated,
                 DateTimeFormatter.ofPattern("MMM dd, YYYY")))
                 .setComparator(BankAccount::getUpdated).setFlexGrow(0)
