@@ -204,6 +204,7 @@ public class UIUtils {
     public static Button createButton(String text, ButtonVariant... variants) {
         Button button = new Button(text);
         button.addThemeVariants(variants);
+        button.getElement().setAttribute("aria-label", text);
         return button;
     }
 
