@@ -253,37 +253,37 @@ public class UIUtils {
 
     public static Label createH1Label(String text) {
         Label label = new Label(text);
-        label.addClassName(LumoStyles.Header.H1);
+        label.addClassName(LumoStyles.Heading.H1);
         return label;
     }
 
     public static Label createH2Label(String text) {
         Label label = new Label(text);
-        label.addClassName(LumoStyles.Header.H2);
+        label.addClassName(LumoStyles.Heading.H2);
         return label;
     }
 
     public static Label createH3Label(String text) {
         Label label = new Label(text);
-        label.addClassName(LumoStyles.Header.H3);
+        label.addClassName(LumoStyles.Heading.H3);
         return label;
     }
 
     public static Label createH4Label(String text) {
         Label label = new Label(text);
-        label.addClassName(LumoStyles.Header.H4);
+        label.addClassName(LumoStyles.Heading.H4);
         return label;
     }
 
     public static Label createH5Label(String text) {
         Label label = new Label(text);
-        label.addClassName(LumoStyles.Header.H5);
+        label.addClassName(LumoStyles.Heading.H5);
         return label;
     }
 
     public static Label createH6Label(String text) {
         Label label = new Label(text);
-        label.addClassName(LumoStyles.Header.H6);
+        label.addClassName(LumoStyles.Heading.H6);
         return label;
     }
 

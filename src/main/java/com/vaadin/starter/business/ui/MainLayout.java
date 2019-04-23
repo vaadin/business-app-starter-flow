@@ -1,5 +1,9 @@
 package com.vaadin.starter.business.ui;
 
+import com.vaadin.flow.component.html.Label;
+import com.vaadin.starter.business.ui.util.FontSize;
+import com.vaadin.starter.business.ui.util.FontWeight;
+import com.vaadin.starter.business.ui.util.UIUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

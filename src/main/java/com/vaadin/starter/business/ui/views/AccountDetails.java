@@ -105,7 +105,7 @@ public class AccountDetails extends ViewFrame implements HasUrlParameter<Long> {
                 UIUtils.createTertiaryIcon(VaadinIcon.DOLLAR), "",
                 "Availability");
         availability.setId("availability");
-        availability.getPrimary().addClassName(LumoStyles.Header.H2);
+        availability.getPrimary().addClassName(LumoStyles.Heading.H2);
         availability.setDividerVisible(true);
         availability.setReverse(true);
 

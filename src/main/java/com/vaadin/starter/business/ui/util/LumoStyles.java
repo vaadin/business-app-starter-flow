@@ -80,11 +80,7 @@ public class LumoStyles {
         public static final String MONOSPACE = "monospace";
     }
 
-    public class FontWeight {
-        public static final String MEDIUM = "font-weight-medium";
-    }
-
-    public class Header {
+    public class Heading {
         public static final String H1 = "h1";
         public static final String H2 = "h2";
         public static final String H3 = "h3";
