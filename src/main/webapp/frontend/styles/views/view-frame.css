@@ -20,7 +20,7 @@
   overflow-x: hidden;
   overflow-y: auto;
   position: relative;
-  -webkit-overflow-scrolling: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .view-frame__footer {
