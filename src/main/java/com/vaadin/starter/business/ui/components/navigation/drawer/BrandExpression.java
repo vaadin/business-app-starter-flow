@@ -18,6 +18,7 @@ public class BrandExpression extends Composite<Div> {
 
         logo = new Image(UIUtils.IMG_PATH + "logo-18.png", "");
         logo.addClassName(CLASS_NAME + "__logo");
+        logo.setAlt(text + " logo");
 
         title = UIUtils.createH3Label(text);
         title.addClassName(CLASS_NAME + "__title");

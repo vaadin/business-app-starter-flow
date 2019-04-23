@@ -79,6 +79,7 @@ public class AppBar extends Composite<FlexLayout> {
         menuIcon.removeThemeVariants(ButtonVariant.LUMO_ICON);
         menuIcon.addClassName(CLASS_NAME + "__navi-icon");
         menuIcon.addClickListener(e -> MainLayout.get().getNaviDrawer().toggle());
+        menuIcon.getElement().setAttribute("aria-label", "Menu");
     }
 
     private void initContextIcon() {
@@ -87,6 +88,7 @@ public class AppBar extends Composite<FlexLayout> {
         contextIcon.removeThemeVariants(ButtonVariant.LUMO_ICON);
         contextIcon.addClassNames(CLASS_NAME + "__context-icon");
         contextIcon.setVisible(false);
+        contextIcon.getElement().setAttribute("aria-label", "Back");
     }
 
     private void initTitle(String title) {
@@ -105,6 +107,7 @@ public class AppBar extends Composite<FlexLayout> {
         avatar = new Image();
         avatar.setClassName(CLASS_NAME + "__avatar");
         avatar.setSrc(IMG_PATH + "avatar.png");
+        avatar.setAlt("User menu");
 
         ContextMenu contextMenu = new ContextMenu(avatar);
         contextMenu.setOpenOnClick(true);
