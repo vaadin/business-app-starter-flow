@@ -57,7 +57,7 @@ public class MainLayout extends FlexBoxLayout
     private Div appFooterOuter;
 
     private TabBar tabBar;
-    private boolean navigationTabs = false;
+    private boolean navigationTabs = true;
     private AppBar appBar;
 
     public MainLayout() {
