@@ -85,6 +85,7 @@ public class NaviDrawer extends Composite<Div>
         search.setPlaceholder("Search");
         search.setPrefixComponent(new Icon(VaadinIcon.SEARCH));
         search.addValueChangeListener(e -> menu.filter(search.getValue()));
+        search.setClearButtonVisible(true);
         mainContent.add(search);
     }
 
