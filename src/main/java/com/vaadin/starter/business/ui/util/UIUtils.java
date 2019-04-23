@@ -306,25 +306,11 @@ public class UIUtils {
                 + address.getCity() + " " + address.getZip();
     }
 
-    public static Label createAmountLabel(double amount) {
-        Label label = createH5Label(formatAmount(amount));
-        label.addClassName(LumoStyles.FontFamily.MONOSPACE);
-        return label;
-    }
-
-    public static Label createUnitsLabel(int units) {
-        Label label = new Label(formatUnits(units));
-        label.addClassName(LumoStyles.FontFamily.MONOSPACE);
-        return label;
-    }
-
     public static Button createFloatingActionButton(VaadinIcon icon) {
         Button button = createPrimaryButton(icon);
         button.addThemeName("fab");
         return button;
     }
-
-    /* === FORMLAYOUT === */
 
     public static FlexLayout createPhoneLayout() {
         TextField prefix = new TextField();
@@ -350,11 +336,21 @@ public class UIUtils {
         return decimalFormat.get().format(amount);
     }
 
+    public static Label createAmountLabel(double amount) {
+        Label label = createH5Label(formatAmount(amount));
+        label.addClassName(LumoStyles.FontFamily.MONOSPACE);
+        return label;
+    }
+
     public static String formatUnits(int units) {
         return NumberFormat.getIntegerInstance().format(units);
     }
 
-    /* === BADGES === */
+    public static Label createUnitsLabel(int units) {
+        Label label = new Label(formatUnits(units));
+        label.addClassName(LumoStyles.FontFamily.MONOSPACE);
+        return label;
+    }
 
     /* === ICONS === */
 

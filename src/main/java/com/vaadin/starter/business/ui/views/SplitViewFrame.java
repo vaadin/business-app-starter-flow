@@ -10,11 +10,12 @@ import com.vaadin.starter.business.ui.components.FlexBoxLayout;
 import com.vaadin.starter.business.ui.util.css.FlexDirection;
 
 /**
- * A view frame that establishes app design guidelines. It consists of three
+ * A view frame that establishes app design guidelines. It consists of four
  * parts:
  * <ul>
  * <li>Topmost {@link #setViewHeader(Component...) header}</li>
  * <li>Center {@link #setViewContent(Component...) content}</li>
+ * <li>Center {@link #setViewDetails(Component...) details}</li>
  * <li>Bottom {@link #setViewFooter(Component...) footer}</li>
  * </ul>
  */
@@ -62,7 +63,7 @@ public class SplitViewFrame extends Composite<Div> implements HasStyle {
     }
 
     /**
-     * Sets the content slot's components.
+     * Sets the detail slot's components.
      */
     public void setViewDetails(Component... components) {
         details.removeAll();
