@@ -2,23 +2,26 @@ package com.vaadin.starter.business.ui.util;
 
 public enum TextColor {
 
-    HEADER("header-text"), BODY("body-text"), SECONDARY(
-            "secondary-text"), TERTIARY("tertiary-text"), DISABLED(
-                    "disabled-text"), PRIMARY("primary-text"), PRIMARY_CONTRAST(
-                            "primary-contrast-text"), ERROR(
-                                    "error-text"), ERROR_CONTRAST(
-                                            "error-contrast-text"), SUCCESS(
-                                                    "success-text"), SUCCESS_CONTRAST(
-                                                            "success-contrast-text");
+    HEADER("var(--lumo-header-text-color)"),
+    BODY("var(--lumo-body-text-color)"),
+    SECONDARY("var(--lumo-secondary-text-color)"),
+    TERTIARY("var(--lumo-tertiary-text-color)"),
+    DISABLED("var(--lumo-disabled-text-color)"),
+    PRIMARY("var(--lumo-primary-text-color)"),
+    PRIMARY_CONTRAST("var(--lumo-primary-contrast-color)"),
+    ERROR("var(--lumo-error-text-color)"),
+    ERROR_CONTRAST("var(--lumo-error-contrast-color)"),
+    SUCCESS("var(--lumo-success-text-color)"),
+    SUCCESS_CONTRAST("var(--lumo-success-contrast-color)");
 
-    private String style;
+    private String value;
 
-    TextColor(String style) {
-        this.style = style;
+    TextColor(String value) {
+        this.value = value;
     }
 
-    public String getClassName() {
-        return style;
+    public String getValue() {
+        return value;
     }
 
 }

@@ -239,7 +239,8 @@ public class UIUtils {
     public static Label createLabel(FontSize size, TextColor color,
             String text) {
         Label label = new Label(text);
-        label.addClassNames(size.getClassName(), color.getClassName());
+        setFontSize(size, label);
+        setTextColor(color, label);
         return label;
     }
 
@@ -291,7 +292,8 @@ public class UIUtils {
 
     public static Component createInitials(String initials) {
         FlexBoxLayout layout = new FlexBoxLayout(new Text(initials));
-        layout.addClassNames("initials", FontSize.S.getClassName());
+        setFontSize(FontSize.S, layout);
+        layout.addClassName("initials");
 
         layout.setAlignItems(FlexComponent.Alignment.CENTER);
         layout.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
@@ -357,37 +359,37 @@ public class UIUtils {
 
     public static Icon createPrimaryIcon(VaadinIcon icon) {
         Icon i = new Icon(icon);
-        i.addClassName(TextColor.PRIMARY.getClassName());
+        setTextColor(TextColor.PRIMARY, i);
         return i;
     }
 
     public static Icon createSecondaryIcon(VaadinIcon icon) {
         Icon i = new Icon(icon);
-        i.addClassName(TextColor.SECONDARY.getClassName());
+        setTextColor(TextColor.SECONDARY, i);
         return i;
     }
 
     public static Icon createTertiaryIcon(VaadinIcon icon) {
         Icon i = new Icon(icon);
-        i.addClassName(TextColor.TERTIARY.getClassName());
+        setTextColor(TextColor.TERTIARY, i);
         return i;
     }
 
     public static Icon createDisabledIcon(VaadinIcon icon) {
         Icon i = new Icon(icon);
-        i.addClassName(TextColor.DISABLED.getClassName());
+        setTextColor(TextColor.DISABLED, i);
         return i;
     }
 
     public static Icon createSuccessIcon(VaadinIcon icon) {
         Icon i = new Icon(icon);
-        i.addClassName(TextColor.SUCCESS.getClassName());
+        setTextColor(TextColor.SUCCESS, i);
         return i;
     }
 
     public static Icon createErrorIcon(VaadinIcon icon) {
         Icon i = new Icon(icon);
-        i.addClassName(TextColor.ERROR.getClassName());
+        setTextColor(TextColor.ERROR, i);
         return i;
     }
 
@@ -408,7 +410,8 @@ public class UIUtils {
     public static Icon createIcon(IconSize size, TextColor color,
             VaadinIcon icon) {
         Icon i = new Icon(icon);
-        i.addClassNames(size.getClassName(), color.getClassName());
+        i.addClassNames(size.getClassName());
+        setTextColor(color, i);
         return i;
     }
 
@@ -465,6 +468,14 @@ public class UIUtils {
         }
     }
 
+    public static void setFontSize(FontSize fontSize,
+                                     Component... components) {
+        for (Component component : components) {
+            component.getElement().getStyle().set("font-size",
+                    fontSize.getValue());
+        }
+    }
+
     public static void setFontWeight(FontWeight fontWeight,
             Component... components) {
         for (Component component : components) {
@@ -498,6 +509,12 @@ public class UIUtils {
         for (Component component : components) {
             component.getElement().getStyle().set("text-align",
                     textAlign.getValue());
+        }
+    }
+
+    public static void setTextColor(TextColor textColor, Component... components) {
+        for (Component component : components) {
+            component.getElement().getStyle().set("color", textColor.getValue());
         }
     }
 

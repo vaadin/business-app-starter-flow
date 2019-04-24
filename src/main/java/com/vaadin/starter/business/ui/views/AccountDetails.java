@@ -158,9 +158,9 @@ public class AccountDetails extends ViewFrame implements HasUrlParameter<Long> {
 
             Label amountLabel = UIUtils.createAmountLabel(amount);
             if (amount > 0) {
-                amountLabel.addClassName(TextColor.SUCCESS.getClassName());
+                UIUtils.setTextColor(TextColor.SUCCESS, amountLabel);
             } else {
-                amountLabel.addClassName(TextColor.ERROR.getClassName());
+                UIUtils.setTextColor(TextColor.ERROR, amountLabel);
             }
 
             ListItem item = new ListItem(DummyData.getLogo(),

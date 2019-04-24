@@ -80,9 +80,9 @@ public class Accounts extends ViewFrame implements RouterLayout {
         Label label = UIUtils.createAmountLabel(availability);
 
         if (availability > 0) {
-            label.addClassName(TextColor.SUCCESS.getClassName());
+            UIUtils.setTextColor(TextColor.SUCCESS, label);
         } else {
-            label.addClassName(TextColor.ERROR.getClassName());
+            UIUtils.setTextColor(TextColor.ERROR, label);
         }
 
         return label;
