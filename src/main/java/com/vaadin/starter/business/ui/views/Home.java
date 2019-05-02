@@ -30,7 +30,7 @@ public class Home extends ViewFrame {
                         "<p>The app comes with multiple list views to edit master-detail data. Views can be divided horizontally or vertically to open up the details, and the the details can also be split into multiple tabs for extra space. The details can also be opened fullscreen to maximize the use of space. Additionally there is an opt-in option for opening multiple application views in tabs within the app, for quick comparison or navigation between data. You enable this feature by setting MainLayout.navigationTabs to true.</p></span>");
 
 
-        Html documentationLink = new Html("<a href=\"https://vaadin.com/docs/businessapp/overview.html\">Read the documentation");
+        Html documentationLink = new Html("<a href=\"https://vaadin.com/docs/business-app/overview.html\">Read the documentation");
         Html separator = new Html("<span>&#124;</span>");
         Html starterLink = new Html("<a href=\"https://vaadin.com/start/latest/business-app\">Start a new project with Business App");
 
