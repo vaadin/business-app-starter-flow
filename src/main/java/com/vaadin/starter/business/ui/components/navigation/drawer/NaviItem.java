@@ -2,11 +2,9 @@ package com.vaadin.starter.business.ui.components.navigation.drawer;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.io.Charsets;
 import org.apache.commons.io.IOUtils;
 
 import com.vaadin.flow.component.Component;

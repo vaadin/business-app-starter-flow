@@ -5,6 +5,7 @@ import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.grid.ColumnTextAlign;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.tabs.Tab;
@@ -26,7 +27,9 @@ import com.vaadin.starter.business.ui.components.detailsdrawer.DetailsDrawerFoot
 import com.vaadin.starter.business.ui.components.detailsdrawer.DetailsDrawerHeader;
 import com.vaadin.starter.business.ui.components.navigation.bar.AppBar;
 import com.vaadin.starter.business.ui.layout.size.Bottom;
+import com.vaadin.starter.business.ui.util.FontSize;
 import com.vaadin.starter.business.ui.util.LumoStyles;
+import com.vaadin.starter.business.ui.util.TextColor;
 import com.vaadin.starter.business.ui.util.UIUtils;
 import com.vaadin.starter.business.ui.util.css.FlexDirection;
 import com.vaadin.starter.business.ui.util.css.WhiteSpace;
@@ -124,9 +127,22 @@ public class Payments extends SplitViewFrame {
         DetailsDrawerHeader detailsDrawerTitle = new DetailsDrawerHeader(
                 "Payment Details", true);
 
-        Tabs tabs = new Tabs(new Tab("Details"), new Tab("Attachments"),
-                new Tab("History"));
+        Tab details = new Tab("Details");
+        Tab attachments = new Tab("Attachments");
+        Tab history = new Tab("History");
+
+        Tabs tabs = new Tabs(details, attachments, history);
         tabs.addThemeVariants(TabsVariant.LUMO_EQUAL_WIDTH_TABS);
+        tabs.addSelectedChangeListener(e -> {
+            Tab selectedTab = tabs.getSelectedTab();
+            if (selectedTab.equals(details)) {
+                detailsDrawer.setContent(createDetails(grid.getSelectionModel().getFirstSelectedItem().get()));
+            } else if (selectedTab.equals(attachments)) {
+                detailsDrawer.setContent(createAttachments());
+            } else if (selectedTab.equals(history)) {
+                detailsDrawer.setContent(createHistory());
+            }
+        });
 
         detailsDrawer.setHeader(detailsDrawerTitle, tabs);
         detailsDrawer.getHeader().setFlexDirection(FlexDirection.COLUMN);
@@ -171,6 +187,18 @@ public class Payments extends SplitViewFrame {
         Div details = new Div(status, from, to, amount, date);
         details.addClassName(LumoStyles.Padding.Vertical.S);
         return details;
+    }
+
+    private Component createAttachments() {
+        Label message = UIUtils.createLabel(FontSize.S, TextColor.SECONDARY, "Not implemented yet.");
+        message.addClassNames(LumoStyles.Padding.Responsive.Horizontal.L, LumoStyles.Padding.Vertical.L);
+        return message;
+    }
+
+    private Component createHistory() {
+        Label message = UIUtils.createLabel(FontSize.S, TextColor.SECONDARY, "Not implemented yet.");
+        message.addClassNames(LumoStyles.Padding.Responsive.Horizontal.L, LumoStyles.Padding.Vertical.L);
+        return message;
     }
 
     private void filter() {
