@@ -123,6 +123,10 @@ public class Accountants extends SplitViewFrame {
 
         // Footer
         DetailsDrawerFooter footer = new DetailsDrawerFooter();
+        footer.addSaveListener(e -> {
+            detailsDrawer.hide();
+            UIUtils.showNotification("Changes saved.");
+        });
         footer.addCancelListener(e -> detailsDrawer.hide());
         detailsDrawer.setFooter(footer);
 

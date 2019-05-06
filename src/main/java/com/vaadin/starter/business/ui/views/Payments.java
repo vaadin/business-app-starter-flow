@@ -131,11 +131,6 @@ public class Payments extends SplitViewFrame {
         detailsDrawer.setHeader(detailsDrawerTitle, tabs);
         detailsDrawer.getHeader().setFlexDirection(FlexDirection.COLUMN);
 
-        // Footer
-        DetailsDrawerFooter footer = new DetailsDrawerFooter();
-        footer.addCancelListener(e -> detailsDrawer.hide());
-        detailsDrawer.setFooter(footer);
-
         return detailsDrawer;
     }
 
