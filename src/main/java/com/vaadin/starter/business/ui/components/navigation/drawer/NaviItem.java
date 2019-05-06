@@ -2,6 +2,7 @@ package com.vaadin.starter.business.ui.components.navigation.drawer;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -169,7 +170,7 @@ public class NaviItem extends Div {
         try (InputStream resourceAsStream = VaadinService.getCurrent()
                 .getResourceAsStream("frontend://" + path, FakeBrowser.getEs6(),
                         null)) {
-            return IOUtils.toString(resourceAsStream, Charsets.UTF_8);
+            return IOUtils.toString(resourceAsStream, "UTF-8");
         }
     }
 
