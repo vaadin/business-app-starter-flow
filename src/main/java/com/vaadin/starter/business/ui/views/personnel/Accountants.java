@@ -119,6 +119,7 @@ public class Accountants extends SplitViewFrame {
 
         // Header
         detailsDrawerHeader = new DetailsDrawerHeader("");
+        detailsDrawerHeader.addCloseListener(buttonClickEvent -> detailsDrawer.hide());
         detailsDrawer.setHeader(detailsDrawerHeader);
 
         // Footer
@@ -134,7 +135,7 @@ public class Accountants extends SplitViewFrame {
     }
 
     private void showDetails(Person person) {
-        detailsDrawerHeader.setText(person.getName());
+        detailsDrawerHeader.setTitle(person.getName());
         detailsDrawer.setContent(createDetails(person));
         detailsDrawer.show();
     }

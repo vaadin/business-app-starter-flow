@@ -38,7 +38,7 @@ public class Managers extends SplitViewFrame {
     private ListDataProvider<Person> dataProvider;
 
     private DetailsDrawer detailsDrawer;
-    private Label detailsDrawerHeader;
+    private DetailsDrawerHeader detailsDrawerHeader;
 
     public Managers() {
         setViewContent(createContent());
@@ -114,6 +114,7 @@ public class Managers extends SplitViewFrame {
 
         // Header
         detailsDrawerHeader = new DetailsDrawerHeader("");
+        detailsDrawerHeader.addCloseListener(buttonClickEvent -> detailsDrawer.hide());
         detailsDrawer.setHeader(detailsDrawerHeader);
 
         // Footer
@@ -129,7 +130,7 @@ public class Managers extends SplitViewFrame {
     }
 
     private void showDetails(Person person) {
-        detailsDrawerHeader.setText(person.getName());
+        detailsDrawerHeader.setTitle(person.getName());
         detailsDrawer.setContent(createDetails(person));
         detailsDrawer.show();
     }

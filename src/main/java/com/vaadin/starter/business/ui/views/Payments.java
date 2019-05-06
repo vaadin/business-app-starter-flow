@@ -124,9 +124,6 @@ public class Payments extends SplitViewFrame {
         detailsDrawer = new DetailsDrawer(DetailsDrawer.Position.RIGHT);
 
         // Header
-        DetailsDrawerHeader detailsDrawerTitle = new DetailsDrawerHeader(
-                "Payment Details", true);
-
         Tab details = new Tab("Details");
         Tab attachments = new Tab("Attachments");
         Tab history = new Tab("History");
@@ -144,8 +141,9 @@ public class Payments extends SplitViewFrame {
             }
         });
 
-        detailsDrawer.setHeader(detailsDrawerTitle, tabs);
-        detailsDrawer.getHeader().setFlexDirection(FlexDirection.COLUMN);
+        DetailsDrawerHeader detailsDrawerHeader = new DetailsDrawerHeader("Payment Details", tabs);
+        detailsDrawerHeader.addCloseListener(buttonClickEvent -> detailsDrawer.hide());
+        detailsDrawer.setHeader(detailsDrawerHeader);
 
         return detailsDrawer;
     }

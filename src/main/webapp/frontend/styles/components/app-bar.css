@@ -7,6 +7,7 @@
 
 /* Container */
 .app-bar__container {
+  padding: 0 var(--lumo-space-r-l);
   transition: padding var(--transition-duration-m);
 }
 
@@ -58,10 +59,6 @@
 }
 
 @media (max-width: 1023px) {
-  .app-bar__container {
-    padding: 0 var(--lumo-space-m);
-  }
-
   .app-bar__navi-icon,
   .app-bar__context-icon {
     margin-bottom: calc(calc(var(--app-bar-height-mobile) - var(--lumo-icon-size-m)) / 2);
@@ -79,10 +76,6 @@
 }
 
 @media (min-width: 1024px) {
-  .app-bar__container {
-    padding: 0 var(--lumo-space-l);
-  }
-
   .app-bar__navi-icon {
     display: none;
   }
