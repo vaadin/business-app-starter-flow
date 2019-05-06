@@ -137,6 +137,9 @@ public class MainLayout extends FlexBoxLayout
         // Without:
         // all of them go into the AppBar
 
+        setAppHeaderOuter();
+        setAppFooterOuter();
+
         appBar = new AppBar("");
 
         if (navigationTabs) {

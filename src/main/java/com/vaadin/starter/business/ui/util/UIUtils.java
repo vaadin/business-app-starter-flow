@@ -221,7 +221,9 @@ public class UIUtils {
 
     public static Button createButton(String text, VaadinIcon icon,
             ButtonVariant... variants) {
-        Button button = new Button(text, new Icon(icon));
+        Icon i = new Icon(icon);
+        i.getElement().setAttribute("slot", "prefix");
+        Button button = new Button(text, i);
         button.addThemeVariants(variants);
         return button;
     }
