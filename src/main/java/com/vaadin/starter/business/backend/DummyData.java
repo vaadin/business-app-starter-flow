@@ -1,14 +1,10 @@
 package com.vaadin.starter.business.backend;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
-
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.starter.business.ui.util.UIUtils;
+
+import java.time.LocalDate;
+import java.util.*;
 
 public class DummyData {
 

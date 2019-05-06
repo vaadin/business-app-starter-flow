@@ -1,10 +1,5 @@
 package com.vaadin.starter.business.ui.util;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
@@ -22,13 +17,12 @@ import com.vaadin.starter.business.backend.Address;
 import com.vaadin.starter.business.backend.DummyData;
 import com.vaadin.starter.business.ui.components.FlexBoxLayout;
 import com.vaadin.starter.business.ui.layout.size.Right;
-import com.vaadin.starter.business.ui.util.css.AlignSelf;
-import com.vaadin.starter.business.ui.util.css.BorderRadius;
-import com.vaadin.starter.business.ui.util.css.BoxSizing;
-import com.vaadin.starter.business.ui.util.css.Overflow;
-import com.vaadin.starter.business.ui.util.css.Shadow;
-import com.vaadin.starter.business.ui.util.css.TextAlign;
-import com.vaadin.starter.business.ui.util.css.WhiteSpace;
+import com.vaadin.starter.business.ui.util.css.*;
+
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class UIUtils {
 

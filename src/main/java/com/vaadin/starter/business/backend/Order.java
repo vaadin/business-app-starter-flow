@@ -1,9 +1,9 @@
 package com.vaadin.starter.business.backend;
 
+import com.vaadin.starter.business.ui.util.css.lumo.BadgeColor;
+
 import java.time.LocalDate;
 import java.util.Collection;
-
-import com.vaadin.starter.business.ui.util.css.lumo.BadgeColor;
 
 public class Order {
 

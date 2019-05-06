@@ -1,14 +1,14 @@
 package com.vaadin.starter.business.ui.components;
 
-import static com.vaadin.starter.business.ui.util.css.lumo.BadgeShape.PILL;
-
-import java.util.StringJoiner;
-
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.starter.business.ui.util.UIUtils;
 import com.vaadin.starter.business.ui.util.css.lumo.BadgeColor;
 import com.vaadin.starter.business.ui.util.css.lumo.BadgeShape;
 import com.vaadin.starter.business.ui.util.css.lumo.BadgeSize;
+
+import java.util.StringJoiner;
+
+import static com.vaadin.starter.business.ui.util.css.lumo.BadgeShape.PILL;
 
 public class Badge extends Span {
 

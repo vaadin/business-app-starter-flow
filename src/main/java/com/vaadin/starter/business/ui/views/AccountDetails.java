@@ -1,7 +1,5 @@
 package com.vaadin.starter.business.ui.views;
 
-import java.time.LocalDate;
-
 import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
@@ -29,18 +27,17 @@ import com.vaadin.starter.business.ui.components.navigation.bar.AppBar;
 import com.vaadin.starter.business.ui.layout.size.Bottom;
 import com.vaadin.starter.business.ui.layout.size.Horizontal;
 import com.vaadin.starter.business.ui.layout.size.Top;
-import com.vaadin.starter.business.ui.layout.size.Uniform;
 import com.vaadin.starter.business.ui.layout.size.Vertical;
 import com.vaadin.starter.business.ui.util.BoxShadowBorders;
 import com.vaadin.starter.business.ui.util.LumoStyles;
 import com.vaadin.starter.business.ui.util.TextColor;
 import com.vaadin.starter.business.ui.util.UIUtils;
 import com.vaadin.starter.business.ui.util.css.BorderRadius;
-import com.vaadin.starter.business.ui.util.css.BoxSizing;
 import com.vaadin.starter.business.ui.util.css.FlexDirection;
 import com.vaadin.starter.business.ui.util.css.FlexWrap;
-import com.vaadin.starter.business.ui.util.css.Shadow;
 import com.vaadin.starter.business.ui.util.css.WhiteSpace;
+
+import java.time.LocalDate;
 
 @Route(value = "account-details", layout = MainLayout.class)
 @PageTitle("Account Details")

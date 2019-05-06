@@ -23,7 +23,6 @@ import com.vaadin.starter.business.ui.MainLayout;
 import com.vaadin.starter.business.ui.components.Badge;
 import com.vaadin.starter.business.ui.components.ListItem;
 import com.vaadin.starter.business.ui.components.detailsdrawer.DetailsDrawer;
-import com.vaadin.starter.business.ui.components.detailsdrawer.DetailsDrawerFooter;
 import com.vaadin.starter.business.ui.components.detailsdrawer.DetailsDrawerHeader;
 import com.vaadin.starter.business.ui.components.navigation.bar.AppBar;
 import com.vaadin.starter.business.ui.layout.size.Bottom;
@@ -31,7 +30,6 @@ import com.vaadin.starter.business.ui.util.FontSize;
 import com.vaadin.starter.business.ui.util.LumoStyles;
 import com.vaadin.starter.business.ui.util.TextColor;
 import com.vaadin.starter.business.ui.util.UIUtils;
-import com.vaadin.starter.business.ui.util.css.FlexDirection;
 import com.vaadin.starter.business.ui.util.css.WhiteSpace;
 
 @Route(value = "payments", layout = MainLayout.class)

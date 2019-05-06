@@ -1,7 +1,5 @@
 package com.vaadin.starter.business.ui.components.navigation.bar;
 
-import static com.vaadin.starter.business.ui.util.UIUtils.IMG_PATH;
-
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.Composite;
@@ -27,6 +25,8 @@ import com.vaadin.starter.business.ui.components.navigation.tab.NaviTabs;
 import com.vaadin.starter.business.ui.util.LumoStyles;
 import com.vaadin.starter.business.ui.util.UIUtils;
 import com.vaadin.starter.business.ui.views.Home;
+
+import static com.vaadin.starter.business.ui.util.UIUtils.IMG_PATH;
 
 public class AppBar extends Composite<FlexLayout> {
 

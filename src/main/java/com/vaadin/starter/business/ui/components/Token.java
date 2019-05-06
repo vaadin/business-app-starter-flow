@@ -1,7 +1,5 @@
 package com.vaadin.starter.business.ui.components;
 
-import static com.vaadin.flow.component.button.ButtonVariant.LUMO_ICON;
-
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.HasStyle;
 import com.vaadin.flow.component.button.Button;
@@ -17,6 +15,8 @@ import com.vaadin.starter.business.ui.util.TextColor;
 import com.vaadin.starter.business.ui.util.UIUtils;
 import com.vaadin.starter.business.ui.util.css.BorderRadius;
 import com.vaadin.starter.business.ui.util.css.Display;
+
+import static com.vaadin.flow.component.button.ButtonVariant.LUMO_ICON;
 
 public class Token extends Composite<FlexBoxLayout> implements HasStyle {
 

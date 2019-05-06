@@ -1,11 +1,11 @@
 package com.vaadin.starter.business.backend;
 
-import java.time.LocalDate;
-
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.starter.business.ui.util.UIUtils;
 import com.vaadin.starter.business.ui.util.css.lumo.BadgeColor;
+
+import java.time.LocalDate;
 
 public class Payment {
 

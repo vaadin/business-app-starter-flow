@@ -1,7 +1,5 @@
 package com.vaadin.starter.business.ui.views;
 
-import java.time.format.DateTimeFormatter;
-
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.grid.ColumnTextAlign;
@@ -21,6 +19,8 @@ import com.vaadin.starter.business.ui.MainLayout;
 import com.vaadin.starter.business.ui.components.ListItem;
 import com.vaadin.starter.business.ui.util.TextColor;
 import com.vaadin.starter.business.ui.util.UIUtils;
+
+import java.time.format.DateTimeFormatter;
 
 @Route(value = "accounts", layout = MainLayout.class)
 @ParentLayout(MainLayout.class)
