@@ -27,7 +27,7 @@ public class DetailsDrawer extends Composite<FlexLayout>
         header = new FlexBoxLayout();
         header.addClassName(CLASS_NAME + "__header");
 
-        content = new FlexBoxLayout();
+        content = new FlexBoxLayout(components);
         content.addClassName(CLASS_NAME + "__content");
         content.setFlexDirection(FlexDirection.COLUMN);
 
