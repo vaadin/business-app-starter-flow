@@ -210,13 +210,7 @@ public class AccountDetails extends ViewFrame implements HasUrlParameter<Long> {
         conf.addSeries(deposits);
 
         FlexBoxLayout card = new FlexBoxLayout(chart);
-        card.setBackgroundColor(LumoStyles.Color.BASE_COLOR);
-        card.setBorderRadius(BorderRadius.S);
-        card.setBoxSizing(BoxSizing.BORDER_BOX);
-        card.setFlexWrap(FlexWrap.WRAP);
         card.setHeight("400px");
-        card.setPadding(Uniform.M);
-        card.setShadow(Shadow.S);
         return card;
     }
 }
