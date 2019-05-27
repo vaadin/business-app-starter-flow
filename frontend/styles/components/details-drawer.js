@@ -1,5 +1,6 @@
-<custom-style>
-  <style>
+import { style } from '../styler.js';
+
+style(`
     .details-drawer {
       background: var(--lumo-base-color);
       flex-direction: column;
@@ -65,5 +66,4 @@
         margin-right: calc(var(--details-drawer-width) * -1);
       }
     }
-  </style>
-</custom-style>
+ `)

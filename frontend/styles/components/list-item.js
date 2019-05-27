@@ -1,5 +1,6 @@
-<custom-style>
-  <style>
+import { style } from "../styler.js";
+
+style(`
     .list-item {
       box-sizing: border-box;
       overflow: hidden;
@@ -59,5 +60,4 @@
         left: calc(calc(var(--lumo-space-l) * 2) + var(--lumo-space-m));
       }
     }
-  </style>
-</custom-style>
+  `);

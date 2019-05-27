@@ -1,7 +1,8 @@
-<dom-module id="floating-action-button" theme-for="vaadin-button">
-  <template>
-    <style>
-      :host([theme~="fab"]) {
+import { componentStyle } from "../styler.js";
+
+componentStyle(
+  "vaadin-button",
+  `:host([theme~="fab"]) {
         --lumo-button-size: var(--lumo-size-xl);
         border-radius: 50%;
         bottom: var(--lumo-space-m);
@@ -12,6 +13,5 @@
         position: absolute;
         right: var(--lumo-space-m);
       }
-    </style>
-  </template>
-</dom-module>
+`
+);

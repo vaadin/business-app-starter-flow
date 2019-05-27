@@ -1,7 +1,7 @@
-<custom-style>
-  <style>
+import { style } from "../styler.js";
+
+style(`
     .navi-menu {
       margin: var(--lumo-space-s) 0;
     }
-  </style>
-</custom-style>
+`);

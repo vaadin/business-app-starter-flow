@@ -1,5 +1,6 @@
-<custom-style>
-  <style>
+import { style } from "../styler.js";
+
+style(`
     .navi-drawer {
       z-index: 3;
     }
@@ -123,5 +124,4 @@
         display: none;
       }
     }
-  </style>
-</custom-style>
+`);

@@ -1,5 +1,6 @@
-<custom-style>
-  <style>
+import { style } from "../styler.js";
+
+style(`
     .tab-bar {
       align-items: center;
       box-shadow: var(--lumo-box-shadow-m);
@@ -68,5 +69,4 @@
         margin-right: var(--lumo-space-m);
       }
     }
-  </style>
-</custom-style>
+ `);

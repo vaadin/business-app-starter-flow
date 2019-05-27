@@ -1,6 +1,9 @@
-<dom-module id="vaadin-chart-lumo-theme" theme-for="vaadin-chart">
-  <template>
-    <style include="vaadin-chart-default-theme">
+import "@vaadin/vaadin-charts/theme/vaadin-chart-default-theme";
+import { componentStyle } from "../styler.js";
+
+componentStyle(
+  { tag: "vaadin-chart", include: "vaadin-chart-default-theme" },
+  `
       /*
       :host {
         --vaadin-charts-color-0: #f45b5b;
@@ -69,6 +72,5 @@
       .highcharts-yaxis-grid  {
         display: none;
       }
-    </style>
-  </template>
-</dom-module>
+  `
+);

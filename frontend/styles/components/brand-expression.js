@@ -1,5 +1,6 @@
-<custom-style>
-  <style>
+import { style } from '../styler.js';
+
+style(`
     .brand-expression {
       align-items: center;
       box-shadow: inset 0 -1px var(--lumo-contrast-20pct);
@@ -23,5 +24,4 @@
     .navi-drawer[rail] .brand-expression__title {
       display: none;
     }
-  </style>
-</custom-style>
+`)

@@ -1,5 +1,6 @@
-<custom-style>
-  <style>
+import { style } from '../styler.js';
+
+style(`
     .app-bar {
       box-shadow: var(--lumo-box-shadow-m);
       flex-direction: column;
@@ -96,5 +97,4 @@
         padding: 0 var(--lumo-space-l);
       }
     }
-  </style>
-</custom-style>
+`)
