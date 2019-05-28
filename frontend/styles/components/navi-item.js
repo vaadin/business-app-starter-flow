@@ -1,5 +1,6 @@
-<custom-style>
-  <style>
+import { style } from "../styler.js";
+
+style(`
     .navi-item {
       align-items: center;
       display: flex;
@@ -93,5 +94,4 @@
       margin-left: auto;
       margin-right: var(--lumo-space-s);
     }
-  </style>
-</custom-style>
+`);

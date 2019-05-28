@@ -1,9 +1,12 @@
 package com.vaadin.starter.business.ui;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasElement;
 import com.vaadin.flow.component.UI;
-import com.vaadin.flow.component.dependency.HtmlImport;
+import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
@@ -11,7 +14,11 @@ import com.vaadin.flow.component.page.Viewport;
 import com.vaadin.flow.router.AfterNavigationEvent;
 import com.vaadin.flow.router.AfterNavigationObserver;
 import com.vaadin.flow.router.RouterLayout;
-import com.vaadin.flow.server.*;
+import com.vaadin.flow.server.ErrorHandler;
+import com.vaadin.flow.server.InitialPageSettings;
+import com.vaadin.flow.server.PWA;
+import com.vaadin.flow.server.PageConfigurator;
+import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.starter.business.ui.components.FlexBoxLayout;
 import com.vaadin.starter.business.ui.components.navigation.bar.AppBar;
 import com.vaadin.starter.business.ui.components.navigation.bar.TabBar;
@@ -27,10 +34,8 @@ import com.vaadin.starter.business.ui.views.Payments;
 import com.vaadin.starter.business.ui.views.Statistics;
 import com.vaadin.starter.business.ui.views.personnel.Accountants;
 import com.vaadin.starter.business.ui.views.personnel.Managers;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-@HtmlImport("frontend://styles/shared-styles.html")
+@JsModule("./styles/shared-styles.js")
 @Viewport("width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes")
 @PWA(name = "###Project Name###", shortName = "###Project Name###", iconPath = "images/logo-18.png", backgroundColor = "#233348", themeColor = "#233348")
 public class MainLayout extends FlexBoxLayout

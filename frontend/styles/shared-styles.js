@@ -1,40 +1,42 @@
-<link rel="import" href="../bower_components/vaadin-lumo-styles/badge.html">
-<link rel="import" href="../bower_components/vaadin-lumo-styles/color.html">
-<link rel="import" href="../bower_components/vaadin-lumo-styles/style.html">
-<link rel="import" href="../bower_components/vaadin-lumo-styles/typography.html">
+import { styleInclude, globalStylesheet } from "./styler.js";
 
-<link rel="stylesheet" href="lumo-border-radius.css">
-<link rel="stylesheet" href="lumo-icon-size.css">
-<link rel="stylesheet" href="lumo-margin.css">
-<link rel="stylesheet" href="lumo-padding.css">
-<link rel="stylesheet" href="lumo-shadow.css">
-<link rel="stylesheet" href="lumo-spacing.css">
-<link rel="stylesheet" href="lumo-typography.css">
+import "@vaadin/vaadin-lumo-styles/badge";
+import "@vaadin/vaadin-lumo-styles/color";
+import "@vaadin/vaadin-lumo-styles/style";
+import "@vaadin/vaadin-lumo-styles/typography";
 
-<link rel="import" href="components/account-switcher.html">
-<link rel="import" href="components/app-bar.html">
-<link rel="import" href="components/brand-expression.html">
-<link rel="import" href="components/charts.html">
-<link rel="import" href="components/details-drawer.html">
-<link rel="import" href="components/floating-action-button.html">
-<link rel="import" href="components/initials.html">
-<link rel="import" href="components/list-item.html">
-<link rel="import" href="components/navi-drawer.html">
-<link rel="import" href="components/navi-icon.html">
-<link rel="import" href="components/navi-item.html">
-<link rel="import" href="components/navi-menu.html">
-<link rel="import" href="components/tab-bar.html">
+import "./components/account-switcher.js";
+import "./components/app-bar.js";
+import "./components/brand-expression.js";
+import "./components/charts.js";
+import "./components/details-drawer.js";
+import "./components/floating-action-button";
+import "./components/initials.js";
+import "./components/list-item.js";
+import "./components/navi-drawer.js";
+import "./components/navi-icon.js";
+import "./components/navi-item.js";
+import "./components/navi-menu.js";
+import "./components/tab-bar.js";
 
-<link rel="stylesheet" href="misc/box-shadow-borders.css">
+globalStylesheet("styles/lumo-border-radius.css");
+globalStylesheet("styles/lumo-icon-size.css");
+globalStylesheet("styles/lumo-margin.css");
+globalStylesheet("styles/lumo-padding.css");
+globalStylesheet("styles/lumo-shadow.css");
+globalStylesheet("styles/lumo-spacing.css");
+globalStylesheet("styles/lumo-typography.css");
 
-<link rel="stylesheet" href="views/dashboard.css">
-<link rel="stylesheet" href="views/grid-view.css">
-<link rel="stylesheet" href="views/report-details.css">
-<link rel="stylesheet" href="views/view-frame.css">
+globalStylesheet("styles/misc/box-shadow-borders.css");
 
-<custom-style>
-  <style include="lumo-badge">
-    :root {
+globalStylesheet("styles/views/dashboard.css");
+globalStylesheet("styles/views/grid-view.css");
+globalStylesheet("styles/views/report-details.css");
+globalStylesheet("styles/views/view-frame.css");
+
+styleInclude(
+  "lumo-badge",
+  `:root {
       --app-bar-height-desktop: var(--lumo-size-xl);
       --app-bar-height-mobile: var(--lumo-size-l);
 
@@ -100,5 +102,5 @@
     .app-footer-outer {
       z-index: 3;
     }
-  </style>
-</custom-style>
+`
+);

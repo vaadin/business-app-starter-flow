@@ -1,5 +1,6 @@
-<custom-style>
-  <style>
+import { style } from '../styler.js';
+
+style(`
     .account-switcher__avatar {
       border-radius: 100%;
       display: flex;
@@ -25,5 +26,4 @@
     .account-switcher__email vaadin-button {
       margin: 0;
     }
-  </style>
-</custom-style>
+ `)

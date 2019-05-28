@@ -1,8 +1,8 @@
-<custom-style>
-  <style>
+import { style } from "../styler.js";
+
+style(`
     .initials {
       border-radius: 100%;
       font-weight: 600;
     }
-  </style>
-</custom-style>
+`);
