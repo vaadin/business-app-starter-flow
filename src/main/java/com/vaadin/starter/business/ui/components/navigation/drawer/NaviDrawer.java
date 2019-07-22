@@ -13,7 +13,6 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.AfterNavigationEvent;
 import com.vaadin.flow.router.AfterNavigationObserver;
 import com.vaadin.starter.business.ui.util.UIUtils;
-
 import elemental.json.JsonObject;
 
 @JsModule("swipe-away.js")
