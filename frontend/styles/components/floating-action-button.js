@@ -3,15 +3,14 @@ import { componentStyle } from "../styler.js";
 componentStyle(
   "vaadin-button",
   `:host([theme~="fab"]) {
-        --lumo-button-size: var(--lumo-size-xl);
-        border-radius: 50%;
-        bottom: var(--lumo-space-m);
-        box-shadow: var(--lumo-box-shadow-m);
-        font-size: var(--lumo-font-size-l);
-        margin: 0;
-        padding: 0;
-        position: absolute;
-        right: var(--lumo-space-m);
-      }
-`
-);
+    --lumo-button-size: var(--lumo-size-xl);
+    border-radius: 50%;
+    bottom: var(--lumo-space-m);
+    box-shadow: var(--lumo-box-shadow-m);
+    font-size: var(--lumo-font-size-l);
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    right: var(--lumo-space-m);
+  }
+`);

@@ -61,21 +61,25 @@ public class Managers extends SplitViewFrame {
         grid.setDataProvider(dataProvider);
         grid.setSizeFull();
 
-        grid.addColumn(Person::getId).setHeader("ID").setFrozen(true)
-                .setSortable(true).setWidth(UIUtils.COLUMN_WIDTH_XS)
+        grid.addColumn(Person::getId)
+                .setHeader("ID")
+                .setFrozen(true)
+                .setSortable(true)
                 .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createUserInfo))
-                .setHeader("Name").setWidth(UIUtils.COLUMN_WIDTH_XL);
+                .setHeader("Name");
         grid.addColumn(new ComponentRenderer<>(this::createActive))
-                .setHeader("Active").setWidth(UIUtils.COLUMN_WIDTH_XS)
-                .setFlexGrow(0).setTextAlign(ColumnTextAlign.END);
+                .setHeader("Active")
+                .setFlexGrow(0)
+                .setTextAlign(ColumnTextAlign.END);
         grid.addColumn(new ComponentRenderer<>(this::createApprovalLimit))
                 .setHeader("Approval Limit ($)")
-                .setWidth(UIUtils.COLUMN_WIDTH_L).setFlexGrow(0)
+                .setFlexGrow(0)
                 .setTextAlign(ColumnTextAlign.END);
         grid.addColumn(new ComponentRenderer<>(this::createDate))
-                .setHeader("Last Report").setWidth(UIUtils.COLUMN_WIDTH_M)
-                .setFlexGrow(0).setTextAlign(ColumnTextAlign.END);
+                .setHeader("Last Report")
+                .setFlexGrow(0)
+                .setTextAlign(ColumnTextAlign.END);
 
         return grid;
     }

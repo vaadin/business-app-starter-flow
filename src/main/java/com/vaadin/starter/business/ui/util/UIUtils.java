@@ -28,12 +28,6 @@ public class UIUtils {
 
     public static final String IMG_PATH = "images/";
 
-    public static final String COLUMN_WIDTH_XS = "80px";
-    public static final String COLUMN_WIDTH_S = "120px";
-    public static final String COLUMN_WIDTH_M = "160px";
-    public static final String COLUMN_WIDTH_L = "200px";
-    public static final String COLUMN_WIDTH_XL = "240px";
-
     /**
      * Thread-unsafe formatters.
      */
@@ -206,7 +200,9 @@ public class UIUtils {
 
     public static Button createButton(VaadinIcon icon,
             ButtonVariant... variants) {
-        Button button = new Button(new Icon(icon));
+        Button button = new Button();
+        // Non-slotted icons for icon-only buttons.
+        button.getElement().appendChild(new Icon(icon).getElement());
         button.addThemeVariants(variants);
         return button;
     }
@@ -477,6 +473,14 @@ public class UIUtils {
         for (Component component : components) {
             component.getElement().getStyle().set("font-weight",
                     fontWeight.getValue());
+        }
+    }
+
+    public static void setLineHeight(String value,
+                                     Component... components) {
+        for (Component component : components) {
+            component.getElement().getStyle().set("line-height",
+                    value);
         }
     }
 

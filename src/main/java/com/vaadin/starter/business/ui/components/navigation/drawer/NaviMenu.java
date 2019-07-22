@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class NaviMenu extends Div {
+
     private static final String CLASS_NAME = "navi-menu";
 
     public NaviMenu() {
@@ -42,13 +43,6 @@ public class NaviMenu extends Div {
     public NaviItem addNaviItem(Image image, String text,
             Class<? extends Component> navigationTarget) {
         NaviItem item = new NaviItem(image, text, navigationTarget);
-        addNaviItem(item);
-        return item;
-    }
-
-    public NaviItem addNaviItem(String path, String text,
-            Class<? extends Component> navigationTarget) {
-        NaviItem item = new NaviItem(path, text, navigationTarget);
         addNaviItem(item);
         return item;
     }

@@ -26,8 +26,7 @@ public class DetailsDrawerHeader extends FlexBoxLayout {
         setWidth("100%");
 
         this.close = UIUtils.createTertiaryInlineButton(VaadinIcon.CLOSE);
-        this.close.removeThemeVariants(ButtonVariant.LUMO_ICON);
-        this.close.getElement().getStyle().set("line-height", "1");
+        UIUtils.setLineHeight("1", this.close);
 
         this.title = UIUtils.createH3Label(title);
 

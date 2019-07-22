@@ -76,27 +76,29 @@ public class Payments extends SplitViewFrame {
         grid.setHeight("100%");
 
         ComponentRenderer<Badge, Payment> badgeRenderer = new ComponentRenderer<>(
-                payment -> {
-                    Payment.Status status = payment.getStatus();
-                    Badge badge = new Badge(status.getName(),
-                            status.getTheme());
-                    UIUtils.setTooltip(status.getDesc(), badge);
-                    return badge;
-                });
-        grid.addColumn(badgeRenderer).setHeader("Status")
-                .setWidth(UIUtils.COLUMN_WIDTH_S).setFlexGrow(0);
+            payment -> {
+                Payment.Status status = payment.getStatus();
+                Badge badge = new Badge(status.getName(), status.getTheme());
+                UIUtils.setTooltip(status.getDesc(), badge);
+                return badge;
+            }
+        );
+        grid.addColumn(badgeRenderer)
+                .setHeader("Status")
+                .setFlexGrow(0);
         grid.addColumn(new ComponentRenderer<>(this::createFromInfo))
-                .setHeader("From").setWidth(UIUtils.COLUMN_WIDTH_XL);
+                .setHeader("From");
         grid.addColumn(new ComponentRenderer<>(this::createToInfo))
-                .setHeader("To").setWidth(UIUtils.COLUMN_WIDTH_XL);
+                .setHeader("To");
         grid.addColumn(new ComponentRenderer<>(this::createAmount))
-                .setHeader("Amount ($)").setWidth(UIUtils.COLUMN_WIDTH_M)
-                .setFlexGrow(0).setTextAlign(ColumnTextAlign.END);
+                .setHeader("Amount ($)")
+                .setFlexGrow(0)
+                .setTextAlign(ColumnTextAlign.END);
         grid.addColumn(TemplateRenderer.<Payment> of("[[item.date]]")
-                .withProperty("date",
-                        payment -> UIUtils.formatDate(payment.getDate())))
-                .setHeader("Due Date").setComparator(Payment::getDate)
-                .setWidth(UIUtils.COLUMN_WIDTH_M).setFlexGrow(0);
+                .withProperty("date", payment -> UIUtils.formatDate(payment.getDate())))
+                .setComparator(Payment::getDate)
+                .setFlexGrow(0)
+                .setHeader("Due Date");
 
         return grid;
     }

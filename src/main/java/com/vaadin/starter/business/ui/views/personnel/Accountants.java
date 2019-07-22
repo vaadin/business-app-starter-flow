@@ -11,6 +11,7 @@ import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
+import com.vaadin.flow.component.radiobutton.RadioGroupVariant;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.upload.Upload;
 import com.vaadin.flow.data.provider.DataProvider;
@@ -60,25 +61,27 @@ public class Accountants extends SplitViewFrame {
         grid.setDataProvider(dataProvider);
         grid.setHeight("100%");
 
-        grid.addColumn(Person::getId).setFlexGrow(0).setFrozen(true)
-                .setHeader("ID").setSortable(true)
-                .setWidth(UIUtils.COLUMN_WIDTH_XS);
+        grid.addColumn(Person::getId)
+                .setFlexGrow(0)
+                .setFrozen(true)
+                .setHeader("ID")
+                .setSortable(true);
         grid.addColumn(new ComponentRenderer<>(this::createUserInfo))
-                .setHeader("Name").setWidth(UIUtils.COLUMN_WIDTH_XL);
+                .setHeader("Name");
         grid.addColumn(new ComponentRenderer<>(this::createActive))
-                .setFlexGrow(0).setHeader("Active")
-                .setWidth(UIUtils.COLUMN_WIDTH_XS)
+                .setFlexGrow(0)
+                .setHeader("Active")
                 .setTextAlign(ColumnTextAlign.END);
         grid.addColumn(new ComponentRenderer<>(this::createInvoices))
-                .setFlexGrow(0).setHeader("Invoices")
-                .setWidth(UIUtils.COLUMN_WIDTH_M)
+                .setFlexGrow(0)
+                .setHeader("Invoices")
                 .setTextAlign(ColumnTextAlign.END);
         grid.addColumn(new ComponentRenderer<>(this::createCompanies))
-                .setFlexGrow(0).setHeader("Companies")
-                .setWidth(UIUtils.COLUMN_WIDTH_S)
+                .setFlexGrow(0)
+                .setHeader("Companies")
                 .setTextAlign(ColumnTextAlign.END);
         grid.addColumn(new ComponentRenderer<>(this::createDate)).setFlexGrow(0)
-                .setHeader("Last Report").setWidth(UIUtils.COLUMN_WIDTH_S)
+                .setHeader("Last Report")
                 .setTextAlign(ColumnTextAlign.END);
 
         return grid;
@@ -150,6 +153,7 @@ public class Accountants extends SplitViewFrame {
         lastName.setWidth("100%");
 
         RadioButtonGroup<String> gender = new RadioButtonGroup<>();
+        gender.addThemeVariants(RadioGroupVariant.LUMO_VERTICAL);
         gender.setItems("Active", "Inactive");
         gender.setValue(person.getRandomBoolean() ? "Active" : "Inactive");
 
