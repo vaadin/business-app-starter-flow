@@ -8,6 +8,7 @@ import "@vaadin/vaadin-lumo-styles/typography";
 import "./components/account-switcher.js";
 import "./components/app-bar.js";
 import "./components/brand-expression.js";
+import "./components/button.js";
 import "./components/charts.js";
 import "./components/details-drawer.js";
 import "./components/floating-action-button";

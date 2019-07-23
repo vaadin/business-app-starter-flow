@@ -8,6 +8,7 @@ import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.contextmenu.ContextMenu;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
@@ -25,7 +26,6 @@ public class TabBar extends Composite<FlexLayout> {
 
     private Button menuIcon;
 
-    private FlexLayout actionItems;
     private Image avatar;
 
     private Button addTab;
@@ -47,11 +47,14 @@ public class TabBar extends Composite<FlexLayout> {
         ContextMenu contextMenu = new ContextMenu(avatar);
         contextMenu.setOpenOnClick(true);
         contextMenu.addItem("john.smith@gmail.com",
-                e -> System.out.println("Testing..."));
-        contextMenu.addItem("john.smith@yahoo.com",
-                e -> System.out.println("Testing..."));
-        contextMenu.addItem("Settings", e -> System.out.println("Testing..."));
-        contextMenu.addItem("Logout", e -> System.out.println("Testing..."));
+                e -> Notification.show("Not implemented yet.", 3000,
+                        Notification.Position.BOTTOM_CENTER));
+        contextMenu.addItem("Settings",
+                e -> Notification.show("Not implemented yet.", 3000,
+                        Notification.Position.BOTTOM_CENTER));
+        contextMenu.addItem("Log Out",
+                e -> Notification.show("Not implemented yet.", 3000,
+                        Notification.Position.BOTTOM_CENTER));
 
         addTab = UIUtils.createSmallButton(VaadinIcon.PLUS);
         addTab.addClickListener(e -> tabs
@@ -130,31 +133,5 @@ public class TabBar extends Composite<FlexLayout> {
 
     public void setAddTabVisible(boolean visible) {
         addTab.setVisible(visible);
-    }
-
-    /* === ACTION ITEMS === */
-
-    public Component addActionItem(Component component) {
-        actionItems.add(component);
-        updateActionItemsVisibility();
-        return component;
-    }
-
-    public Button addActionItem(VaadinIcon icon) {
-        Button button = UIUtils.createButton(icon, ButtonVariant.LUMO_SMALL,
-                ButtonVariant.LUMO_TERTIARY);
-        addActionItem(button);
-        return button;
-    }
-
-    public void removeAllActionItems() {
-        actionItems.removeAll();
-        updateActionItemsVisibility();
-    }
-
-    /* === UPDATE VISIBILITY === */
-
-    private void updateActionItemsVisibility() {
-        actionItems.setVisible(actionItems.getComponentCount() > 0);
     }
 }

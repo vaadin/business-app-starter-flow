@@ -200,9 +200,7 @@ public class UIUtils {
 
     public static Button createButton(VaadinIcon icon,
             ButtonVariant... variants) {
-        Button button = new Button();
-        // Non-slotted icons for icon-only buttons.
-        button.getElement().appendChild(new Icon(icon).getElement());
+        Button button = new Button(new Icon(icon));
         button.addThemeVariants(variants);
         return button;
     }

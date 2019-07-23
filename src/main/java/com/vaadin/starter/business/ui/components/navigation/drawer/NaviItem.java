@@ -23,7 +23,6 @@ public class NaviItem extends Div {
 
     private Component link;
     private Class<? extends Component> navigationTarget;
-    private VaadinIcon icon = VaadinIcon.CARET_UP;
     private String text;
 
     protected Button expandCollapse;
@@ -59,7 +58,7 @@ public class NaviItem extends Div {
             this.link = div;
         }
 
-        expandCollapse = UIUtils.createButton(icon, ButtonVariant.LUMO_SMALL, ButtonVariant.LUMO_TERTIARY);
+        expandCollapse = UIUtils.createButton(VaadinIcon.CARET_UP, ButtonVariant.LUMO_SMALL, ButtonVariant.LUMO_TERTIARY);
         expandCollapse.addClickListener(event -> setSubItemsVisible(!subItemsVisible));
         expandCollapse.setVisible(false);
 
@@ -107,7 +106,7 @@ public class NaviItem extends Div {
 
     private void setSubItemsVisible(boolean visible) {
         if (level == 0) {
-            icon = visible ? VaadinIcon.CARET_UP : VaadinIcon.CARET_DOWN;
+            expandCollapse.setIcon(new Icon(visible ? VaadinIcon.CARET_UP : VaadinIcon.CARET_DOWN));
         }
         subItems.forEach(item -> item.setVisible(visible));
         subItemsVisible = visible;
@@ -125,7 +124,7 @@ public class NaviItem extends Div {
         // If true, we only update the icon. If false, we hide all the sub items.
         if (visible) {
             if (level == 0) {
-                icon = VaadinIcon.CARET_DOWN;
+                expandCollapse.setIcon(new Icon(VaadinIcon.CARET_DOWN));
             }
         } else {
             setSubItemsVisible(visible);
