@@ -2,8 +2,9 @@ import { style } from "../styler.js";
 
 style(`
   .tab-bar {
+    background-color: var(--lumo-base-color);
     align-items: center;
-    box-shadow: var(--lumo-box-shadow-m);
+    box-shadow: var(--lumo-box-shadow-s);
     position: relative;
     z-index: 1;
   }
@@ -23,7 +24,7 @@ style(`
   }
 
   .tab-bar__tab vaadin-button {
-    margin: 0;
+    margin: 0 0 0 var(--lumo-space-s);
   }
 
   .tab-bar__add-tab {

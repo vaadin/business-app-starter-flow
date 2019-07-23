@@ -74,7 +74,7 @@ public class Statistics extends ViewFrame {
         Row charts = new Row();
         UIUtils.setBackgroundColor(LumoStyles.Color.BASE_COLOR, charts);
         UIUtils.setBorderRadius(BorderRadius.S, charts);
-        UIUtils.setShadow(Shadow.S, charts);
+        UIUtils.setShadow(Shadow.XS, charts);
 
         for (Payment.Status status : Payment.Status.values()) {
             charts.add(createPaymentChart(status));
@@ -198,12 +198,12 @@ public class Statistics extends ViewFrame {
                 600, 580, 740, 800));
 
         FlexBoxLayout card = new FlexBoxLayout(chart);
-        card.setBorderRadius(BorderRadius.S);
         card.setBackgroundColor(LumoStyles.Color.BASE_COLOR);
+        card.setBorderRadius(BorderRadius.S);
         card.setBoxSizing(BoxSizing.BORDER_BOX);
         card.setHeight("400px");
         card.setPadding(Uniform.M);
-        card.setShadow(Shadow.S);
+        card.setShadow(Shadow.XS);
         return card;
     }
 
@@ -244,7 +244,7 @@ public class Statistics extends ViewFrame {
         Div card = new Div(tabs, items);
         UIUtils.setBackgroundColor(LumoStyles.Color.BASE_COLOR, card);
         UIUtils.setBorderRadius(BorderRadius.S, card);
-        UIUtils.setShadow(Shadow.S, card);
+        UIUtils.setShadow(Shadow.XS, card);
 
         FlexBoxLayout reports = new FlexBoxLayout(header, card);
         reports.addClassName(CLASS_NAME + "__reports");
@@ -278,7 +278,7 @@ public class Statistics extends ViewFrame {
         Div card = new Div(tabs, items);
         UIUtils.setBackgroundColor(LumoStyles.Color.BASE_COLOR, card);
         UIUtils.setBorderRadius(BorderRadius.S, card);
-        UIUtils.setShadow(Shadow.S, card);
+        UIUtils.setShadow(Shadow.XS, card);
 
         FlexBoxLayout logs = new FlexBoxLayout(header, card);
         logs.addClassName(CLASS_NAME + "__logs");

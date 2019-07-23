@@ -25,7 +25,7 @@ style(`
   /* Content */
   .navi-drawer__content {
     background-color: var(--lumo-base-color);
-    box-shadow: var(--lumo-box-shadow-m);
+    box-shadow: var(--lumo-box-shadow-s);
     box-sizing: border-box;
     display: flex;
     flex-direction: column;

@@ -84,18 +84,23 @@ public class Payments extends SplitViewFrame {
             }
         );
         grid.addColumn(badgeRenderer)
-                .setHeader("Status")
-                .setFlexGrow(0);
+                .setAutoWidth(true)
+                .setFlexGrow(0)
+                .setHeader("Status");
         grid.addColumn(new ComponentRenderer<>(this::createFromInfo))
+                .setAutoWidth(true)
                 .setHeader("From");
         grid.addColumn(new ComponentRenderer<>(this::createToInfo))
+                .setAutoWidth(true)
                 .setHeader("To");
         grid.addColumn(new ComponentRenderer<>(this::createAmount))
-                .setHeader("Amount ($)")
+                .setAutoWidth(true)
                 .setFlexGrow(0)
+                .setHeader("Amount ($)")
                 .setTextAlign(ColumnTextAlign.END);
         grid.addColumn(TemplateRenderer.<Payment> of("[[item.date]]")
                 .withProperty("date", payment -> UIUtils.formatDate(payment.getDate())))
+                .setAutoWidth(true)
                 .setComparator(Payment::getDate)
                 .setFlexGrow(0)
                 .setHeader("Due Date");

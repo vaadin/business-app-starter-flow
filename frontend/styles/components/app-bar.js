@@ -2,7 +2,8 @@ import { style } from '../styler.js';
 
 style(`
   .app-bar {
-    box-shadow: var(--lumo-box-shadow-m);
+    background-color: var(--lumo-base-color);
+    box-shadow: var(--lumo-box-shadow-s);
     flex-direction: column;
     position: relative;
     z-index: 1;
@@ -54,7 +55,7 @@ style(`
   }
 
   .app-bar__tab vaadin-button {
-    margin: 0;
+    margin: 0 0 0 var(--lumo-space-s);
   }
 
   .app-bar__add-tab {

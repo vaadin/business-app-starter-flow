@@ -54,7 +54,6 @@ public class AppBar extends Composite<FlexLayout> {
 
     public AppBar(String title, NaviTab... tabs) {
         getContent().setClassName(CLASS_NAME);
-        getElement().setAttribute(LumoStyles.THEME, LumoStyles.DARK);
 
         initMenuIcon();
         initContextIcon();

@@ -62,23 +62,28 @@ public class Managers extends SplitViewFrame {
         grid.setSizeFull();
 
         grid.addColumn(Person::getId)
-                .setHeader("ID")
+                .setAutoWidth(true)
+                .setFlexGrow(0)
                 .setFrozen(true)
-                .setSortable(true)
-                .setFlexGrow(0);
+                .setHeader("ID")
+                .setSortable(true);
         grid.addColumn(new ComponentRenderer<>(this::createUserInfo))
+                .setAutoWidth(true)
                 .setHeader("Name");
         grid.addColumn(new ComponentRenderer<>(this::createActive))
-                .setHeader("Active")
+                .setAutoWidth(true)
                 .setFlexGrow(0)
+                .setHeader("Active")
                 .setTextAlign(ColumnTextAlign.END);
         grid.addColumn(new ComponentRenderer<>(this::createApprovalLimit))
-                .setHeader("Approval Limit ($)")
+                .setAutoWidth(true)
                 .setFlexGrow(0)
+                .setHeader("Approval Limit ($)")
                 .setTextAlign(ColumnTextAlign.END);
         grid.addColumn(new ComponentRenderer<>(this::createDate))
-                .setHeader("Last Report")
+                .setAutoWidth(true)
                 .setFlexGrow(0)
+                .setHeader("Last Report")
                 .setTextAlign(ColumnTextAlign.END);
 
         return grid;

@@ -12,6 +12,7 @@ import com.vaadin.flow.router.AfterNavigationEvent;
 import com.vaadin.flow.router.AfterNavigationObserver;
 import com.vaadin.flow.router.RouterLayout;
 import com.vaadin.flow.server.*;
+import com.vaadin.flow.theme.lumo.Lumo;
 import com.vaadin.starter.business.ui.components.FlexBoxLayout;
 import com.vaadin.starter.business.ui.components.navigation.bar.AppBar;
 import com.vaadin.starter.business.ui.components.navigation.bar.TabBar;
@@ -19,6 +20,7 @@ import com.vaadin.starter.business.ui.components.navigation.drawer.NaviDrawer;
 import com.vaadin.starter.business.ui.components.navigation.drawer.NaviItem;
 import com.vaadin.starter.business.ui.components.navigation.drawer.NaviMenu;
 import com.vaadin.starter.business.ui.util.LumoStyles;
+import com.vaadin.starter.business.ui.util.UIUtils;
 import com.vaadin.starter.business.ui.util.css.FlexDirection;
 import com.vaadin.starter.business.ui.util.css.Overflow;
 import com.vaadin.starter.business.ui.views.Accounts;
@@ -52,7 +54,7 @@ public class MainLayout extends FlexBoxLayout
     private Div appFooterOuter;
 
     private TabBar tabBar;
-    private boolean navigationTabs = false;
+    private boolean navigationTabs = true;
     private AppBar appBar;
 
     public MainLayout() {
@@ -123,30 +125,35 @@ public class MainLayout extends FlexBoxLayout
      * Configure the app's inner and outer headers and footers.
      */
     private void initHeadersAndFooters() {
-        // With tabs:
-        // the title, avatar and menu button (small screens) go into the TabBar
-        // Without:
-        // all of them go into the AppBar
+        // setAppHeaderOuter();
+        // setAppFooterInner();
+        // setAppFooterOuter();
 
-        setAppHeaderOuter();
-        setAppFooterOuter();
+        // Default inner header setup:
+        // - When using tabbed navigation the view title, user avatar and main menu button will appear in the TabBar.
+        // - When tabbed navigation is turned off they appear in the AppBar.
 
         appBar = new AppBar("");
 
+        // Tabbed navigation
         if (navigationTabs) {
-            appBar.getAvatar().setVisible(false);
             tabBar = new TabBar();
+            UIUtils.setTheme(Lumo.DARK, tabBar);
+
+            // Shift-click to add a new tab
             for (NaviItem item : naviDrawer.getMenu().getNaviItems()) {
                 item.addClickListener(e -> {
-                    // Shift-click to add a new tab
                     if (e.getButton() == 0 && e.isShiftKey()) {
-                        tabBar.setSelectedTab(tabBar.addClosableTab(
-                                item.getText(), item.getNavigationTarget()));
+                        tabBar.setSelectedTab(tabBar.addClosableTab(item.getText(), item.getNavigationTarget()));
                     }
                 });
             }
+            appBar.getAvatar().setVisible(false);
             setAppHeaderInner(tabBar, appBar);
+
+        // Default navigation
         } else {
+            UIUtils.setTheme(Lumo.DARK, appBar);
             setAppHeaderInner(appBar);
         }
     }

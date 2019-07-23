@@ -33,7 +33,6 @@ public class TabBar extends Composite<FlexLayout> {
 
     public TabBar() {
         getContent().setClassName(CLASS_NAME);
-        getElement().setAttribute(LumoStyles.THEME, LumoStyles.DARK);
 
         menuIcon = UIUtils.createTertiaryInlineButton(VaadinIcon.MENU);
         menuIcon.removeThemeVariants(ButtonVariant.LUMO_ICON);

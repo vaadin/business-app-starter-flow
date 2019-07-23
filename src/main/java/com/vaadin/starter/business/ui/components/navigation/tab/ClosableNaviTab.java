@@ -4,6 +4,7 @@ import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.starter.business.ui.util.FontSize;
 import com.vaadin.starter.business.ui.util.UIUtils;
 
 public class ClosableNaviTab extends NaviTab {
@@ -15,8 +16,9 @@ public class ClosableNaviTab extends NaviTab {
         super(label, navigationTarget);
         getElement().setAttribute("closable", true);
 
-        close = UIUtils.createButton(VaadinIcon.CLOSE, ButtonVariant.LUMO_SMALL,
-                ButtonVariant.LUMO_TERTIARY);
+        close = UIUtils.createButton(VaadinIcon.CLOSE, ButtonVariant.LUMO_TERTIARY_INLINE);
+        // ButtonVariant.LUMO_SMALL isn't small enough.
+        UIUtils.setFontSize(FontSize.XXS, close);
         add(close);
     }
 

@@ -62,25 +62,32 @@ public class Accountants extends SplitViewFrame {
         grid.setHeight("100%");
 
         grid.addColumn(Person::getId)
+                .setAutoWidth(true)
                 .setFlexGrow(0)
                 .setFrozen(true)
                 .setHeader("ID")
                 .setSortable(true);
         grid.addColumn(new ComponentRenderer<>(this::createUserInfo))
+                .setAutoWidth(true)
                 .setHeader("Name");
         grid.addColumn(new ComponentRenderer<>(this::createActive))
+                .setAutoWidth(true)
                 .setFlexGrow(0)
                 .setHeader("Active")
                 .setTextAlign(ColumnTextAlign.END);
         grid.addColumn(new ComponentRenderer<>(this::createInvoices))
+                .setAutoWidth(true)
                 .setFlexGrow(0)
                 .setHeader("Invoices")
                 .setTextAlign(ColumnTextAlign.END);
         grid.addColumn(new ComponentRenderer<>(this::createCompanies))
+                .setAutoWidth(true)
                 .setFlexGrow(0)
                 .setHeader("Companies")
                 .setTextAlign(ColumnTextAlign.END);
         grid.addColumn(new ComponentRenderer<>(this::createDate)).setFlexGrow(0)
+                .setAutoWidth(true)
+                .setFlexGrow(0)
                 .setHeader("Last Report")
                 .setTextAlign(ColumnTextAlign.END);
 
