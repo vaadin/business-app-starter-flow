@@ -33,6 +33,13 @@ public class NaviMenu extends Div {
         });
     }
 
+    public NaviItem addNaviItem(String text,
+                                Class<? extends Component> navigationTarget) {
+        NaviItem item = new NaviItem(text, navigationTarget);
+        addNaviItem(item);
+        return item;
+    }
+
     public NaviItem addNaviItem(VaadinIcon icon, String text,
             Class<? extends Component> navigationTarget) {
         NaviItem item = new NaviItem(icon, text, navigationTarget);

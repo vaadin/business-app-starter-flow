@@ -10,9 +10,7 @@ import com.vaadin.flow.data.provider.DataProvider;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.data.renderer.LocalDateRenderer;
 import com.vaadin.flow.router.PageTitle;
-import com.vaadin.flow.router.ParentLayout;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.router.RouterLayout;
 import com.vaadin.starter.business.backend.BankAccount;
 import com.vaadin.starter.business.backend.DummyData;
 import com.vaadin.starter.business.ui.MainLayout;
@@ -23,9 +21,8 @@ import com.vaadin.starter.business.ui.util.UIUtils;
 import java.time.format.DateTimeFormatter;
 
 @Route(value = "accounts", layout = MainLayout.class)
-@ParentLayout(MainLayout.class)
 @PageTitle("Accounts")
-public class Accounts extends ViewFrame implements RouterLayout {
+public class Accounts extends ViewFrame {
 
     private Grid<BankAccount> grid;
 

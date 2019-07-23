@@ -39,6 +39,7 @@ export function componentStyle(tagAndInclude, css) {
 
   document.head.appendChild(domModuleElement);
 }
+
 export function globalStylesheet(url) {
   const linkElement = document.createElement("link");
   linkElement.rel = "stylesheet";
