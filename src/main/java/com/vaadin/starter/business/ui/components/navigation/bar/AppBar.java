@@ -26,6 +26,8 @@ import com.vaadin.starter.business.ui.util.LumoStyles;
 import com.vaadin.starter.business.ui.util.UIUtils;
 import com.vaadin.starter.business.ui.views.Home;
 
+import java.util.ArrayList;
+
 import static com.vaadin.starter.business.ui.util.UIUtils.IMG_PATH;
 
 public class AppBar extends Composite<FlexLayout> {
@@ -43,6 +45,7 @@ public class AppBar extends Composite<FlexLayout> {
 
     private FlexBoxLayout tabContainer;
     private NaviTabs tabs;
+    private ArrayList<Registration> tabSelectionListeners;
     private Button addTab;
 
     private TextField search;
@@ -151,6 +154,8 @@ public class AppBar extends Composite<FlexLayout> {
             configureTab(tab);
         }
 
+        this.tabSelectionListeners = new ArrayList<>();
+
         tabContainer = new FlexBoxLayout(this.tabs, addTab);
         tabContainer.addClassName(CLASS_NAME + "__tab-container");
         tabContainer.setAlignItems(FlexComponent.Alignment.CENTER);
@@ -254,7 +259,8 @@ public class AppBar extends Composite<FlexLayout> {
 
     public void addTabSelectionListener(
             ComponentEventListener<Tabs.SelectedChangeEvent> listener) {
-        tabs.addSelectedChangeListener(listener);
+        Registration registration = tabs.addSelectedChangeListener(listener);
+        tabSelectionListeners.add(registration);
     }
 
     public int getTabCount() {
@@ -262,6 +268,8 @@ public class AppBar extends Composite<FlexLayout> {
     }
 
     public void removeAllTabs() {
+        tabSelectionListeners.forEach(registration -> registration.remove());
+        tabSelectionListeners.clear();
         tabs.removeAll();
         updateTabsVisibility();
     }
