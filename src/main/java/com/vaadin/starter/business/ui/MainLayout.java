@@ -67,7 +67,6 @@ public class MainLayout extends FlexBoxLayout
                 });
 
         addClassName(CLASS_NAME);
-        setBackgroundColor(LumoStyles.Color.Contrast._5);
         setFlexDirection(FlexDirection.COLUMN);
         setSizeFull();
 
