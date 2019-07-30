@@ -1,6 +1,8 @@
 # Business App Starter
 
-Business App is a starter for Vaadin. [Live demo](https://business.demo.vaadin.com/)
+Business App is a starter for Vaadin. 
+
+[Live demo](https://business.demo.vaadin.com/)
 
 The starter gives you a productivity boost and a head-start. You get an app shell with a typical hierarchical left-hand menu. The shell, the views and the components are all responsive and touch friendly, which makes them great for desktop and mobile use. The views are built with Java, which enhances Java developers' productivity by allowing them to do all in one language.
 
@@ -16,15 +18,11 @@ Wait for the application to start
 
 Open http://localhost:8080/ to view the application.
 
-Note that when running in development mode, the application will not work in IE11.
-
 ## Running the Project in Production Mode
 
 `./mvnw jetty:run-exploded -Dvaadin.productionMode`
 
 The default mode when the application is built or started is 'development'. The 'production' mode is turned on by setting the `vaadin.productionMode` system property when building or starting the app.
-
-In the 'production' mode all frontend resources of the application are minified and transpiled to also support Internet Explorer 11. That adds extra time to the build process, but reduces the total download size.
 
 Note that if you switch between running in production mode and development mode, you need to do
 ```
