@@ -38,8 +38,10 @@ globalStylesheet("styles/views/view-frame.css");
 styleInclude(
   "lumo-badge",
   `:root {
-    --navi-drawer-rail-width: calc(var(--lumo-size-m) * 1.75);
+    --app-bar-height: var(--lumo-size-xl);
+
     --navi-drawer-width: calc(var(--lumo-size-m) * 7);
+    --navi-drawer-rail-width: calc(var(--lumo-size-m) * 1.75);
     --navi-item-indentation: calc(var(--lumo-icon-size-s) + var(--lumo-space-l));
 
     --details-drawer-width: calc(var(--lumo-size-m) * 11);
@@ -47,43 +49,32 @@ styleInclude(
     --transition-duration-s: 160ms;
     --transition-duration-m: 240ms;
     --transition-duration-l: 320ms;
+
+    --lumo-space-r-m: var(--lumo-space-m);
+    --lumo-space-r-l: var(--lumo-space-l);
+    --lumo-space-r-x: var(--lumo-space-l);
+    --lumo-space-wide-r-m: var(--lumo-space-wide-m);
+    --lumo-space-wide-r-l: var(--lumo-space-wide-l);
   }
 
   /* Responsive sizing and spacing */
   @media (max-width: 479px) {
     :root {
-      --lumo-space-r-m: var(--lumo-space-s);
-      --lumo-space-r-l: var(--lumo-space-m);
       --lumo-space-r-x: 0;
-
-      --lumo-space-wide-r-m: var(--lumo-space-wide-s);
-      --lumo-space-wide-r-l: var(--lumo-space-wide-m);
-
-      --app-bar-height: var(--lumo-size-l)
     }
   }
   @media (min-width: 480px) and (max-width: 1023px) {
     :root {
-      --lumo-space-r-m: var(--lumo-space-s);
-      --lumo-space-r-l: var(--lumo-space-m);
       --lumo-space-r-x: var(--lumo-space-m);
-
-      --lumo-space-wide-r-m: var(--lumo-space-wide-s);
-      --lumo-space-wide-r-l: var(--lumo-space-wide-m);
-
-      --app-bar-height: var(--lumo-size-l)
     }
   }
-  @media (min-width: 1024px) {
+  @media (max-width: 1023px) {
     :root {
-      --lumo-space-r-m: var(--lumo-space-m);
-      --lumo-space-r-l: var(--lumo-space-l);
-      --lumo-space-r-x: var(--lumo-space-l);
-
-      --lumo-space-wide-r-m: var(--lumo-space-wide-m);
-      --lumo-space-wide-r-l: var(--lumo-space-wide-l);
-
-      --app-bar-height: var(--lumo-size-xl);
+      --app-bar-height: var(--lumo-size-l);
+      --lumo-space-r-m: var(--lumo-space-s);
+      --lumo-space-r-l: var(--lumo-space-m);
+      --lumo-space-wide-r-m: var(--lumo-space-wide-s);
+      --lumo-space-wide-r-l: var(--lumo-space-wide-m);
     }
   }
 
