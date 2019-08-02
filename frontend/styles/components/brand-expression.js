@@ -20,4 +20,12 @@ style(`
   .brand-expression__title {
     margin-left: var(--lumo-space-s);
   }
+
+  /* IE 11 workarounds */
+  @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    .navi-drawer[rail]:not([open]):not(:hover) .brand-expression__logo {
+      /* With max-width, the logo gets too wide */
+      width: 100%;
+    }
+  }
 `)
