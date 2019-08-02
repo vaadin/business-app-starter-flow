@@ -103,4 +103,8 @@ styleInclude(
   .app-footer-outer {
     z-index: 3;
   }
+
+  .root {
+    background-color: var(--lumo-contrast-5pct);
+  }
 `);
