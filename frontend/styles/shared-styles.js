@@ -38,9 +38,6 @@ globalStylesheet("styles/views/view-frame.css");
 styleInclude(
   "lumo-badge",
   `:root {
-    --app-bar-height-desktop: var(--lumo-size-xl);
-    --app-bar-height-mobile: var(--lumo-size-l);
-
     --navi-drawer-rail-width: calc(var(--lumo-size-m) * 1.75);
     --navi-drawer-width: calc(var(--lumo-size-m) * 7);
     --navi-item-indentation: calc(var(--lumo-icon-size-s) + var(--lumo-space-l));
@@ -61,6 +58,8 @@ styleInclude(
 
       --lumo-space-wide-r-m: var(--lumo-space-wide-s);
       --lumo-space-wide-r-l: var(--lumo-space-wide-m);
+
+      --app-bar-height: var(--lumo-size-l)
     }
   }
   @media (min-width: 480px) and (max-width: 1023px) {
@@ -71,6 +70,8 @@ styleInclude(
 
       --lumo-space-wide-r-m: var(--lumo-space-wide-s);
       --lumo-space-wide-r-l: var(--lumo-space-wide-m);
+
+      --app-bar-height: var(--lumo-size-l)
     }
   }
   @media (min-width: 1024px) {
@@ -81,6 +82,8 @@ styleInclude(
 
       --lumo-space-wide-r-m: var(--lumo-space-wide-m);
       --lumo-space-wide-r-l: var(--lumo-space-wide-l);
+
+      --app-bar-height: var(--lumo-size-xl);
     }
   }
 
@@ -91,12 +94,8 @@ styleInclude(
     width: 100%;
   }
 
-  vaadin-grid-cell-content {
-    text-overflow: ellipsis;
-  }
-
-  vaadin-text-field {
-    align-self: auto;
+  .root {
+    background-color: var(--lumo-contrast-5pct);
   }
 
   .app-header-outer,
@@ -104,7 +103,11 @@ styleInclude(
     z-index: 3;
   }
 
-  .root {
-    background-color: var(--lumo-contrast-5pct);
+  vaadin-grid-cell-content {
+    text-overflow: ellipsis;
+  }
+
+  vaadin-text-field {
+    align-self: auto;
   }
 `);

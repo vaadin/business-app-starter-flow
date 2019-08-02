@@ -68,10 +68,10 @@ public class Payments extends SplitViewFrame {
     }
 
     private Grid createGrid() {
-        grid = new Grid<>();
-        grid.addSelectionListener(event -> event.getFirstSelectedItem()
-                .ifPresent(this::showDetails));
         dataProvider = DataProvider.ofCollection(DummyData.getPayments());
+
+        grid = new Grid<>();
+        grid.addSelectionListener(event -> event.getFirstSelectedItem().ifPresent(this::showDetails));
         grid.setDataProvider(dataProvider);
         grid.setHeight("100%");
 
@@ -88,11 +88,11 @@ public class Payments extends SplitViewFrame {
                 .setFlexGrow(0)
                 .setHeader("Status");
         grid.addColumn(new ComponentRenderer<>(this::createFromInfo))
-                .setAutoWidth(true)
-                .setHeader("From");
+                .setHeader("From")
+                .setWidth("200px");
         grid.addColumn(new ComponentRenderer<>(this::createToInfo))
-                .setAutoWidth(true)
-                .setHeader("To");
+                .setHeader("To")
+                .setWidth("200px");
         grid.addColumn(new ComponentRenderer<>(this::createAmount))
                 .setAutoWidth(true)
                 .setFlexGrow(0)

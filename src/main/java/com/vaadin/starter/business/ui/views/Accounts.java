@@ -38,9 +38,9 @@ public class Accounts extends ViewFrame {
 
     private Grid createGrid() {
         grid = new Grid<>();
-        grid.setId("accounts");
         grid.addSelectionListener(event -> event.getFirstSelectedItem().ifPresent(this::viewDetails));
         grid.setDataProvider(DataProvider.ofCollection(DummyData.getBankAccounts()));
+        grid.setId("accounts");
         grid.setSizeFull();
 
         grid.addColumn(BankAccount::getId)
@@ -50,13 +50,13 @@ public class Accounts extends ViewFrame {
                 .setHeader("ID")
                 .setSortable(true);
         grid.addColumn(new ComponentRenderer<>(this::createBankInfo))
-                .setAutoWidth(true)
                 .setComparator(BankAccount::getAccount)
-                .setHeader("Bank Account");
+                .setHeader("Bank Account")
+                .setWidth("200px");
         grid.addColumn(BankAccount::getOwner)
-                .setAutoWidth(true)
                 .setHeader("Owner")
-                .setSortable(true);
+                .setSortable(true)
+                .setWidth("200px");
         grid.addColumn(new ComponentRenderer<>(this::createAvailability))
                 .setAutoWidth(true)
                 .setComparator(BankAccount::getAvailability)

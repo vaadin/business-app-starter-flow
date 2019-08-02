@@ -18,9 +18,7 @@ style(`
   /* Navi icon */
   .app-bar__navi-icon,
   .app-bar__context-icon {
-    margin-right: var(--lumo-space-l);
-    margin-bottom: calc((var(--app-bar-height-mobile) - var(--lumo-icon-size-m)) / 2);
-    margin-top: calc((var(--app-bar-height-mobile) - var(--lumo-icon-size-m)) / 2);
+    margin: calc((var(--app-bar-height) - var(--lumo-icon-size-m)) / 2) var(--lumo-space-l) calc((var(--app-bar-height) - var(--lumo-icon-size-m)) / 2) 0;
   }
 
   /* Title */
@@ -33,8 +31,7 @@ style(`
   }
 
   .app-bar__title:not(:empty) {
-    margin-bottom: calc((var(--app-bar-height-mobile) - (var(--lumo-font-size-l) * var(--lumo-line-height-xs))) / 2);
-    margin-top: calc((var(--app-bar-height-mobile) - (var(--lumo-font-size-l) * var(--lumo-line-height-xs))) / 2);
+    margin: calc((var(--app-bar-height) - (var(--lumo-font-size-l) * var(--lumo-line-height-xs))) / 2) 0;
   }
 
   /* Action items */
@@ -43,7 +40,7 @@ style(`
   }
 
   .app-bar__tab-container {
-    padding: 0 var(--lumo-space-m);
+    padding: 0 var(--lumo-space-r-l);
   }
 
   /* Search */
@@ -77,35 +74,20 @@ style(`
     .app-bar__navi-icon {
       display: none;
     }
-
-    .app-bar__context-icon {
-      margin-bottom: calc((var(--app-bar-height-desktop) - var(--lumo-icon-size-m)) / 2);
-      margin-top: calc((var(--app-bar-height-desktop) - var(--lumo-icon-size-m)) / 2);
-    }
-
-    .app-bar__title:not(:empty) {
-      margin-bottom: calc((var(--app-bar-height-desktop) - (var(--lumo-font-size-l) * var(--lumo-line-height-xs))) / 2);
-      margin-top: calc((var(--app-bar-height-desktop) - (var(--lumo-font-size-l) * var(--lumo-line-height-xs))) / 2);
-    }
-
-    .app-bar__tab-container {
-      padding: 0 var(--lumo-space-l);
-    }
   }
 
-    /* IE 11 workarounds */
-    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
-      /* IE 11 can't handle different themes for sub-parts of the application, without the parts having own
-         shadow roots. Instead of polluting the code for all browsers, the relevant colors of dark theme
-         is hard coded here. */
-      .app-bar {
-        color: hsl(214, 100%, 98%);
-        background-color: hsl(214, 35%, 21%);
-        box-shadow: 0 2px 4px -1px hsla(214, 8%, 4%, 0.23), 0 3px 12px -1px hsla(214, 12%, 6%, 0.32);
-      }
-
-      .app-bar__title {
-        color: hsl(214, 100%, 98%);
-      }
+  /* === IE 11 workarounds === */
+  @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    /* IE 11 can't handle different themes for sub-parts of the application, without the parts having own
+       shadow roots. Instead of polluting the code for all browsers, the relevant colors of dark theme
+       is hard coded here. */
+    .app-bar {
+      color: hsl(214, 100%, 98%);
+      background-color: hsl(214, 35%, 21%);
+      box-shadow: 0 2px 4px -1px hsla(214, 8%, 4%, 0.23), 0 3px 12px -1px hsla(214, 12%, 6%, 0.32);
     }
+    .app-bar__title {
+      color: hsl(214, 100%, 98%);
+    }
+  }
 `)

@@ -131,24 +131,20 @@ style(`
     }
   }
 
-  /* IE 11 workarounds */
+  /* === IE 11 workarounds === */
   @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
     .navi-drawer__scrim,
     .navi-drawer__content {
-      /* z-index is needed on each level for IE11 support. For other browsers .navi-drawer z-index is enough */
+      /* z-index is needed on each level for IE11 support. */
       z-index: 2
     }
-
-
     .brand-expression .h3 {
       font-size: 1.375rem;
     }
   }
-
-  /* Push the drawer out of view */
   @media all and (max-width: 1023px) and (-ms-high-contrast: none), (-ms-high-contrast: active) {
     .navi-drawer:not([open]) .navi-drawer__content {
-      /* IE11 doesn't understand nested calc's, so flatting one level */
+      /* IE11 doesn't understand nested calculations. */
       margin-left: -18.9rem;
     }
   }

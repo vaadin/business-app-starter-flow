@@ -7,7 +7,7 @@ style(`
     box-sizing: border-box;
     display: flex;
     /* Application header height with tabs */
-    height: calc(var(--app-bar-height-desktop) + var(--lumo-size-l));
+    height: calc(var(--app-bar-height) + var(--lumo-size-l));
     justify-content: center;
     padding: var(--lumo-space-m);
   }
