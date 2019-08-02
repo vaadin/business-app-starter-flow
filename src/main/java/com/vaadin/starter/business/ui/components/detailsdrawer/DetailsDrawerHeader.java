@@ -27,7 +27,7 @@ public class DetailsDrawerHeader extends FlexBoxLayout {
         this.close = UIUtils.createTertiaryInlineButton(VaadinIcon.CLOSE);
         UIUtils.setLineHeight("1", this.close);
 
-        this.title = UIUtils.createH3Label(title);
+        this.title = UIUtils.createH4Label(title);
 
         FlexBoxLayout wrapper = new FlexBoxLayout(this.close, this.title);
         wrapper.setAlignItems(Alignment.CENTER);
