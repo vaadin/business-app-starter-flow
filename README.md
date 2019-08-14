@@ -12,7 +12,7 @@ You can read the detailed documentation in [Vaadin Docs](https://vaadin.com/docs
 
 ## Running the Project in Development Mode
 
-`./mvnw jetty:run`
+`mvn jetty:run`
 
 Wait for the application to start
 
@@ -20,13 +20,13 @@ Open http://localhost:8080/ to view the application.
 
 ## Running the Project in Production Mode
 
-`./mvnw jetty:run-exploded -Dvaadin.productionMode`
+`mvn jetty:run-exploded -Dvaadin.productionMode`
 
 The default mode when the application is built or started is 'development'. The 'production' mode is turned on by setting the `vaadin.productionMode` system property when building or starting the app.
 
 Note that if you switch between running in production mode and development mode, you need to do
 ```
-./mvnw clean
+mvn clean
 ```
 before running in the other mode.
 
