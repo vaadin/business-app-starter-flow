@@ -21,19 +21,23 @@ import com.vaadin.starter.business.backend.DummyData;
 import com.vaadin.starter.business.backend.Payment;
 import com.vaadin.starter.business.ui.MainLayout;
 import com.vaadin.starter.business.ui.components.Badge;
+import com.vaadin.starter.business.ui.components.FlexBoxLayout;
 import com.vaadin.starter.business.ui.components.ListItem;
 import com.vaadin.starter.business.ui.components.detailsdrawer.DetailsDrawer;
 import com.vaadin.starter.business.ui.components.detailsdrawer.DetailsDrawerHeader;
 import com.vaadin.starter.business.ui.components.navigation.bar.AppBar;
 import com.vaadin.starter.business.ui.layout.size.Bottom;
+import com.vaadin.starter.business.ui.layout.size.Horizontal;
+import com.vaadin.starter.business.ui.layout.size.Top;
 import com.vaadin.starter.business.ui.util.FontSize;
 import com.vaadin.starter.business.ui.util.LumoStyles;
 import com.vaadin.starter.business.ui.util.TextColor;
 import com.vaadin.starter.business.ui.util.UIUtils;
+import com.vaadin.starter.business.ui.util.css.BoxSizing;
 import com.vaadin.starter.business.ui.util.css.WhiteSpace;
 
-@Route(value = "payments", layout = MainLayout.class)
 @PageTitle("Payments")
+@Route(value = "payments", layout = MainLayout.class)
 public class Payments extends SplitViewFrame {
 
     private Grid<Payment> grid;
@@ -62,8 +66,10 @@ public class Payments extends SplitViewFrame {
     }
 
     private Component createContent() {
-        Div content = new Div(createGrid());
-        content.addClassName("grid-view");
+        FlexBoxLayout content = new FlexBoxLayout(createGrid());
+        content.setBoxSizing(BoxSizing.BORDER_BOX);
+        content.setHeightFull();
+        content.setPadding(Horizontal.RESPONSIVE_X, Top.RESPONSIVE_X);
         return content;
     }
 
@@ -73,7 +79,7 @@ public class Payments extends SplitViewFrame {
         grid = new Grid<>();
         grid.addSelectionListener(event -> event.getFirstSelectedItem().ifPresent(this::showDetails));
         grid.setDataProvider(dataProvider);
-        grid.setHeight("100%");
+        grid.setHeightFull();
 
         ComponentRenderer<Badge, Payment> badgeRenderer = new ComponentRenderer<>(
             payment -> {
@@ -109,15 +115,11 @@ public class Payments extends SplitViewFrame {
     }
 
     private Component createFromInfo(Payment payment) {
-        ListItem item = new ListItem(payment.getFrom(), payment.getFromIBAN());
-        item.setHorizontalPadding(false);
-        return item;
+        return new ListItem(payment.getFrom(), payment.getFromIBAN());
     }
 
     private Component createToInfo(Payment payment) {
-        ListItem item = new ListItem(payment.getTo(), payment.getToIBAN());
-        item.setHorizontalPadding(false);
-        return item;
+        return new ListItem(payment.getTo(), payment.getToIBAN());
     }
 
     private Component createAmount(Payment payment) {

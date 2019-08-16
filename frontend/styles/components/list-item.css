@@ -1,0 +1,70 @@
+.list-item {
+  box-sizing: border-box;
+  line-height: var(--lumo-line-height-m);
+  overflow: hidden;
+  padding: var(--lumo-space-wide-r-l);
+  position: relative;
+}
+
+/* Prefix */
+.list-item__prefix {
+  display: flex;
+  flex-shrink: 0;
+  margin-right: var(--lumo-space-l);
+}
+
+.list-item__prefix img {
+  max-height: var(--lumo-icon-size-m);
+  max-width: var(--lumo-icon-size-m);
+}
+
+/* Content */
+.list-item__content {
+  flex: 1;
+  overflow: hidden;
+}
+
+.list-item__content label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Suffix */
+.list-item__suffix {
+  display: flex;
+  flex-shrink: 0;
+  margin-left: var(--lumo-space-l);
+}
+
+/* Divider */
+.list-item__divider {
+  background-color: var(--lumo-contrast-10pct);
+  bottom: 0;
+  height: 1px;
+  left: 0;
+  position: absolute;
+  right: 0;
+}
+
+.list-item__prefix ~ .list-item__divider {
+  left: calc(var(--lumo-icon-size-m) + (var(--lumo-space-l) * 2));
+}
+
+/* Grid styling */
+vaadin-grid .list-item {
+  padding: var(--lumo-space-xs) 0;
+}
+
+vaadin-grid .list-item__prefix {
+  margin-right: var(--lumo-space-m);
+}
+
+vaadin-grid .list-item label {
+  pointer-events: none;
+}
+
+@media (max-width: 1023px) {
+  .list-item__prefix ~ .list-item__divider {
+    left: calc(var(--lumo-icon-size-m) + (var(--lumo-space-l) + var(--lumo-space-m)));
+  }
+}

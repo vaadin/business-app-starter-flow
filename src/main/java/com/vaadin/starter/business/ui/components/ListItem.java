@@ -1,18 +1,18 @@
 package com.vaadin.starter.business.ui.components;
 
 import com.vaadin.flow.component.Component;
-import com.vaadin.flow.component.HasStyle;
+import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
-import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.starter.business.ui.util.FontSize;
 import com.vaadin.starter.business.ui.util.TextColor;
 import com.vaadin.starter.business.ui.util.UIUtils;
 import com.vaadin.starter.business.ui.util.css.FlexDirection;
 import com.vaadin.starter.business.ui.util.css.WhiteSpace;
 
-public class ListItem extends FlexLayout implements HasStyle {
+@CssImport("styles/components/list-item.css")
+public class ListItem extends FlexBoxLayout {
 
     private final String CLASS_NAME = "list-item";
 
@@ -27,15 +27,15 @@ public class ListItem extends FlexLayout implements HasStyle {
     private Div divider;
 
     public ListItem(String primary, String secondary) {
-        setClassName(CLASS_NAME);
         setAlignItems(FlexComponent.Alignment.CENTER);
+        setClassName(CLASS_NAME);
 
         this.primary = new Label(primary);
         this.secondary = UIUtils.createLabel(FontSize.S, TextColor.SECONDARY,
                 secondary);
 
         content = new FlexBoxLayout(this.primary, this.secondary);
-        content.addClassName(CLASS_NAME + "__content");
+        content.setClassName(CLASS_NAME + "__content");
         content.setFlexDirection(FlexDirection.COLUMN);
         add(content);
     }
@@ -122,7 +122,7 @@ public class ListItem extends FlexLayout implements HasStyle {
     public void setPrefix(Component... components) {
         if (prefix == null) {
             prefix = new Div();
-            prefix.addClassName(CLASS_NAME + "__prefix");
+            prefix.setClassName(CLASS_NAME + "__prefix");
             getElement().insertChild(0, prefix.getElement());
         }
         prefix.removeAll();
@@ -132,7 +132,7 @@ public class ListItem extends FlexLayout implements HasStyle {
     public void setSuffix(Component... components) {
         if (suffix == null) {
             suffix = new Div();
-            suffix.addClassName(CLASS_NAME + "__suffix");
+            suffix.setClassName(CLASS_NAME + "__suffix");
             getElement().insertChild(getElement().getChildCount(),
                     suffix.getElement());
         }
@@ -143,7 +143,7 @@ public class ListItem extends FlexLayout implements HasStyle {
     public void setDividerVisible(boolean visible) {
         if (divider == null) {
             divider = new Div();
-            divider.addClassName(CLASS_NAME + "__divider");
+            divider.setClassName(CLASS_NAME + "__divider");
             add(divider);
         }
         divider.setVisible(visible);

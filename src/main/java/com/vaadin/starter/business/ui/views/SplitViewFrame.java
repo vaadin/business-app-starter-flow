@@ -4,6 +4,7 @@ import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.HasStyle;
+import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.starter.business.ui.MainLayout;
 import com.vaadin.starter.business.ui.components.FlexBoxLayout;
@@ -19,15 +20,18 @@ import com.vaadin.starter.business.ui.util.css.FlexDirection;
  * <li>Bottom {@link #setViewFooter(Component...) footer}</li>
  * </ul>
  */
+@CssImport("styles/components/view-frame.css")
 public class SplitViewFrame extends Composite<Div> implements HasStyle {
 
-    private final String CLASS_NAME = "view-frame";
+    private String CLASS_NAME = "view-frame";
 
-    private final Div header = new Div();
-    private final FlexBoxLayout wrapper = new FlexBoxLayout();
-    private final Div content = new Div();
-    private final Div details = new Div();
-    private final Div footer = new Div();
+    private Div header;
+
+    private FlexBoxLayout wrapper;
+    private Div content;
+    private Div details;
+
+    private Div footer;
 
     public enum Position {
         RIGHT, BOTTOM
@@ -36,10 +40,19 @@ public class SplitViewFrame extends Composite<Div> implements HasStyle {
     public SplitViewFrame() {
         setClassName(CLASS_NAME);
 
+        header = new Div();
         header.setClassName(CLASS_NAME + "__header");
+
+        wrapper = new FlexBoxLayout();
         wrapper.setClassName(CLASS_NAME + "__wrapper");
+
+        content = new Div();
         content.setClassName(CLASS_NAME + "__content");
+
+        details = new Div();
         details.setClassName(CLASS_NAME + "__details");
+
+        footer = new Div();
         footer.setClassName(CLASS_NAME + "__footer");
 
         wrapper.add(content, details);

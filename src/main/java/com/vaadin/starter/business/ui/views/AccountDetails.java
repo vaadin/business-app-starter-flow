@@ -39,8 +39,8 @@ import com.vaadin.starter.business.ui.util.css.WhiteSpace;
 
 import java.time.LocalDate;
 
-@Route(value = "account-details", layout = MainLayout.class)
 @PageTitle("Account Details")
+@Route(value = "account-details", layout = MainLayout.class)
 public class AccountDetails extends ViewFrame implements HasUrlParameter<Long> {
 
     public int RECENT_TRANSACTIONS = 4;
@@ -52,39 +52,19 @@ public class AccountDetails extends ViewFrame implements HasUrlParameter<Long> {
     private BankAccount account;
 
     @Override
-    protected void onAttach(AttachEvent attachEvent) {
-        super.onAttach(attachEvent);
-
-        AppBar appBar = initAppBar();
-        appBar.setTitle(account.getOwner());
-        UI.getCurrent().getPage().setTitle(account.getOwner());
-
-        availability.setPrimaryText(
-                UIUtils.formatAmount(account.getAvailability()));
-        bankAccount.setPrimaryText(account.getAccount());
-        bankAccount.setSecondaryText(account.getBank());
-        updated.setPrimaryText(UIUtils.formatDate(account.getUpdated()));
-    }
-
-    @Override
     public void setParameter(BeforeEvent beforeEvent, Long id) {
         setViewContent(createContent());
         account = DummyData.getBankAccount(id);
     }
 
-    private AppBar initAppBar() {
-        AppBar appBar = MainLayout.get().getAppBar();
-        appBar.setNaviMode(AppBar.NaviMode.CONTEXTUAL);
-        appBar.getContextIcon().addClickListener(
-                e -> UI.getCurrent().navigate(Accounts.class));
-        return appBar;
-    }
-
     private Component createContent() {
-        FlexBoxLayout content = new FlexBoxLayout(createLogoSection(),
+        FlexBoxLayout content = new FlexBoxLayout(
+                createLogoSection(),
                 createRecentTransactionsHeader(),
-                createRecentTransactionsList(), createMonthlyOverviewHeader(),
-                createMonthlyOverviewChart());
+                createRecentTransactionsList(),
+                createMonthlyOverviewHeader(),
+                createMonthlyOverviewChart()
+        );
         content.setFlexDirection(FlexDirection.COLUMN);
         content.setMargin(Horizontal.AUTO, Vertical.RESPONSIVE_L);
         content.setMaxWidth("840px");
@@ -98,27 +78,22 @@ public class AccountDetails extends ViewFrame implements HasUrlParameter<Long> {
         image.setHeight("200px");
         image.setWidth("200px");
 
-        availability = new ListItem(
-                UIUtils.createTertiaryIcon(VaadinIcon.DOLLAR), "",
-                "Availability");
-        availability.setId("availability");
+        availability = new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.DOLLAR), "", "Availability");
         availability.getPrimary().addClassName(LumoStyles.Heading.H2);
         availability.setDividerVisible(true);
+        availability.setId("availability");
         availability.setReverse(true);
 
-        bankAccount = new ListItem(
-                UIUtils.createTertiaryIcon(VaadinIcon.INSTITUTION), "", "");
-        bankAccount.setId("bankAccount");
+        bankAccount = new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.INSTITUTION), "", "");
         bankAccount.setDividerVisible(true);
+        bankAccount.setId("bankAccount");
         bankAccount.setReverse(true);
         bankAccount.setWhiteSpace(WhiteSpace.PRE_LINE);
 
-        updated = new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.CALENDAR),
-                "", "Updated");
+        updated = new ListItem(UIUtils.createTertiaryIcon(VaadinIcon.CALENDAR), "", "Updated");
         updated.setReverse(true);
 
-        FlexBoxLayout listItems = new FlexBoxLayout(availability, bankAccount,
-                updated);
+        FlexBoxLayout listItems = new FlexBoxLayout(availability, bankAccount, updated);
         listItems.setFlexDirection(FlexDirection.COLUMN);
 
         FlexBoxLayout section = new FlexBoxLayout(image, listItems);
@@ -147,24 +122,22 @@ public class AccountDetails extends ViewFrame implements HasUrlParameter<Long> {
 
     private Component createRecentTransactionsList() {
         Div items = new Div();
-        items.addClassNames(BoxShadowBorders.BOTTOM,
-                LumoStyles.Padding.Bottom.L);
+        items.addClassNames(BoxShadowBorders.BOTTOM, LumoStyles.Padding.Bottom.L);
 
         for (int i = 0; i < RECENT_TRANSACTIONS; i++) {
             Double amount = DummyData.getAmount();
-
             Label amountLabel = UIUtils.createAmountLabel(amount);
             if (amount > 0) {
                 UIUtils.setTextColor(TextColor.SUCCESS, amountLabel);
             } else {
                 UIUtils.setTextColor(TextColor.ERROR, amountLabel);
             }
-
-            ListItem item = new ListItem(DummyData.getLogo(),
+            ListItem item = new ListItem(
+                    DummyData.getLogo(),
                     DummyData.getCompany(),
                     UIUtils.formatDate(LocalDate.now().minusDays(i)),
-                    amountLabel);
-
+                    amountLabel
+            );
             // Dividers for all but the last item
             item.setDividerVisible(i < RECENT_TRANSACTIONS - 1);
             items.add(item);
@@ -175,8 +148,7 @@ public class AccountDetails extends ViewFrame implements HasUrlParameter<Long> {
 
     private Component createMonthlyOverviewHeader() {
         Label header = UIUtils.createH3Label("Monthly Overview");
-        header.addClassNames(LumoStyles.Margin.Vertical.L,
-                LumoStyles.Margin.Responsive.Horizontal.L);
+        header.addClassNames(LumoStyles.Margin.Vertical.L, LumoStyles.Margin.Responsive.Horizontal.L);
         return header;
     }
 
@@ -188,8 +160,7 @@ public class AccountDetails extends ViewFrame implements HasUrlParameter<Long> {
         conf.getLegend().setEnabled(true);
 
         XAxis xAxis = new XAxis();
-        xAxis.setCategories("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul",
-                "Aug", "Sep", "Oct", "Nov", "Dec");
+        xAxis.setCategories("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
         conf.addxAxis(xAxis);
 
         conf.getyAxis().setTitle("Amount ($)");
@@ -209,5 +180,26 @@ public class AccountDetails extends ViewFrame implements HasUrlParameter<Long> {
         FlexBoxLayout card = new FlexBoxLayout(chart);
         card.setHeight("400px");
         return card;
+    }
+
+    @Override
+    protected void onAttach(AttachEvent attachEvent) {
+        super.onAttach(attachEvent);
+
+        initAppBar();
+        UI.getCurrent().getPage().setTitle(account.getOwner());
+
+        availability.setPrimaryText(UIUtils.formatAmount(account.getAvailability()));
+        bankAccount.setPrimaryText(account.getAccount());
+        bankAccount.setSecondaryText(account.getBank());
+        updated.setPrimaryText(UIUtils.formatDate(account.getUpdated()));
+    }
+
+    private AppBar initAppBar() {
+        AppBar appBar = MainLayout.get().getAppBar();
+        appBar.setNaviMode(AppBar.NaviMode.CONTEXTUAL);
+        appBar.getContextIcon().addClickListener(e -> UI.getCurrent().navigate(Accounts.class));
+        appBar.setTitle(account.getOwner());
+        return appBar;
     }
 }

@@ -1,20 +1,17 @@
 package com.vaadin.starter.business.ui.util.css;
 
-public enum TextAlign {
+public enum TextOverflow {
 
-    CENTER("center"),
-    JUSTIFY("justify"),
-    LEFT("left"),
-    RIGHT("right");
+    CLIP("clip"),
+    ELLIPSIS("ellipsis");
 
     private String value;
 
-    TextAlign(String value) {
+    TextOverflow(String value) {
         this.value = value;
     }
 
     public String getValue() {
         return value;
     }
-
 }

@@ -1,20 +1,16 @@
 package com.vaadin.starter.business.ui.util.css;
 
-public enum TextAlign {
+public enum PointerEvents {
 
-    CENTER("center"),
-    JUSTIFY("justify"),
-    LEFT("left"),
-    RIGHT("right");
+    AUTO("auto"), NONE("none");
 
     private String value;
 
-    TextAlign(String value) {
+    PointerEvents(String value) {
         this.value = value;
     }
 
     public String getValue() {
         return value;
     }
-
 }

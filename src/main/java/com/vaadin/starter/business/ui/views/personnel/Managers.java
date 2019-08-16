@@ -5,7 +5,6 @@ import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.ColumnTextAlign;
 import com.vaadin.flow.component.grid.Grid;
-import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -21,12 +20,17 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.starter.business.backend.DummyData;
 import com.vaadin.starter.business.backend.Person;
 import com.vaadin.starter.business.ui.MainLayout;
+import com.vaadin.starter.business.ui.components.FlexBoxLayout;
+import com.vaadin.starter.business.ui.components.Initials;
 import com.vaadin.starter.business.ui.components.ListItem;
 import com.vaadin.starter.business.ui.components.detailsdrawer.DetailsDrawer;
 import com.vaadin.starter.business.ui.components.detailsdrawer.DetailsDrawerFooter;
 import com.vaadin.starter.business.ui.components.detailsdrawer.DetailsDrawerHeader;
+import com.vaadin.starter.business.ui.layout.size.Horizontal;
+import com.vaadin.starter.business.ui.layout.size.Top;
 import com.vaadin.starter.business.ui.util.LumoStyles;
 import com.vaadin.starter.business.ui.util.UIUtils;
+import com.vaadin.starter.business.ui.util.css.BoxSizing;
 import com.vaadin.starter.business.ui.views.SplitViewFrame;
 
 @Route(value = "managers", layout = MainLayout.class)
@@ -48,8 +52,10 @@ public class Managers extends SplitViewFrame {
     }
 
     private Component createContent() {
-        Div content = new Div(createGrid());
-        content.addClassName("grid-view");
+        FlexBoxLayout content = new FlexBoxLayout(createGrid());
+        content.setBoxSizing(BoxSizing.BORDER_BOX);
+        content.setHeightFull();
+        content.setPadding(Horizontal.RESPONSIVE_X, Top.RESPONSIVE_X);
         return content;
     }
 
@@ -90,11 +96,9 @@ public class Managers extends SplitViewFrame {
     }
 
     private Component createUserInfo(Person person) {
-        ListItem item = new ListItem(
-                UIUtils.createInitials(person.getInitials()), person.getName(),
+        return new ListItem(
+                new Initials(person.getInitials()), person.getName(),
                 person.getEmail());
-        item.setHorizontalPadding(false);
-        return item;
     }
 
     private Component createActive(Person person) {
@@ -146,11 +150,11 @@ public class Managers extends SplitViewFrame {
     private FormLayout createDetails(Person person) {
         TextField firstName = new TextField();
         firstName.setValue(person.getFirstName());
-        firstName.setWidth("100%");
+        firstName.setWidthFull();
 
         TextField lastName = new TextField();
         lastName.setValue(person.getLastName());
-        lastName.setWidth("100%");
+        lastName.setWidthFull();
 
         RadioButtonGroup<String> gender = new RadioButtonGroup<>();
         gender.setItems("Active", "Inactive");
@@ -160,12 +164,12 @@ public class Managers extends SplitViewFrame {
 
         TextField email = new TextField();
         email.setValue(person.getEmail());
-        email.setWidth("100%");
+        email.setWidthFull();
 
         ComboBox company = new ComboBox();
         company.setItems(DummyData.getCompanies());
         company.setValue(DummyData.getCompany());
-        company.setWidth("100%");
+        company.setWidthFull();
 
         // Form layout
         FormLayout form = new FormLayout();

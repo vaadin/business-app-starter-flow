@@ -1,18 +1,15 @@
 package com.vaadin.starter.business.ui.util;
 
 import com.vaadin.flow.component.Component;
-import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
-import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.textfield.TextFieldVariant;
-import com.vaadin.flow.theme.lumo.Lumo;
 import com.vaadin.starter.business.backend.Address;
 import com.vaadin.starter.business.backend.DummyData;
 import com.vaadin.starter.business.ui.components.FlexBoxLayout;
@@ -280,20 +277,6 @@ public class UIUtils {
 
     /* === MISC === */
 
-    public static Component createInitials(String initials) {
-        FlexBoxLayout layout = new FlexBoxLayout(new Text(initials));
-        setFontSize(FontSize.S, layout);
-        layout.addClassName("initials");
-
-        layout.setAlignItems(FlexComponent.Alignment.CENTER);
-        layout.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
-        layout.setTheme(Lumo.DARK);
-
-        layout.setHeight(LumoStyles.Size.M);
-        layout.setWidth(LumoStyles.Size.M);
-        return layout;
-    }
-
     public static String formatAddress(Address address) {
         return address.getStreet() + "\n" + address.getCity() + ", "
                 + address.getCity() + " " + address.getZip();
@@ -474,6 +457,14 @@ public class UIUtils {
         }
     }
 
+    public static void setLineHeight(LineHeight lineHeight,
+                                     Component... components) {
+        for (Component component : components) {
+            component.getElement().getStyle().set("line-height",
+                    lineHeight.getValue());
+        }
+    }
+
     public static void setLineHeight(String value,
                                      Component... components) {
         for (Component component : components) {
@@ -495,6 +486,13 @@ public class UIUtils {
         }
     }
 
+    public static void setPointerEvents(PointerEvents pointerEvents, Component... components) {
+        for (Component component : components) {
+            component.getElement().getStyle().set("pointer-events",
+                    pointerEvents.getValue());
+        }
+    }
+
     public static void setShadow(Shadow shadow, Component... components) {
         for (Component component : components) {
             component.getElement().getStyle().set("box-shadow",
@@ -513,6 +511,12 @@ public class UIUtils {
     public static void setTextColor(TextColor textColor, Component... components) {
         for (Component component : components) {
             component.getElement().getStyle().set("color", textColor.getValue());
+        }
+    }
+
+    public static void setTextOverflow(TextOverflow textOverflow, Component... components) {
+        for (Component component : components) {
+            component.getElement().getStyle().set("text-overflow", textOverflow.getValue());
         }
     }
 

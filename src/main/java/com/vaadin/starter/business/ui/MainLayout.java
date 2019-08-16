@@ -3,7 +3,7 @@ package com.vaadin.starter.business.ui;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasElement;
 import com.vaadin.flow.component.UI;
-import com.vaadin.flow.component.dependency.JsModule;
+import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
@@ -19,7 +19,6 @@ import com.vaadin.starter.business.ui.components.navigation.bar.TabBar;
 import com.vaadin.starter.business.ui.components.navigation.drawer.NaviDrawer;
 import com.vaadin.starter.business.ui.components.navigation.drawer.NaviItem;
 import com.vaadin.starter.business.ui.components.navigation.drawer.NaviMenu;
-import com.vaadin.starter.business.ui.util.LumoStyles;
 import com.vaadin.starter.business.ui.util.UIUtils;
 import com.vaadin.starter.business.ui.util.css.FlexDirection;
 import com.vaadin.starter.business.ui.util.css.Overflow;
@@ -32,9 +31,20 @@ import com.vaadin.starter.business.ui.views.personnel.Managers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@JsModule("./styles/shared-styles.js")
-@Viewport("width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes")
+@CssImport(value = "./styles/components/charts.css", themeFor = "vaadin-chart", include = "vaadin-chart-default-theme")
+@CssImport(value = "./styles/components/floating-action-button.css", themeFor = "vaadin-button")
+@CssImport(value = "./styles/components/grid.css", themeFor = "vaadin-grid")
+@CssImport("./styles/lumo/border-radius.css")
+@CssImport("./styles/lumo/icon-size.css")
+@CssImport("./styles/lumo/margin.css")
+@CssImport("./styles/lumo/padding.css")
+@CssImport("./styles/lumo/shadow.css")
+@CssImport("./styles/lumo/spacing.css")
+@CssImport("./styles/lumo/typography.css")
+@CssImport("./styles/misc/box-shadow-borders.css")
+@CssImport(value = "./styles/styles.css", include = "lumo-badge")
 @PWA(name = "###Project Name###", shortName = "###Project Name###", iconPath = "images/logo-18.png", backgroundColor = "#233348", themeColor = "#233348")
+@Viewport("width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes")
 public class MainLayout extends FlexBoxLayout
         implements RouterLayout, PageConfigurator, AfterNavigationObserver {
 
@@ -204,7 +214,7 @@ public class MainLayout extends FlexBoxLayout
         settings.addMetaTag("apple-mobile-web-app-capable", "yes");
         settings.addMetaTag("apple-mobile-web-app-status-bar-style", "black");
 
-        settings.addFavIcon("icon", "frontend/styles/favicons/favicon.ico",
+        settings.addFavIcon("icon", "frontend/images/favicons/favicon.ico",
                 "256x256");
     }
 

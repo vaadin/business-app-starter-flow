@@ -18,9 +18,9 @@ public class NaviTabs extends Tabs {
     private ComponentEventListener<SelectedChangeEvent> listener = (ComponentEventListener<SelectedChangeEvent>) selectedChangeEvent -> navigateToSelectedTab();
 
     public NaviTabs() {
+        addSelectedChangeListener(listener);
         getElement().setAttribute("overflow", "end");
         UIUtils.setOverflow(Overflow.HIDDEN, this);
-        addSelectedChangeListener(listener);
     }
 
     /**

@@ -5,6 +5,7 @@ import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.starter.business.ui.components.FlexBoxLayout;
 import com.vaadin.starter.business.ui.layout.size.Horizontal;
@@ -22,7 +23,7 @@ public class DetailsDrawerHeader extends FlexBoxLayout {
     public DetailsDrawerHeader(String title) {
         addClassName(BoxShadowBorders.BOTTOM);
         setFlexDirection(FlexDirection.COLUMN);
-        setWidth("100%");
+        setWidthFull();
 
         this.close = UIUtils.createTertiaryInlineButton(VaadinIcon.CLOSE);
         UIUtils.setLineHeight("1", this.close);
@@ -30,7 +31,7 @@ public class DetailsDrawerHeader extends FlexBoxLayout {
         this.title = UIUtils.createH4Label(title);
 
         FlexBoxLayout wrapper = new FlexBoxLayout(this.close, this.title);
-        wrapper.setAlignItems(Alignment.CENTER);
+        wrapper.setAlignItems(FlexComponent.Alignment.CENTER);
         wrapper.setPadding(Horizontal.RESPONSIVE_L, Vertical.M);
         wrapper.setSpacing(Right.L);
         add(wrapper);

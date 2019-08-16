@@ -5,6 +5,7 @@ import com.vaadin.flow.component.board.Row;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.charts.Chart;
 import com.vaadin.flow.component.charts.model.*;
+import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -25,11 +26,12 @@ import com.vaadin.starter.business.ui.util.*;
 import com.vaadin.starter.business.ui.util.css.Position;
 import com.vaadin.starter.business.ui.util.css.*;
 
-@Route(value = "statistics", layout = MainLayout.class)
+@CssImport("styles/views/statistics.css")
 @PageTitle("Statistics")
+@Route(value = "statistics", layout = MainLayout.class)
 public class Statistics extends ViewFrame {
 
-    private static final String CLASS_NAME = "dashboard";
+    private static final String CLASS_NAME = "statistics";
     public static final String MAX_WIDTH = "1024px";
 
     public Statistics() {
@@ -56,7 +58,7 @@ public class Statistics extends ViewFrame {
         payments.setMargin(Top.L);
         payments.setMaxWidth(MAX_WIDTH);
         payments.setPadding(Horizontal.RESPONSIVE_L);
-        payments.setWidth("100%");
+        payments.setWidthFull();
         return payments;
     }
 
@@ -176,7 +178,7 @@ public class Statistics extends ViewFrame {
         transactions.setMargin(Top.XL);
         transactions.setMaxWidth(MAX_WIDTH);
         transactions.setPadding(Horizontal.RESPONSIVE_L);
-        transactions.setWidth("100%");
+        transactions.setWidthFull();
         return transactions;
     }
 
@@ -214,7 +216,7 @@ public class Statistics extends ViewFrame {
         Row docs = new Row(reports, logs);
         docs.addClassName(LumoStyles.Margin.Top.XL);
         UIUtils.setMaxWidth(MAX_WIDTH, docs);
-        docs.setWidth("100%");
+        docs.setWidthFull();
 
         return docs;
     }

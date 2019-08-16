@@ -2,18 +2,17 @@ package com.vaadin.starter.business.ui.components.navigation.bar;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentEventListener;
-import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.HasValue;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.contextmenu.ContextMenu;
+import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.H4;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
-import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.textfield.TextField;
@@ -30,7 +29,8 @@ import java.util.ArrayList;
 
 import static com.vaadin.starter.business.ui.util.UIUtils.IMG_PATH;
 
-public class AppBar extends Composite<FlexLayout> {
+@CssImport("styles/components/app-bar.css")
+public class AppBar extends FlexBoxLayout {
 
     private String CLASS_NAME = "app-bar";
 
@@ -56,7 +56,7 @@ public class AppBar extends Composite<FlexLayout> {
     }
 
     public AppBar(String title, NaviTab... tabs) {
-        getContent().setClassName(CLASS_NAME);
+        setClassName(CLASS_NAME);
 
         initMenuIcon();
         initContextIcon();
@@ -80,19 +80,19 @@ public class AppBar extends Composite<FlexLayout> {
 
     private void initMenuIcon() {
         menuIcon = UIUtils.createTertiaryInlineButton(VaadinIcon.MENU);
-        menuIcon.removeThemeVariants(ButtonVariant.LUMO_ICON);
         menuIcon.addClassName(CLASS_NAME + "__navi-icon");
         menuIcon.addClickListener(e -> MainLayout.get().getNaviDrawer().toggle());
         UIUtils.setAriaLabel("Menu", menuIcon);
+        UIUtils.setLineHeight("1", menuIcon);
     }
 
     private void initContextIcon() {
         contextIcon = UIUtils
                 .createTertiaryInlineButton(VaadinIcon.ARROW_LEFT);
-        contextIcon.removeThemeVariants(ButtonVariant.LUMO_ICON);
         contextIcon.addClassNames(CLASS_NAME + "__context-icon");
         contextIcon.setVisible(false);
         UIUtils.setAriaLabel("Back", contextIcon);
+        UIUtils.setLineHeight("1", contextIcon);
     }
 
     private void initTitle(String title) {
@@ -115,9 +115,6 @@ public class AppBar extends Composite<FlexLayout> {
 
         ContextMenu contextMenu = new ContextMenu(avatar);
         contextMenu.setOpenOnClick(true);
-        contextMenu.addItem("john.smith@gmail.com",
-                e -> Notification.show("Not implemented yet.", 3000,
-                        Notification.Position.BOTTOM_CENTER));
         contextMenu.addItem("Settings",
                 e -> Notification.show("Not implemented yet.", 3000,
                         Notification.Position.BOTTOM_CENTER));
@@ -138,7 +135,7 @@ public class AppBar extends Composite<FlexLayout> {
         container.addClassName(CLASS_NAME + "__container");
         container.setAlignItems(FlexComponent.Alignment.CENTER);
         container.setFlexGrow(1, search);
-        getContent().add(container);
+        add(container);
     }
 
     private void initTabs(NaviTab... tabs) {
@@ -159,7 +156,7 @@ public class AppBar extends Composite<FlexLayout> {
         tabContainer = new FlexBoxLayout(this.tabs, addTab);
         tabContainer.addClassName(CLASS_NAME + "__tab-container");
         tabContainer.setAlignItems(FlexComponent.Alignment.CENTER);
-        getContent().add(tabContainer);
+        add(tabContainer);
     }
 
     /* === MENU ICON === */
@@ -176,7 +173,6 @@ public class AppBar extends Composite<FlexLayout> {
 
     public void setContextIcon(Icon icon) {
         contextIcon.setIcon(icon);
-        contextIcon.removeThemeVariants(ButtonVariant.LUMO_ICON);
     }
 
     /* === TITLE === */
@@ -207,6 +203,12 @@ public class AppBar extends Composite<FlexLayout> {
     public void removeAllActionItems() {
         actionItems.removeAll();
         updateActionItemsVisibility();
+    }
+
+    /* === AVATAR == */
+
+    public Image getAvatar() {
+        return avatar;
     }
 
     /* === TABS === */
@@ -337,9 +339,5 @@ public class AppBar extends Composite<FlexLayout> {
 
     private void updateTabsVisibility() {
         tabs.setVisible(tabs.getComponentCount() > 0);
-    }
-
-    public Image getAvatar() {
-        return avatar;
     }
 }

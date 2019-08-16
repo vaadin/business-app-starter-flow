@@ -2,9 +2,9 @@ package com.vaadin.starter.business.ui.components.navigation.drawer;
 
 import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.ClientCallable;
-import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.icon.Icon;
@@ -15,13 +15,14 @@ import com.vaadin.flow.router.AfterNavigationObserver;
 import com.vaadin.starter.business.ui.util.UIUtils;
 import elemental.json.JsonObject;
 
+@CssImport("styles/components/navi-drawer.css")
 @JsModule("swipe-away.js")
-public class NaviDrawer extends Composite<Div>
+public class NaviDrawer extends Div
         implements AfterNavigationObserver {
 
-    private static final String CLASS_NAME = "navi-drawer";
-    private static final String RAIL = "rail";
-    private static final String OPEN = "open";
+    private String CLASS_NAME = "navi-drawer";
+    private String RAIL = "rail";
+    private String OPEN = "open";
 
     private Div scrim;
 
@@ -47,7 +48,7 @@ public class NaviDrawer extends Composite<Div>
     }
 
     public NaviDrawer() {
-        getContent().setClassName(CLASS_NAME);
+        setClassName(CLASS_NAME);
 
         initScrim();
         initMainContent();
@@ -66,13 +67,13 @@ public class NaviDrawer extends Composite<Div>
         scrim = new Div();
         scrim.addClassName(CLASS_NAME + "__scrim");
         scrim.addClickListener(event -> close());
-        getContent().add(scrim);
+        add(scrim);
     }
 
     private void initMainContent() {
         mainContent = new Div();
         mainContent.addClassName(CLASS_NAME + "__content");
-        getContent().add(mainContent);
+        add(mainContent);
     }
 
     private void initHeader() {
@@ -81,10 +82,10 @@ public class NaviDrawer extends Composite<Div>
 
     private void initSearch() {
         search = new TextField();
-        search.setPlaceholder("Search");
-        search.setPrefixComponent(new Icon(VaadinIcon.SEARCH));
         search.addValueChangeListener(e -> menu.filter(search.getValue()));
         search.setClearButtonVisible(true);
+        search.setPlaceholder("Search");
+        search.setPrefixComponent(new Icon(VaadinIcon.SEARCH));
         mainContent.add(search);
     }
 
@@ -100,8 +101,7 @@ public class NaviDrawer extends Composite<Div>
     }
 
     private void initFooter() {
-        railButton = UIUtils.createSmallButton("Collapse",
-                VaadinIcon.CHEVRON_LEFT_SMALL);
+        railButton = UIUtils.createSmallButton("Collapse", VaadinIcon.CHEVRON_LEFT_SMALL);
         railButton.addClassName(CLASS_NAME + "__footer");
         railButton.addClickListener(event -> toggleRailMode());
         railButton.getElement().setAttribute("aria-label", "Collapse menu");
@@ -113,12 +113,13 @@ public class NaviDrawer extends Composite<Div>
             getElement().setAttribute(RAIL, false);
             railButton.setIcon(new Icon(VaadinIcon.CHEVRON_LEFT_SMALL));
             railButton.setText("Collapse");
-            railButton.getElement().setAttribute("aria-label", "Collapse menu");
+            UIUtils.setAriaLabel("Collapse menu", railButton);
+
         } else {
             getElement().setAttribute(RAIL, true);
             railButton.setIcon(new Icon(VaadinIcon.CHEVRON_RIGHT_SMALL));
             railButton.setText("Expand");
-            railButton.getElement().setAttribute("aria-label", "Expand menu");
+            UIUtils.setAriaLabel("Expand menu", railButton);
             getUI().get().getPage().executeJavaScript(
                     "var originalStyle = getComputedStyle($0).pointerEvents;" //
                             + "$0.style.pointerEvents='none';" //

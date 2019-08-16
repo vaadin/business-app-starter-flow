@@ -89,6 +89,12 @@ public class LumoStyles {
         public static final String H6 = "h6";
     }
 
+    public class IconSize {
+        public static final String S = "var(--lumo-icon-size-s)";
+        public static final String M = "var(--lumo-icon-size-m)";
+        public static final String L = "var(--lumo-icon-size-l)";
+    }
+
     public class Margin {
         public class Bottom {
             public static final String AUTO = "margin-b-a";

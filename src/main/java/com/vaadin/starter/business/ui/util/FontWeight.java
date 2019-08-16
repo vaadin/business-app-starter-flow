@@ -2,10 +2,10 @@ package com.vaadin.starter.business.ui.util;
 
 public enum FontWeight {
 
-    BOLD("bold"),
-    BOLDER("bolder"),
     LIGHTER("lighter"),
     NORMAL("normal"),
+    BOLD("bold"),
+    BOLDER("bolder"),
     _100("100"),
     _200("200"),
     _300("300"),

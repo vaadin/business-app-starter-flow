@@ -10,13 +10,13 @@ import com.vaadin.starter.business.ui.MainLayout;
 import com.vaadin.starter.business.ui.components.FlexBoxLayout;
 import com.vaadin.starter.business.ui.layout.size.Horizontal;
 import com.vaadin.starter.business.ui.layout.size.Right;
-import com.vaadin.starter.business.ui.layout.size.Vertical;
+import com.vaadin.starter.business.ui.layout.size.Uniform;
 import com.vaadin.starter.business.ui.util.UIUtils;
 import com.vaadin.starter.business.ui.util.css.FlexDirection;
 import com.vaadin.starter.business.ui.util.css.FlexWrap;
 
-@Route(value = "", layout = MainLayout.class)
 @PageTitle("Welcome")
+@Route(value = "", layout = MainLayout.class)
 public class Home extends ViewFrame {
 
     public Home() {
@@ -54,7 +54,7 @@ public class Home extends ViewFrame {
         content.setFlexDirection(FlexDirection.COLUMN);
         content.setMargin(Horizontal.AUTO);
         content.setMaxWidth("840px");
-        content.setPadding(Horizontal.RESPONSIVE_L, Vertical.L);
+        content.setPadding(Uniform.RESPONSIVE_L);
         return content;
     }
 

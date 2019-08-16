@@ -2,17 +2,16 @@ package com.vaadin.starter.business.ui.components.navigation.bar;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentEventListener;
-import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.contextmenu.ContextMenu;
+import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
-import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.starter.business.ui.MainLayout;
+import com.vaadin.starter.business.ui.components.FlexBoxLayout;
 import com.vaadin.starter.business.ui.components.navigation.tab.NaviTabs;
 import com.vaadin.starter.business.ui.util.LumoStyles;
 import com.vaadin.starter.business.ui.util.UIUtils;
@@ -20,22 +19,20 @@ import com.vaadin.starter.business.ui.views.Home;
 
 import static com.vaadin.starter.business.ui.util.UIUtils.IMG_PATH;
 
-public class TabBar extends Composite<FlexLayout> {
+@CssImport("styles/components/tab-bar.css")
+public class TabBar extends FlexBoxLayout {
 
-    private final String CLASS_NAME = "tab-bar";
+    private String CLASS_NAME = "tab-bar";
 
     private Button menuIcon;
-
+    private NaviTabs tabs;
+    private Button addTab;
     private Image avatar;
 
-    private Button addTab;
-    private NaviTabs tabs;
-
     public TabBar() {
-        getContent().setClassName(CLASS_NAME);
+        setClassName(CLASS_NAME);
 
         menuIcon = UIUtils.createTertiaryInlineButton(VaadinIcon.MENU);
-        menuIcon.removeThemeVariants(ButtonVariant.LUMO_ICON);
         menuIcon.addClassName(CLASS_NAME + "__navi-icon");
         menuIcon.addClickListener(e -> MainLayout.get().getNaviDrawer().toggle());
 
@@ -45,9 +42,6 @@ public class TabBar extends Composite<FlexLayout> {
 
         ContextMenu contextMenu = new ContextMenu(avatar);
         contextMenu.setOpenOnClick(true);
-        contextMenu.addItem("john.smith@gmail.com",
-                e -> Notification.show("Not implemented yet.", 3000,
-                        Notification.Position.BOTTOM_CENTER));
         contextMenu.addItem("Settings",
                 e -> Notification.show("Not implemented yet.", 3000,
                         Notification.Position.BOTTOM_CENTER));
@@ -63,7 +57,7 @@ public class TabBar extends Composite<FlexLayout> {
         tabs = new NaviTabs();
         tabs.setClassName(CLASS_NAME + "__tabs");
 
-        getContent().add(menuIcon, tabs, addTab, avatar);
+        add(menuIcon, tabs, addTab, avatar);
     }
 
     /* === MENU ICON === */

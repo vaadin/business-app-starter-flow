@@ -1,48 +1,72 @@
 package com.vaadin.starter.business.ui.views;
 
+import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.DetachEvent;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.grid.ColumnTextAlign;
 import com.vaadin.flow.component.grid.Grid;
-import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.page.Page;
 import com.vaadin.flow.data.provider.DataProvider;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.data.renderer.LocalDateRenderer;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.shared.Registration;
 import com.vaadin.starter.business.backend.BankAccount;
 import com.vaadin.starter.business.backend.DummyData;
 import com.vaadin.starter.business.ui.MainLayout;
+import com.vaadin.starter.business.ui.components.Badge;
+import com.vaadin.starter.business.ui.components.FlexBoxLayout;
 import com.vaadin.starter.business.ui.components.ListItem;
-import com.vaadin.starter.business.ui.util.TextColor;
-import com.vaadin.starter.business.ui.util.UIUtils;
+import com.vaadin.starter.business.ui.layout.size.Horizontal;
+import com.vaadin.starter.business.ui.layout.size.Right;
+import com.vaadin.starter.business.ui.layout.size.Top;
+import com.vaadin.starter.business.ui.layout.size.Vertical;
+import com.vaadin.starter.business.ui.util.*;
+import com.vaadin.starter.business.ui.util.css.*;
+import com.vaadin.starter.business.ui.util.css.lumo.BadgeColor;
+import com.vaadin.starter.business.ui.util.css.lumo.BadgeShape;
+import com.vaadin.starter.business.ui.util.css.lumo.BadgeSize;
 
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
-@Route(value = "accounts", layout = MainLayout.class)
 @PageTitle("Accounts")
+@Route(value = "accounts", layout = MainLayout.class)
 public class Accounts extends ViewFrame {
 
+    public static final int MOBILE_BREAKPOINT = 480;
     private Grid<BankAccount> grid;
+    private Registration resizeListener;
 
     public Accounts() {
         setViewContent(createContent());
     }
 
     private Component createContent() {
-        Div content = new Div(createGrid());
-        content.addClassName("grid-view");
+        FlexBoxLayout content = new FlexBoxLayout(createGrid());
+        content.setBoxSizing(BoxSizing.BORDER_BOX);
+        content.setHeightFull();
+        content.setPadding(Horizontal.RESPONSIVE_X, Top.RESPONSIVE_X);
         return content;
     }
 
     private Grid createGrid() {
         grid = new Grid<>();
         grid.addSelectionListener(event -> event.getFirstSelectedItem().ifPresent(this::viewDetails));
+        grid.addThemeName("mobile");
         grid.setDataProvider(DataProvider.ofCollection(DummyData.getBankAccounts()));
         grid.setId("accounts");
         grid.setSizeFull();
 
+        // "Mobile" column
+        grid.addColumn(new ComponentRenderer<>(this::getMobileTemplate))
+                .setVisible(false);
+
+        // "Desktop" columns
         grid.addColumn(BankAccount::getId)
                 .setAutoWidth(true)
                 .setFlexGrow(0)
@@ -72,26 +96,128 @@ public class Accounts extends ViewFrame {
         return grid;
     }
 
+    private BankAccountMobileTemplate getMobileTemplate(BankAccount bankAccount) {
+        return new BankAccountMobileTemplate(bankAccount);
+    }
+
     private Component createBankInfo(BankAccount bankAccount) {
-        ListItem item = new ListItem(bankAccount.getAccount(), bankAccount.getBank());
-        item.setHorizontalPadding(false);
-        return item;
+        return new ListItem(bankAccount.getAccount(), bankAccount.getBank());
     }
 
     private Component createAvailability(BankAccount bankAccount) {
         Double availability = bankAccount.getAvailability();
         Label label = UIUtils.createAmountLabel(availability);
-
         if (availability > 0) {
             UIUtils.setTextColor(TextColor.SUCCESS, label);
         } else {
             UIUtils.setTextColor(TextColor.ERROR, label);
         }
-
         return label;
     }
 
     private void viewDetails(BankAccount bankAccount) {
         UI.getCurrent().navigate(AccountDetails.class, bankAccount.getId());
+    }
+
+    @Override
+    protected void onAttach(AttachEvent attachEvent) {
+        super.onAttach(attachEvent);
+        getUI().ifPresent(ui -> {
+            Page page = ui.getPage();
+            resizeListener = page.addBrowserWindowResizeListener(event -> updateVisibleColumns(event.getWidth()));
+            page.retrieveExtendedClientDetails(details -> updateVisibleColumns(details.getBodyClientWidth()));
+        });
+    }
+
+    @Override
+    protected void onDetach(DetachEvent detachEvent) {
+        resizeListener.remove();
+        super.onDetach(detachEvent);
+    }
+
+    private void updateVisibleColumns(int width) {
+        boolean mobile = width < MOBILE_BREAKPOINT;
+        List<Grid.Column<BankAccount>> columns = grid.getColumns();
+
+        // "Mobile" column
+        columns.get(0).setVisible(mobile);
+
+        // "Desktop" columns
+        for (int i = 1; i < columns.size(); i++) {
+            columns.get(i).setVisible(!mobile);
+        }
+    }
+
+    /**
+     * A layout for displaying BankAccount info in a mobile friendly format.
+     */
+    private class BankAccountMobileTemplate extends FlexBoxLayout {
+
+        private BankAccount bankAccount;
+
+        public BankAccountMobileTemplate(BankAccount bankAccount) {
+            this.bankAccount = bankAccount;
+
+            UIUtils.setLineHeight(LineHeight.M, this);
+            UIUtils.setPointerEvents(PointerEvents.NONE, this);
+
+            setPadding(Vertical.S);
+            setSpacing(Right.L);
+
+            Image logo = getLogo();
+            FlexBoxLayout owner = getOwner();
+            Label account = getAccount();
+            FlexBoxLayout availability = getAvailability();
+
+            FlexBoxLayout column = new FlexBoxLayout(owner, account, availability);
+            column.setFlexDirection(FlexDirection.COLUMN);
+            column.setOverflow(Overflow.HIDDEN);
+
+            add(logo, column);
+            setFlexGrow(1, column);
+        }
+
+        private Image getLogo() {
+            Image logo = DummyData.getLogo();
+            setFlexShrink("0", logo);
+            logo.setHeight(LumoStyles.IconSize.M);
+            logo.setWidth(LumoStyles.IconSize.M);
+            return logo;
+        }
+
+        private FlexBoxLayout getOwner() {
+            Label owner = UIUtils.createLabel(FontSize.M, TextColor.BODY, bankAccount.getOwner());
+            UIUtils.setOverflow(Overflow.HIDDEN, owner);
+            UIUtils.setTextOverflow(TextOverflow.ELLIPSIS, owner);
+
+            Badge id = new Badge(String.valueOf(bankAccount.getId()), BadgeColor.NORMAL, BadgeSize.S, BadgeShape.PILL);
+
+            FlexBoxLayout wrapper = new FlexBoxLayout(owner, id);
+            wrapper.setAlignItems(Alignment.CENTER);
+            wrapper.setFlexGrow(1, owner);
+            wrapper.setFlexShrink("0", id);
+            wrapper.setSpacing(Right.M);
+            return wrapper;
+        }
+
+        private Label getAccount() {
+            Label account = UIUtils.createLabel(FontSize.S, TextColor.SECONDARY, bankAccount.getAccount());
+            account.addClassNames(LumoStyles.Margin.Bottom.S);
+            UIUtils.setOverflow(Overflow.HIDDEN, account);
+            UIUtils.setTextOverflow(TextOverflow.ELLIPSIS, account);
+            return account;
+        }
+
+        private FlexBoxLayout getAvailability() {
+            Label availability = UIUtils.createH4Label("$" + UIUtils.formatAmount(bankAccount.getAvailability()));
+            UIUtils.setLineHeight(LineHeight.S, availability);
+
+            Label updated = UIUtils.createLabel(FontSize.XS, TextColor.TERTIARY, UIUtils.formatDate(bankAccount.getUpdated()));
+
+            FlexBoxLayout wrapper = new FlexBoxLayout(availability, updated);
+            wrapper.setAlignItems(Alignment.BASELINE);
+            wrapper.setFlexGrow(1, availability);
+            return wrapper;
+        }
     }
 }

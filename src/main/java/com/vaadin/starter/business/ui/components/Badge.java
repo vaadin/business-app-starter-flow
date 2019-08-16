@@ -21,16 +21,13 @@ public class Badge extends Span {
         UIUtils.setTheme(color.getThemeName(), this);
     }
 
-    public Badge(String text, BadgeColor color, BadgeSize size,
-            BadgeShape shape) {
+    public Badge(String text, BadgeColor color, BadgeSize size, BadgeShape shape) {
         super(text);
         StringJoiner joiner = new StringJoiner(" ");
         joiner.add(color.getThemeName());
-
         if (shape.equals(PILL)) {
             joiner.add(shape.getThemeName());
         }
-
         if (size.equals(BadgeSize.S)) {
             joiner.add(size.getThemeName());
         }

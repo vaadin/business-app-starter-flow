@@ -2,7 +2,9 @@ package com.vaadin.starter.business.ui.util;
 
 public enum IconSize {
 
-    S("size-s"), M("size-m"), L("size-l");
+    S("size-s"),
+    M("size-m"),
+    L("size-l");
 
     private String style;
 

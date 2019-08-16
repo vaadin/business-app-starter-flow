@@ -3,6 +3,7 @@ package com.vaadin.starter.business.ui.components.navigation.drawer;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
+import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Span;
@@ -16,9 +17,11 @@ import com.vaadin.starter.business.ui.util.UIUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+@CssImport("styles/components/navi-item.css")
 public class NaviItem extends Div {
 
-    private static final String CLASS_NAME = "navi-item";
+    private String CLASS_NAME = "navi-item";
+
     private int level = 0;
 
     private Component link;
@@ -42,6 +45,8 @@ public class NaviItem extends Div {
 
     public NaviItem(String text, Class<? extends Component> navigationTarget) {
         setClassName(CLASS_NAME);
+        setLevel(0);
+
         this.text = text;
         this.navigationTarget = navigationTarget;
 
@@ -51,6 +56,7 @@ public class NaviItem extends Div {
             routerLink.setClassName(CLASS_NAME + "__link");
             routerLink.setHighlightCondition(HighlightConditions.sameLocation());
             this.link = routerLink;
+
         } else {
             Div div = new Div(new Span(text));
             div.addClickListener(e -> expandCollapse.click());
@@ -64,16 +70,14 @@ public class NaviItem extends Div {
 
         subItems = new ArrayList<>();
         subItemsVisible = true;
+        updateAriaLabel();
 
         add(link, expandCollapse);
-
-        updateAriaLabel();
-        setLevel(0);
     }
 
     private void updateAriaLabel() {
         String action = (subItemsVisible ? "Collapse " : "Expand ") + text;
-        expandCollapse.getElement().setAttribute("aria-label", action);
+        UIUtils.setAriaLabel(action, expandCollapse);
     }
 
     public boolean isHighlighted(AfterNavigationEvent e) {
@@ -121,7 +125,7 @@ public class NaviItem extends Div {
     public void setVisible(boolean visible) {
         super.setVisible(visible);
 
-        // If true, we only update the icon. If false, we hide all the sub items.
+        // If true, we only update the icon. If false, we hide all the sub items
         if (visible) {
             if (level == 0) {
                 expandCollapse.setIcon(new Icon(VaadinIcon.CARET_DOWN));

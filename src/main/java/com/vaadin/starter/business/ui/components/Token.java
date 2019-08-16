@@ -1,7 +1,5 @@
 package com.vaadin.starter.business.ui.components;
 
-import com.vaadin.flow.component.Composite;
-import com.vaadin.flow.component.HasStyle;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.html.Label;
@@ -16,28 +14,22 @@ import com.vaadin.starter.business.ui.util.UIUtils;
 import com.vaadin.starter.business.ui.util.css.BorderRadius;
 import com.vaadin.starter.business.ui.util.css.Display;
 
-import static com.vaadin.flow.component.button.ButtonVariant.LUMO_ICON;
-
-public class Token extends Composite<FlexBoxLayout> implements HasStyle {
+public class Token extends FlexBoxLayout {
 
     private final String CLASS_NAME = "token";
 
     public Token(String text) {
-        addClassName(CLASS_NAME);
-        getContent().setAlignItems(FlexComponent.Alignment.CENTER);
-        getContent().setBackgroundColor(LumoStyles.Color.Primary._10);
-        getContent().setBorderRadius(BorderRadius.M);
-        getContent().setDisplay(Display.INLINE_FLEX);
-        getContent().setPadding(Left.S);
-        getContent().setPadding(Right.XS);
-        getContent().setSpacing(Right.XS);
+        setAlignItems(FlexComponent.Alignment.CENTER);
+        setBackgroundColor(LumoStyles.Color.Primary._10);
+        setBorderRadius(BorderRadius.M);
+        setClassName(CLASS_NAME);
+        setDisplay(Display.INLINE_FLEX);
+        setPadding(Left.S, Right.XS);
+        setSpacing(Right.XS);
 
         Label label = UIUtils.createLabel(FontSize.S, TextColor.BODY, text);
-        Button button = UIUtils.createButton(VaadinIcon.CLOSE_SMALL,
-                ButtonVariant.LUMO_SMALL, ButtonVariant.LUMO_TERTIARY_INLINE);
-        button.getThemeNames().remove(LUMO_ICON.getVariantName());
-
-        getContent().add(label, button);
+        Button button = UIUtils.createButton(VaadinIcon.CLOSE_SMALL, ButtonVariant.LUMO_SMALL, ButtonVariant.LUMO_TERTIARY_INLINE);
+        add(label, button);
     }
 
 }
