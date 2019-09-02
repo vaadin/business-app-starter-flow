@@ -31,6 +31,7 @@
   position: relative;
   transition: margin var(--transition-duration-m);
   width: var(--navi-drawer-width);
+  z-index: 2;
 }
 
 /* Search */
