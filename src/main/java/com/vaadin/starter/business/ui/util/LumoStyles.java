@@ -2,9 +2,6 @@ package com.vaadin.starter.business.ui.util;
 
 public class LumoStyles {
 
-    public static final String DARK = "dark";
-    public static final String THEME = "theme";
-
     public class BorderRadius {
         public static final String S = "border-radius-s";
         public static final String M = "border-radius-m";
