@@ -5,7 +5,7 @@ import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.starter.business.ui.components.FlexBoxLayout;
 import com.vaadin.starter.business.ui.util.css.FlexDirection;
 
-@CssImport("styles/components/details-drawer.css")
+@CssImport("./styles/components/details-drawer.css")
 public class DetailsDrawer extends FlexBoxLayout {
 
     private String CLASS_NAME = "details-drawer";

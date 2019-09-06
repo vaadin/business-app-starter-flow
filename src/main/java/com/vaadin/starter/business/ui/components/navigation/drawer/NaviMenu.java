@@ -9,7 +9,7 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@CssImport("styles/components/navi-menu.css")
+@CssImport("./styles/components/navi-menu.css")
 public class NaviMenu extends Div {
 
     private String CLASS_NAME = "navi-menu";

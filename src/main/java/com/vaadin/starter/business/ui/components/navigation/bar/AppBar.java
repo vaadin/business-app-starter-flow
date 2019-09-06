@@ -29,7 +29,7 @@ import java.util.ArrayList;
 
 import static com.vaadin.starter.business.ui.util.UIUtils.IMG_PATH;
 
-@CssImport("styles/components/app-bar.css")
+@CssImport("./styles/components/app-bar.css")
 public class AppBar extends FlexBoxLayout {
 
     private String CLASS_NAME = "app-bar";

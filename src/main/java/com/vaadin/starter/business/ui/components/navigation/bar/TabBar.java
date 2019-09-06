@@ -19,7 +19,7 @@ import com.vaadin.starter.business.ui.views.Home;
 
 import static com.vaadin.starter.business.ui.util.UIUtils.IMG_PATH;
 
-@CssImport("styles/components/tab-bar.css")
+@CssImport("./styles/components/tab-bar.css")
 public class TabBar extends FlexBoxLayout {
 
     private String CLASS_NAME = "tab-bar";

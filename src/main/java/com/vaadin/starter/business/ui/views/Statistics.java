@@ -26,7 +26,7 @@ import com.vaadin.starter.business.ui.util.*;
 import com.vaadin.starter.business.ui.util.css.Position;
 import com.vaadin.starter.business.ui.util.css.*;
 
-@CssImport("styles/views/statistics.css")
+@CssImport("./styles/views/statistics.css")
 @PageTitle("Statistics")
 @Route(value = "statistics", layout = MainLayout.class)
 public class Statistics extends ViewFrame {
