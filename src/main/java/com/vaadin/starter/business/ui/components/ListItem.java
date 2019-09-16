@@ -11,7 +11,7 @@ import com.vaadin.starter.business.ui.util.UIUtils;
 import com.vaadin.starter.business.ui.util.css.FlexDirection;
 import com.vaadin.starter.business.ui.util.css.WhiteSpace;
 
-@CssImport("styles/components/list-item.css")
+@CssImport("./styles/components/list-item.css")
 public class ListItem extends FlexBoxLayout {
 
     private final String CLASS_NAME = "list-item";

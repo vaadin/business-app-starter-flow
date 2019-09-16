@@ -17,7 +17,7 @@ import com.vaadin.starter.business.ui.MainLayout;
  * <li>Bottom {@link #setViewFooter(Component...) footer}</li>
  * </ul>
  */
-@CssImport("styles/components/view-frame.css")
+@CssImport("./styles/components/view-frame.css")
 public class ViewFrame extends Composite<Div> implements HasStyle {
 
     private String CLASS_NAME = "view-frame";

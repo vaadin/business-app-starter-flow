@@ -6,7 +6,7 @@ import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.starter.business.ui.util.UIUtils;
 
-@CssImport("styles/components/brand-expression.css")
+@CssImport("./styles/components/brand-expression.css")
 public class BrandExpression extends Div {
 
     private String CLASS_NAME = "brand-expression";
