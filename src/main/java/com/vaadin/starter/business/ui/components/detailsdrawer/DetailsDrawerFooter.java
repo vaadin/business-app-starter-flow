@@ -13,28 +13,28 @@ import com.vaadin.starter.business.ui.util.UIUtils;
 
 public class DetailsDrawerFooter extends FlexBoxLayout {
 
-    private Button save;
-    private Button cancel;
+	private Button save;
+	private Button cancel;
 
-    public DetailsDrawerFooter() {
-        setBackgroundColor(LumoStyles.Color.Contrast._5);
-        setPadding(Horizontal.RESPONSIVE_L, Vertical.S);
-        setSpacing(Right.S);
-        setWidthFull();
+	public DetailsDrawerFooter() {
+		setBackgroundColor(LumoStyles.Color.Contrast._5);
+		setPadding(Horizontal.RESPONSIVE_L, Vertical.S);
+		setSpacing(Right.S);
+		setWidthFull();
 
-        save = UIUtils.createPrimaryButton("Save");
-        cancel = UIUtils.createTertiaryButton("Cancel");
-        add(save, cancel);
-    }
+		save = UIUtils.createPrimaryButton("Save");
+		cancel = UIUtils.createTertiaryButton("Cancel");
+		add(save, cancel);
+	}
 
-    public Registration addSaveListener(
-            ComponentEventListener<ClickEvent<Button>> listener) {
-        return save.addClickListener(listener);
-    }
+	public Registration addSaveListener(
+			ComponentEventListener<ClickEvent<Button>> listener) {
+		return save.addClickListener(listener);
+	}
 
-    public Registration addCancelListener(
-            ComponentEventListener<ClickEvent<Button>> listener) {
-        return cancel.addClickListener(listener);
-    }
+	public Registration addCancelListener(
+			ComponentEventListener<ClickEvent<Button>> listener) {
+		return cancel.addClickListener(listener);
+	}
 
 }

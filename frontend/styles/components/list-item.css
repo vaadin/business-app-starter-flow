@@ -2,7 +2,6 @@
   box-sizing: border-box;
   line-height: var(--lumo-line-height-m);
   overflow: hidden;
-  padding: var(--lumo-space-wide-r-l);
   position: relative;
 }
 
@@ -10,7 +9,6 @@
 .list-item__prefix {
   display: flex;
   flex-shrink: 0;
-  margin-right: var(--lumo-space-l);
 }
 
 .list-item__prefix img {
@@ -33,38 +31,30 @@
 .list-item__suffix {
   display: flex;
   flex-shrink: 0;
-  margin-left: var(--lumo-space-l);
 }
 
 /* Divider */
-.list-item__divider {
+.list-item[with-divider]::after {
   background-color: var(--lumo-contrast-10pct);
   bottom: 0;
+  content: "";
   height: 1px;
   left: 0;
   position: absolute;
   right: 0;
 }
 
-.list-item__prefix ~ .list-item__divider {
-  left: calc(var(--lumo-icon-size-m) + (var(--lumo-space-l) * 2));
+.list-item[with-prefix][with-divider]::after {
+  left: calc((var(--lumo-icon-size-m) + var(--lumo-space-l)) + var(--lumo-space-l));
 }
 
 /* Grid styling */
-vaadin-grid .list-item {
-  padding: var(--lumo-space-xs) 0;
-}
-
-vaadin-grid .list-item__prefix {
-  margin-right: var(--lumo-space-m);
-}
-
 vaadin-grid .list-item label {
   pointer-events: none;
 }
 
 @media (max-width: 1023px) {
-  .list-item__prefix ~ .list-item__divider {
-    left: calc(var(--lumo-icon-size-m) + (var(--lumo-space-l) + var(--lumo-space-m)));
+  .list-item[with-prefix][with-divider]::after {
+    left: calc((var(--lumo-icon-size-m) + var(--lumo-space-l)) + var(--lumo-space-m));
   }
 }

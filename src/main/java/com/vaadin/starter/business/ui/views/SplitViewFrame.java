@@ -23,86 +23,86 @@ import com.vaadin.starter.business.ui.util.css.FlexDirection;
 @CssImport("./styles/components/view-frame.css")
 public class SplitViewFrame extends Composite<Div> implements HasStyle {
 
-    private String CLASS_NAME = "view-frame";
+	private String CLASS_NAME = "view-frame";
 
-    private Div header;
+	private Div header;
 
-    private FlexBoxLayout wrapper;
-    private Div content;
-    private Div details;
+	private FlexBoxLayout wrapper;
+	private Div content;
+	private Div details;
 
-    private Div footer;
+	private Div footer;
 
-    public enum Position {
-        RIGHT, BOTTOM
-    }
+	public enum Position {
+		RIGHT, BOTTOM
+	}
 
-    public SplitViewFrame() {
-        setClassName(CLASS_NAME);
+	public SplitViewFrame() {
+		setClassName(CLASS_NAME);
 
-        header = new Div();
-        header.setClassName(CLASS_NAME + "__header");
+		header = new Div();
+		header.setClassName(CLASS_NAME + "__header");
 
-        wrapper = new FlexBoxLayout();
-        wrapper.setClassName(CLASS_NAME + "__wrapper");
+		wrapper = new FlexBoxLayout();
+		wrapper.setClassName(CLASS_NAME + "__wrapper");
 
-        content = new Div();
-        content.setClassName(CLASS_NAME + "__content");
+		content = new Div();
+		content.setClassName(CLASS_NAME + "__content");
 
-        details = new Div();
-        details.setClassName(CLASS_NAME + "__details");
+		details = new Div();
+		details.setClassName(CLASS_NAME + "__details");
 
-        footer = new Div();
-        footer.setClassName(CLASS_NAME + "__footer");
+		footer = new Div();
+		footer.setClassName(CLASS_NAME + "__footer");
 
-        wrapper.add(content, details);
-        getContent().add(header, wrapper, footer);
-    }
+		wrapper.add(content, details);
+		getContent().add(header, wrapper, footer);
+	}
 
-    /**
-     * Sets the header slot's components.
-     */
-    public void setViewHeader(Component... components) {
-        header.removeAll();
-        header.add(components);
-    }
+	/**
+	 * Sets the header slot's components.
+	 */
+	public void setViewHeader(Component... components) {
+		header.removeAll();
+		header.add(components);
+	}
 
-    /**
-     * Sets the content slot's components.
-     */
-    public void setViewContent(Component... components) {
-        content.removeAll();
-        content.add(components);
-    }
+	/**
+	 * Sets the content slot's components.
+	 */
+	public void setViewContent(Component... components) {
+		content.removeAll();
+		content.add(components);
+	}
 
-    /**
-     * Sets the detail slot's components.
-     */
-    public void setViewDetails(Component... components) {
-        details.removeAll();
-        details.add(components);
-    }
+	/**
+	 * Sets the detail slot's components.
+	 */
+	public void setViewDetails(Component... components) {
+		details.removeAll();
+		details.add(components);
+	}
 
-    public void setViewDetailsPosition(Position position) {
-        if (position.equals(Position.RIGHT)) {
-            wrapper.setFlexDirection(FlexDirection.ROW);
+	public void setViewDetailsPosition(Position position) {
+		if (position.equals(Position.RIGHT)) {
+			wrapper.setFlexDirection(FlexDirection.ROW);
 
-        } else if (position.equals(Position.BOTTOM)) {
-            wrapper.setFlexDirection(FlexDirection.COLUMN);
-        }
-    }
+		} else if (position.equals(Position.BOTTOM)) {
+			wrapper.setFlexDirection(FlexDirection.COLUMN);
+		}
+	}
 
-    /**
-     * Sets the footer slot's components.
-     */
-    public void setViewFooter(Component... components) {
-        footer.removeAll();
-        footer.add(components);
-    }
+	/**
+	 * Sets the footer slot's components.
+	 */
+	public void setViewFooter(Component... components) {
+		footer.removeAll();
+		footer.add(components);
+	}
 
-    @Override
-    protected void onAttach(AttachEvent attachEvent) {
-        super.onAttach(attachEvent);
-        MainLayout.get().getAppBar().reset();
-    }
+	@Override
+	protected void onAttach(AttachEvent attachEvent) {
+		super.onAttach(attachEvent);
+		MainLayout.get().getAppBar().reset();
+	}
 }

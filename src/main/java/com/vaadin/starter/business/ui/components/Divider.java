@@ -9,24 +9,24 @@ import com.vaadin.starter.business.ui.util.UIUtils;
 
 public class Divider extends FlexBoxLayout implements HasSize, HasStyle {
 
-    private String CLASS_NAME = "divider";
+	private String CLASS_NAME = "divider";
 
-    private Div divider;
+	private Div divider;
 
-    public Divider(String height) {
-        this(FlexComponent.Alignment.CENTER, height);
-    }
+	public Divider(String height) {
+		this(FlexComponent.Alignment.CENTER, height);
+	}
 
-    public Divider(FlexComponent.Alignment alignItems, String height) {
-        setAlignItems(alignItems);
-        setClassName(CLASS_NAME);
-        setHeight(height);
+	public Divider(FlexComponent.Alignment alignItems, String height) {
+		setAlignItems(alignItems);
+		setClassName(CLASS_NAME);
+		setHeight(height);
 
-        divider = new Div();
-        UIUtils.setBackgroundColor(LumoStyles.Color.Contrast._10, divider);
-        divider.setHeight("1px");
-        divider.setWidthFull();
-        add(divider);
-    }
+		divider = new Div();
+		UIUtils.setBackgroundColor(LumoStyles.Color.Contrast._10, divider);
+		divider.setHeight("1px");
+		divider.setWidthFull();
+		add(divider);
+	}
 
 }

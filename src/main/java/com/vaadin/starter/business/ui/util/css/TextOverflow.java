@@ -2,16 +2,16 @@ package com.vaadin.starter.business.ui.util.css;
 
 public enum TextOverflow {
 
-    CLIP("clip"),
-    ELLIPSIS("ellipsis");
+	CLIP("clip"),
+	ELLIPSIS("ellipsis");
 
-    private String value;
+	private String value;
 
-    TextOverflow(String value) {
-        this.value = value;
-    }
+	TextOverflow(String value) {
+		this.value = value;
+	}
 
-    public String getValue() {
-        return value;
-    }
+	public String getValue() {
+		return value;
+	}
 }
