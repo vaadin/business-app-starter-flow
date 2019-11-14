@@ -92,6 +92,37 @@ public class Accountants extends ViewFrame {
 		return grid;
 	}
 
+	private Component createUserInfo(Person person) {
+		ListItem item = new ListItem(
+				new Initials(person.getInitials()), person.getName(),
+				person.getEmail());
+		item.setPadding(Vertical.XS);
+		item.setSpacing(Right.M);
+		return item;
+	}
+
+	private Component createActive(Person person) {
+		Icon icon;
+		if (person.getRandomBoolean()) {
+			icon = UIUtils.createPrimaryIcon(VaadinIcon.CHECK);
+		} else {
+			icon = UIUtils.createDisabledIcon(VaadinIcon.CLOSE);
+		}
+		return icon;
+	}
+
+	private Component createInvoices() {
+		return UIUtils.createAmountLabel(DummyData.getRandomInt(0, 5000));
+	}
+
+	private Component createCompanies() {
+		return UIUtils.createUnitsLabel(DummyData.getRandomInt(0, 50));
+	}
+
+	private Component createDate(Person person) {
+		return new Span(UIUtils.formatDate(person.getLastModified()));
+	}
+
 	private BinderCrudEditor<Person> createEditor() {
 		Binder<Person> binder = new Binder<>(Person.class);
 
@@ -143,37 +174,6 @@ public class Accountants extends ViewFrame {
 				uploadItem);
 		return new BinderCrudEditor<>(binder, form);
 	}
-	private Component createUserInfo(Person person) {
-		ListItem item = new ListItem(
-				new Initials(person.getInitials()), person.getName(),
-				person.getEmail());
-		item.setPadding(Vertical.XS);
-		item.setSpacing(Right.M);
-		return item;
-	}
-
-	private Component createActive(Person person) {
-		Icon icon;
-		if (person.getRandomBoolean()) {
-			icon = UIUtils.createPrimaryIcon(VaadinIcon.CHECK);
-		} else {
-			icon = UIUtils.createDisabledIcon(VaadinIcon.CLOSE);
-		}
-		return icon;
-	}
-
-	private Component createInvoices() {
-		return UIUtils.createAmountLabel(DummyData.getRandomInt(0, 5000));
-	}
-
-	private Component createCompanies() {
-		return UIUtils.createUnitsLabel(DummyData.getRandomInt(0, 50));
-	}
-
-	private Component createDate(Person person) {
-		return new Span(UIUtils.formatDate(person.getLastModified()));
-	}
-
 	private void filter() {
 		dataProvider.setFilterByValue(Person::getRole, Person.Role.ACCOUNTANT);
 	}
