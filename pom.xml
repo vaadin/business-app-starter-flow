@@ -219,6 +219,8 @@
                             <rootStandaloneServerDirectory>.driver</rootStandaloneServerDirectory>
                             <customRepositoryMap>webdrivers.xml</customRepositoryMap>
                             <downloadedZipFileDirectory>.driver/zips</downloadedZipFileDirectory>
+                            <!-- Overwrite any existing binaries that have been downloaded and extracted -->
+                            <overwriteFilesThatExist>true</overwriteFilesThatExist>
                         </configuration>
                         <executions>
                             <execution>
