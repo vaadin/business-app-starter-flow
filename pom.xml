@@ -15,20 +15,12 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <failOnMissingWebXml>false</failOnMissingWebXml>
 
-        <vaadin.version>14.1.17</vaadin.version>
+        <vaadin.version>15.0.0.beta1</vaadin.version>
         <jetty.version>9.4.15.v20190215</jetty.version>
     </properties>
 
-    <pluginRepositories>
-        <!-- Repository needed for using Vaadin prerelease versions
-        <pluginRepository>
-            <id>vaadin-prereleases</id>
-            <url>https://maven.vaadin.com/vaadin-prereleases</url>
-        </pluginRepository>
-         -->
-    </pluginRepositories>
-
     <repositories>
+        <!-- The order of definitions matters. Explicitly defining central here to make sure it has the highest priority. -->
         <repository>
             <id>central</id>
             <url>https://repo.maven.apache.org/maven2</url>
@@ -37,18 +29,43 @@
             </snapshots>
         </repository>
         <repository>
-            <id>vaadin-addons</id>
+            <id>vaadin-prereleases</id>
+            <url>
+                https://maven.vaadin.com/vaadin-prereleases/
+            </url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <!-- Repository used by many Vaadin add-ons -->
+        <repository>
+            <id>Vaadin Directory</id>
             <url>https://maven.vaadin.com/vaadin-addons</url>
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
         </repository>
-        <!-- Repository needed for using Vaadin prerelease versions <repository>
-            <id>vaadin-prereleases</id>
-            <url>https://maven.vaadin.com/vaadin-prereleases</url>
-        </repository>
-        -->
     </repositories>
+
+    <pluginRepositories>
+        <!-- The order of definitions matters. Explicitly defining central here to make sure it has the highest priority. -->
+        <pluginRepository>
+            <id>central</id>
+            <url>https://repo.maven.apache.org/maven2</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+        <pluginRepository>
+            <id>vaadin-prereleases</id>
+            <url>
+                https://maven.vaadin.com/vaadin-prereleases/
+            </url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
 
     <dependencyManagement>
         <dependencies>
@@ -152,6 +169,7 @@
                         <configuration>
                             <stopPort>9966</stopPort>
                             <stopKey>stopit</stopKey>
+                            <scanIntervalSeconds>-1</scanIntervalSeconds>
                         </configuration>
                         <executions>
                             <execution>
@@ -201,6 +219,8 @@
                             <rootStandaloneServerDirectory>.driver</rootStandaloneServerDirectory>
                             <customRepositoryMap>webdrivers.xml</customRepositoryMap>
                             <downloadedZipFileDirectory>.driver/zips</downloadedZipFileDirectory>
+                            <!-- Overwrite any existing binaries that have been downloaded and extracted -->
+                            <overwriteFilesThatExist>true</overwriteFilesThatExist>
                         </configuration>
                         <executions>
                             <execution>
