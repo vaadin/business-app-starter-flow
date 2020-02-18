@@ -3,5 +3,5 @@ language: java
 before_install:
   - gem install rake
   
-script: mvn -Pit verify
+script: export DISPLAY=:0.0 && mvn -Pit verify
   
