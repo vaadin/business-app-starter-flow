@@ -4,5 +4,5 @@ before_install:
   - gem install rake
   
  script:
-  - mvn -Pit verify 
+  - mvn -Pit verify
   
