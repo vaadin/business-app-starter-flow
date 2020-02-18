@@ -2,5 +2,6 @@ language: java
 
 before_install:
   - gem install rake
-
+  
+script: mvn clean verify
   
