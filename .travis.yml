@@ -2,6 +2,10 @@ language: java
 
 before_install:
   - gem install rake
-  
+ 
+install:
+  - echo "sauce.user=$SAUCE_USER" > local.properties && echo "sauce.sauceAccessKey=$SAUCE_ACCESS_KEY" >> local.properties
+  - cat local.properties
+ 
 script: export DISPLAY=:0.0 && mvn -Pit verify
   
