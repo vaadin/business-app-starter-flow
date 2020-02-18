@@ -2,3 +2,7 @@ language: java
 
 before_install:
   - gem install rake
+  
+ script:
+  - mvn -Pit verify 
+  
