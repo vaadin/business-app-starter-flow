@@ -1,4 +1,4 @@
-# Business App Starter
+# Business App Starter   
 
 Business App is a starter for Vaadin. 
 
