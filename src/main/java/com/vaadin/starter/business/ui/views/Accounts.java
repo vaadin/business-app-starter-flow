@@ -103,7 +103,7 @@ public class Accounts extends ViewFrame {
 	private Component createOwnerInfo(BankAccount bankAccount) {
 		ListItem item = new ListItem(bankAccount.getOwner());
 		item.setPadding(Vertical.XS);
-		item.setPrefix(DummyData.getLogo());
+		item.setPrefix(bankAccount.getLogo());
 		item.setSpacing(Right.M);
 		return item;
 	}
@@ -188,7 +188,7 @@ public class Accounts extends ViewFrame {
 		}
 
 		private Image getLogo() {
-			Image logo = DummyData.getLogo();
+			Image logo = bankAccount.getLogo();
 			setFlexShrink("0", logo);
 			logo.setHeight(LumoStyles.IconSize.M);
 			logo.setWidth(LumoStyles.IconSize.M);

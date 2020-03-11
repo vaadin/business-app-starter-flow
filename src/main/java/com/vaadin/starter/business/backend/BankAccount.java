@@ -1,5 +1,6 @@
 package com.vaadin.starter.business.backend;
 
+import com.vaadin.flow.component.html.Image;
 import java.time.LocalDate;
 
 public class BankAccount {
@@ -10,15 +11,17 @@ public class BankAccount {
 	private String owner;
 	private Double availability;
 	private LocalDate updated;
+	private String path;
 
 	public BankAccount(Long id, String bank, String account, String company,
-	                   Double availability, LocalDate updated) {
+	                   Double availability, LocalDate updated, String path) {
 		this.id = id;
 		this.bank = bank;
 		this.account = account;
 		this.owner = company;
 		this.availability = availability;
 		this.updated = updated;
+		this.path=path;
 	}
 
 	public Long getId() {
@@ -43,5 +46,9 @@ public class BankAccount {
 
 	public LocalDate getUpdated() {
 		return updated;
+	}
+
+	public Image getLogo(){
+		return new Image(path,"Company Logo");
 	}
 }
