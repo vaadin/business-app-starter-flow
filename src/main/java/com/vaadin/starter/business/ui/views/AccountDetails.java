@@ -72,7 +72,7 @@ public class AccountDetails extends ViewFrame implements HasUrlParameter<Long> {
 	}
 
 	private FlexBoxLayout createLogoSection() {
-		Image image = account.getLogo();
+		Image image = new Image(account.getLogoPath(),"Company Logo");
 		image.addClassName(LumoStyles.Margin.Horizontal.L);
 		UIUtils.setBorderRadius(BorderRadius._50, image);
 		image.setHeight("200px");
