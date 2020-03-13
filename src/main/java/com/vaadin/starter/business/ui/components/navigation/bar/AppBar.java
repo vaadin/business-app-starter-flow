@@ -126,7 +126,6 @@ public class AppBar extends Header {
 		contextMenu.addItem("Log Out",
 				e -> Notification.show("Not implemented yet.", 3000,
 						Notification.Position.BOTTOM_CENTER));
-		contextMenu.addItem("Settings", e -> { /* Do something… */ } );
 	}
 
 	private void initActionItems() {
