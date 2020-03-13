@@ -53,8 +53,8 @@ public class AccountDetails extends ViewFrame implements HasUrlParameter<Long> {
 
 	@Override
 	public void setParameter(BeforeEvent beforeEvent, Long id) {
-		setViewContent(createContent());
 		account = DummyData.getBankAccount(id);
+		setViewContent(createContent());
 	}
 
 	private Component createContent() {
@@ -72,7 +72,7 @@ public class AccountDetails extends ViewFrame implements HasUrlParameter<Long> {
 	}
 
 	private FlexBoxLayout createLogoSection() {
-		Image image = DummyData.getLogo();
+		Image image = new Image(account.getLogoPath(),"Company Logo");
 		image.addClassName(LumoStyles.Margin.Horizontal.L);
 		UIUtils.setBorderRadius(BorderRadius._50, image);
 		image.setHeight("200px");
