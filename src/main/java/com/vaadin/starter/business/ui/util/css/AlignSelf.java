@@ -2,8 +2,11 @@ package com.vaadin.starter.business.ui.util.css;
 
 public enum AlignSelf {
 
-	BASLINE("baseline"), CENTER("center"), END("end"), START("start"), STRETCH(
-			"stretch");
+	BASLINE("baseline"),
+	CENTER("center"),
+	END("end"),
+	START("start"),
+	STRETCH("stretch");
 
 	private String value;
 

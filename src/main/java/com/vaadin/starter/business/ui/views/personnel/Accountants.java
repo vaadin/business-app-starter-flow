@@ -26,12 +26,16 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.starter.business.backend.DummyData;
 import com.vaadin.starter.business.backend.Person;
 import com.vaadin.starter.business.ui.MainLayout;
+import com.vaadin.starter.business.ui.components.FlexBoxLayout;
 import com.vaadin.starter.business.ui.components.Initials;
 import com.vaadin.starter.business.ui.components.ListItem;
+import com.vaadin.starter.business.ui.layout.size.Horizontal;
 import com.vaadin.starter.business.ui.layout.size.Right;
+import com.vaadin.starter.business.ui.layout.size.Top;
 import com.vaadin.starter.business.ui.layout.size.Vertical;
 import com.vaadin.starter.business.ui.util.LumoStyles;
 import com.vaadin.starter.business.ui.util.UIUtils;
+import com.vaadin.starter.business.ui.util.css.BoxSizing;
 import com.vaadin.starter.business.ui.views.ViewFrame;
 
 @Route(value = "accountants", layout = MainLayout.class)
@@ -42,13 +46,25 @@ public class Accountants extends ViewFrame {
 	private ListDataProvider<Person> dataProvider;
 
 	public Accountants() {
-		Crud<Person> crud = new Crud<>(Person.class, createGrid(), createEditor());
-		crud.setEditOnClick(true);
-		crud.setEditorPosition(CrudEditorPosition.ASIDE);
-		crud.setSizeFull();
-		setViewContent(crud);
-
+		setViewContent(createContent());
 		filter();
+	}
+
+	private Component createContent() {
+		FlexBoxLayout content = new FlexBoxLayout(createCrud());
+		content.setBoxSizing(BoxSizing.BORDER_BOX);
+		content.setHeightFull();
+		content.setPadding(Horizontal.RESPONSIVE_X, Top.RESPONSIVE_X);
+		return content;
+	}
+
+	private Crud<Person> createCrud() {
+		Crud<Person> crud = new Crud<>(Person.class, createGrid(), createEditor());
+		UIUtils.setBackgroundColor(LumoStyles.Color.BASE_COLOR, crud);
+		crud.setEditOnClick(true);
+		crud.setEditorPosition(CrudEditorPosition.BOTTOM);
+		crud.setSizeFull();
+		return crud;
 	}
 
 	private Grid<Person> createGrid() {
@@ -155,25 +171,28 @@ public class Accountants extends ViewFrame {
 
 		// Form layout
 		FormLayout form = new FormLayout();
-		form.addClassNames(LumoStyles.Padding.Bottom.L,
-				LumoStyles.Padding.Horizontal.L, LumoStyles.Padding.Top.S);
+		form.addClassNames(
+				LumoStyles.Padding.Bottom.L,
+				LumoStyles.Padding.Horizontal.L,
+				LumoStyles.Padding.Top.S
+		);
 		form.setResponsiveSteps(
 				new FormLayout.ResponsiveStep("0", 1,
 						FormLayout.ResponsiveStep.LabelsPosition.TOP),
 				new FormLayout.ResponsiveStep("21em", 2,
-						FormLayout.ResponsiveStep.LabelsPosition.TOP));
+						FormLayout.ResponsiveStep.LabelsPosition.TOP)
+		);
 		form.addFormItem(firstName, "First Name");
 		form.addFormItem(lastName, "Last Name");
 		FormLayout.FormItem statusItem = form.addFormItem(status, "Status");
 		FormLayout.FormItem phoneItem = form.addFormItem(phone, "Phone");
 		FormLayout.FormItem emailItem = form.addFormItem(email, "Email");
 		FormLayout.FormItem companyItem = form.addFormItem(company, "Company");
-		FormLayout.FormItem uploadItem = form.addFormItem(new Upload(),
-				"Image");
-		UIUtils.setColSpan(2, statusItem, phoneItem, emailItem, companyItem,
-				uploadItem);
+		FormLayout.FormItem uploadItem = form.addFormItem(new Upload(), "Image");
+		UIUtils.setColSpan(2, statusItem, phoneItem, emailItem, companyItem, uploadItem);
 		return new BinderCrudEditor<>(binder, form);
 	}
+
 	private void filter() {
 		dataProvider.setFilterByValue(Person::getRole, Person.Role.ACCOUNTANT);
 	}
