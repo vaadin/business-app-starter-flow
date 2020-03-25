@@ -64,6 +64,7 @@ public class Accountants extends ViewFrame {
 
 	private Crud<Person> createCrud() {
 		crud = new Crud<>(Person.class, createGrid(), createEditor());
+		crud.addNewListener(event -> header.setTitle("New Accountant"));
 		UIUtils.setBackgroundColor(LumoStyles.Color.BASE_COLOR, crud);
 		crud.setEditOnClick(true);
 		crud.setEditorPosition(CrudEditorPosition.ASIDE);
