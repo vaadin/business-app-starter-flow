@@ -14,6 +14,7 @@ import com.vaadin.starter.business.backend.Address;
 import com.vaadin.starter.business.backend.DummyData;
 import com.vaadin.starter.business.ui.components.FlexBoxLayout;
 import com.vaadin.starter.business.ui.layout.size.Right;
+import com.vaadin.starter.business.ui.layout.size.Size;
 import com.vaadin.starter.business.ui.util.css.*;
 
 import java.text.DecimalFormat;
@@ -300,7 +301,7 @@ public class UIUtils {
 
 		FlexBoxLayout layout = new FlexBoxLayout(prefix, number);
 		layout.setFlexGrow(1, number);
-		layout.setSpacing(Right.S);
+		UIUtils.setMargin(prefix, Right.XS);
 		return layout;
 	}
 
@@ -405,7 +406,7 @@ public class UIUtils {
 	/* === CSS UTILITIES === */
 
 	public static void setAlignItems(AlignItems alignItems,
-	                                Component... components) {
+	                                 Component... components) {
 		for (Component component : components) {
 			component.getElement().getStyle().set("align-items",
 					alignItems.getValue());
@@ -433,6 +434,13 @@ public class UIUtils {
 		for (Component component : components) {
 			component.getElement().getStyle().set("border-radius",
 					borderRadius.getValue());
+		}
+	}
+
+	public static void setBoxShadow(boolean inset, int offsetY, int offsetX, String color, Component... components) {
+		String value = offsetY + "px " + offsetX + "px " + color;
+		for (Component component : components) {
+			component.getElement().getStyle().set("box-shadow", inset ? "inset " + value : value);
 		}
 	}
 
@@ -513,6 +521,25 @@ public class UIUtils {
 		}
 	}
 
+	public static void setMargin(Component component, Size... sizes) {
+		removeMargin(component);
+		for (Size size : sizes) {
+			for (String attribute : size.getMarginAttributes()) {
+				component.getElement().getStyle().set(attribute, size.getVariable());
+			}
+		}
+	}
+
+	public static void removeMargin(Component... components) {
+		for (Component component : components) {
+			component.getElement().getStyle().remove("margin");
+			component.getElement().getStyle().remove("margin-bottom");
+			component.getElement().getStyle().remove("margin-left");
+			component.getElement().getStyle().remove("margin-right");
+			component.getElement().getStyle().remove("margin-top");
+		}
+	}
+
 	public static void setMaxWidth(String value, Component... components) {
 		for (Component component : components) {
 			component.getElement().getStyle().set("max-width", value);
@@ -523,6 +550,25 @@ public class UIUtils {
 		for (Component component : components) {
 			component.getElement().getStyle().set("overflow",
 					overflow.getValue());
+		}
+	}
+
+	public static void setPadding(Component component, Size... sizes) {
+		removePadding(component);
+		for (Size size : sizes) {
+			for (String attribute : size.getPaddingAttributes()) {
+				component.getElement().getStyle().set(attribute, size.getVariable());
+			}
+		}
+	}
+
+	public static void removePadding(Component... components) {
+		for (Component component : components) {
+			component.getElement().getStyle().remove("padding");
+			component.getElement().getStyle().remove("padding-bottom");
+			component.getElement().getStyle().remove("padding-left");
+			component.getElement().getStyle().remove("padding-right");
+			component.getElement().getStyle().remove("padding-top");
 		}
 	}
 

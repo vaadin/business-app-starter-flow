@@ -15,6 +15,7 @@ public class NaviMenu extends Nav {
 
 	private String CLASS_NAME = "navi-menu";
 	private UnorderedList list;
+	private NaviItem active;
 
 	public NaviMenu() {
 		setClassName(CLASS_NAME);
@@ -72,5 +73,4 @@ public class NaviMenu extends Nav {
 				.collect(Collectors.toList());
 		return items;
 	}
-
 }

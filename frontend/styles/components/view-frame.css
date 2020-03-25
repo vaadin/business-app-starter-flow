@@ -23,6 +23,18 @@
   -webkit-overflow-scrolling: touch;
 }
 
+.view-frame__content vaadin-grid,
+.view-frame__content vaadin-crud {
+  border-bottom: none;
+}
+
+@media (max-width: 479px) {
+  .view-frame__content vaadin-grid,
+  .view-frame__content vaadin-crud {
+    border: none;
+  }
+}
+
 .view-frame__footer {
   z-index: 2;
 }

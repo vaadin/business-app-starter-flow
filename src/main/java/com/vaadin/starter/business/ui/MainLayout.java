@@ -35,7 +35,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @CssImport(value = "./styles/components/charts.css", themeFor = "vaadin-chart", include = "vaadin-chart-default-theme")
-@CssImport(value = "./styles/components/floating-action-button.css", themeFor = "vaadin-button")
+@CssImport(value = "./styles/components/crud.css", themeFor = "vaadin-crud")
+@CssImport(value = "./styles/components/crud-dialog-layout.css", themeFor = "vaadin-dialog-layout")
+@CssImport(value = "./styles/components/crud-dialog-overlay.css", themeFor = "vaadin-dialog-overlay")
 @CssImport(value = "./styles/components/grid.css", themeFor = "vaadin-grid")
 @CssImport("./styles/lumo/border-radius.css")
 @CssImport("./styles/lumo/icon-size.css")
