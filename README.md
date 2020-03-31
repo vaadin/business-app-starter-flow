@@ -2,7 +2,7 @@
 
 Business App is a starter for Vaadin. 
 
-[Live demo](https://business.demo.vaadin.com/)
+[Live demo](https://labs.vaadin.com/business/)
 
 The starter gives you a productivity boost and a head-start. You get an app shell with a typical hierarchical left-hand menu. The shell, the views and the components are all responsive and touch friendly, which makes them great for desktop and mobile use. The views are built with Java, which enhances Java developers' productivity by allowing them to do all in one language.
 
