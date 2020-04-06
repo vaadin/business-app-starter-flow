@@ -3,6 +3,9 @@ jdk: openjdk8
 sudo: true
 dist: xenial
 
+env:
+  - TESTBENCH=-Dvaadin.proKey=$VAADIN_PRO_KEY
+
 before_install:
   - gem install rake
 
