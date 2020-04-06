@@ -16,4 +16,4 @@ addons:
 
 
 install: true
-script: ./.travis.script.sh
+script: xvfb-run  --server-args="-screen 0 1024x768x24" mvn -B -e -V clean verify -Pit,production -Dvaadin.bowerMode=false
