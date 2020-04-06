@@ -4,7 +4,7 @@ sudo: true
 dist: xenial
 
 env:
-  - TESTBENCH= -Dvaadin.proKey=$VAADIN_PRO_KEY
+  - TESTBENCH= -Dvaadin.proKey=$VAADIN_PRO_KEY_USER/$VAADIN_PRO_KEY_KEY
 
 before_install:
   - gem install rake
@@ -20,3 +20,4 @@ addons:
 
 install: true
 script: xvfb-run  --server-args="-screen 0 1024x768x24" mvn -B -e -V clean verify -Pit-saucelabs,production -Dvaadin.bowerMode=false $TESTBENCH
+
