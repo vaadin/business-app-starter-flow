@@ -16,6 +16,9 @@ addons:
       - google-chrome
     packages:
       - google-chrome-stable
+  sauce_connect:
+    username: $SAUCE_USER
+    access_key: $SAUCE_ACCESS_KEY
 
 
 install: true
