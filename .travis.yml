@@ -1,4 +1,19 @@
 language: java
+jdk: openjdk8
+sudo: true
+dist: xenial
 
 before_install:
   - gem install rake
+
+
+addons:
+  apt:
+    sources:
+      - google-chrome
+    packages:
+      - google-chrome-stable
+
+
+install: true
+script: ./.travis.script.sh
