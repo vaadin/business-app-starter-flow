@@ -1,14 +1,18 @@
 package com.vaadin.starter.business.it;
 
+import com.vaadin.testbench.IPAddress;
 import com.vaadin.testbench.ScreenshotOnFailureRule;
 import com.vaadin.testbench.TestBenchTestCase;
+import com.vaadin.testbench.parallel.ParallelTest;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
-public abstract class AbstractIT extends TestBenchTestCase {
+public abstract class AbstractIT extends ParallelTest {
+
+    public static String APP_URL= "http://localhost:8080";
 
     @Rule
     public ScreenshotOnFailureRule rule = new ScreenshotOnFailureRule(this,
@@ -28,4 +32,11 @@ public abstract class AbstractIT extends TestBenchTestCase {
         return string.replaceAll("[\\., ]", "").replace((char) 160, ' ');
     }
 
+    @Override
+    public void setup() throws Exception {
+        super.setup();
+        if (getRunLocallyBrowser() == null) {
+            APP_URL = "http://" + IPAddress.findSiteLocalAddress() + ":8080/";
+        }
+    }
 }
