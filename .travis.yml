@@ -5,8 +5,8 @@ dist: xenial
 
 env:
   - TESTBENCH=-Dvaadin.proKey=$VAADIN_PRO_KEY_USER/$VAADIN_PRO_KEY_KEY
-  - SAUCE_USER_EN=-Dsauce.user=$SAUCE_USER
-  - SAUCE_ACCESS_KEY_EN=-Dsauce.sauceAccessKey=$SAUCE_ACCESS_KEY
+  #- SAUCE_USER_EN=-Dsauce.user=$SAUCE_USER
+  #- SAUCE_ACCESS_KEY_EN=-Dsauce.sauceAccessKey=$SAUCE_ACCESS_KEY
 
 before_install:
   - gem install rake
@@ -24,5 +24,5 @@ addons:
 
 
 install: true
-script: xvfb-run  --server-args="-screen 0 1024x768x24" mvn -B -e -V clean verify -Pit-saucelabs,production -Dvaadin.bowerMode=false $TESTBENCH $SAUSE_USER_EN $SAUCE_ACCESS_KEY_EN
+script: xvfb-run  --server-args="-screen 0 1024x768x24" mvn -B -e -V clean verify -Pit-saucelabs,production -Dvaadin.bowerMode=false $TESTBENCH -Dsauce.user=$SAUCE_USER -Dsauce.sauceAccessKey=$SAUCE_ACCESS_KEY
 
