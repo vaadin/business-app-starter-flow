@@ -33,7 +33,8 @@ public abstract class AbstractIT extends ParallelTest {
         super.setup();
         if (getRunLocallyBrowser() == null) {
             //APP_URL = getHubURL().replace("localhost","@ondemand.saucelabs.com").replace("4445","7000");
-                APP_URL = "http://" + IPAddress.findSiteLocalAddress() + ":8080/";
+                //APP_URL = "http://" + IPAddress.findSiteLocalAddress() + ":8080/";
+            APP_URL="https://ondemand.us-east-1.saucelabs.com/wd/hub";
         }
         System.out.println("SET-UP " + APP_URL);
     }
