@@ -8,7 +8,7 @@ import org.junit.Rule;
 
 public abstract class AbstractIT extends ParallelTest {
 
-    public static String APP_URL= "http://localhost:8080/prod-mode";
+    public static String APP_URL= "http://localhost:8080";
 
     @Rule
     public ScreenshotOnFailureRule rule = new ScreenshotOnFailureRule(this,
