@@ -297,7 +297,7 @@
                         <configuration>
                             <sauceUsername>${sauce.user}</sauceUsername>
                             <sauceAccessKey>${sauce.sauceAccessKey}</sauceAccessKey>
-                            <port>7000</port>
+                            <!--<port>7000</port>-->
                             <options>${sauce.options}</options>
                         </configuration>
                         <dependencies>
