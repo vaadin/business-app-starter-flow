@@ -36,7 +36,8 @@ public abstract class AbstractIT extends ParallelTest {
     public void setup() throws Exception {
         super.setup();
         if (getRunLocallyBrowser() == null) {
-            APP_URL = "http://" + IPAddress.findSiteLocalAddress() + ":8080/";
+            APP_URL = getHubURL();
         }
+        System.out.println("SET-UP " + APP_URL);
     }
 }
