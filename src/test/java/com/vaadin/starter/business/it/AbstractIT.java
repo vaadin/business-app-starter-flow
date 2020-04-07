@@ -8,7 +8,7 @@ import org.junit.Rule;
 
 public abstract class AbstractIT extends ParallelTest {
 
-    public static String APP_URL= "http://localhost:8080";
+    public static String APP_URL= "http://localhost:8080/prod-mode";
 
     @Rule
     public ScreenshotOnFailureRule rule = new ScreenshotOnFailureRule(this,
@@ -28,7 +28,7 @@ public abstract class AbstractIT extends ParallelTest {
         return string.replaceAll("[\\., ]", "").replace((char) 160, ' ');
     }
 
-    @Override
+  /*  @Override
     public void setup() throws Exception {
         super.setup();
         if (getRunLocallyBrowser() == null) {
@@ -37,5 +37,5 @@ public abstract class AbstractIT extends ParallelTest {
             APP_URL="https://ondemand.us-east-1.saucelabs.com/wd/hub";
         }
         System.out.println("SET-UP " + APP_URL);
-    }
+    }*/
 }
