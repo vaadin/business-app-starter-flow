@@ -31,7 +31,7 @@ public abstract class AbstractIT extends ParallelTest {
     public void setup() throws Exception {
         super.setup();
         if (getRunLocallyBrowser() == null) {
-            APP_URL = getHubURL().replace("localhost","@ondemand.saucelabs.com");
+            APP_URL = getHubURL().replace("localhost","@ondemand.saucelabs.com").replace("4445","7000");
         }
         System.out.println("SET-UP " + APP_URL);
     }
