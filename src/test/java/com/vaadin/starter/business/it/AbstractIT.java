@@ -1,14 +1,9 @@
 package com.vaadin.starter.business.it;
 
-import com.vaadin.testbench.IPAddress;
 import com.vaadin.testbench.ScreenshotOnFailureRule;
-import com.vaadin.testbench.TestBenchTestCase;
 import com.vaadin.testbench.parallel.ParallelTest;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Rule;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 
 public abstract class AbstractIT extends ParallelTest {
 
@@ -36,7 +31,7 @@ public abstract class AbstractIT extends ParallelTest {
     public void setup() throws Exception {
         super.setup();
         if (getRunLocallyBrowser() == null) {
-            APP_URL = getHubURL();
+            APP_URL = getHubURL().replace("4445","7000");
         }
         System.out.println("SET-UP " + APP_URL);
     }
