@@ -24,6 +24,5 @@ addons:
 
 
 install: true
-# script: xvfb-run  --server-args="-screen 0 1024x768x24" mvn -B -e -V clean verify -Pit-saucelabs,production -Dvaadin.bowerMode=false $TESTBENCH -Dsauce.user=$SAUCE_USER -Dsauce.sauceAccessKey=$SAUCE_ACCESS_KEY
 script: xvfb-run  --server-args="-screen 0 1024x768x24" mvn -B -e -V clean verify -Pit-saucelabs,production -Dvaadin.bowerMode=false $TESTBENCH $SAUCE_USER_EN $SAUCE_ACCESS_KEY_EN
 
