@@ -4,9 +4,7 @@ sudo: true
 dist: xenial
 
 env:
-  TESTBENCH=-Dvaadin.proKey=$VAADIN_PRO_KEY_USER/$VAADIN_PRO_KEY_KEY
-  SAUCE_USER_EN=-Dsauce.user=$SAUCE_USER
-  SAUCE_ACCESS_KEY_EN=-Dsauce.sauceAccessKey=$SAUCE_ACCESS_KEY
+  - TESTBENCH=-Dvaadin.proKey=$VAADIN_PRO_KEY_USER/$VAADIN_PRO_KEY_KEY SAUCE_USER_EN=-Dsauce.user=$SAUCE_USER SAUCE_ACCESS_KEY_EN=-Dsauce.sauceAccessKey=$SAUCE_ACCESS_KEY
 
 before_install:
   - gem install rake
