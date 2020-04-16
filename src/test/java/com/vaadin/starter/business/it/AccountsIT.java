@@ -9,7 +9,7 @@ public class AccountsIT extends AbstractIT {
 
     @Test
     public void accountDetailsCorrect() {
-        getDriver().get("http://localhost:8080/accounts");
+        getDriver().get( APP_URL + "/accounts");
         GridElement accountsGrid = $(GridElement.class).id("accounts");
 
         GridTHTDElement availability = accountsGrid.getCell(0, 3);
