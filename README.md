@@ -38,8 +38,8 @@ For full terms, see LICENSE
 ### Pro components
 
 Pro components used in this starter are
- - [Charts](https://vaadin.com/components/vaadin-charts)
- - [Board](https://vaadin.com/components/vaadin-board)
- - [Crud](https://vaadin.com/components/vaadin-crud/)
+ - [Vaadin Charts](https://vaadin.com/components/vaadin-charts)
+ - [Vaadin Board](https://vaadin.com/components/vaadin-board)
+ - [Vaadin Crud](https://vaadin.com/components/vaadin-crud/)
  
 Also [TestBench](https://vaadin.com/testbench) library is used for testing.
