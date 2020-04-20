@@ -34,3 +34,12 @@ before running in the other mode.
 A paid Pro or Prime subscription is required for creating a new software project from this starter. After its creation, results can be used, developed and distributed freely, but licenses for the used commercial components are required during development. The starter or its parts cannot be redistributed as a code example or template.
 
 For full terms, see LICENSE
+
+### Pro components
+
+Pro components used in this starter are
+ - [Charts](https://vaadin.com/components/vaadin-charts)
+ - [Board](https://vaadin.com/components/vaadin-board)
+ - [Crud](https://vaadin.com/components/vaadin-crud/)
+ 
+Also [TestBench](https://vaadin.com/testbench) library is used for testing.
