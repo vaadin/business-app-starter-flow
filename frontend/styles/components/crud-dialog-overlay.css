@@ -1,0 +1,10 @@
+/* Needed to have a fixed header and content scrolling */
+:host([theme~="layout"]) [part="overlay"],
+:host([theme~="layout"]) [part="content"] {
+  max-height: 100%;
+}
+
+#editor {
+  height: 100%;
+  overflow: hidden;
+}

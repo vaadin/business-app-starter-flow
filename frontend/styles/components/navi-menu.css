@@ -1,5 +1,4 @@
 .navi-menu {
-  box-shadow: inset 0 -1px var(--lumo-contrast-10pct);
   flex: 1;
   overflow: auto;
   -webkit-overflow-scrolling: touch;

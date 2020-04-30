@@ -16,6 +16,11 @@
   flex-shrink: 0;
 }
 
+.details-drawer h2 {
+  font-size: var(--lumo-font-size-l);
+  margin: 0;
+}
+
 .details-drawer__header vaadin-tabs {
   box-shadow: none;
 }
