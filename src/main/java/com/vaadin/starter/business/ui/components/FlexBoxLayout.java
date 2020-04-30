@@ -5,7 +5,6 @@ import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.theme.lumo.Lumo;
 import com.vaadin.starter.business.ui.layout.size.Size;
 import com.vaadin.starter.business.ui.util.css.*;
-
 import java.util.ArrayList;
 
 public class FlexBoxLayout extends FlexLayout {
@@ -77,7 +76,7 @@ public class FlexBoxLayout extends FlexLayout {
 		}
 	}
 
-	public void setFlexDirection(FlexDirection direction) {
+	public void setFlexDirection(com.vaadin.starter.business.ui.util.css.FlexDirection direction) {
 		getStyle().set(FLEX_DIRECTION, direction.getValue());
 	}
 
@@ -91,7 +90,7 @@ public class FlexBoxLayout extends FlexLayout {
 		}
 	}
 
-	public void setFlexWrap(FlexWrap wrap) {
+	public void setFlexWrap(com.vaadin.starter.business.ui.util.css.FlexWrap wrap) {
 		getStyle().set(FLEX_WRAP, wrap.getValue());
 	}
 
