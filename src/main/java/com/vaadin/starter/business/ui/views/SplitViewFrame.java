@@ -6,9 +6,9 @@ import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.HasStyle;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.starter.business.ui.MainLayout;
 import com.vaadin.starter.business.ui.components.FlexBoxLayout;
-import com.vaadin.starter.business.ui.util.css.FlexDirection;
 
 /**
  * A view frame that establishes app design guidelines. It consists of four
@@ -85,10 +85,10 @@ public class SplitViewFrame extends Composite<Div> implements HasStyle {
 
 	public void setViewDetailsPosition(Position position) {
 		if (position.equals(Position.RIGHT)) {
-			wrapper.setFlexDirection(FlexDirection.ROW);
+			wrapper.setFlexDirection(FlexLayout.FlexDirection.ROW);
 
 		} else if (position.equals(Position.BOTTOM)) {
-			wrapper.setFlexDirection(FlexDirection.COLUMN);
+			wrapper.setFlexDirection(FlexLayout.FlexDirection.COLUMN);
 		}
 	}
 

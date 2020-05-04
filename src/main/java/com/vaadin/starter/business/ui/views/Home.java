@@ -4,6 +4,7 @@ import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Html;
 import com.vaadin.flow.component.html.Anchor;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.starter.business.ui.MainLayout;
@@ -12,8 +13,6 @@ import com.vaadin.starter.business.ui.layout.size.Horizontal;
 import com.vaadin.starter.business.ui.layout.size.Right;
 import com.vaadin.starter.business.ui.layout.size.Uniform;
 import com.vaadin.starter.business.ui.util.UIUtils;
-import com.vaadin.starter.business.ui.util.css.FlexDirection;
-import com.vaadin.starter.business.ui.util.css.FlexWrap;
 
 @PageTitle("Welcome")
 @Route(value = "", layout = MainLayout.class)
@@ -47,11 +46,11 @@ public class Home extends ViewFrame {
 		Anchor starter = new Anchor("https://vaadin.com/start/latest/business-app", UIUtils.createButton("Start a new project with Business App", VaadinIcon.EXTERNAL_LINK));
 
 		FlexBoxLayout links = new FlexBoxLayout(documentation, starter);
-		links.setFlexWrap(FlexWrap.WRAP);
+		links.setFlexWrap(FlexLayout.FlexWrap.WRAP);
 		links.setSpacing(Right.S);
 
 		FlexBoxLayout content = new FlexBoxLayout(intro, productivity, features, links);
-		content.setFlexDirection(FlexDirection.COLUMN);
+		content.setFlexDirection(FlexLayout.FlexDirection.COLUMN);
 		content.setMargin(Horizontal.AUTO);
 		content.setMaxWidth("840px");
 		content.setPadding(Uniform.RESPONSIVE_L);

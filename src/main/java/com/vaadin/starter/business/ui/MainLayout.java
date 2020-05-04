@@ -23,7 +23,6 @@ import com.vaadin.starter.business.ui.components.navigation.drawer.NaviItem;
 import com.vaadin.starter.business.ui.components.navigation.drawer.NaviMenu;
 import com.vaadin.starter.business.ui.util.UIUtils;
 import com.vaadin.starter.business.ui.util.css.Display;
-import com.vaadin.starter.business.ui.util.css.FlexDirection;
 import com.vaadin.starter.business.ui.util.css.Overflow;
 import com.vaadin.starter.business.ui.views.Accounts;
 import com.vaadin.starter.business.ui.views.Home;

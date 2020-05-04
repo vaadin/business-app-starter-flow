@@ -11,6 +11,7 @@ import com.vaadin.flow.component.charts.model.ListSeries;
 import com.vaadin.flow.component.charts.model.XAxis;
 import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.router.BeforeEvent;
 import com.vaadin.flow.router.HasUrlParameter;
 import com.vaadin.flow.router.PageTitle;
@@ -52,7 +53,7 @@ public class AccountDetails extends ViewFrame implements HasUrlParameter<Long> {
 				createRecentTransactionsList(),
 				createMonthlyOverviewChart()
 		);
-		content.setFlexDirection(FlexDirection.COLUMN);
+		content.setFlexDirection(FlexLayout.FlexDirection.COLUMN);
 		content.setMargin(Horizontal.AUTO, Vertical.RESPONSIVE_L);
 		content.setMaxWidth("840px");
 		return content;
@@ -82,7 +83,7 @@ public class AccountDetails extends ViewFrame implements HasUrlParameter<Long> {
 		updated.setReverse(true);
 
 		FlexBoxLayout listItems = new FlexBoxLayout(availability, bankAccount, updated);
-		listItems.setFlexDirection(FlexDirection.COLUMN);
+		listItems.setFlexDirection(FlexLayout.FlexDirection.COLUMN);
 
 		Section section = new Section(image, listItems);
 		section.addClassNames(
