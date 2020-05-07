@@ -10,7 +10,6 @@ import com.vaadin.starter.business.ui.layout.size.Wide;
 import com.vaadin.starter.business.ui.util.FontSize;
 import com.vaadin.starter.business.ui.util.TextColor;
 import com.vaadin.starter.business.ui.util.UIUtils;
-import com.vaadin.starter.business.ui.util.css.FlexDirection;
 import com.vaadin.starter.business.ui.util.css.WhiteSpace;
 
 @CssImport("./styles/components/list-item.css")
