@@ -1,5 +1,8 @@
 package com.vaadin.starter.business.ui.views;
 
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+
 import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.DetachEvent;
@@ -25,14 +28,19 @@ import com.vaadin.starter.business.ui.layout.size.Horizontal;
 import com.vaadin.starter.business.ui.layout.size.Right;
 import com.vaadin.starter.business.ui.layout.size.Top;
 import com.vaadin.starter.business.ui.layout.size.Vertical;
-import com.vaadin.starter.business.ui.util.*;
-import com.vaadin.starter.business.ui.util.css.*;
+import com.vaadin.starter.business.ui.util.FontSize;
+import com.vaadin.starter.business.ui.util.LineHeight;
+import com.vaadin.starter.business.ui.util.LumoStyles;
+import com.vaadin.starter.business.ui.util.TextColor;
+import com.vaadin.starter.business.ui.util.UIUtils;
+import com.vaadin.starter.business.ui.util.css.BoxSizing;
+import com.vaadin.starter.business.ui.util.css.FlexDirection;
+import com.vaadin.starter.business.ui.util.css.Overflow;
+import com.vaadin.starter.business.ui.util.css.PointerEvents;
+import com.vaadin.starter.business.ui.util.css.TextOverflow;
 import com.vaadin.starter.business.ui.util.css.lumo.BadgeColor;
 import com.vaadin.starter.business.ui.util.css.lumo.BadgeShape;
 import com.vaadin.starter.business.ui.util.css.lumo.BadgeSize;
-
-import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 @PageTitle("Accounts")
 @Route(value = "accounts", layout = MainLayout.class)
@@ -75,6 +83,8 @@ public class Accounts extends ViewFrame {
 				.setSortable(true);
 		grid.addColumn(new ComponentRenderer<>(this::createOwnerInfo))
 				.setHeader("Owner")
+				.setComparator((account1, account2) ->
+					account1.getOwner().compareToIgnoreCase(account2.getOwner()))
 				.setSortable(true)
 				.setWidth("200px");
 		grid.addColumn(new ComponentRenderer<>(this::createBankInfo))
