@@ -14,6 +14,7 @@ import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
+import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.router.BeforeEvent;
 import com.vaadin.flow.router.HasUrlParameter;
 import com.vaadin.flow.router.PageTitle;
@@ -33,8 +34,6 @@ import com.vaadin.starter.business.ui.util.LumoStyles;
 import com.vaadin.starter.business.ui.util.TextColor;
 import com.vaadin.starter.business.ui.util.UIUtils;
 import com.vaadin.starter.business.ui.util.css.BorderRadius;
-import com.vaadin.starter.business.ui.util.css.FlexDirection;
-import com.vaadin.starter.business.ui.util.css.FlexWrap;
 import com.vaadin.starter.business.ui.util.css.WhiteSpace;
 
 import java.time.LocalDate;
@@ -65,7 +64,7 @@ public class AccountDetails extends ViewFrame implements HasUrlParameter<Long> {
 				createMonthlyOverviewHeader(),
 				createMonthlyOverviewChart()
 		);
-		content.setFlexDirection(FlexDirection.COLUMN);
+		content.setFlexDirection(FlexLayout.FlexDirection.COLUMN);
 		content.setMargin(Horizontal.AUTO, Vertical.RESPONSIVE_L);
 		content.setMaxWidth("840px");
 		return content;
@@ -94,13 +93,13 @@ public class AccountDetails extends ViewFrame implements HasUrlParameter<Long> {
 		updated.setReverse(true);
 
 		FlexBoxLayout listItems = new FlexBoxLayout(availability, bankAccount, updated);
-		listItems.setFlexDirection(FlexDirection.COLUMN);
+		listItems.setFlexDirection(FlexLayout.FlexDirection.COLUMN);
 
 		FlexBoxLayout section = new FlexBoxLayout(image, listItems);
 		section.addClassName(BoxShadowBorders.BOTTOM);
 		section.setAlignItems(FlexComponent.Alignment.CENTER);
 		section.setFlex("1", listItems);
-		section.setFlexWrap(FlexWrap.WRAP);
+		section.setFlexWrap(FlexLayout.FlexWrap.WRAP);
 		section.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
 		section.setPadding(Bottom.L);
 		return section;
