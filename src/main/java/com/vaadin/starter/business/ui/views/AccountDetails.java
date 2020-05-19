@@ -35,6 +35,7 @@ import com.vaadin.starter.business.ui.util.TextColor;
 import com.vaadin.starter.business.ui.util.UIUtils;
 import com.vaadin.starter.business.ui.util.css.BorderRadius;
 import com.vaadin.starter.business.ui.util.css.WhiteSpace;
+import com.vaadin.flow.component.orderedlayout.FlexLayout.FlexDirection;
 
 import java.time.LocalDate;
 
@@ -64,7 +65,7 @@ public class AccountDetails extends ViewFrame implements HasUrlParameter<Long> {
 				createMonthlyOverviewHeader(),
 				createMonthlyOverviewChart()
 		);
-		content.setFlexDirection(FlexLayout.FlexDirection.COLUMN);
+		content.setFlexDirection(FlexDirection.COLUMN);
 		content.setMargin(Horizontal.AUTO, Vertical.RESPONSIVE_L);
 		content.setMaxWidth("840px");
 		return content;
@@ -93,7 +94,7 @@ public class AccountDetails extends ViewFrame implements HasUrlParameter<Long> {
 		updated.setReverse(true);
 
 		FlexBoxLayout listItems = new FlexBoxLayout(availability, bankAccount, updated);
-		listItems.setFlexDirection(FlexLayout.FlexDirection.COLUMN);
+		listItems.setFlexDirection(FlexDirection.COLUMN);
 
 		FlexBoxLayout section = new FlexBoxLayout(image, listItems);
 		section.addClassName(BoxShadowBorders.BOTTOM);

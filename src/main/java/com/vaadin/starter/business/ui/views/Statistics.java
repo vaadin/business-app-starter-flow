@@ -26,6 +26,7 @@ import com.vaadin.starter.business.ui.layout.size.*;
 import com.vaadin.starter.business.ui.util.*;
 import com.vaadin.starter.business.ui.util.css.Position;
 import com.vaadin.starter.business.ui.util.css.*;
+import com.vaadin.flow.component.orderedlayout.FlexLayout.FlexDirection;
 
 @CssImport("./styles/views/statistics.css")
 @PageTitle("Statistics")
@@ -128,7 +129,7 @@ public class Statistics extends ViewFrame {
 				new Label(status.getName()), chartContainer);
 		paymentChart.addClassName(CLASS_NAME + "__payment-chart");
 		paymentChart.setAlignItems(FlexComponent.Alignment.CENTER);
-		paymentChart.setFlexDirection(FlexLayout.FlexDirection.COLUMN);
+		paymentChart.setFlexDirection(FlexDirection.COLUMN);
 		paymentChart.setPadding(Bottom.S, Top.M);
 		return paymentChart;
 	}
@@ -251,7 +252,7 @@ public class Statistics extends ViewFrame {
 
 		FlexBoxLayout reports = new FlexBoxLayout(header, card);
 		reports.addClassName(CLASS_NAME + "__reports");
-		reports.setFlexDirection(FlexLayout.FlexDirection.COLUMN);
+		reports.setFlexDirection(FlexDirection.COLUMN);
 		reports.setPadding(Bottom.XL, Left.RESPONSIVE_L);
 		return reports;
 	}
@@ -285,7 +286,7 @@ public class Statistics extends ViewFrame {
 
 		FlexBoxLayout logs = new FlexBoxLayout(header, card);
 		logs.addClassName(CLASS_NAME + "__logs");
-		logs.setFlexDirection(FlexLayout.FlexDirection.COLUMN);
+		logs.setFlexDirection(FlexDirection.COLUMN);
 		logs.setPadding(Bottom.XL, Right.RESPONSIVE_L);
 		return logs;
 	}
