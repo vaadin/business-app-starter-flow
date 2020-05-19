@@ -10,7 +10,6 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
-import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.router.PageTitle;
@@ -47,7 +46,7 @@ public class Statistics extends ViewFrame {
 
 		FlexBoxLayout content = new FlexBoxLayout(payments, transactions, docs);
 		content.setAlignItems(FlexComponent.Alignment.CENTER);
-		content.setFlexDirection(FlexLayout.FlexDirection.COLUMN);
+		content.setFlexDirection(FlexDirection.COLUMN);
 		return content;
 	}
 
