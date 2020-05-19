@@ -14,7 +14,6 @@ import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
-import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.router.BeforeEvent;
 import com.vaadin.flow.router.HasUrlParameter;
 import com.vaadin.flow.router.PageTitle;
@@ -36,6 +35,7 @@ import com.vaadin.starter.business.ui.util.UIUtils;
 import com.vaadin.starter.business.ui.util.css.BorderRadius;
 import com.vaadin.starter.business.ui.util.css.WhiteSpace;
 import com.vaadin.flow.component.orderedlayout.FlexLayout.FlexDirection;
+import com.vaadin.flow.component.orderedlayout.FlexLayout.FlexWrap;
 
 import java.time.LocalDate;
 
@@ -100,7 +100,7 @@ public class AccountDetails extends ViewFrame implements HasUrlParameter<Long> {
 		section.addClassName(BoxShadowBorders.BOTTOM);
 		section.setAlignItems(FlexComponent.Alignment.CENTER);
 		section.setFlex("1", listItems);
-		section.setFlexWrap(FlexLayout.FlexWrap.WRAP);
+		section.setFlexWrap(FlexWrap.WRAP);
 		section.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
 		section.setPadding(Bottom.L);
 		return section;
