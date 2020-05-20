@@ -8,7 +8,7 @@ import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.starter.business.ui.MainLayout;
 import com.vaadin.starter.business.ui.components.FlexBoxLayout;
-import com.vaadin.starter.business.ui.util.css.FlexDirection;
+import com.vaadin.flow.component.orderedlayout.FlexLayout.FlexDirection;
 
 /**
  * A view frame that establishes app design guidelines. It consists of four

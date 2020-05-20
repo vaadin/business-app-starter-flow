@@ -13,7 +13,6 @@ import com.vaadin.starter.business.ui.layout.size.Right;
 import com.vaadin.starter.business.ui.layout.size.Vertical;
 import com.vaadin.starter.business.ui.util.BoxShadowBorders;
 import com.vaadin.starter.business.ui.util.UIUtils;
-import com.vaadin.starter.business.ui.util.css.FlexDirection;
 
 public class DetailsDrawerHeader extends FlexBoxLayout {
 

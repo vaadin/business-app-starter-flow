@@ -33,9 +33,9 @@ import com.vaadin.starter.business.ui.util.LumoStyles;
 import com.vaadin.starter.business.ui.util.TextColor;
 import com.vaadin.starter.business.ui.util.UIUtils;
 import com.vaadin.starter.business.ui.util.css.BorderRadius;
-import com.vaadin.starter.business.ui.util.css.FlexDirection;
-import com.vaadin.starter.business.ui.util.css.FlexWrap;
 import com.vaadin.starter.business.ui.util.css.WhiteSpace;
+import com.vaadin.flow.component.orderedlayout.FlexLayout.FlexDirection;
+import com.vaadin.flow.component.orderedlayout.FlexLayout.FlexWrap;
 
 import java.time.LocalDate;
 

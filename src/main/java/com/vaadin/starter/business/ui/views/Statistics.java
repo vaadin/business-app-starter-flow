@@ -25,6 +25,7 @@ import com.vaadin.starter.business.ui.layout.size.*;
 import com.vaadin.starter.business.ui.util.*;
 import com.vaadin.starter.business.ui.util.css.Position;
 import com.vaadin.starter.business.ui.util.css.*;
+import com.vaadin.flow.component.orderedlayout.FlexLayout.FlexDirection;
 
 @CssImport("./styles/views/statistics.css")
 @PageTitle("Statistics")
