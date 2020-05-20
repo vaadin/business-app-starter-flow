@@ -15,16 +15,17 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <failOnMissingWebXml>false</failOnMissingWebXml>
 
-        <vaadin.version>14.2-SNAPSHOT</vaadin.version>
+        <vaadin.version>14.2.0</vaadin.version>
         <jetty.version>9.4.15.v20190215</jetty.version>
     </properties>
 
     <pluginRepositories>
+        <!-- Repository needed for using Vaadin prerelease versions
         <pluginRepository>
             <id>vaadin-prereleases</id>
             <url>https://maven.vaadin.com/vaadin-prereleases</url>
         </pluginRepository>
-
+         -->
     </pluginRepositories>
 
     <repositories>
@@ -42,10 +43,11 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository>
-       <repository>
+        <!-- Repository needed for using Vaadin prerelease versions <repository>
             <id>vaadin-prereleases</id>
             <url>https://maven.vaadin.com/vaadin-prereleases</url>
         </repository>
+        -->
     </repositories>
 
     <dependencyManagement>
