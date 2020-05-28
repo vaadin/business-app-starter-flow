@@ -34,7 +34,6 @@ import com.vaadin.starter.business.ui.util.LumoStyles;
 import com.vaadin.starter.business.ui.util.TextColor;
 import com.vaadin.starter.business.ui.util.UIUtils;
 import com.vaadin.starter.business.ui.util.css.BoxSizing;
-import com.vaadin.starter.business.ui.util.css.FlexDirection;
 import com.vaadin.starter.business.ui.util.css.Overflow;
 import com.vaadin.starter.business.ui.util.css.PointerEvents;
 import com.vaadin.starter.business.ui.util.css.TextOverflow;
