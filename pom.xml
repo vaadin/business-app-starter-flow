@@ -89,6 +89,13 @@
             <artifactId>vaadin-testbench</artifactId>
             <scope>test</scope>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/io.github.bonigarcia/webdrivermanager -->
+        <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>3.8.1</version>
+            <scope>test</scope>
+        </dependency>
 
         <!-- Added to provide logging output as Flow uses -->
         <!-- the unbound SLF4J no-operation (NOP) logger implementation -->
@@ -174,36 +181,8 @@
                         </executions>
                         <configuration>
                             <trimStackTrace>false</trimStackTrace>
-                            <systemPropertyVariables>
-                                <webdriver.chrome.driver>${webdriver.chrome.driver}</webdriver.chrome.driver>
-                                <com.vaadin.testbench.Parameters.runLocally>chrome</com.vaadin.testbench.Parameters.runLocally>
-                            </systemPropertyVariables>
                         </configuration>
                     </plugin>
-                    <!-- Plugin for automatically download Chrome Driver for tests -->
-                    <plugin>
-                        <groupId>com.lazerycode.selenium</groupId>
-                        <artifactId>driver-binary-downloader-maven-plugin</artifactId>
-                        <version>1.0.17</version>
-                        <configuration>
-                            <!-- root directory that downloaded driver binaries will be stored
-                                in -->
-                            <onlyGetDriversForHostOperatingSystem>true</onlyGetDriversForHostOperatingSystem>
-                            <rootStandaloneServerDirectory>.driver</rootStandaloneServerDirectory>
-                            <customRepositoryMap>webdrivers.xml</customRepositoryMap>
-                            <downloadedZipFileDirectory>.driver/zips</downloadedZipFileDirectory>
-                            <!-- Overwrite any existing binaries that have been downloaded and extracted -->
-                            <overwriteFilesThatExist>true</overwriteFilesThatExist>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>selenium</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-
                 </plugins>
             </build>
         </profile>
