@@ -11,7 +11,7 @@
     "@vaadin/vaadin-split-layout": "4.2.0",
     "@vaadin/vaadin-combo-box": "5.1.1",
     "@vaadin/vaadin-cookie-consent": "1.1.2",
-    "@vaadin/vaadin-core-shrinkwrap": "16.0.3",
+    "@vaadin/vaadin-core-shrinkwrap": "16.0.4",
     "@vaadin/vaadin-upload": "4.3.0",
     "@vaadin/vaadin-dialog": "2.4.3",
     "@vaadin/vaadin-select": "2.2.0",
@@ -22,7 +22,7 @@
     "@vaadin/vaadin-charts": "6.3.1",
     "@vaadin/vaadin-grid-pro": "2.1.1",
     "@vaadin/vaadin-progress-bar": "1.2.0",
-    "@vaadin/vaadin-shrinkwrap": "16.0.3",
+    "@vaadin/vaadin-shrinkwrap": "16.0.4",
     "@vaadin/vaadin-ordered-layout": "1.3.0",
     "@vaadin/vaadin-login": "1.1.0",
     "@vaadin/vaadin-button": "2.3.0",
@@ -41,7 +41,7 @@
     "@vaadin/vaadin-time-picker": "2.1.1",
     "@vaadin/vaadin-context-menu": "4.4.0",
     "@vaadin/vaadin-tabs": "3.1.0",
-    "@vaadin/vaadin-radio-button": "1.3.0",
+    "@vaadin/vaadin-radio-button": "1.3.1",
     "@vaadin/vaadin-lumo-styles": "1.6.0",
     "@vaadin/vaadin-material-styles": "1.3.2",
     "@vaadin/vaadin-rich-text-editor": "1.2.2",
@@ -76,7 +76,7 @@
       "@vaadin/vaadin-split-layout": "4.2.0",
       "@vaadin/vaadin-combo-box": "5.1.1",
       "@vaadin/vaadin-cookie-consent": "1.1.2",
-      "@vaadin/vaadin-core-shrinkwrap": "16.0.3",
+      "@vaadin/vaadin-core-shrinkwrap": "16.0.4",
       "@vaadin/vaadin-upload": "4.3.0",
       "@vaadin/vaadin-dialog": "2.4.3",
       "@vaadin/vaadin-select": "2.2.0",
@@ -87,7 +87,7 @@
       "@vaadin/vaadin-charts": "6.3.1",
       "@vaadin/vaadin-grid-pro": "2.1.1",
       "@vaadin/vaadin-progress-bar": "1.2.0",
-      "@vaadin/vaadin-shrinkwrap": "16.0.3",
+      "@vaadin/vaadin-shrinkwrap": "16.0.4",
       "@vaadin/vaadin-ordered-layout": "1.3.0",
       "@vaadin/vaadin-login": "1.1.0",
       "@vaadin/vaadin-button": "2.3.0",
@@ -106,7 +106,7 @@
       "@vaadin/vaadin-time-picker": "2.1.1",
       "@vaadin/vaadin-context-menu": "4.4.0",
       "@vaadin/vaadin-tabs": "3.1.0",
-      "@vaadin/vaadin-radio-button": "1.3.0",
+      "@vaadin/vaadin-radio-button": "1.3.1",
       "@vaadin/vaadin-lumo-styles": "1.6.0",
       "@vaadin/vaadin-material-styles": "1.3.2",
       "@vaadin/vaadin-rich-text-editor": "1.2.2",
@@ -130,6 +130,6 @@
       "lit-element": "2.3.1",
       "chokidar": "^3.4.0"
     },
-    "hash": "c1777096c8e439bbcdbd94438b204c8ca21a0d3601368701931e7c341f4d0e72"
+    "hash": "9dcd633ee5e75d575a304f7415ba91e7aeb5d6fe9be5bf834673b3929d97cbd0"
   }
 }
