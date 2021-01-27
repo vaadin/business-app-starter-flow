@@ -16,7 +16,7 @@
         <failOnMissingWebXml>false</failOnMissingWebXml>
 
         <vaadin.version>19.0.0.alpha4</vaadin.version>
-        <jetty.version>9.4.15.v20190215</jetty.version>
+        <jetty.version>9.4.36.v20210114</jetty.version>
     </properties>
 
     <repositories>
