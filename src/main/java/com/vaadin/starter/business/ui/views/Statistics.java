@@ -139,6 +139,7 @@ public class Statistics extends ViewFrame {
 		chart.setSizeFull();
 
 		Configuration configuration = chart.getConfiguration();
+		configuration.getChart().setStyledMode(true);
 		configuration.getChart().setType(ChartType.SOLIDGAUGE);
 		configuration.setTitle("");
 		configuration.getTooltip().setEnabled(false);
