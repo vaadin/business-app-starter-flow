@@ -8,6 +8,7 @@ env:
 
 before_install:
   - gem install rake
+  - nvm install 14.16.1
 
 
 addons:
