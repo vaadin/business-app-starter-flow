@@ -45,6 +45,7 @@ import org.slf4j.LoggerFactory;
 @CssImport("./styles/lumo/typography.css")
 @CssImport("./styles/misc/box-shadow-borders.css")
 @CssImport(value = "./styles/styles.css", include = "lumo-badge")
+@JsModule("@vaadin/vaadin-charts/theme/vaadin-chart-default-theme")
 @JsModule("@vaadin/vaadin-lumo-styles/badge")
 public class MainLayout extends FlexBoxLayout
 		implements RouterLayout, AfterNavigationObserver {

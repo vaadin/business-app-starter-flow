@@ -60,7 +60,7 @@ public class Managers extends ViewFrame {
 		Crud<Person> crud = new Crud<>(Person.class, createGrid(), createEditor());
 		UIUtils.setBackgroundColor(LumoStyles.Color.BASE_COLOR, crud);
 		crud.setEditOnClick(true);
-		crud.setEditorPosition(CrudEditorPosition.BOTTOM);
+		crud.setEditorPosition(CrudEditorPosition.ASIDE);
 		crud.setSizeFull();
 		return crud;
 	}

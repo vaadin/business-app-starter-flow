@@ -43,7 +43,7 @@ public class Home extends ViewFrame {
 				"You enable this feature by setting <code>MainLayout.navigationTabs</code> to true.</p>");
 
 		Anchor documentation = new Anchor("https://vaadin.com/docs/business-app/overview.html", UIUtils.createButton("Read the documentation", VaadinIcon.EXTERNAL_LINK));
-		Anchor starter = new Anchor("https://vaadin.com/start/v14/business-app", UIUtils.createButton("Start a new project with Business App", VaadinIcon.EXTERNAL_LINK));
+		Anchor starter = new Anchor("https://vaadin.com/start/lts/business-app", UIUtils.createButton("Start a new project with Business App", VaadinIcon.EXTERNAL_LINK));
 
 		FlexBoxLayout links = new FlexBoxLayout(documentation, starter);
 		links.setFlexWrap(FlexLayout.FlexWrap.WRAP);
