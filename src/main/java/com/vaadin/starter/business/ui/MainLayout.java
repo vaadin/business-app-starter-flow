@@ -214,8 +214,6 @@ public class MainLayout extends FlexBoxLayout
 	public void configurePage(InitialPageSettings settings) {
 		settings.addMetaTag("apple-mobile-web-app-capable", "yes");
 		settings.addMetaTag("apple-mobile-web-app-status-bar-style", "black");
-
-		settings.addFavIcon("icon", "/images/favicons/favicon.ico", "256x256");
 	}
 
 	@Override
