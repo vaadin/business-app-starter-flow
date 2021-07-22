@@ -14,7 +14,5 @@ public class AppShell implements AppShellConfigurator {
 	public void configurePage(AppShellSettings settings) {
 		settings.addMetaTag("apple-mobile-web-app-capable", "yes");
 		settings.addMetaTag("apple-mobile-web-app-status-bar-style", "black");
-		settings.addFavIcon("icon", "frontend/images/favicons/favicon.ico",
-				"256x256");
 	}
 }
