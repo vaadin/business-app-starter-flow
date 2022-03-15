@@ -109,7 +109,7 @@
 
 @media (min-width: 1024px) {
   .navi-drawer[rail]:not([open]):not(:hover) .account-switcher__avatar,
-  .navi-drawer[rail]:not([open]):not(:hover) .navi-item__link iron-icon {
+  .navi-drawer[rail]:not([open]):not(:hover) .navi-item__link vaadin-icon {
     margin-left: auto;
     margin-right: auto;
   }
@@ -123,7 +123,7 @@
     display: none;
   }
 
-  .navi-drawer[rail]:not([open]):not(:hover) .navi-drawer__footer iron-icon {
+  .navi-drawer[rail]:not([open]):not(:hover) .navi-drawer__footer vaadin-icon {
     margin-left: 0.25em;
     margin-right: -0.25em;
     width: var(--navi-drawer-rail-width);

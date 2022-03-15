@@ -63,12 +63,12 @@
   color: var(--lumo-body-text-color);
 }
 
-.navi-item__link:not([highlight]) iron-icon {
+.navi-item__link:not([highlight]) vaadin-icon {
   color: var(--lumo-tertiary-text-color);
 }
 
 /* Icon */
-.navi-item__link iron-icon {
+.navi-item__link vaadin-icon {
   height: var(--lumo-icon-size-s);
   flex-shrink: 0;
   margin: 0 var(--lumo-space-l) 0 0;

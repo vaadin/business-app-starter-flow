@@ -139,6 +139,7 @@ public class Statistics extends ViewFrame {
 		chart.setSizeFull();
 
 		Configuration configuration = chart.getConfiguration();
+		configuration.getChart().setStyledMode(true);
 		configuration.getChart().setType(ChartType.SOLIDGAUGE);
 		configuration.setTitle("");
 		configuration.getTooltip().setEnabled(false);
@@ -187,12 +188,14 @@ public class Statistics extends ViewFrame {
 		Chart chart = new Chart(ChartType.AREASPLINE);
 
 		Configuration conf = chart.getConfiguration();
+		conf.getChart().setStyledMode(true);
 		conf.setTitle("2019");
 		conf.getLegend().setEnabled(false);
 
 		XAxis xAxis = new XAxis();
 		xAxis.setCategories("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul",
 				"Aug", "Sep", "Oct", "Nov", "Dec");
+		xAxis.setTickWidth(1);
 		conf.addxAxis(xAxis);
 
 		conf.getyAxis().setTitle("Number of Processed Transactions");
