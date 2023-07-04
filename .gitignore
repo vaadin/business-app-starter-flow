@@ -2,5 +2,5 @@
 target
 *.iml
 node_modules
-webpack.generated.js
+vite.generated.js
 frontend/generated/
