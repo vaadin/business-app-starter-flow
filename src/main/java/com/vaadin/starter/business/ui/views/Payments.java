@@ -14,6 +14,7 @@ import com.vaadin.flow.component.tabs.TabsVariant;
 import com.vaadin.flow.data.provider.DataProvider;
 import com.vaadin.flow.data.provider.ListDataProvider;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
+import com.vaadin.flow.data.renderer.LitRenderer;
 import com.vaadin.flow.data.renderer.TemplateRenderer;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
@@ -112,7 +113,7 @@ public class Payments extends SplitViewFrame {
 				.setFlexGrow(0)
 				.setHeader("Amount ($)")
 				.setTextAlign(ColumnTextAlign.END);
-		grid.addColumn(TemplateRenderer.<Payment>of("[[item.date]]")
+		grid.addColumn(LitRenderer.<Payment>of("${item.date}")
 				.withProperty("date", payment -> UIUtils.formatDate(payment.getDate())))
 				.setAutoWidth(true)
 				.setComparator(Payment::getDate)

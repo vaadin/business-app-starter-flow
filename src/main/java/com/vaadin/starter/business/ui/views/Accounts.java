@@ -96,7 +96,7 @@ public class Accounts extends ViewFrame {
 				.setFlexGrow(0)
 				.setHeader("Availability ($)")
 				.setTextAlign(ColumnTextAlign.END);
-		grid.addColumn(new LocalDateRenderer<>(BankAccount::getUpdated, DateTimeFormatter.ofPattern("MMM dd, YYYY")))
+		grid.addColumn(new LocalDateRenderer<>(BankAccount::getUpdated, "MMM dd, YYYY"))
 				.setAutoWidth(true)
 				.setComparator(BankAccount::getUpdated)
 				.setFlexGrow(0)
