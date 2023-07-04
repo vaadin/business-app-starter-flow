@@ -1,24 +1,25 @@
 package com.vaadin.starter.business.it;
 
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.util.Enumeration;
+import java.util.Optional;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Rule;
+import org.openqa.selenium.By;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+
 import com.vaadin.testbench.Parameters;
 import com.vaadin.testbench.ScreenshotOnFailureRule;
 import com.vaadin.testbench.TestBench;
 import com.vaadin.testbench.parallel.ParallelTest;
+
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
-
-import java.net.InetAddress;
-import java.net.SocketException;
-import java.util.Enumeration;
-
-import org.junit.Rule;
-import org.openqa.selenium.By;
-import org.openqa.selenium.chrome.ChromeDriver;
-
-import java.net.NetworkInterface;
-import java.util.Optional;
 
 public abstract class AbstractIT extends ParallelTest {
 
@@ -49,7 +50,11 @@ public abstract class AbstractIT extends ParallelTest {
         if (isUsingHub()) {
             super.setup();
         } else {
-            setDriver(TestBench.createDriver(new ChromeDriver()));
+            ChromeOptions options = new ChromeOptions();
+            if (Boolean.getBoolean("headless")) {
+                options.addArguments("--headless");
+            }
+            setDriver(TestBench.createDriver(new ChromeDriver(options)));
         }
         getDriver().get(getURL(route));
     }
