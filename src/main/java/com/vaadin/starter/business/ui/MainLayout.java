@@ -31,7 +31,7 @@ import com.vaadin.starter.business.ui.views.personnel.Managers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@CssImport(value = "./styles/components/charts.css", themeFor = "vaadin-chart", include = "vaadin-chart-default-theme")
+@CssImport(value = "./styles/components/charts.css", themeFor = "vaadin-chart")
 @CssImport(value = "./styles/components/floating-action-button.css", themeFor = "vaadin-button")
 @CssImport(value = "./styles/components/grid.css", themeFor = "vaadin-grid")
 @CssImport("./styles/lumo/border-radius.css")
