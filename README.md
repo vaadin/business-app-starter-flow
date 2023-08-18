@@ -1,3 +1,7 @@
+# ⚠️ This starter is not recommended ⚠️
+
+**This starter is not recommended for new Vaadin Flow applications. Instead, visit [start.vaadin.com](https://start.vaadin.com/) to configure and download a Vaadin project that reflects the current best practices.**
+
 # Business App Starter
 
 Business App is a starter for Vaadin. 
