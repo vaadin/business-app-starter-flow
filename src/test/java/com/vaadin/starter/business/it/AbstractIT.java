@@ -19,8 +19,6 @@ import com.vaadin.testbench.ScreenshotOnFailureRule;
 import com.vaadin.testbench.TestBench;
 import com.vaadin.testbench.parallel.ParallelTest;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
-
 public abstract class AbstractIT extends ParallelTest {
 
     private static final int SERVER_PORT = 8080;
@@ -39,11 +37,6 @@ public abstract class AbstractIT extends ParallelTest {
     @Rule
     public ScreenshotOnFailureRule rule = new ScreenshotOnFailureRule(this,
             true);
-
-    @BeforeClass
-    public static void setupClass() {
-        WebDriverManager.chromedriver().setup();
-    }
 
     @Before
     public void setup() throws Exception {
