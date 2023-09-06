@@ -1,24 +1,21 @@
 package com.vaadin.starter.business.it;
 
-import com.vaadin.testbench.Parameters;
-import com.vaadin.testbench.ScreenshotOnFailureRule;
-import com.vaadin.testbench.TestBench;
-import com.vaadin.testbench.parallel.ParallelTest;
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
-
 import java.net.InetAddress;
+import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Enumeration;
+import java.util.Optional;
 
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.openqa.selenium.By;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-import java.net.NetworkInterface;
-import java.util.Optional;
+import com.vaadin.testbench.Parameters;
+import com.vaadin.testbench.ScreenshotOnFailureRule;
+import com.vaadin.testbench.TestBench;
+import com.vaadin.testbench.parallel.ParallelTest;
 
 public abstract class AbstractIT extends ParallelTest {
 
@@ -38,11 +35,6 @@ public abstract class AbstractIT extends ParallelTest {
     @Rule
     public ScreenshotOnFailureRule rule = new ScreenshotOnFailureRule(this,
             true);
-
-    @BeforeClass
-    public static void setupClass() {
-        WebDriverManager.chromedriver().setup();
-    }
 
     @Before
     public void setup() throws Exception {
