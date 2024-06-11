@@ -3,4 +3,4 @@ target
 *.iml
 node_modules
 vite.generated.js
-frontend/generated/
+src/main/frontend/generated/
