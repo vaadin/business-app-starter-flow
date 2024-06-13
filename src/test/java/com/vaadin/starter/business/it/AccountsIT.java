@@ -25,7 +25,7 @@ public class AccountsIT extends AbstractIT {
         accountsGrid.getCell(0, 0).click();
 
         TestBenchElement availabilityDetails = $(TestBenchElement.class)
-                .id("availability").$("label").attributeContains("class", "h2")
+                .id("availability").$("label").withAttributeContainingWord("class", "h2")
                 .first();
         assertNumbers(gridViewAvailability, availabilityDetails.getText());
     }
