@@ -4,6 +4,7 @@ import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.theme.lumo.Lumo;
 import com.vaadin.starter.business.ui.layout.size.Size;
+import com.vaadin.starter.business.ui.util.UIUtils;
 import com.vaadin.starter.business.ui.util.css.*;
 import java.util.ArrayList;
 
@@ -81,19 +82,7 @@ public class FlexBoxLayout extends FlexLayout {
 	}
 
 	public void setMargin(Size... sizes) {
-		for (Size size : sizes) {
-			for (String attribute : size.getMarginAttributes()) {
-				getStyle().set(attribute, size.getVariable());
-			}
-		}
-	}
-
-	public void removeMargin() {
-		getStyle().remove("margin");
-		getStyle().remove("margin-bottom");
-		getStyle().remove("margin-left");
-		getStyle().remove("margin-right");
-		getStyle().remove("margin-top");
+		UIUtils.setMargin(this, sizes);
 	}
 
 	public void setMaxWidth(String value) {
@@ -113,20 +102,7 @@ public class FlexBoxLayout extends FlexLayout {
 	}
 
 	public void setPadding(Size... sizes) {
-		removePadding();
-		for (Size size : sizes) {
-			for (String attribute : size.getPaddingAttributes()) {
-				getStyle().set(attribute, size.getVariable());
-			}
-		}
-	}
-
-	public void removePadding() {
-		getStyle().remove("padding");
-		getStyle().remove("padding-bottom");
-		getStyle().remove("padding-left");
-		getStyle().remove("padding-right");
-		getStyle().remove("padding-top");
+		UIUtils.setPadding(this, sizes);
 	}
 
 	public void setPosition(Position position) {

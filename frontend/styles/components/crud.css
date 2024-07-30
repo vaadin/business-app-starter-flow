@@ -1,0 +1,16 @@
+/* Border on the main element */
+:host {
+  border: 1px solid var(--lumo-contrast-20pct);
+  box-sizing: border-box;
+}
+
+/* Remove border from individual elements */
+::slotted(vaadin-grid),
+[part="toolbar"] {
+  border: none;
+}
+
+#editor {
+  height: 100%;
+  overflow: hidden;
+}

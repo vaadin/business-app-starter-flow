@@ -31,7 +31,7 @@
 
 /* Hover */
 .navi-item:hover {
-  background-color: var(--lumo-contrast-10pct);
+  background-color: var(--lumo-contrast-5pct);
 }
 
 .navi-item__link:hover {
@@ -40,7 +40,7 @@
 
 /* Active */
 .navi-item:active {
-  background-color: var(--lumo-contrast-20pct);
+  background-color: var(--lumo-contrast-10pct);
 }
 
 /* Link */
@@ -56,7 +56,7 @@
 
 /* Highlight */
 .navi-item__link[highlight] {
-  background-color: var(--lumo-primary-color-10pct);
+  color: var(--lumo-primary-text-color);
 }
 
 .navi-item__link:not([highlight]) {

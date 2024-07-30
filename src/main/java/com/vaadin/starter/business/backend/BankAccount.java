@@ -48,6 +48,6 @@ public class BankAccount {
 	}
 
 	public String getLogoPath() {
-	    return path;
+		return path;
 	}
 }

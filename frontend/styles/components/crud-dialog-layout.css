@@ -1,0 +1,29 @@
+/* Hide the header to use a custom header */
+[part="header"] {
+  display: none;
+}
+
+/* Remove the border of the editor */
+:host(:not([theme~="no-border"]):not([editor-position=""])) [part="editor"]:not([hidden]) {
+  border: none;
+}
+
+/* Custom padding in our case */
+[part="scroller"] {
+  height: 100%;
+  overflow: hidden;
+  padding: 0;
+}
+
+[part="footer"] {
+  padding: var(--lumo-space-s) var(--lumo-space-r-l);
+}
+
+[part="footer"] ::slotted(vaadin-button) {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+[part="footer"] ::slotted(vaadin-button[theme~="primary"]) {
+  margin-left: var(--lumo-space-m);
+}
