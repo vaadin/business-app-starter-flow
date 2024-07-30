@@ -10,6 +10,7 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
+import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.router.PageTitle;
@@ -45,7 +46,7 @@ public class Statistics extends ViewFrame {
 
 		FlexBoxLayout content = new FlexBoxLayout(payments, transactions, docs);
 		content.setAlignItems(FlexComponent.Alignment.CENTER);
-		content.setFlexDirection(FlexDirection.COLUMN);
+		content.setFlexDirection(FlexLayout.FlexDirection.COLUMN);
 		return content;
 	}
 
@@ -127,7 +128,7 @@ public class Statistics extends ViewFrame {
 				new Label(status.getName()), chartContainer);
 		paymentChart.addClassName(CLASS_NAME + "__payment-chart");
 		paymentChart.setAlignItems(FlexComponent.Alignment.CENTER);
-		paymentChart.setFlexDirection(FlexDirection.COLUMN);
+		paymentChart.setFlexDirection(FlexLayout.FlexDirection.COLUMN);
 		paymentChart.setPadding(Bottom.S, Top.M);
 		return paymentChart;
 	}
@@ -138,6 +139,7 @@ public class Statistics extends ViewFrame {
 		chart.setSizeFull();
 
 		Configuration configuration = chart.getConfiguration();
+		configuration.getChart().setStyledMode(true);
 		configuration.getChart().setType(ChartType.SOLIDGAUGE);
 		configuration.setTitle("");
 		configuration.getTooltip().setEnabled(false);
@@ -250,7 +252,7 @@ public class Statistics extends ViewFrame {
 
 		FlexBoxLayout reports = new FlexBoxLayout(header, card);
 		reports.addClassName(CLASS_NAME + "__reports");
-		reports.setFlexDirection(FlexDirection.COLUMN);
+		reports.setFlexDirection(FlexLayout.FlexDirection.COLUMN);
 		reports.setPadding(Bottom.XL, Left.RESPONSIVE_L);
 		return reports;
 	}
@@ -284,7 +286,7 @@ public class Statistics extends ViewFrame {
 
 		FlexBoxLayout logs = new FlexBoxLayout(header, card);
 		logs.addClassName(CLASS_NAME + "__logs");
-		logs.setFlexDirection(FlexDirection.COLUMN);
+		logs.setFlexDirection(FlexLayout.FlexDirection.COLUMN);
 		logs.setPadding(Bottom.XL, Right.RESPONSIVE_L);
 		return logs;
 	}

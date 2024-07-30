@@ -2,7 +2,7 @@
 
 Business App is a starter for Vaadin. 
 
-[Live demo](https://business.demo.vaadin.com/)
+[Live demo](https://labs.vaadin.com/business/)
 
 The starter gives you a productivity boost and a head-start. You get an app shell with a typical hierarchical left-hand menu. The shell, the views and the components are all responsive and touch friendly, which makes them great for desktop and mobile use. The views are built with Java, which enhances Java developers' productivity by allowing them to do all in one language.
 
@@ -34,3 +34,12 @@ before running in the other mode.
 A paid Pro or Prime subscription is required for creating a new software project from this starter. After its creation, results can be used, developed and distributed freely, but licenses for the used commercial components are required during development. The starter or its parts cannot be redistributed as a code example or template.
 
 For full terms, see LICENSE
+
+### Pro components
+
+Pro components used in this starter are
+ - [Vaadin Charts](https://vaadin.com/components/vaadin-charts)
+ - [Vaadin Board](https://vaadin.com/components/vaadin-board)
+ - [Vaadin Crud](https://vaadin.com/components/vaadin-crud/)
+ 
+Also [TestBench](https://vaadin.com/testbench) library is used for testing.

@@ -1,22 +1,23 @@
 package com.vaadin.starter.business.it;
 
 import com.vaadin.testbench.ScreenshotOnFailureRule;
-import com.vaadin.testbench.TestBenchTestCase;
+import com.vaadin.testbench.parallel.ParallelTest;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Rule;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 
-public abstract class AbstractIT extends TestBenchTestCase {
+public abstract class AbstractIT extends ParallelTest {
+
+    public static String APP_URL= "http://localhost:8080";
 
     @Rule
     public ScreenshotOnFailureRule rule = new ScreenshotOnFailureRule(this,
             true);
 
-    @Before
-    public void startBrowser() {
-        setDriver(new ChromeDriver(new ChromeOptions().setHeadless(false)));
+    @BeforeClass
+    public static void setupClass() {
+        WebDriverManager.chromedriver().setup();
     }
 
     protected void assertNumbers(String expected, String actual) {
@@ -27,5 +28,4 @@ public abstract class AbstractIT extends TestBenchTestCase {
     private String stripSeparators(String string) {
         return string.replaceAll("[\\., ]", "").replace((char) 160, ' ');
     }
-
 }

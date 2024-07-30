@@ -65,7 +65,7 @@ public class Managers extends ViewFrame {
 		crud.addNewListener(event -> header.setTitle("New Manager"));
 		UIUtils.setBackgroundColor(LumoStyles.Color.BASE_COLOR, crud);
 		crud.setEditOnClick(true);
-		crud.setEditorPosition(CrudEditorPosition.BOTTOM);
+		crud.setEditorPosition(CrudEditorPosition.ASIDE);
 		crud.setSizeFull();
 		return crud;
 	}
