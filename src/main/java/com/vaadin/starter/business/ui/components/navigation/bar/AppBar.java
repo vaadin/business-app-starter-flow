@@ -338,6 +338,6 @@ public class AppBar extends FlexBoxLayout {
 	}
 
 	private void updateTabsVisibility() {
-		tabs.setVisible(tabs.getComponentCount() > 0);
+		tabs.setVisible(tabs.getTabCount() > 0);
 	}
 }
