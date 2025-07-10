@@ -7,7 +7,7 @@ import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H4;
 import com.vaadin.flow.component.html.Image;
-import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.html.NativeLabel;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.starter.business.ui.util.UIUtils;
 
@@ -20,7 +20,7 @@ public class AccountSwitcher extends Div {
 
 	private Image avatar;
 	private H4 username;
-	private Label email;
+	private NativeLabel email;
 	private Button dropdown;
 	private ContextMenu menu;
 
@@ -46,7 +46,7 @@ public class AccountSwitcher extends Div {
 	}
 
 	private void initEmail() {
-		email = new Label("john.smith@gmail.com");
+		email = new NativeLabel("john.smith@gmail.com");
 		email.addClassName(CLASS_NAME + "__email");
 
 		dropdown = UIUtils.createButton(VaadinIcon.ANGLE_DOWN, ButtonVariant.LUMO_SMALL, ButtonVariant.LUMO_TERTIARY);

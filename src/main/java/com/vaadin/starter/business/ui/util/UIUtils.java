@@ -3,7 +3,7 @@ package com.vaadin.starter.business.ui.util;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
-import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.html.NativeLabel;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
@@ -225,54 +225,54 @@ public class UIUtils {
 
 	/* ==== LABELS ==== */
 
-	public static Label createLabel(FontSize size, TextColor color,
+	public static NativeLabel createLabel(FontSize size, TextColor color,
 	                                String text) {
-		Label label = new Label(text);
+		NativeLabel label = new NativeLabel(text);
 		setFontSize(size, label);
 		setTextColor(color, label);
 		return label;
 	}
 
-	public static Label createLabel(FontSize size, String text) {
+	public static NativeLabel createLabel(FontSize size, String text) {
 		return createLabel(size, TextColor.BODY, text);
 	}
 
-	public static Label createLabel(TextColor color, String text) {
+	public static NativeLabel createLabel(TextColor color, String text) {
 		return createLabel(FontSize.M, color, text);
 	}
 
-	public static Label createH1Label(String text) {
-		Label label = new Label(text);
+	public static NativeLabel createH1Label(String text) {
+		NativeLabel label = new NativeLabel(text);
 		label.addClassName(LumoStyles.Heading.H1);
 		return label;
 	}
 
-	public static Label createH2Label(String text) {
-		Label label = new Label(text);
+	public static NativeLabel createH2Label(String text) {
+		NativeLabel label = new NativeLabel(text);
 		label.addClassName(LumoStyles.Heading.H2);
 		return label;
 	}
 
-	public static Label createH3Label(String text) {
-		Label label = new Label(text);
+	public static NativeLabel createH3Label(String text) {
+		NativeLabel label = new NativeLabel(text);
 		label.addClassName(LumoStyles.Heading.H3);
 		return label;
 	}
 
-	public static Label createH4Label(String text) {
-		Label label = new Label(text);
+	public static NativeLabel createH4Label(String text) {
+		NativeLabel label = new NativeLabel(text);
 		label.addClassName(LumoStyles.Heading.H4);
 		return label;
 	}
 
-	public static Label createH5Label(String text) {
-		Label label = new Label(text);
+	public static NativeLabel createH5Label(String text) {
+		NativeLabel label = new NativeLabel(text);
 		label.addClassName(LumoStyles.Heading.H5);
 		return label;
 	}
 
-	public static Label createH6Label(String text) {
-		Label label = new Label(text);
+	public static NativeLabel createH6Label(String text) {
+		NativeLabel label = new NativeLabel(text);
 		label.addClassName(LumoStyles.Heading.H6);
 		return label;
 	}
@@ -314,8 +314,8 @@ public class UIUtils {
 		return decimalFormat.get().format(amount);
 	}
 
-	public static Label createAmountLabel(double amount) {
-		Label label = createH5Label(formatAmount(amount));
+	public static NativeLabel createAmountLabel(double amount) {
+		NativeLabel label = createH5Label(formatAmount(amount));
 		label.addClassName(LumoStyles.FontFamily.MONOSPACE);
 		return label;
 	}
@@ -324,8 +324,8 @@ public class UIUtils {
 		return NumberFormat.getIntegerInstance().format(units);
 	}
 
-	public static Label createUnitsLabel(int units) {
-		Label label = new Label(formatUnits(units));
+	public static NativeLabel createUnitsLabel(int units) {
+		NativeLabel label = new NativeLabel(formatUnits(units));
 		label.addClassName(LumoStyles.FontFamily.MONOSPACE);
 		return label;
 	}

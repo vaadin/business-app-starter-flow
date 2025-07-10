@@ -3,7 +3,7 @@ package com.vaadin.starter.business.ui.components.detailsdrawer;
 import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.html.NativeLabel;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.tabs.Tabs;
@@ -17,7 +17,7 @@ import com.vaadin.starter.business.ui.util.UIUtils;
 public class DetailsDrawerHeader extends FlexBoxLayout {
 
 	private Button close;
-	private Label title;
+	private NativeLabel title;
 
 	public DetailsDrawerHeader(String title) {
 		addClassName(BoxShadowBorders.BOTTOM);

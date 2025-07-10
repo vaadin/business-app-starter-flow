@@ -2,7 +2,7 @@ package com.vaadin.starter.business.ui.components;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
-import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.html.NativeLabel;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.starter.business.ui.layout.size.Left;
@@ -27,7 +27,7 @@ public class Token extends FlexBoxLayout {
 		setPadding(Left.S, Right.XS);
 		setSpacing(Right.XS);
 
-		Label label = UIUtils.createLabel(FontSize.S, TextColor.BODY, text);
+		NativeLabel label = UIUtils.createLabel(FontSize.S, TextColor.BODY, text);
 		Button button = UIUtils.createButton(VaadinIcon.CLOSE_SMALL, ButtonVariant.LUMO_SMALL, ButtonVariant.LUMO_TERTIARY_INLINE);
 		add(label, button);
 	}
