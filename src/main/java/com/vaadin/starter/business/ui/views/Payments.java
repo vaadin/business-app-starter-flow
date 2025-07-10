@@ -5,7 +5,7 @@ import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.grid.ColumnTextAlign;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.html.NativeLabel;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.tabs.Tab;
@@ -193,13 +193,13 @@ public class Payments extends SplitViewFrame {
 	}
 
 	private Component createAttachments() {
-		Label message = UIUtils.createLabel(FontSize.S, TextColor.SECONDARY, "Not implemented yet.");
+		NativeLabel message = UIUtils.createLabel(FontSize.S, TextColor.SECONDARY, "Not implemented yet.");
 		message.addClassNames(LumoStyles.Padding.Responsive.Horizontal.L, LumoStyles.Padding.Vertical.L);
 		return message;
 	}
 
 	private Component createHistory() {
-		Label message = UIUtils.createLabel(FontSize.S, TextColor.SECONDARY, "Not implemented yet.");
+		NativeLabel message = UIUtils.createLabel(FontSize.S, TextColor.SECONDARY, "Not implemented yet.");
 		message.addClassNames(LumoStyles.Padding.Responsive.Horizontal.L, LumoStyles.Padding.Vertical.L);
 		return message;
 	}

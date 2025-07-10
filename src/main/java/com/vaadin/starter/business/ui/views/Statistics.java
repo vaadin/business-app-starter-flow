@@ -7,7 +7,7 @@ import com.vaadin.flow.component.charts.Chart;
 import com.vaadin.flow.component.charts.model.*;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.html.NativeLabel;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.tabs.Tab;
@@ -125,7 +125,7 @@ public class Statistics extends ViewFrame {
 		chartContainer.setWidth("120px");
 
 		FlexBoxLayout paymentChart = new FlexBoxLayout(
-				new Label(status.getName()), chartContainer);
+				new NativeLabel(status.getName()), chartContainer);
 		paymentChart.addClassName(CLASS_NAME + "__payment-chart");
 		paymentChart.setAlignItems(FlexComponent.Alignment.CENTER);
 		paymentChart.setFlexDirection(FlexDirection.COLUMN);

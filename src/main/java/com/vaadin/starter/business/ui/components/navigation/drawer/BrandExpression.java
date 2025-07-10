@@ -3,7 +3,7 @@ package com.vaadin.starter.business.ui.components.navigation.drawer;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Image;
-import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.html.NativeLabel;
 import com.vaadin.starter.business.ui.util.UIUtils;
 
 @CssImport("./styles/components/brand-expression.css")
@@ -12,7 +12,7 @@ public class BrandExpression extends Div {
 	private String CLASS_NAME = "brand-expression";
 
 	private Image logo;
-	private Label title;
+	private NativeLabel title;
 
 	public BrandExpression(String text) {
 		setClassName(CLASS_NAME);

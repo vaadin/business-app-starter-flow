@@ -10,7 +10,7 @@ import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.grid.ColumnTextAlign;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Image;
-import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.html.NativeLabel;
 import com.vaadin.flow.component.page.Page;
 import com.vaadin.flow.data.provider.DataProvider;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
@@ -123,9 +123,9 @@ public class Accounts extends ViewFrame {
 		return item;
 	}
 
-	private Label createAvailability(BankAccount bankAccount) {
+	private NativeLabel createAvailability(BankAccount bankAccount) {
 		Double availability = bankAccount.getAvailability();
-		Label amountLabel = UIUtils.createAmountLabel(availability);
+		NativeLabel amountLabel = UIUtils.createAmountLabel(availability);
 		if (availability > 0) {
 			UIUtils.setTextColor(TextColor.SUCCESS, amountLabel);
 		} else {
@@ -185,7 +185,7 @@ public class Accounts extends ViewFrame {
 
 			Image logo = getLogo();
 			FlexBoxLayout owner = getOwner();
-			Label account = getAccount();
+			NativeLabel account = getAccount();
 			FlexBoxLayout availability = getAvailability();
 
 			FlexBoxLayout column = new FlexBoxLayout(owner, account, availability);
@@ -205,7 +205,7 @@ public class Accounts extends ViewFrame {
 		}
 
 		private FlexBoxLayout getOwner() {
-			Label owner = UIUtils.createLabel(FontSize.M, TextColor.BODY, bankAccount.getOwner());
+			NativeLabel owner = UIUtils.createLabel(FontSize.M, TextColor.BODY, bankAccount.getOwner());
 			UIUtils.setOverflow(Overflow.HIDDEN, owner);
 			UIUtils.setTextOverflow(TextOverflow.ELLIPSIS, owner);
 
@@ -219,8 +219,8 @@ public class Accounts extends ViewFrame {
 			return wrapper;
 		}
 
-		private Label getAccount() {
-			Label account = UIUtils.createLabel(FontSize.S, TextColor.SECONDARY, bankAccount.getAccount());
+		private NativeLabel getAccount() {
+			NativeLabel account = UIUtils.createLabel(FontSize.S, TextColor.SECONDARY, bankAccount.getAccount());
 			account.addClassNames(LumoStyles.Margin.Bottom.S);
 			UIUtils.setOverflow(Overflow.HIDDEN, account);
 			UIUtils.setTextOverflow(TextOverflow.ELLIPSIS, account);
@@ -228,9 +228,9 @@ public class Accounts extends ViewFrame {
 		}
 
 		private FlexBoxLayout getAvailability() {
-			Label availability = createAvailability(bankAccount);
+			NativeLabel availability = createAvailability(bankAccount);
 			availability.setText("$" + availability.getText());
-			Label updated = UIUtils.createLabel(FontSize.XS, TextColor.TERTIARY, UIUtils.formatDate(bankAccount.getUpdated()));
+			NativeLabel updated = UIUtils.createLabel(FontSize.XS, TextColor.TERTIARY, UIUtils.formatDate(bankAccount.getUpdated()));
 
 			FlexBoxLayout wrapper = new FlexBoxLayout(availability, updated);
 			wrapper.setAlignItems(Alignment.BASELINE);

@@ -11,7 +11,7 @@ import com.vaadin.flow.component.charts.model.ListSeries;
 import com.vaadin.flow.component.charts.model.XAxis;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Image;
-import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.html.NativeLabel;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.router.BeforeEvent;
@@ -107,7 +107,7 @@ public class AccountDetails extends ViewFrame implements HasUrlParameter<Long> {
 	}
 
 	private Component createRecentTransactionsHeader() {
-		Label title = UIUtils.createH3Label("Recent Transactions");
+		NativeLabel title = UIUtils.createH3Label("Recent Transactions");
 
 		Button viewAll = UIUtils.createSmallButton("View All");
 		viewAll.addClickListener(
@@ -126,7 +126,7 @@ public class AccountDetails extends ViewFrame implements HasUrlParameter<Long> {
 
 		for (int i = 0; i < RECENT_TRANSACTIONS; i++) {
 			Double amount = DummyData.getAmount();
-			Label amountLabel = UIUtils.createAmountLabel(amount);
+			NativeLabel amountLabel = UIUtils.createAmountLabel(amount);
 			if (amount > 0) {
 				UIUtils.setTextColor(TextColor.SUCCESS, amountLabel);
 			} else {
@@ -147,7 +147,7 @@ public class AccountDetails extends ViewFrame implements HasUrlParameter<Long> {
 	}
 
 	private Component createMonthlyOverviewHeader() {
-		Label header = UIUtils.createH3Label("Monthly Overview");
+		NativeLabel header = UIUtils.createH3Label("Monthly Overview");
 		header.addClassNames(LumoStyles.Margin.Vertical.L, LumoStyles.Margin.Responsive.Horizontal.L);
 		return header;
 	}
