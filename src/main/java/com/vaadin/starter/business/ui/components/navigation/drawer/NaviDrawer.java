@@ -1,5 +1,6 @@
 package com.vaadin.starter.business.ui.components.navigation.drawer;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.ClientCallable;
 import com.vaadin.flow.component.UI;
@@ -13,7 +14,6 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.AfterNavigationEvent;
 import com.vaadin.flow.router.AfterNavigationObserver;
 import com.vaadin.starter.business.ui.util.UIUtils;
-import elemental.json.JsonObject;
 
 @CssImport("./styles/components/navi-drawer.css")
 @JsModule("./swipe-away.js")
@@ -43,7 +43,7 @@ public class NaviDrawer extends Div
 	}
 
 	@ClientCallable
-	public void onSwipeAway(JsonObject data) {
+	public void onSwipeAway(JsonNode data) {
 		close();
 	}
 
