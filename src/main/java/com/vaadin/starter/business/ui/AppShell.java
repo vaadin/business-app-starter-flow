@@ -8,6 +8,8 @@ import com.vaadin.starter.business.ui.util.UIUtils;
 
 @PWA(name = "###Project Name###", shortName = "###Project Name###", iconPath = UIUtils.IMG_PATH + "logos/18.png", backgroundColor = "#233348", themeColor = "#233348")
 @Viewport("width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes")
+@com.vaadin.flow.component.dependency.CssImport("@vaadin/vaadin-lumo-styles/lumo.css")
+@com.vaadin.flow.component.dependency.NpmPackage(value="@polymer/polymer", version="^3.5.2")
 public class AppShell implements AppShellConfigurator {
 
     @Override
