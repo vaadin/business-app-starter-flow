@@ -14,7 +14,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <failOnMissingWebXml>false</failOnMissingWebXml>
 
-        <vaadin.version>24.9.7</vaadin.version>
+        <vaadin.version>25.0.0</vaadin.version>
         <jetty.version>11.0.20</jetty.version>
     </properties>
 
@@ -57,6 +57,11 @@
             <artifactId>jakarta.servlet-api</artifactId>
             <version>5.0.0</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-dev</artifactId>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 
